@@ -30,6 +30,12 @@ const Home = () => {
                         link="sort"
                     />
                     <VizItem
+                        id="Pathfinding"
+                        title="Pathfinding"
+                        description="Pathfinding algorithms are methods of finding the shortest or optimal path between two points in a graph, such as a map, a maze, or a network. Some common examples are breadth-first search, depth-first search, Dijkstra’s algorithm, A* algorithm, and Bellman-Ford algorithm."
+                        link="pathfinder"
+                    />
+                    {/* <VizItem
                         id="bitmask"
                         title="Bitmask"
                         description="Bitmask is a technique used for bit manipulation, often applied in computer science and algorithms."
@@ -122,7 +128,7 @@ const Home = () => {
                         title="Minimum Spanning Tree"
                         description="A Spanning Tree (ST) of a connected undirected weighted graph G is a subgraph of G that is a tree and connects (spans) all vertices of G. A graph G can have many STs (see this or this), each with different total weight (the sum of edge weights in the ST)."
                         link=""
-                    />
+                    /> */}
 
                 </ul>
             </div>
