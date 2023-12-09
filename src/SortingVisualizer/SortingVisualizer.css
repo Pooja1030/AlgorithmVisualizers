@@ -1,10 +1,4 @@
-.array-container {
-    position: absolute;
-    left: 20px;
-    /* top: 100px; */
-  }
-  
-  .array-bar {
+.array-bar {
     width: 4.5px;
     display: inline-block;
     margin: 0 1px;
@@ -14,4 +8,17 @@ button{
   display: inline-block;
   margin: 8px;
   padding: 5px 10px;
+}
+
+#topbar {
+  display: flex;
+  justify-content: center;
+  padding: 20px; /* Optional padding */
+}
+
+.array-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Make the container take the full height of the viewport */
 }

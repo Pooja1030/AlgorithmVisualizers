@@ -3,22 +3,26 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import Layout from "./Pages/Layout";
 import Home from "./Pages/Home";
-import Sort from "./Pages/Sort";
-import Sorting from './Pages/Sorting';
+import Sort from './Sorting/sort';
+
 
 
 function App() {
   return (
     <div className="App">
+    {/* ReactDOM.render( */}
+      <React.StrictMode>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="Sort" element={<Sort />} />
-            <Route path="Sorting/" element={<Sorting />} />
+            <Route path='/sort' Component={Sort} />
+
           </Route>
         </Routes>
       </BrowserRouter>
+      </React.StrictMode>
+    {/* ); */}
     </div>
   );
 }
