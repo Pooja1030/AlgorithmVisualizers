@@ -10,6 +10,7 @@ import ConvexHull from "./convexHull/convexHull";
 // import Tree from "./RecursiveGraph/Tree"
 import Graph from './RecursiveGraph/graph';
 import Puzzle from './15Puzzle/puzzle';
+import Queen from './Queen/queen';
 // import Sort from "./Pages/Sort";
 // import Sorting from './Pages/Sorting';
 // import NoPage from "./Pages/NoPage";
@@ -33,6 +34,7 @@ function App() {
             <Route path="convexHull" element={<ConvexHull />} />
             <Route path="graph" element={<Graph/>} />
             <Route path="puzzle" element={<Puzzle/>} />
+            <Route path="queen" element={<Queen/>} />
 
             {/* <Route path="*" element={<NoPage />} /> */}
 

@@ -69,7 +69,7 @@ const Home = () => {
                         id="Queen"
                         title="QueenProblem"
                         description="Pathfinding algorithms are methods of finding the shortest or optimal path between two points in a graph, such as a map, a maze, or a network. Some common examples are breadth-first search, depth-first search, Dijkstra’s algorithm, A* algorithm, and Bellman-Ford algorithm."
-                        link="QueenProblem"
+                        link="queen"
                     />
 
                     {/* <VizItem
