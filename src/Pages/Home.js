@@ -35,6 +35,43 @@ const Home = () => {
                         description="Pathfinding algorithms are methods of finding the shortest or optimal path between two points in a graph, such as a map, a maze, or a network. Some common examples are breadth-first search, depth-first search, Dijkstra’s algorithm, A* algorithm, and Bellman-Ford algorithm."
                         link="pathfinder"
                     />
+                    <VizItem
+                        id="RecursiveSort"
+                        title="RecursiveSort"
+                        description="Pathfinding algorithms are methods of finding the shortest or optimal path between two points in a graph, such as a map, a maze, or a network. Some common examples are breadth-first search, depth-first search, Dijkstra’s algorithm, A* algorithm, and Bellman-Ford algorithm."
+                        link="recursiveSort"
+                    />
+                    <VizItem
+                        id="convexHull"
+                        title="ConvexHull"
+                        description="Pathfinding algorithms are methods of finding the shortest or optimal path between two points in a graph, such as a map, a maze, or a network. Some common examples are breadth-first search, depth-first search, Dijkstra’s algorithm, A* algorithm, and Bellman-Ford algorithm."
+                        link="convexHull"
+                    />
+                    <VizItem
+                        id="recursionTree"
+                        title="RecursionTree"
+                        description="Pathfinding algorithms are methods of finding the shortest or optimal path between two points in a graph, such as a map, a maze, or a network. Some common examples are breadth-first search, depth-first search, Dijkstra’s algorithm, A* algorithm, and Bellman-Ford algorithm."
+                        link="graph"
+                    />
+                    <VizItem
+                        id="15 Puzzle"
+                        title="15Puzzle"
+                        description="Pathfinding algorithms are methods of finding the shortest or optimal path between two points in a graph, such as a map, a maze, or a network. Some common examples are breadth-first search, depth-first search, Dijkstra’s algorithm, A* algorithm, and Bellman-Ford algorithm."
+                        link="puzzle"
+                    />
+                    <VizItem
+                        id="Binarytree"
+                        title="BinaryTree"
+                        description="Pathfinding algorithms are methods of finding the shortest or optimal path between two points in a graph, such as a map, a maze, or a network. Some common examples are breadth-first search, depth-first search, Dijkstra’s algorithm, A* algorithm, and Bellman-Ford algorithm."
+                        link="BinaryTree"
+                    />
+                    <VizItem
+                        id="Queen"
+                        title="QueenProblem"
+                        description="Pathfinding algorithms are methods of finding the shortest or optimal path between two points in a graph, such as a map, a maze, or a network. Some common examples are breadth-first search, depth-first search, Dijkstra’s algorithm, A* algorithm, and Bellman-Ford algorithm."
+                        link="QueenProblem"
+                    />
+
                     {/* <VizItem
                         id="bitmask"
                         title="Bitmask"

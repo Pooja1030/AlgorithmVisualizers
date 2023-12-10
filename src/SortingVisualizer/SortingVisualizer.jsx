@@ -1,6 +1,9 @@
 // import React from 'react';
 // import {getMergeSortAnimations} from '../SortingAlgorithms/SortingAlgorithms.js';
 // import '../SortingVisualizer/SortingVisualizer.css';
+import React from 'react';
+import { getMergeSortAnimations } from '../SortingAlgorithms/SortingAlgorithms.js';
+import '../SortingVisualizer/SortingVisualizer.css';
 
 // // Change this value for the speed of the animations.
 // const ANIMATION_SPEED_MS = 5;
@@ -13,6 +16,11 @@
 
 // // This is the color of array bars that are being compared throughout the animations.
 // const SECONDARY_COLOR = 'red';
+// This is the main color of the array bars.
+const PRIMARY_COLOR = '#504099';
+
+// This is the color of array bars that are being compared throughout the animations.
+const SECONDARY_COLOR = '#FFAD84';
 
 // export default class SortingVisualizer extends React.Component {
 //   constructor(props) {
@@ -34,6 +42,13 @@
 //     }
 //     this.setState({array});
 //   }
+  resetArray() {
+    const array = [];
+    for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
+      array.push(randomIntFromInterval(5, 730));
+    }
+    this.setState({ array });
+  }
 
 //   mergeSort() {
 //     const animations = getMergeSortAnimations(this.state.array);
@@ -69,6 +84,17 @@
 
 //   bubbleSort() {
     
+//   }
+//   quickSort() {
+
+//   }
+
+//   heapSort() {
+
+//   }
+
+//   bubbleSort() {
+
 //   }
 
 //   // NOTE: This method will only work if your sorting algorithms actually return
@@ -117,6 +143,41 @@
 //   // min and max included
 //   return Math.floor(Math.random() * (max - min + 1) + min);
 // }
+  render() {
+    const { array } = this.state;
+
+    return (
+    <>
+      <div className='menu'>
+
+        <button onClick={() => this.resetArray()}>Generate New Array</button>
+        <button onClick={() => this.mergeSort()}>Merge Sort</button>
+        <button onClick={() => this.quickSort()}>Quick Sort</button>
+        <button onClick={() => this.heapSort()}>Heap Sort</button>
+        <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
+      </div>
+
+      <div className="array-container">
+        {array.map((value, idx) => (
+          <div
+            className="array-bar"
+            key={idx}
+            style={{
+              backgroundColor: PRIMARY_COLOR,
+              height: `${value * 0.9}px`,
+            }}></div>
+        ))}
+        {/* <button onClick={() => this.testSortingAlgorithms()}>
+          Test Sorting Algorithms (BROKEN)
+        </button> */}
+      </div></>
+    );
+  }
+}
+function randomIntFromInterval(min, max) {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
 // function arraysAreEqual(arrayOne, arrayTwo) {
 //   if (arrayOne.length !== arrayTwo.length) return false;

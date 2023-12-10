@@ -13,7 +13,7 @@
 import React, {Component} from 'react';
 import {bubbleSort,selectionSort,insertionSort } from "../algorithms/sortingalgorithms"
 import Navbar from './navbar';
-// import {quickSort} from "../algorithms/quickSort";
+import {quickSort} from "../algorithms/quickSort";
 import Menu from "./menu";
 import Rects from './rects';
 import '../App.css';
@@ -113,10 +113,10 @@ class Sort extends Component {
           case 2:
               steps1 = insertionSort(this.state.rects);
               break;
-        //   case 3:
-        //       steps1 = quickSort(this.state.rects2);
-        //       console.log(steps1)
-        //       break;
+          case 3:
+              steps1 = quickSort(this.state.rects2);
+              console.log(steps1)
+              break;
           default:
               steps1 = bubbleSort(this.state.rects);
               break;
@@ -134,9 +134,9 @@ class Sort extends Component {
               case 2:
                   steps2 = insertionSort(this.state.rects2);
                   break;
-            //   case 3:
-            //       steps2 = quickSort(this.state.rects2);
-            //       break;
+              case 3:
+                  steps2 = quickSort(this.state.rects2);
+                  break;
               default:
                   steps2 = bubbleSort(this.state.rects2);
                   break;

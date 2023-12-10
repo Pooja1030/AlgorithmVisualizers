@@ -12,7 +12,7 @@ class Rects extends Component {
         return (
             <div>
                 <FlipMove
-                    className="d-flex justify-content-center align-items-end"
+                    className="d-flex bars justify-content-center align-items-end"
                     duration={this.props.speed}
                     // easing="cubic-bezier(.12,.36,.14,1.2)"
                 >

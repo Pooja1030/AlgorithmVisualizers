@@ -160,7 +160,7 @@ ul, li {
   backface-visibility: hidden;
 } 
 
-
+ 
 .node {
   fill: #ccc;
   stroke: #fff;
@@ -223,3 +223,71 @@ ul, li {
 
 
 
+
+
+
+
+
+button,
+select {
+  display: block;
+  width: fit-content;
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+
+}
+
+select {
+  padding: 0.5em 3.5em 0.5em 1em;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #5a43c3 50%),
+    linear-gradient(135deg, #5a43c3 50%, transparent 50%),
+    linear-gradient(to right, #e0ddeb, #e0ddeb);
+  background-position:
+    calc(100% - 1.5em) calc(1em + 2px),
+    calc(100% - 1.2em) calc(1em + 2px),
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    3em 3em;
+  background-repeat: no-repeat;
+}
+
+
+
+/* select:focus {
+  background-image:
+    linear-gradient(45deg, white 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, white 50%),
+    linear-gradient(to right, gray, gray);
+  background-position:
+    calc(100% - 1.5em) 1em,
+    calc(100% - 1.2em) 1em,
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    3em 3em;
+  background-repeat: no-repeat;
+  border-color: grey;
+  outline: 0;
+} */
+
+
+.menu {
+  display: flex;
+  margin: 10px 60px;
+}
+
+
+.bars, nav{
+  display: flex;
+  flex-direction: row;
+}
