@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Cells from "./cells";
-import Navbar from "./navbar";
+import Navbar from '../Pages/navbar';
 import Menu from "./menu";
 
 class Queen extends Component {
@@ -22,7 +22,7 @@ class Queen extends Component {
     render() {
         return (
             <div>
-                <Navbar/>
+                <Navbar currentPage="N-queens problem"/>
                 <Menu
                     onSpeedChange={this.handleSpeedChange}
                     onCountChange={this.handleQueenChange}
