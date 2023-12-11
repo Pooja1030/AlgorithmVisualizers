@@ -22,7 +22,7 @@ class Vertex extends Component {
                     cy={this.props.pos.y}
                     r={6}
                     // ry={3}
-                    stroke="black" stroke-width="0.5" fill={this.props.current?'cyan':'white'}
+                    stroke="black" stroke-width="0.5" fill={this.props.current?'#FE7BE5':'white'}
                 >
                     <animate
                         id={'cxanim'+this.props.id}

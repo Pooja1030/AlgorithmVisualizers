@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import Rect from "./rect";
 import Rects from "../Sorting/rects";
-import Navbar from "./navbar";
+import Navbar from '../Pages/navbar';
 import Menu from "./menu";
 import  heapSort  from "../algorithms/heapSort";
 import { quickSortRecursive } from "../algorithms/quickSortRecursive";
 import mergeSort  from "../algorithms/mergeSort";
-
+import '../App.css';
 
 class RecursiveSort extends Component {
     state = {
@@ -29,8 +29,8 @@ class RecursiveSort extends Component {
     render() {
         return (
             <React.Fragment>
-                <Navbar />
-                <Menu 
+                <Navbar currentPage="Recursive Sort"/>
+                <Menu className="menu"
                     disable={this.state.isRunning}
                     onViusalize={this.handleSort}
                     onRandomize={this.handleRandomize}
@@ -39,7 +39,7 @@ class RecursiveSort extends Component {
                     onAlgoChanged={this.handleAlgoChanged}
                     onSpeedChange={this.handleSpeedChanged}
                 />
-                <div className=' justify-content-center'>
+                <div className='justify-content-center'>
                     <Rects
                         rects={this.state.rects}
                     />

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import CanvasSvg from "./canvasSVG";
 import {getFibTree, getTree} from "./fib";
 import Menu from "./menu";
-import Navbar from "./navbar";
+import Navbar from '../Pages/navbar';
 import Details from "./details";
 
 class Graph extends Component {
@@ -100,7 +100,7 @@ class Graph extends Component {
     render() {
         return (
             <div>
-                <Navbar/>
+                <Navbar currentPage="Recursion Tree"/>
                 <Menu
                     setN={this.setN}
                     setR={this.setR}

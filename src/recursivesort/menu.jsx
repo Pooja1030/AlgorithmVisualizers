@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import DiscreteSlider from "./slider";
 import SimpleSelect from "./simpleSelect";
 import CustomizedSlider from "./airslider";
@@ -9,15 +9,8 @@ import SwitchLabels from "./formControlLael";
 class Menu extends Component {
     render() {
         return (
-            <nav className="nav alert-dark">
-                <button
-                    className='btn btn-secondary m-2'
-                    onClick={this.props.onRandomize}
-                    disabled={this.props.disable}
-                    style={this.isClickable()}
-                >
-                    Randomize
-                </button>
+            <nav className="nav menu alert-dark">
+                <div className='controls'>
 
                 <RangeSlider
                     disable={this.props.disable}
@@ -44,22 +37,32 @@ class Menu extends Component {
                     pos={0}
                     onAlgoChanged={this.props.onAlgoChanged}
                 />
-                <button
-                    className='btn btn-warning btn-lg '
-                    onClick={this.props.onViusalize}
-                    disabled={this.props.disable}
-                    style={this.isClickable()}
-                >
-                    Visualize
-                </button>
-
+                </div>
+                <div>
+                    <button
+                        className='visualize-btn btn-warning btn-lg '
+                        onClick={this.props.onViusalize}
+                        disabled={this.props.disable}
+                        style={this.isClickable()}
+                    >
+                        Visualize
+                    </button>
+                    <button
+                        className='reset-btn btn-secondary m-2'
+                        onClick={this.props.onRandomize}
+                        disabled={this.props.disable}
+                        style={this.isClickable()}
+                    >
+                        Randomize
+                    </button>
+                </div>
             </nav>
         );
     }
-    isClickable = () =>{
-        if( this.props.disable ){
-            return {cursor: "not-allowed"};
-        } else{
+    isClickable = () => {
+        if (this.props.disable) {
+            return { cursor: "not-allowed" };
+        } else {
             return {};
         }
     }

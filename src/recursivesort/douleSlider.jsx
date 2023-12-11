@@ -51,7 +51,7 @@ export default function RangeSlider(props) {
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
                 getAriaValueText={valuetext}
-                valueLabelDisplay="off"
+                // valueLabelDisplay="off"
             >
             </CSlider>
 
