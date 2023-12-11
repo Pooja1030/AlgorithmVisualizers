@@ -3,9 +3,9 @@ import { Outlet, Link } from "react-router-dom";
 const Layout = () => {
     return (
         <>
-            <nav>
+            {/* <nav>
                 <Link to="/"><h2> Algorithm Visualizer</h2></Link>
-            </nav>
+            </nav> */}
 
             <Outlet />
         </>
