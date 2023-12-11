@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Navbar from "./navbar";
+import Navbar from '../Pages/navbar';
 import FlipMove from 'react-flip-move';
 // import SvgLines from 'react-mt-svg-lines';
 import '../helpers/array_helpers';
@@ -35,7 +35,7 @@ class Puzzle extends Component {
             <div style={{backgroundColor: "#57407c"}}
                  className={'full-height'}
             >
-                <Navbar/>
+                <Navbar currentPage="15 Puzzle"/>
                 <div className={'justify-content-around '}
                      style={{textAlign: "Center"}}>
                     <div style={{textAlign: "center", height: "440px", width: "440px", margin: 'auto'}}
