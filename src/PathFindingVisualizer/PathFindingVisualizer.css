@@ -13,3 +13,29 @@ color: #fff;
   background-color: #c34343;
   color: #fff;
 }
+
+.node-type{
+  display: flex;
+  width: fit-content;
+  margin: 10px;
+  padding: 0 20px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  
+  /* background-color: #5a43c3; */
+}
+
+.node-type .node{
+  margin: 0;
+}
+
+.node-type p{
+  padding: 0 10px;
+  margin: 0;
+}
+
+.menu{
+  justify-content: space-between;
+  padding: 10px 60px;
+}

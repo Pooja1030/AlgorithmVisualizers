@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import Node from './Node/Node';
 import { dijkstra, getNodesInShortestPathOrder } from './algorithms/dijkstra';
-
+import { bfs, dfs } from './algorithms/bfs';
+import { aStar } from './algorithms/astar';
+import Navbar from '../Pages/navbar';
 import './PathFindingVisualizer.css';
 
-// const START_NODE_ROW = 10;
-// const START_NODE_COL = 15;
-// const FINISH_NODE_ROW = 10;
-// const FINISH_NODE_COL = 35;
+const algorithms = [{ "name": "Dijkstra's Algorithm", "function": dijkstra },
+{ "name": "A* Algorithm", "function": aStar },
+{ "name": "Depth-first Search", "function": dfs },
+{ "name": "Breadth-first search", "function": bfs }
+];
 
 export default class PathfindingVisualizer extends Component {
     constructor() {
@@ -209,7 +212,8 @@ export default class PathfindingVisualizer extends Component {
     };
 
 
-    animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder) {
+    animateVisitedNodes(visitedNodesInOrder, nodesInShortestPathOrder) {
+        console.log("visited ", visitedNodesInOrder.length);
         for (let i = 0; i <= visitedNodesInOrder.length; i++) {
             if (i === visitedNodesInOrder.length) {
                 setTimeout(() => {
@@ -220,6 +224,7 @@ export default class PathfindingVisualizer extends Component {
             }
             setTimeout(() => {
                 const node = visitedNodesInOrder[i];
+                node.isVisited = true;
                 if (!node.isFinish && !node.isStart)
                     document.getElementById(`node-${node.row}-${node.col}`).className =
                         'node node-visited';
@@ -228,6 +233,7 @@ export default class PathfindingVisualizer extends Component {
     }
 
     animateShortestPath(nodesInShortestPathOrder) {
+        console.log("path ", nodesInShortestPathOrder.length);
         for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
             setTimeout(() => {
                 const node = nodesInShortestPathOrder[i];
@@ -239,41 +245,36 @@ export default class PathfindingVisualizer extends Component {
     }
 
 
-    visualizeDijkstra() {
+
+    visualize() {
         if (this.animating) return;
 
         const { grid, startNodeRow, startNodeCol, finishNodeRow, finishNodeCol } = this.state;
         const startNode = grid[startNodeRow][startNodeCol];
         const finishNode = grid[finishNodeRow][finishNodeCol];
-        const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+
+        let visitedNodesInOrder;
+
+        if (this.state.algorithm === "") {
+            console.log("No algorithm selected");
+            return;
+        }
+
+        else {
+            for (let i = 0; i < algorithms.length; i++) {
+                if (this.state.algorithm === algorithms[i].name) {
+                    console.log(algorithms[i].name);
+                    visitedNodesInOrder = algorithms[i].function(grid, startNode, finishNode);
+                }
+            }
+        }
+
         const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
 
         this.animating = true;
-        this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+        this.animateVisitedNodes(visitedNodesInOrder, nodesInShortestPathOrder);
     }
 
-    visualize() {
-        // e.preventDefault();
-
-        if (this.state.algorithm === "") {
-            this.visualizeDijkstra()
-            console.log("{this.state.algorithm}");
-
-        }
-        else {
-            if (this.state.algorithm === "Dijkstra's Algorithm") {
-                this.setState({ algorithm: "Dijkstra's Algorithm" });
-                this.visualizeDijkstra();
-                console.log("dijkstra");
-
-            }
-            else if (this.state.algorithm === "A* Search")
-                console.log("astar");
-
-            else if (this.state.algorithm === "Breath First Search")
-                console.log("bfs");
-        }
-    }
 
 
     render() {
@@ -281,21 +282,34 @@ export default class PathfindingVisualizer extends Component {
 
         return (
             <>
+                <Navbar currentPage="Pathfinding Visualizer" />
                 <div className='menu'>
-                    <select onChange={(e) => this.setState({ algorithm: e.target.value })}>
-                        <option defaultValue disabled>
-                            Select algorithm
-                        </option>
-                        <option value="Dijkstra's Algorithm">Dijkstra's Algorithm</option>
-                        <option value="A* Search">A* Search</option>
-                        <option value="Breath First Search">Breath First Search</option>
-                    </select>
+                    <div>
 
-                    <button className="visualize-btn" onClick={() => this.visualize()}>
-                        Visualize
-                    </button>
-                    <button className="reset-btn" onClick={() => this.getInitialGrid()}>Reset</button>
+                        <select onChange={(e) => this.setState({ algorithm: e.target.value })}>
+                            <option disabled selected>
+                                Select algorithm
+                            </option>
 
+                            {algorithms.map((item, itemId) => <option key={itemId} value={item.name}>{item.name}</option>)}
+
+                        </select>
+                        <button className="visualize-btn" onClick={() => this.visualize()}>
+                            Visualize
+                        </button>
+
+                        <button className="reset-btn" onClick={() => this.getInitialGrid()}>Reset</button>
+                    </div>
+                    <div>
+                        <div className='node-type'>
+                            <div className='node node-start'></div>
+                            <p> Start Node </p>
+                        </div>
+                        <div className='node-type'>
+                            <div className='node node-finish'></div>
+                            <p>Finish Node</p>
+                        </div>
+                    </div>
                 </div>
 
 

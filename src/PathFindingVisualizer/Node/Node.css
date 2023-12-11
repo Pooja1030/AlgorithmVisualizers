@@ -5,6 +5,7 @@
   /* background-color: #352F44; */
   display: inline-block;
   margin: -2px 0;
+  box-sizing: border-box;
 }
 
 .node-finish {
