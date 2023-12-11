@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import MyTimer from "./timer";
 import Canvas from "./canvas";
-import Navbar from "./navbar";
+import Navbar from '../Pages/navbar';
 import Menu from "./menu";
+
 class ConvexHull extends Component {
     state={
         dots:[],
@@ -20,12 +21,15 @@ class ConvexHull extends Component {
         this.setState({width:window.innerWidth,height:window.innerHeight-200});
     }
     componentDidMount() {
-        this.setState({width:window.innerWidth,height:window.innerHeight-100});
+        this.setState({
+            width:window.innerWidth,
+            height:window.innerHeight-100, 
+            dots:getNewDots(this.state.number)});
     }
     render() {
         return (
             <div>
-                <Navbar/>
+                <Navbar currentPage="Convex Hull"/>
                 <Menu
                     onRefresh={this.handleRefreshDots}
                     onVisualize={this.handleVisualize}
