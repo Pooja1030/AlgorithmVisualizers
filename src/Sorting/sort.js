@@ -12,7 +12,7 @@
 
 import React, {Component} from 'react';
 import {bubbleSort,selectionSort,insertionSort } from "../algorithms/sortingalgorithms"
-import Navbar from './navbar';
+import Navbar from '../Pages/navbar';
 import {quickSort} from "../algorithms/quickSort";
 import Menu from "./menu";
 import Rects from './rects';
@@ -41,7 +41,7 @@ class Sort extends Component {
     render() {
     return (
         <React.Fragment>
-            <Navbar/>
+            <Navbar currentPage="Sorting Visualizer"/>
             <Menu
                 disable={this.state.isRunning}
                 onDoubleChange={this.handleDouble}
@@ -52,7 +52,7 @@ class Sort extends Component {
                 onAlgoChanged={this.handleAlgoChanged}
                 onSpeedChange={this.handleSpeedChanged}
             />
-            <div className=' justify-content-center'>
+            <div className='justify-content-center'>
                 <Rects
                     speed={this.state.speed}
                     rects={this.state.rects}

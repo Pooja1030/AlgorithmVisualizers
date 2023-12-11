@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import DiscreteSlider from "./slider";
 import SimpleSelect from "./simpleSelect";
 import CustomizedSlider from "./airSlider";
@@ -9,15 +9,7 @@ import SwitchLabels from "./formControlLael";
 class Menu extends Component {
     render() {
         return (
-            <nav className="nav alert-dark">
-                <button
-                    className='btn btn-secondary m-2'
-                    onClick={this.props.onRandomize}
-                    disabled={this.props.disable}
-                    style={this.isClickable()}
-                >
-                    Randomize
-                </button>
+            <nav className="nav menu alert-dark">
 
                 <RangeSlider
                     disable={this.props.disable}
@@ -52,22 +44,31 @@ class Menu extends Component {
                     pos={1}
                     onAlgoChanged={this.props.onAlgoChanged}
                 />
+                <div>
                 <button
-                    className='btn btn-warning btn-lg '
+                    className='visualize-btn btn-warning btn-lg '
                     onClick={this.props.onViusalize}
                     disabled={this.props.disable}
                     style={this.isClickable()}
                 >
                     Visualize
                 </button>
-
+                <button
+                    className='reset-btn btn-secondary m-2'
+                    onClick={this.props.onRandomize}
+                    disabled={this.props.disable}
+                    style={this.isClickable()}
+                >
+                    Randomize
+                </button>
+                </div>
             </nav>
         );
     }
-    isClickable = () =>{
-        if( this.props.disable ){
-            return {cursor: "not-allowed"};
-        } else{
+    isClickable = () => {
+        if (this.props.disable) {
+            return { cursor: "not-allowed" };
+        } else {
             return {};
         }
     }
