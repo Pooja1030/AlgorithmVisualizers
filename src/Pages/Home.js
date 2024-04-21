@@ -24,7 +24,8 @@ const algorithms = {
     "recursiveSort": ["Merge", "Heap", "Quick"],
     "convexHull": ["Graham Scan"],
     "recursionTree": ["Fibonacci", "Binomial Coefficient", "Derangement", "Bigmod"],
-    "queen":["Backtracking"]
+    "queen":["Backtracking"],
+    "Binary Search":["Binary Search"]
 };
 
 
@@ -142,32 +143,47 @@ const Home = () => {
                         link="puzzle"
                         img={puzzle}
                     />
-                    {/* <VizItem
+                    <VizItem
                         id="Binary tree"
                         title="BinaryTree"
                         description="A binary tree is a data structure in which each node has at most two children, referred to as the left child and the right child."
                         link="BinaryTree"
-                    /> */}
-                    {/* <VizItem
-                        id="bitmask"
-                        title="Bitmask"
-                        description="Bitmask is a technique used for bit manipulation, often applied in computer science and algorithms."
-                        link=""
-                    /> */}
-                    {/* <VizItem
-                        id="Binary Heap"
-                        title="Binary Heap"
-                        description="Binary Heap is one possible data structure to model an efficient Priority Queue (PQ) Abstract Data Type (ADT). In a PQ, each element has a priority and an element with higher priority is served before an element with lower priority (ties are either simply resolved arbitrarily or broken with standard First-In First-Out (FIFO) rule as with a normal Queue)."
-                        link=""
-                        algorithm=""
+                    />
+                    <VizItem
+                        id="Stack"
+                        title="Stack"
+                        // description="Bitmask is a technique used for bit manipulation, often applied in computer science and algorithms."
+                        link="Stack"
+                    />
+                    <VizItem
+                        id="Queue"
+                        title="Queue"
+                        // description="Bitmask is a technique used for bit manipulation, often applied in computer science and algorithms."
+                        link="Queue"
+                    />
+                    <VizItem
+                        id="Binary Search"
+                        title="Binary Search"
+                        // description="Binary Heap is one possible data structure to model an efficient Priority Queue (PQ) Abstract Data Type (ADT). In a PQ, each element has a priority and an element with higher priority is served before an element with lower priority (ties are either simply resolved arbitrarily or broken with standard First-In First-Out (FIFO) rule as with a normal Queue)."
+                        link="Binarysearch"
+                        // algorithm=""
                     />
                     <VizItem
                         id="LinkedList"
                         title="Linked List"
                         description="Linked List is a data structure consisting of a group of vertices (nodes) which together represent a sequence. Under the simplest form, each vertex is composed of a data and a reference (link) to the next vertex in the sequence"
-                        link=""
-                        algorithm=""
-                    /> */}
+                        link="LinkedList"
+                        // algorithm=""
+                    />
+                    <VizItem
+                        id="MinimumSpanningTree"
+                        title="MinimumSpanningTree"
+                        // description="Bitmask is a technique used for bit manipulation, often applied in computer science and algorithms."
+                        link="MinimumSpanningTree"
+                    />
+                   
+        
+                    
                     {/* <VizItem
                         id="Union-Find DS"
                         title="Union-Find DS"
@@ -237,14 +253,8 @@ const Home = () => {
                         description="Suffix Array is a sorted array of all suffixes of a given (usually long) text string T of length n characters (n can be in order of hundred thousands characters).
                     Suffix Array is a simple, yet powerful data structure which is used, among others, in full text indices, data compression algorithms, and within the field of bioinformatics."
                         link=""
-                    />
-                    <VizItem
-                        id="Minimum Spanning Tree"
-                        title="Minimum Spanning Tree"
-                        description="A Spanning Tree (ST) of a connected undirected weighted graph G is a subgraph of G that is a tree and connects (spans) all vertices of G. A graph G can have many STs (see this or this), each with different total weight (the sum of edge weights in the ST)."
-                        link=""
-                    /> */}
-
+                    />} */
+}
                 </ul>
             </div>
             <Outlet />
