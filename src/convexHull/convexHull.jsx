@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MyTimer from "./timer";
 import Canvas from "./canvas";
-import Navbar from '../Pages/navbar';
+import Navbar from '../Components/navbar';
 import Menu from "./menu";
 
 class ConvexHull extends Component {

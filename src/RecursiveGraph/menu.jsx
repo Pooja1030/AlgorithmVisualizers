@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import SimpleSelect from "./simpleSelect";
+// import SimpleSelect from "./simpleSelect";
+import SimpleSelect from "../Components/simpleSelect";
+
 
 
 class Menu extends Component {
@@ -15,14 +17,14 @@ class Menu extends Component {
                 {/*    step={1}*/}
                 {/*    title="Speed"*/}
                 {/*    onCountChange={this.props.onSpeedChange}*/}
-                {/*    disable={false}*/}
+                {/*    isDisabled={false}*/}
                 {/*/>*/}
                 
                 <SimpleSelect
                     pos={0}
                     label={'Task'}
                     items={['Fibonacci', 'Binomial Coefficient', "Derangement", "Bigmod", "Stirling2"]}
-                    onValueChanged={this.props.setAlgo}
+                    onValueChanged={this.props.onAlgoChanged}
                 />
                 <SimpleSelect
                     pos={0}
@@ -41,12 +43,12 @@ class Menu extends Component {
                 <button
                     className='visualize-btn btn-warning btn-lg '
                     onClick={this.props.onStart}
-                    disabled={this.props.disable}
+                    disabled={this.props.isDisabled}
                 >Visualize</button>
                 <button
                     className='reset-btn btn-warning btn-lg m-2'
                     onClick={this.props.onReset}
-                    disabled={this.props.disable}
+                    disabled={this.props.isDisabled}
                 >Reset</button>
             </nav>
         );

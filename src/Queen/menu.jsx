@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DiscreteSlider from "./slider";
+import DiscreteSlider from '../Components/slider'
 
 
 
@@ -15,7 +15,7 @@ class Menu extends Component {
                         step={1}
                         title="Grid size"
                         onCountChange={this.props.onCountChange}
-                        disable={this.props.disable}
+                        isDisabled={this.props.isDisabled}
                     />
                     <DiscreteSlider
                         default={50}
@@ -30,7 +30,7 @@ class Menu extends Component {
                     <button
                         className='visualize-btn btn-warning btn-lg '
                         onClick={this.props.onViusalize}
-                        disabled={this.props.disable}
+                        disabled={this.props.isDisabled}
                         style={this.isClickable()}
                     >
                         Visualize
@@ -38,7 +38,7 @@ class Menu extends Component {
                     <button
                         className='reset-btn btn-secondary m-2'
                         onClick={this.props.onClear}
-                        disabled={this.props.disable}
+                        disabled={this.props.isDisabled}
                         style={this.isClickable()}
                     >
                         Clear Board

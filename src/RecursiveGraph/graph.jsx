@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import CanvasSvg from "./canvasSVG";
 import {getFibTree, getTree} from "./fib";
 import Menu from "./menu";
-import Navbar from '../Pages/navbar';
+import Navbar from '../Components/navbar';
 import Details from "./details";
 
 class Graph extends Component {

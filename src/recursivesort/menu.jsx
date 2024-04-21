@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import DiscreteSlider from "./slider";
-import SimpleSelect from "./simpleSelect";
-import CustomizedSlider from "./airslider";
-import RangeSlider from "./douleSlider";
-import SwitchLabels from "./formControlLael";
+import DiscreteSlider from "../Components/slider";
+import SimpleSelect from "../Components/simpleSelect";
+import RangeSlider from '../Components/douleSlider';
+import CustomizedSlider from '../Components/douleSlider';
+import SwitchLabels from "../Components/formControlLabel";
 
 
 class Menu extends Component {
@@ -13,7 +13,7 @@ class Menu extends Component {
                 <div className='controls'>
 
                 <RangeSlider
-                    disable={this.props.disable}
+                    isDisabled={this.props.isDisabled}
                 />
                 <DiscreteSlider
                     default={20}
@@ -22,7 +22,7 @@ class Menu extends Component {
                     step={10}
                     title="Numbers"
                     onCountChange={this.props.onCountChange}
-                    disable={this.props.disable}
+                    isDisabled={this.props.isDisabled}
                 />
                 <DiscreteSlider
                     default={50}
@@ -31,18 +31,19 @@ class Menu extends Component {
                     step={1}
                     title="Speed"
                     onCountChange={this.props.onSpeedChange}
-                    disable={false}
+                    isDisabled={false}
                 />
                 <SimpleSelect
                     pos={0}
                     onAlgoChanged={this.props.onAlgoChanged}
+                    items={["Merge Sort","Heap Sort","Quick Sort"]}
                 />
                 </div>
                 <div>
                     <button
                         className='visualize-btn btn-warning btn-lg '
-                        onClick={this.props.onViusalize}
-                        disabled={this.props.disable}
+                        onClick={this.props.onVisualize}
+                        disabled={this.props.isDisabled}
                         style={this.isClickable()}
                     >
                         Visualize
@@ -50,7 +51,7 @@ class Menu extends Component {
                     <button
                         className='reset-btn btn-secondary m-2'
                         onClick={this.props.onRandomize}
-                        disabled={this.props.disable}
+                        disabled={this.props.isDisabled}
                         style={this.isClickable()}
                     >
                         Randomize
