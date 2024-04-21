@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import Node from './Node/Node';
 import { dijkstra, getNodesInShortestPathOrder } from './algorithms/dijkstra';
 import { bfs, dfs } from './algorithms/bfs';
 import { aStar } from './algorithms/astar';
-import Navbar from '../Pages/navbar';
+import Navbar from '../Components/navbar';
+import Menu from './menu';
 import './PathFindingVisualizer.css';
 
 const algorithms = [{ "name": "Dijkstra's Algorithm", "function": dijkstra },
@@ -17,7 +18,7 @@ export default class PathfindingVisualizer extends Component {
         super();
         this.state = {
             grid: [],
-            algorithm: "",
+            algorithm: algorithms[0].name,
             mouseIsPressed: false,
             mouseClicked: false,
             mainClicked: "",
@@ -25,13 +26,15 @@ export default class PathfindingVisualizer extends Component {
             startNodeCol: null,
             finishNodeRow: null,
             finishNodeCol: null,
+            animationSpeed: 100,
+            animating: false,
+            isDrawerOpen: false,
         }
-        this.animating = false;
-
     }
 
     getInitialGrid = () => {
-        if (this.animating) return;
+        if (this.state.animating) return;
+
         let row_size = Math.floor((window.innerHeight - 60) / 27);
         let col_size = Math.floor((window.innerWidth) / 27);
 
@@ -79,7 +82,8 @@ export default class PathfindingVisualizer extends Component {
     }
 
     handleMouseDown = (row, col) => {
-        if (this.animating) return;
+        if (this.state.animating) return;
+
         const grid = this.state.grid;
         const clickedNode = grid[row][col];
 
@@ -102,7 +106,8 @@ export default class PathfindingVisualizer extends Component {
     };
 
     handleMouseEnter = (row, col) => {
-        if (this.animating) return;
+        if (this.state.animating) return;
+
         if (this.state.mouseClicked) {
             const { grid, mainClicked } = this.state;
             const enteredNode = grid[row][col];
@@ -128,7 +133,8 @@ export default class PathfindingVisualizer extends Component {
     };
 
     handleMouseLeave = (row, col) => {
-        if (this.animating) return;
+        if (this.state.animating) return;
+
         const { grid, mainClicked } = this.state;
 
         if (mainClicked !== "") {
@@ -140,7 +146,8 @@ export default class PathfindingVisualizer extends Component {
     };
 
     handleMouseUp = () => {
-        if (this.animating) return;
+        if (this.state.animating) return;
+
         this.setState({
             mouseClicked: false,
             mainClicked: ""
@@ -191,6 +198,7 @@ export default class PathfindingVisualizer extends Component {
     };
 
     resetStartEndNode = (grid, row, col, mainClicked) => {
+
         const newGrid = [...grid];
         const resetNode = newGrid[row][col];
         if (mainClicked !== "") {
@@ -211,15 +219,27 @@ export default class PathfindingVisualizer extends Component {
         return newGrid;
     };
 
+    handleSpeedChange = (newSpeed) => {
+        console.log(newSpeed);
+        this.setState({ animationSpeed: newSpeed });
+    }
 
     animateVisitedNodes(visitedNodesInOrder, nodesInShortestPathOrder) {
-        console.log("visited ", visitedNodesInOrder.length);
+        if (this.state.animating) return;
+
+        const animationSpeed = this.state.animationSpeed; // Speed factor
+        this.setState({
+            animating: true
+        });
+
+        console.log("animating ", this.state.animating);
+
         for (let i = 0; i <= visitedNodesInOrder.length; i++) {
             if (i === visitedNodesInOrder.length) {
+                console.log("visited ", visitedNodesInOrder.length);
                 setTimeout(() => {
                     this.animateShortestPath(nodesInShortestPathOrder);
-                }, 10 * i);
-                this.animating = false;
+                }, 1000 / animationSpeed * i); // Adjust the delay based on the speed factor
                 return;
             }
             setTimeout(() => {
@@ -228,26 +248,43 @@ export default class PathfindingVisualizer extends Component {
                 if (!node.isFinish && !node.isStart)
                     document.getElementById(`node-${node.row}-${node.col}`).className =
                         'node node-visited';
-            }, 10 * i);
+            }, 1000 / animationSpeed * i); // Adjust the delay based on the speed factor
         }
+
+
     }
 
     animateShortestPath(nodesInShortestPathOrder) {
-        console.log("path ", nodesInShortestPathOrder.length);
+        const animationSpeed = this.state.animationSpeed; // Speed factor
+
+
         for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
             setTimeout(() => {
                 const node = nodesInShortestPathOrder[i];
                 if (!node.isFinish && !node.isStart)
                     document.getElementById(`node-${node.row}-${node.col}`).className =
                         'node node-shortest-path';
-            }, 50 * i);
+            }, 1000 / animationSpeed * i); // Adjust the delay based on the speed factor
+        }
+
+        this.setState({ animating: false });
+        console.log("animating ", this.state.animating);
+
+        console.log("path ", nodesInShortestPathOrder.length);
+
+    }
+
+    handleAlgoChange = (pos, val) => {
+        if (pos === 0) {
+            this.setState({ algorithm: algorithms[val].name });
         }
     }
 
 
 
-    visualize() {
-        if (this.animating) return;
+    visualize = () => {
+        if (this.state.animating) return;
+        this.resetGrid();
 
         const { grid, startNodeRow, startNodeCol, finishNodeRow, finishNodeCol } = this.state;
         const startNode = grid[startNodeRow][startNodeCol];
@@ -255,38 +292,70 @@ export default class PathfindingVisualizer extends Component {
 
         let visitedNodesInOrder;
 
-        if (this.state.algorithm === "") {
-            console.log("No algorithm selected");
+        const selectedAlgorithm = algorithms.find(algorithm => algorithm.name === this.state.algorithm);
+        if (!selectedAlgorithm) {
+            console.log("Invalid algorithm selected");
             return;
         }
 
-        else {
-            for (let i = 0; i < algorithms.length; i++) {
-                if (this.state.algorithm === algorithms[i].name) {
-                    console.log(algorithms[i].name);
-                    visitedNodesInOrder = algorithms[i].function(grid, startNode, finishNode);
-                }
-            }
-        }
+        console.log(this.state.algorithm)
+        visitedNodesInOrder = selectedAlgorithm.function(grid, startNode, finishNode);
 
         const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
 
-        this.animating = true;
         this.animateVisitedNodes(visitedNodesInOrder, nodesInShortestPathOrder);
     }
 
+    resetGrid() {
+        if (this.state.animating) return;
+
+        const { grid } = this.state;
+        const newGrid = grid.map(row =>
+            row.map(node => {
+                node.isVisited = false;
+
+                if (!node.isFinish && !node.isStart)
+                    document.getElementById(`node-${node.row}-${node.col}`).className =
+                        'node';
+
+                if (node.isWall)
+                    document.getElementById(`node-${node.row}-${node.col}`).className =
+                        'node node-wall';
+                return node;
+            })
+        );
+        this.setState({ grid: newGrid });
+
+
+    }
+
+    // toggleDrawer = () => {
+    //     this.setState({ isDrawerOpen: !this.state.isDrawerOpen });
+    // };
 
 
     render() {
         const { grid, mouseIsPressed } = this.state;
 
+
         return (
             <>
-                <Navbar currentPage="Pathfinding Visualizer" />
-                <div className='menu'>
+                <Navbar currentPage="Pathfinding Visualizer"
+                    // toggleDrawer={this.toggleDrawer}
+                     />
+                <Menu
+                   open={this.state.isDrawerOpen}
+                    isDisabled={this.state.animating}
+                    onVisualize={this.visualize}
+                    onRandomize={this.getInitialGrid}
+                    onAlgoChanged={this.handleAlgoChange}
+                    onSpeedChange={this.handleSpeedChange}
+                />
+
+                {/* <div className='menu'>
                     <div>
 
-                        <select onChange={(e) => this.setState({ algorithm: e.target.value })}>
+                        <select onChange={this.handleAlgoChanged}>
                             <option disabled selected>
                                 Select algorithm
                             </option>
@@ -310,7 +379,7 @@ export default class PathfindingVisualizer extends Component {
                             <p>Finish Node</p>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
 
                 <div className="grid">
