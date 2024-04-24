@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Navbar from '../Pages/navbar';
+import Navbar from '../Components/navbar';
 import FlipMove from 'react-flip-move';
 // import SvgLines from 'react-mt-svg-lines';
 import '../helpers/array_helpers';

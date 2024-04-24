@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import Rect from "./rect";
 import Rects from "../Sorting/rects";
-import Navbar from '../Pages/navbar';
+import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import  heapSort  from "../algorithms/heapSort";
 import { quickSortRecursive } from "../algorithms/quickSortRecursive";
@@ -31,8 +31,8 @@ class RecursiveSort extends Component {
             <React.Fragment>
                 <Navbar currentPage="Recursive Sort"/>
                 <Menu className="menu"
-                    disable={this.state.isRunning}
-                    onViusalize={this.handleSort}
+                    isDisabled={this.state.isRunning}
+                    onVisualize={this.handleSort}
                     onRandomize={this.handleRandomize}
                     onRefresh={this.handleRefresh}
                     onCountChange={this.handleCountChange}
@@ -69,6 +69,7 @@ class RecursiveSort extends Component {
         if (pos === 0) {
             this.setState({algo: val});
         }
+        console.log(this.state.algo)
     }
     handleSpeedChanged = (val) => {
         const speed = (110 - val);

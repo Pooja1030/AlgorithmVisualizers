@@ -1,11 +1,10 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Edge from "./edge";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -19,31 +18,31 @@ const useStyles = makeStyles((theme) => ({
 
 const SimpleSelect = (props) => {
     const classes = useStyles();
-    const [age, setAge] = React.useState('0');
+    const [algo, setAlgo] = React.useState('0');
     const [state, setState] = React.useState({
         pos: props.pos,
     });
+
     const handleChange = (event) => {
-        console.log(state.pos);
-        setAge(event.target.value);
-        props.onValueChanged(state.pos, event.target.value);
+        setAlgo(event.target.value);
+        props.onAlgoChanged(state.pos, event.target.value);
     };
-    // console.log(props.items);
+
     return (
         <div className="ml-2 mr-2">
             <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">{props.label}</InputLabel>
+                <InputLabel id="demo-simple-select-label">Algorithm</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
+                    value={algo}
                     onChange={handleChange}
                 >
-                    {props.items.map((item, cellidx) => {
-                        return (
-                            <MenuItem value={cellidx} style={{selected: true}}>{item}</MenuItem>
-                        );
-                    })}
+                    {props.items.map((option, index) => (
+                        <MenuItem key={index} value={index} >
+                            {option}
+                        </MenuItem>
+                    ))}
                 </Select>
             </FormControl>
         </div>

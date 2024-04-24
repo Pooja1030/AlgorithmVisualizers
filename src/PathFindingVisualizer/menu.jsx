@@ -4,30 +4,23 @@ import SimpleSelect from "../Components/simpleSelect";
 import RangeSlider from '../Components/douleSlider';
 import SwitchLabels from "../Components/formControlLabel";
 import CustomizedSlider from '../Components/douleSlider';
-
+import Drawer from '@mui/material/Drawer';
 
 class Menu extends Component {
     render() {
         return (
+        //     <Drawer
+        //     anchor="left"
+        //     open={this.props.open}
+        //     onClose={this.props.toggleDrawer}
+        // >
             <nav className="nav menu alert-dark">
 
-                <RangeSlider
-                    isDisabled={this.props.isDisabled}
-                />
-                <DiscreteSlider
-                    default={20}
-                    min={10}
-                    max={100}
-                    step={10}
-                    title="Numbers"
-                    onCountChange={this.props.onCountChange}
-                    isDisabled={this.props.isDisabled}
-                />
                 <DiscreteSlider
                     default={50}
                     min={10}
                     max={100}
-                    step={1}
+                    step={5}
                     title="Speed"
                     onCountChange={this.props.onSpeedChange}
                     isDisabled={false}
@@ -35,29 +28,16 @@ class Menu extends Component {
                 <SimpleSelect
                     pos={0}
                     onAlgoChanged={this.props.onAlgoChanged}
-                    items={["Bubble Sort",
-                    "Selection Sort",
-                    "Insertion Sort",
-                    "Quick Sort"]}
-                />
-                <SwitchLabels
-                    isDisabled={this.props.isDisabled}
-                    onDoubleChange={this.props.onDoubleChange}
-                />
-                <SimpleSelect
-                    pos={1}
-                    onAlgoChanged={this.props.onAlgoChanged}
-                    items={["Bubble Sort",
-                        "Selection Sort",
-                        "Insertion Sort",
-                        "Quick Sort"]}
-                />
+                    items={["Dijkstra's Algorithm",
+                        "A* Algorithm", 
+                        "Depth-first Search", 
+                        "Breadth-first search"]} />
                 <div>
                     <button
                         className='visualize-btn btn-warning btn-lg '
-                        onClick={this.props.onViusalize}
+                        onClick={this.props.onVisualize}
                         disabled={this.props.isDisabled}
-                        style={this.isClickable()}
+                        // style={this.isClickable()}
                     >
                         Visualize
                     </button>
@@ -67,10 +47,11 @@ class Menu extends Component {
                         disabled={this.props.isDisabled}
                         style={this.isClickable()}
                     >
-                        Randomize
+                        Reset
                     </button>
                 </div>
             </nav>
+            // </Drawer>
         );
     }
     isClickable = () => {

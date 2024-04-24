@@ -13,19 +13,20 @@ function valuetext(value) {
     return `${value}`;
 }
 
-
 export default function DiscreteSlider(props) {
     const classes = useStyles();
-    const handleChange = (event) =>{
-        if( event.target.innerText === "" ){
+    const handleChange = (event) => {
+        if (event.target.innerText === "") {
             return;
         }
-        const num = parseInt(event.target.innerText,10);
+        const num = parseInt(event.target.innerText, 10);
         props.onCountChange(num);
     }
     return (
-        <div className={classes.root+" ml-2 mr-2"}>
-
+        <div className={classes.root + " ml-2 mr-2"}>
+            <Typography id="discrete-slider" gutterBottom>
+                {props.title}
+            </Typography>
             <Slider
                 defaultValue={props.default}
                 getAriaValueText={valuetext}
@@ -33,15 +34,13 @@ export default function DiscreteSlider(props) {
                 valueLabelDisplay="auto"
                 onChangeCommitted={handleChange}
                 step={props.step}
-               // marks={props.marks}
+                marks={props.marks}
                 min={props.min}
                 max={props.max}
-                valueLabelDisplay="on"
-                disabled={props.disable}
+                // valueLabelDisplay="on"
+                disabled={props.isDisabled}
             />
-            <Typography id="discrete-slider" gutterBottom>
-                {props.title}
-            </Typography>
+
         </div>
     );
 }

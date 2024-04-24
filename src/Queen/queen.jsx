@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Cells from "./cells";
-import Navbar from '../Pages/navbar';
+import Navbar from '../Components/navbar';
 import Menu from "./menu";
 
 class Queen extends Component {
@@ -27,7 +27,7 @@ class Queen extends Component {
                     onSpeedChange={this.handleSpeedChange}
                     onCountChange={this.handleQueenChange}
                     onViusalize={this.startAlgo}
-                    disable={this.state.isRunning}
+                    isDisabled={this.state.isRunning}
                     onClear={this.handleClear}
                     onStop={this.handleStop}
                 />

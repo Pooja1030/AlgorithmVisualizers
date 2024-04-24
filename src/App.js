@@ -24,6 +24,7 @@ import Queue from './Queue/queue';
 
 // import Stack1 from './Stack/stack';
 
+import HomeDraft from "./Pages/HomeDraft";
 
 
 function App() {
@@ -33,9 +34,8 @@ function App() {
       <React.StrictMode>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          {/* <Route path="/" element={<Layout />}> */}
             <Route index element={<Home />} />
-            <Route path='/sort' Component={Sort} />
             <Route path="Sort" element={<Sort />} />
             <Route path="pathfinder" element={<PathfindingVisualizer />} />
             <Route path="recursiveSort" element={<RecursiveSort />} />
@@ -52,7 +52,9 @@ function App() {
 
             
             <Route path="*" element={<NoPage />} />
-          </Route>
+
+            <Route path="home" element={<HomeDraft/>} />
+          {/* </Route> */}
         </Routes>
       </BrowserRouter>
       </React.StrictMode>

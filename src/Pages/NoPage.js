@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
-import errorillustration from '../404-error-illustration.jpg';
+import errorillustration from '../Images/404-error-illustration.jpg';
 
 const noPage = () => {
     return (

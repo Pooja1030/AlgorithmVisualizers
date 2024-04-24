@@ -18,7 +18,7 @@ export default function SwitchLabels(props) {
             <FormControlLabel
                 control={<Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />}
                 label="Duo"
-                disabled={props.disable}
+                disabled={props.isDisabled}
             />
 
         </FormGroup>
