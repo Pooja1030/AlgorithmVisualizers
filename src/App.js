@@ -18,10 +18,12 @@ import BinarySearch from './BinarySearch/binarysearch';
 import LinkedList from './LinkedList/Linkedlist';
 import MinSpan from './MinimumSpanningTree/MinimumSpanningTree';
 import MinSpanTree from './MinimumSpanningTree/MinimumSpanningTree';
-import Stack from './Stack/stack';
-import Queue from './Queue/queue';
+// import Stack from './Stack/stack';
+// import Queue from './Queue/queue';
 
+import Queue from './Queue/queue copy';
 
+import Stack from './Stack/stack copy';
 // import Stack1 from './Stack/stack';
 
 import HomeDraft from "./Pages/HomeDraft";

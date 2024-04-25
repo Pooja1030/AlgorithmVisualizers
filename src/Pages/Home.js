@@ -25,7 +25,8 @@ const algorithms = {
     "convexHull": ["Graham Scan"],
     "recursionTree": ["Fibonacci", "Binomial Coefficient", "Derangement", "Bigmod"],
     "queen":["Backtracking"],
-    "Binary Search":["Binary Search"]
+    "stack":["Push", "Pop", "Peek", "isEmpty", "Size"],
+    "queue":["Enqueue", "Dequeue", "Peek", "isEmpty", "Size"],
 };
 
 
@@ -154,12 +155,18 @@ const Home = () => {
                         title="Stack"
                         // description="Bitmask is a technique used for bit manipulation, often applied in computer science and algorithms."
                         link="Stack"
+                        algorithm={getAlgoList("stack")}
+                        description="A stack is a Linear data structure. It follows Last in First Out(LIFO). Elements are inserted and deleted from the top of a stack."
+
                     />
                     <VizItem
                         id="Queue"
                         title="Queue"
                         // description="Bitmask is a technique used for bit manipulation, often applied in computer science and algorithms."
                         link="Queue"
+                        algorithm={getAlgoList("queue")}
+                        description="A Queue is a Linear data structure. It follows First in First Out(FIFO). Elements are inserted at the end of the Queue and deleted from the beginning of a queue."
+
                     />
                     <VizItem
                         id="Binary Search"
