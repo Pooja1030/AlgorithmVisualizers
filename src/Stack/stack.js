@@ -36,7 +36,7 @@ class StackVisualization extends Component {
 
         return (
             <>
-                <Navbar currentPage="Stack Visualization" />
+                <Navbar currentPage="Stack" />
                 <div className='menu'>
                     <div>
                         <input type="text" value={inputValue} onChange={this.handleInputChange} />
