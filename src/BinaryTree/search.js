@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from '../Pages/navbar';
+import Navbar from '../Components/navbar';
 
 class BinaryTree extends Component {
     constructor() {

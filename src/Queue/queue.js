@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from '../Pages/navbar';
+import Navbar from '../Components/navbar';
 
 class Queue extends Component {
     constructor() {
@@ -36,6 +36,7 @@ class Queue extends Component {
 
         return (
             <div>
+                <Navbar />
                 <h2>Queue Data Structure</h2>
                 <div>
                     <input type="text" value={inputValue} onChange={this.handleInputChange} />

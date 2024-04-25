@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from '../Pages/navbar';
+import Navbar from '../Components/navbar';
 import Singly from './Singly';
 import Doubly from './Doubly';
 import Circular from './Circular';
