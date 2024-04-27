@@ -152,6 +152,7 @@ const Home = () => {
                         id="Binary tree"
                         title="BinaryTree"
                         description="A binary tree is a data structure in which each node has at most two children, referred to as the left child and the right child."
+                        algorithm={getAlgoList("binarytree")}
                         link="BinaryTree"
                     />
                     <VizItem
@@ -175,9 +176,9 @@ const Home = () => {
                     <VizItem
                         id="Binary Search"
                         title="Binary Search"
-                        // description="Binary Heap is one possible data structure to model an efficient Priority Queue (PQ) Abstract Data Type (ADT). In a PQ, each element has a priority and an element with higher priority is served before an element with lower priority (ties are either simply resolved arbitrarily or broken with standard First-In First-Out (FIFO) rule as with a normal Queue)."
+                        description="Binary Search is defined as a searching algorithm used in a sorted array by repeatedly dividing the search interval in half. The idea of binary search is to use the information that the array is sorted and reduce the time complexity to O(log N)."
+                        algorithm={getAlgoList("binarysearch")}
                         link="Binarysearch"
-                        // algorithm=""
                     />
                     <VizItem
                         id="LinkedList"
@@ -189,7 +190,8 @@ const Home = () => {
                     <VizItem
                         id="MinimumSpanningTree"
                         title="MinimumSpanningTree"
-                        // description="Bitmask is a technique used for bit manipulation, often applied in computer science and algorithms."
+                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
+                        algorithm={getAlgoList("minimumspanningtree")}
                         link="MinimumSpanningTree"
                     />
                    
