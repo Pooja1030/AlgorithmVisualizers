@@ -15,8 +15,7 @@ import Queen from './Queen/queen';
 // import BinarySearch from './BinaryTree/search';
 import BinaryTree from './BinaryTree/search';
 import BinarySearch from './BinarySearch/binarysearch';
-import LinkedList from './LinkedList/Linkedlist';
-import MinSpan from './MinimumSpanningTree/MinimumSpanningTree';
+import LinkedList from './LinkedList/LinkedList copy';
 import MinSpanTree from './MinimumSpanningTree/MinimumSpanningTree';
 // import Stack from './Stack/stack';
 // import Queue from './Queue/queue';
@@ -47,10 +46,11 @@ function App() {
             <Route path="queen" element={<Queen/>} />
             <Route path="BinaryTree" element={<BinaryTree/>} />
             <Route path="BinarySearch" element={<BinarySearch/>} />
-            <Route path="LinkedList" element={<LinkedList/>} />
+            {/* <Route path="LinkedList" element={<LinkedList/>} /> */}
             <Route path="MinimumSpanningTree" element={<MinSpanTree/>} />
             <Route path="stack" element={<Stack/>} />
             <Route path="queue" element={<Queue/>} />
+            <Route path="LinkedList" element={<LinkedList/>} />
 
             
             <Route path="*" element={<NoPage />} />

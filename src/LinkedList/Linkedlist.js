@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Navbar from '../Components/navbar';
-import Singly from './Singly';
-import Doubly from './Doubly';
-import Circular from './Circular';
+import Singly from './SinglyLinkedList';
+import Doubly from './DoublyLinkedList';
+import Circular from './CircularLinkedList';
 
 class LinkedList extends Component {
     constructor() {
