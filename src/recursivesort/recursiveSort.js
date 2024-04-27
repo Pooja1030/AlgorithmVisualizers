@@ -1,12 +1,10 @@
 import React, {Component} from "react";
-import Rect from "./rect";
 import Rects from "../Sorting/rects";
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import  heapSort  from "../algorithms/heapSort";
 import { quickSortRecursive } from "../algorithms/quickSortRecursive";
 import mergeSort  from "../algorithms/mergeSort";
-import '../App.css';
 
 class RecursiveSort extends Component {
     state = {
@@ -15,10 +13,6 @@ class RecursiveSort extends Component {
         speed: 50,
         isRunning: false,
         algo: 0
-    }
-
-    constructor(){
-        super();
     }
 
     componentDidMount() {
@@ -197,7 +191,6 @@ class RecursiveSort extends Component {
     handleMerge = async (steps) => {
         this.setState({isRunning1: true});
 
-        const {speed} = this.state;
 
         let prevRect = this.state.rects;
         for (let j = 0; j < this.state.count; j++) {

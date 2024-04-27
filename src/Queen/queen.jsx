@@ -11,9 +11,7 @@ class Queen extends Component {
         isRunning:false
     }
 
-    constructor(props) {
-        super(props);
-    }
+ 
     componentDidMount() {
         const board = getBoard(this.state.number);
         this.setState({board});

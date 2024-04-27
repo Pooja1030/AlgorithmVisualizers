@@ -36,7 +36,6 @@ export default function DiscreteSlider(props) {
                // marks={props.marks}
                 min={props.min}
                 max={props.max}
-                valueLabelDisplay="on"
                 disabled={props.disable}
             />
             <Typography id="discrete-slider" gutterBottom>

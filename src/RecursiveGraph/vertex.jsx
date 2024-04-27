@@ -2,10 +2,6 @@ import React, {Component} from 'react';
 
 class Vertex extends Component {
 
-    constructor() {
-        super();
-
-    }
     componentDidMount() {
         if( this.props.id === 0 ) return;
         // document.getElementById('ranim'+this.props.id).beginElement();
@@ -76,8 +72,8 @@ class Vertex extends Component {
     }
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+// function sleep(ms) {
+//     return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
 export default Vertex;

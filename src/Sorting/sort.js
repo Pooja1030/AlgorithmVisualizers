@@ -16,7 +16,6 @@ import Navbar from '../Components/navbar';
 import { quickSort } from "../algorithms/quickSort";
 import Menu from "./menu";
 import Rects from './rects';
-import '../App.css';
 
 class Sort extends Component {
     state = {

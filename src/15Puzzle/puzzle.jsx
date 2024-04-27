@@ -29,7 +29,6 @@ class Puzzle extends Component {
     }
 
     render() {
-        let classNames;
         return (
 
             <div style={{backgroundColor: "#57407c"}}

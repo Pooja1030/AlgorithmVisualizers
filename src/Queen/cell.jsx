@@ -5,7 +5,7 @@ class Cell extends Component {
     render() {
         return (
             <div className={this.getClassName()} style={this.getStyled()}>
-                { this.props.cell.isPresent && <img src={queen} height='100px' /> }
+                { this.props.cell.isPresent && <img src={queen} alt='queen' height='100px' /> }
             </div>
         );
     }

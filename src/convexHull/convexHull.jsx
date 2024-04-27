@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import MyTimer from "./timer";
+// import MyTimer from "./timer";
 import Canvas from "./canvas";
 import Navbar from '../Components/navbar';
 import Menu from "./menu";

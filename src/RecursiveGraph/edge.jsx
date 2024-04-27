@@ -39,7 +39,7 @@ class Edge extends Component {
         let l = Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
         let r = 6.5;
         let xx1 = ( x2*(l-r)+x1*r )/l;
-        let yy1 = ( y2*(l-r)+y1*r )/l;
+        // let yy1 = ( y2*(l-r)+y1*r )/l;
         return xx1;
         // return xx1+","+yy1+" "+x2+","+y2;
     }
@@ -50,7 +50,7 @@ class Edge extends Component {
         let y2 = this.props.pos.y2;
         let l = Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
         let r = 6.5;
-        let xx1 = ( x2*(l-r)+x1*r )/l;
+        // let xx1 = ( x2*(l-r)+x1*r )/l;
         let yy1 = ( y2*(l-r)+y1*r )/l;
         return yy1;
         // return xx1+","+yy1+" "+x2+","+y2;

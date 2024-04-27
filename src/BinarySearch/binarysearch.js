@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import Rects from './rects';
-import '../App.css';
+// import '../App.css';
 
 class BinarySearch extends Component {
   state = {
@@ -90,7 +90,7 @@ class BinarySearch extends Component {
         return;
       }
       const step = steps[index];
-      const { low, high, mid, found, index: targetIndex, direction } = step;
+      const { low, high, mid, found, index: targetIndex } = step;
       const updatedRects = this.state.rects.map((rect, i) => {
         if (found && i === targetIndex) {
           return { ...rect, isTarget: true };

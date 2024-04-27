@@ -1,8 +1,5 @@
-// draw tree class functions start :/
-
-
-export class Tree{
-    constructor(node=0,children=[],label="") {
+export class Tree {
+    constructor(node = 0, children = [], label = "") {
         this.id = 0;
         this.node = node;
         this.label = label;
@@ -11,14 +8,14 @@ export class Tree{
     }
 }
 
-export class DrawTree{
-    constructor(tree,parent=undefined,depth=0,number=1) {
-        this.x =-1;
+export class DrawTree {
+    constructor(tree, parent = undefined, depth = 0, number = 1) {
+        this.x = -1;
         this.y = depth;
         this.tree = tree;
         this.children = [];
-        for( let i=0;i<tree.children.length;i++ ){
-            let newTree = new DrawTree(tree.children[i],this,depth+1,i+1);
+        for (let i = 0; i < tree.children.length; i++) {
+            let newTree = new DrawTree(tree.children[i], this, depth + 1, i + 1);
             this.children.push(newTree);
         }
         this.parent = parent;
@@ -32,46 +29,40 @@ export class DrawTree{
         // this.lmost_sibling = this.get_lmost_sibling();
     }
 
-    left = ()=>{
-        if( this.thread!==undefined ) return this.thread;
-        if( this.children.length!==0 ) return this.children[0];
+    left = () => {
+        if (this.thread !== undefined) return this.thread;
+        if (this.children.length !== 0) return this.children[0];
         return undefined;
-        return this.thread || this.children.length && this.children[0];
+        // return this.thread || (this.children.length && this.children[0]);
     }
-    right = ()=>{
-        if( this.thread ) return this.thread;
-        if( this.children.length ) return this.children[this.children.length-1];
+    right = () => {
+        if (this.thread) return this.thread;
+        if (this.children.length) return this.children[this.children.length - 1];
         return undefined;
-        return this.thread || this.children.length && this.children[-1];
+        // return this.thread || (this.children.length && this.children[-1]);
     }
-    lbrother = ()=>{
+    lbrother = () => {
         let n = undefined;
-        if( this.parent ){
+        if (this.parent) {
             // for(let node in this.parent.children)
-            for(let i=0;i<this.parent.children.length;i++)
-            {
+            for (let i = 0; i < this.parent.children.length; i++) {
                 let node = this.parent.children[i];
-                if( node === this ){
+                if (node === this) {
                     return n;
-                }else{
+                } else {
                     n = node;
                 }
             }
         }
         return n;
     }
-    get_lmost_sibling = ()=>{
-        if( !this._lmost_sibling && this.parent && this!==this.parent.children[0] ){
+    get_lmost_sibling = () => {
+        if (!this._lmost_sibling && this.parent && this !== this.parent.children[0]) {
             this._lmost_sibling = this.parent.children[0];
         }
         return this._lmost_sibling;
     }
-
-
 }
-
-
-
 
 export function buchheim(tree) {
     let dt = firstwalk(new DrawTree(tree))
@@ -85,8 +76,7 @@ export function buchheim(tree) {
 function third_walk(tree, n) {
     tree.x += n;
     //for (let c in tree.children)
-    for(let i=0;i<tree.children;i++)
-    {
+    for (let i = 0; i < tree.children.length; i++) {
         let c = tree.children[i];
         third_walk(c, n);
     }
@@ -103,7 +93,7 @@ function firstwalk(v, distance = 1) {
     } else {
         let default_ancestor = v.children[0];
         //for (let w in v.children)
-        for(let i=0;i<v.children.length;i++) {
+        for (let i = 0; i < v.children.length; i++) {
             let w = v.children[i];
             firstwalk(w);
             default_ancestor = apportion(w, default_ancestor, distance);
@@ -111,10 +101,10 @@ function firstwalk(v, distance = 1) {
         // console.log("finished v =", v.tree, "children");
         execute_shifts(v);
 
-        let midpoint = (v.children[0].x + v.children[v.children.length-1].x) / 2;
+        let midpoint = (v.children[0].x + v.children[v.children.length - 1].x) / 2;
 
-        let ell = v.children[0];
-        let arr = v.children[-1];
+        // let ell = v.children[0];
+        // let arr = v.children[v.children.length - 1];
         let w = v.lbrother();
         if (w) {
             v.x = w.x + distance;
@@ -125,7 +115,6 @@ function firstwalk(v, distance = 1) {
     }
     return v;
 }
-
 
 function apportion(v, default_ancestor, distance) {
 
@@ -186,7 +175,7 @@ function execute_shifts(v) {
     let shift, change;
     shift = change = 0;
     // for (let w in v.children[:: - 1])
-    for(let i=v.children.length-1;i>=0;i--){
+    for (let i = v.children.length - 1; i >= 0; i--) {
         let w = v.children[i];
         //console.log("shift:", w.tree.node, shift, w.change);
         w.x += shift;
@@ -198,7 +187,7 @@ function execute_shifts(v) {
 
 function ancestor(vil, v, default_ancestor) {
 
-    if (vil.ancestor in v.parent.children){
+    if (vil.ancestor in v.parent.children) {
 
         return vil.ancestor;
     }
@@ -214,30 +203,16 @@ function second_walk(v, m = 0, depth = 0, min = undefined) {
         min = v.x;
 
     // for (let w in v.children)
-    for(let i=0;i<v.children.length;i++){
+    for (let i = 0; i < v.children.length; i++) {
         let w = v.children[i];
         min = second_walk(w, m + v.mod, depth + 1, min);
     }
     return min;
 }
 
-function dfs(tree){
-    if( tree.tree.node === 'B' ) return;
-    console.log( tree.tree.node, tree.x,tree.y );
-    for(let i=0;i<tree.children.length;i++)
-        dfs(tree.children[i]);
-}
-/*
-let blank = new Tree('B',[]);
-let ll = new Tree("ll",[]);
-let lr = new Tree("lr",[]);
-let rr = new Tree("rr",[]);
-let rl = new Tree("rl",[]);
-let l = new Tree("l",[ll,lr]);
-let r = new Tree("r",[rl,rr]);
-let root = new Tree("root",[l,r] );
-
-let tree = buchheim(root);
-console.log("==================================================================");
-dfs(tree);
-*/
+// function dfs(tree) {
+//     if (tree.tree.node === 'B') return;
+//     console.log(tree.tree.node, tree.x, tree.y);
+//     for (let i = 0; i < tree.children.length; i++)
+//         dfs(tree.children[i]);
+// }

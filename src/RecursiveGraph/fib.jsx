@@ -21,14 +21,14 @@ function fib(n){
     return tree;
 }
 
-function sib(n){
-    let tree = new Tree(n,[]);
-    if( n <3 ) return tree;
-    tree.children.push( sib(n-2) );
-    tree.children.push( sib(n-3) );
-    tree.node = tree.children[0].node+tree.children[1].node;
-    return tree;
-}
+// function sib(n){
+//     let tree = new Tree(n,[]);
+//     if( n <3 ) return tree;
+//     tree.children.push( sib(n-2) );
+//     tree.children.push( sib(n-3) );
+//     tree.node = tree.children[0].node+tree.children[1].node;
+//     return tree;
+// }
 
 function NcR(n,r){
     if (r > n)
@@ -49,8 +49,8 @@ function NcR(n,r){
 }
 
 function derangement(n){
-    if( n == 0 ) return new Tree(1,[],n+"");
-    if( n == 1 ) return new Tree(0,[],n+"");
+    if( n === 0 ) return new Tree(1,[],n+"");
+    if( n === 1 ) return new Tree(0,[],n+"");
     let tree = new Tree(0,[],n+"");
     tree.children.push( derangement(n-1) );
     tree.children.push( derangement(n-2) );

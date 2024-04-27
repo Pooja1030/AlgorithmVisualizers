@@ -1,3 +1,4 @@
+/* eslint-disable no-extend-native */
 /**
  * A set of monkey-patched Array helpers.
  * Probably a bad idea to use these in a real production environment.

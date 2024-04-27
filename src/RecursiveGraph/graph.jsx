@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import CanvasSvg from "./canvasSVG";
-import {getFibTree, getTree} from "./fib";
+import { getTree } from "./fib";
 import Menu from "./menu";
 import Navbar from '../Components/navbar';
 import Details from "./details";
@@ -9,14 +9,14 @@ class Graph extends Component {
     constructor() {
         super();
         this.state = {
-            root:undefined,
-            vertices:[],
-            edges:[],
-            current:-1,
-            n:0,
-            r:2,
-            algo:0,
-            offset:0
+            root: undefined,
+            vertices: [],
+            edges: [],
+            current: -1,
+            n: 0,
+            r: 2,
+            algo: 0,
+            offset: 0
         }
     }
     // setNumber = (event)=>{
@@ -29,78 +29,109 @@ class Graph extends Component {
     setAlgo = (pos, val) => {
         if (pos === 0) {
             // console.log("sup 0");
-            this.setState({algo: val});
+            this.setState({ algo: val });
         }
     }
     setN = (pos, val) => {
         if (pos === 0) {
             // console.log("sup 0");
-            this.setState({n: val});
+            this.setState({ n: val });
         }
     }
     setR = (pos, val) => {
         if (pos === 0) {
             // console.log("sup 0");
-            this.setState({r: val});
+            this.setState({ r: val });
         }
     }
-    addNumber = ()=>{
+    addNumber = () => {
         // console.log(getFibTree(3));
-        let tree = getTree(this.state.n,this.state.algo,this.state.r);
-        this.setState({edges:[],vertices:[],offset:tree.x});
-        this.state.vertices = [];
+        let tree = getTree(this.state.n, this.state.algo, this.state.r);
+        this.setState({ edges: [], vertices: [], offset: tree.x });
+        // this.setState.vertices = [];
         // this.setState({});
-        this.recur(tree,undefined);
+        this.recur(tree, undefined);
 
     }
-    recur = async (node,parent)=>{
+    recur = async (node, parent) => {
 
         let vertices = this.state.vertices;
         let current = this.state.vertices.length;
 
 
-        if( parent!==undefined ){
-            if( node.children.length )
-                vertices.push({label:node.tree.label,val:0,x:node.x,y:node.y,px:parent.x,py:parent.y});
+        if (parent !== undefined) {
+            if (node.children.length)
+                vertices.push({
+                    label: node.tree.label,
+                    val: 0,
+                    x: node.x,
+                    y: node.y,
+                    px: parent.x,
+                    py: parent.y
+                });
             else
-                vertices.push({label:node.tree.label,val:node.tree.node,x:node.x,y:node.y,px:parent.x,py:parent.y});
-            this.setState({vertices,current});
+                vertices.push({
+                    label:
+                        node.tree.label,
+                    val: node.tree.node,
+                    x: node.x,
+                    y: node.y,
+                    px: parent.x,
+                    py: parent.y
+                });
+            this.setState({ vertices, current });
 
 
 
             let edges = this.state.edges;
             edges.push({
-                x1:parent.x,
-                y1:parent.y,
-                x2:node.x,
-                y2:node.y
+                x1: parent.x,
+                y1: parent.y,
+                x2: node.x,
+                y2: node.y
             });
-            this.setState({edges});
-        }else{
-            if( node.children.length )
-                vertices.push({label:node.tree.label,val:0,x:node.x,y:node.y,px:node.x,py:node.y});
+            this.setState({ edges });
+        } else {
+            if (node.children.length)
+                vertices.push({
+                    label:
+                        node.tree.label,
+                    val: 0,
+                    x: node.x,
+                    y: node.y,
+                    px: node.x,
+                    py: node.y
+                });
             else
-                vertices.push({label:node.tree.label,val:node.tree.node,x:node.x,y:node.y,px:node.x,py:node.y});
-            this.setState({vertices,current});
+                vertices.push({
+                    label:
+                        node.tree.label,
+                    val: node.tree.node,
+                    x: node.x,
+                    y: node.y,
+                    px: node.x,
+                    py: node.y
+                });
+            this.setState({ vertices, current });
         }
         await sleep(500);
 
 
-        for(let i=0;i<node.children.length;i++){
-            await this.recur( node.children[i],node );
+        for (let i = 0; i < node.children.length; i++) {
+            await this.recur(node.children[i], node);
             // let verticess = [...this.state.vertices];
             // verticess[current].val+=node.children[i].tree.node;
-            this.setState({current});
+            this.setState({ current });
             await sleep(500);
         }
         let verticess = [...this.state.vertices];
-        verticess[current].val=node.tree.node;
-        this.setState({vertices:verticess});
+        verticess[current].val = node.tree.node;
+        this.setState({ vertices: verticess });
     }
     render() {
         return (
             <div>
-                <Navbar currentPage="Recursion Tree"/>
+                <Navbar currentPage="Recursion Tree" />
                 <Menu
                     setN={this.setN}
                     setR={this.setR}
