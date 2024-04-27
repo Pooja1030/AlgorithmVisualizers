@@ -27,6 +27,10 @@ const algorithms = {
     "queen":["Backtracking"],
     "stack":["Push", "Pop", "Peek", "isEmpty", "Size"],
     "queue":["Enqueue", "Dequeue", "Peek", "isEmpty", "Size"],
+    "linkedlist":["SinglyLinkedList", "DoublyLinkedList", "CircularLinkedList"],
+    "binarytree":["Preorder","Inorder","Postorder"],
+    "binarysearch":["Search"],
+    "minimumspanningtree":["Prim's","Kruskal"],
 };
 
 
@@ -179,8 +183,8 @@ const Home = () => {
                         id="LinkedList"
                         title="Linked List"
                         description="Linked List is a data structure consisting of a group of vertices (nodes) which together represent a sequence. Under the simplest form, each vertex is composed of a data and a reference (link) to the next vertex in the sequence"
+                        algorithm={getAlgoList("linkedlist")}
                         link="LinkedList"
-                        // algorithm=""
                     />
                     <VizItem
                         id="MinimumSpanningTree"
