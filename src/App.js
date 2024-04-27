@@ -13,7 +13,7 @@ import Graph from './RecursiveGraph/graph';
 import Puzzle from './15Puzzle/puzzle';
 import Queen from './Queen/queen';
 // import BinarySearch from './BinaryTree/search';
-import BinaryTree from './BinaryTree/search';
+import BinaryTree from './BinaryTree/searchcopy';
 import BinarySearch from './BinarySearch/binarysearch';
 import LinkedList from './LinkedList/LinkedList copy';
 import MinSpanTree from './MinimumSpanningTree/MinimumSpanningTree';
