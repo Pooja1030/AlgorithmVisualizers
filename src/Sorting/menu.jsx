@@ -3,7 +3,7 @@ import DiscreteSlider from "../Components/slider";
 import SimpleSelect from "../Components/simpleSelect";
 import RangeSlider from '../Components/douleSlider';
 import SwitchLabels from "../Components/formControlLabel";
-import CustomizedSlider from '../Components/douleSlider';
+// import CustomizedSlider from '../Components/douleSlider';
 
 
 class Menu extends Component {
@@ -34,7 +34,8 @@ class Menu extends Component {
                 />
                 <SimpleSelect
                     pos={0}
-                    onAlgoChanged={this.props.onAlgoChanged}
+                    label={"Algorithm"}
+                    onValueChanged={this.props.onAlgoChanged}
                     items={["Bubble Sort",
                     "Selection Sort",
                     "Insertion Sort",
@@ -46,7 +47,8 @@ class Menu extends Component {
                 />
                 <SimpleSelect
                     pos={1}
-                    onAlgoChanged={this.props.onAlgoChanged}
+                    label={"Algorithm"}
+                    onValueChanged={this.props.onAlgoChanged}
                     items={["Bubble Sort",
                         "Selection Sort",
                         "Insertion Sort",

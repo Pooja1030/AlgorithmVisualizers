@@ -104,7 +104,7 @@ class Graph extends Component {
                 <Menu
                     setN={this.setN}
                     setR={this.setR}
-                    setAlgo={this.setAlgo}
+                    onAlgoChanged={this.setAlgo}
                     onStart={this.addNumber}
                 />
                 <Details

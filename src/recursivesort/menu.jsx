@@ -34,8 +34,9 @@ class Menu extends Component {
                     isDisabled={false}
                 />
                 <SimpleSelect
+                    label={"Algorithm"}
                     pos={0}
-                    onAlgoChanged={this.props.onAlgoChanged}
+                    onValueChanged={this.props.onAlgoChanged}
                     items={["Merge Sort","Heap Sort","Quick Sort"]}
                 />
                 </div>

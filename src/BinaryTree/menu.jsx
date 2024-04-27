@@ -34,7 +34,7 @@ class Menu extends Component {
                 />
                 <SimpleSelect
                     pos={0}
-                    onAlgoChanged={this.props.onAlgoChanged}
+                    onValueChanged={this.props.onAlgoChanged}
                 />
                 <SwitchLabels
                     disable={this.props.disable}
@@ -42,7 +42,7 @@ class Menu extends Component {
                 />
                 <SimpleSelect
                     pos={1}
-                    onAlgoChanged={this.props.onAlgoChanged}
+                    onValueChanged={this.props.onAlgoChanged}
                 />
                 <div>
                 <button

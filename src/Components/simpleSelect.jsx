@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -18,28 +17,27 @@ const useStyles = makeStyles((theme) => ({
 
 const SimpleSelect = (props) => {
     const classes = useStyles();
-    const [algo, setAlgo] = React.useState('0');
-    const [state, setState] = React.useState({
-        pos: props.pos,
-    });
+    const { label, items, pos, onValueChanged } = props;
+    const [value, setValue] = React.useState('0');
 
     const handleChange = (event) => {
-        setAlgo(event.target.value);
-        props.onAlgoChanged(state.pos, event.target.value);
+        const selectedValue = event.target.value;
+        setValue(selectedValue);
+        onValueChanged(pos, selectedValue);
     };
 
     return (
         <div className="ml-2 mr-2">
             <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Algorithm</InputLabel>
+                <InputLabel id="demo-simple-select-label">{label}</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={algo}
+                    value={value}
                     onChange={handleChange}
                 >
-                    {props.items.map((option, index) => (
-                        <MenuItem key={index} value={index} >
+                    {items.map((option, index) => (
+                        <MenuItem key={index} value={index}>
                             {option}
                         </MenuItem>
                     ))}

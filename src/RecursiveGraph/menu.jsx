@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-// import SimpleSelect from "./simpleSelect";
 import SimpleSelect from "../Components/simpleSelect";
-
 
 
 class Menu extends Component {
@@ -19,7 +17,7 @@ class Menu extends Component {
                 {/*    onCountChange={this.props.onSpeedChange}*/}
                 {/*    isDisabled={false}*/}
                 {/*/>*/}
-                
+
                 <SimpleSelect
                     pos={0}
                     label={'Task'}
@@ -38,9 +36,7 @@ class Menu extends Component {
                     items={[0, 1, 2, 3, 4, 5, 6]}
                     onValueChanged={this.props.setR}
                 />
-
-
-                <button
+               <button
                     className='visualize-btn btn-warning btn-lg '
                     onClick={this.props.onStart}
                     disabled={this.props.isDisabled}
