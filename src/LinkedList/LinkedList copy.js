@@ -88,16 +88,16 @@ const LinkedListVisualizer = () => {
             <div className="linkedlist-visualizer">
                 <div>
                     <div className="menu">
-                        <button className='visualize-btn' onClick={insertAtBeginning}>Insert at Beginning</button>
-                        <button className='reset-btn' onClick={deleteAtBeginning}>Delete from Beginning</button>
-                        <button className='visualize-btn' onClick={displayList}>Display</button>
-                        <button className='reset-btn' onClick={resetLinkedList}>Reset</button>
                         <select defaultValue="visualize" onChange={handleListTypeChange}>
                             <option disabled value="visualize">Select Linked List</option>
                             <option value="singly">Singly Linked List</option>
                             <option value="doubly">Doubly Linked List</option>
                             <option value="circular">Circular Linked List</option>
                         </select>
+                        <button className='visualize-btn' onClick={insertAtBeginning}>Insert at Beginning</button>
+                        <button className='reset-btn' onClick={deleteAtBeginning}>Delete from Beginning</button>
+                        <button className='visualize-btn' onClick={displayList}>Display</button>
+                        <button className='reset-btn' onClick={resetLinkedList}>Reset</button>
                     </div>
                     <div className="result">{resultText && `${resultText} ${currVal}`}</div>
                 </div>
