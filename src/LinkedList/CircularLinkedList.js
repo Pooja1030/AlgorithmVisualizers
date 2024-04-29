@@ -9,20 +9,18 @@ class Node {
 class CircularLinkedList {
     constructor() {
         this.head = null;
+        this.tail = null;
     }
 
     insertAtBeginning(data) {
         const newNode = new Node(data);
         if (!this.head) {
-            newNode.next = newNode; // Point to itself if it's the only node
             this.head = newNode;
+            this.tail = newNode;
+            newNode.next = newNode; // Circular reference
         } else {
-            let current = this.head;
-            while (current.next !== this.head) {
-                current = current.next;
-            }
-            current.next = newNode;
             newNode.next = this.head;
+            this.tail.next = newNode; // Update tail's next to new node
             this.head = newNode;
         }
     }
@@ -30,89 +28,85 @@ class CircularLinkedList {
     insertAtEnd(data) {
         const newNode = new Node(data);
         if (!this.head) {
-            newNode.next = newNode; // Point to itself if it's the only node
             this.head = newNode;
+            this.tail = newNode;
+            newNode.next = newNode; // Circular reference
         } else {
-            let current = this.head;
-            while (current.next !== this.head) {
-                current = current.next;
-            }
-            current.next = newNode;
             newNode.next = this.head;
+            this.tail.next = newNode; // Update current tail's next to new node
+            this.tail = newNode; // Update tail to new node
         }
     }
 
     insertAfterNode(prevData, newData) {
         const newNode = new Node(newData);
-        if (!this.head) {
-            this.head = newNode;
-            newNode.next = newNode; // Point to itself if it's the only node
-            return;
-        }
         let current = this.head;
         do {
             if (current.data === prevData) {
                 newNode.next = current.next;
                 current.next = newNode;
+                if (current === this.tail) {
+                    this.tail = newNode; // Update tail if inserting after the tail
+                }
                 return;
             }
             current = current.next;
         } while (current !== this.head);
-        // If prevData not found, insert at the end
-        this.insertAtEnd(newData);
+        throw new Error("Previous node not found");
     }
 
     deleteAtBeginning() {
         if (!this.head) return null;
-        let removedData = this.head.data;
-        if (this.head.next === this.head) {
-            this.head = null; // Reset head if it's the only node
+        const removedData = this.head.data;
+        if (this.head === this.tail) {
+            this.head = null;
+            this.tail = null;
         } else {
-            let current = this.head;
-            while (current.next !== this.head) {
-                current = current.next;
-            }
-            current.next = this.head.next;
-            this.head = this.head.next;
+            this.tail.next = this.head.next; // Update tail's next pointer
+            this.head = this.head.next; // Move head to the next node
         }
         return removedData;
     }
 
-    deleteAtEnd() {
+    deleteFromEnd() {
         if (!this.head) return null;
-        let removedData = this.head.data;
-        if (this.head.next === this.head) {
-            this.head = null; // Reset head if it's the only node
+        const removedData = this.tail.data;
+        if (this.head === this.tail) {
+            this.head = null;
+            this.tail = null;
         } else {
             let current = this.head;
-            while (current.next.next !== this.head) {
+            while (current.next !== this.tail) {
                 current = current.next;
             }
-            removedData = current.next.data;
-            current.next = this.head;
+            current.next = this.head; // Update the next pointer of the node before tail
+            this.tail = current; // Move tail to the node before
         }
         return removedData;
     }
 
     deleteFromMiddle(dataToDelete) {
         if (!this.head) return null;
-        if (this.head.data === dataToDelete) {
-            return this.deleteAtBeginning();
-        }
         let current = this.head;
-        while (current.next !== this.head) {
-            if (current.next.data === dataToDelete) {
-                let removedData = current.next.data;
-                current.next = current.next.next;
-                return removedData;
+        let prev = null;
+        do {
+            if (current.data === dataToDelete) {
+                if (current === this.head) {
+                    return this.deleteAtBeginning();
+                } else if (current === this.tail) {
+                    return this.deleteFromEnd();
+                } else {
+                    prev.next = current.next; // Update previous node's next pointer
+                    return current.data;
+                }
             }
+            prev = current;
             current = current.next;
-        }
+        } while (current !== this.head);
         return null; // Node with dataToDelete not found
     }
 
     search(dataToSearch) {
-        if (!this.head) return null;
         let current = this.head;
         do {
             if (current.data === dataToSearch) {
@@ -121,20 +115,6 @@ class CircularLinkedList {
             current = current.next;
         } while (current !== this.head);
         return null; // Node with dataToSearch not found
-    }
-
-    displayList() {
-        if (this.head === null) {
-            return 'List is empty';
-        }
-        let current = this.head.next;
-        let listValues = `${this.head.data} -> `;
-        while (current !== this.head) {
-            listValues += `${current.data} -> `;
-            current = current.next;
-        }
-        listValues += `${this.head.data} (Head)`;
-        return listValues;
     }
 }
 
