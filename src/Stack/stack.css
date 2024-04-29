@@ -29,18 +29,18 @@
     font-weight: bold;
     color: white;
     font-size: 20px;
-    animation: slideIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    animation: slideIn-push 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 .popped {    
-    animation: slideOut 1s cubic-bezier(0, 0, 0.2, 1);
+    animation: slideOut-pop 1s cubic-bezier(0, 0, 0.2, 1);
 }
 
 .controls {
     margin-top: 20px;
 }
 
-@keyframes slideIn {
+@keyframes slideIn-push {
     from {
         transform: translateY(-50px);
         opacity: 0;
@@ -54,7 +54,7 @@
     }
 }
 
-@keyframes slideOut {
+@keyframes slideOut-pop {
     from {
       transform: translateY(0);
       opacity: 1;
