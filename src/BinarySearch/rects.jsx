@@ -1,34 +1,19 @@
-import React, {Component} from 'react';
-import Rect from "./rect";
-import FlipMove from 'react-flip-move';
+import React from 'react';
+import "./style.css";
 
-
-class Rects extends Component {
-    render() {
-        let margin = 5;
-        if( this.props.rects.length>50 ){
-            margin=1;
-        }
-        return (
-            <div>
-                <FlipMove
-                    className="d-flex bars justify-content-center align-items-end"
-                    duration={this.props.speed}
-                    // easing="cubic-bezier(.12,.36,.14,1.2)"
-                >
-                {this.props.rects.map( (rect,rectidx)=>{
-                    return (
-                        <Rect
-                            marg={margin}
-                            key={rect.kk}
-                            rect={rect}
-                        />
-                    );
-                } )}
-                </FlipMove>
-            </div>
-        );
-    }
-}
+const Rects = ({ rects, target }) => {
+  return (
+    <div className="rects-container">
+      {rects.map((rect, index) => (
+        <div
+          key={index}
+          className={`rect ${rect.isHighlight ? 'highlight' : ''} ${rect.isTarget ? 'target' : ''}`}
+        >
+          {rect.value}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export default Rects;
