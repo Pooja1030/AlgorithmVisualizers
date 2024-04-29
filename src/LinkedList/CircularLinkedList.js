@@ -14,25 +14,113 @@ class CircularLinkedList {
     insertAtBeginning(data) {
         const newNode = new Node(data);
         if (!this.head) {
-            newNode.next = newNode; // Circular reference to itself
+            newNode.next = newNode; // Point to itself if it's the only node
             this.head = newNode;
         } else {
-            newNode.next = this.head.next;
-            this.head.next = newNode;
+            let current = this.head;
+            while (current.next !== this.head) {
+                current = current.next;
+            }
+            current.next = newNode;
+            newNode.next = this.head;
+            this.head = newNode;
         }
     }
 
-    deleteAtBeginning() {
-        if (this.head !== null) {
-            const removedData = this.head.next.data;
-            if (this.head.next === this.head) {
-                this.head = null;
-            } else {
-                this.head.next = this.head.next.next;
+    insertAtEnd(data) {
+        const newNode = new Node(data);
+        if (!this.head) {
+            newNode.next = newNode; // Point to itself if it's the only node
+            this.head = newNode;
+        } else {
+            let current = this.head;
+            while (current.next !== this.head) {
+                current = current.next;
             }
-            return removedData;
+            current.next = newNode;
+            newNode.next = this.head;
         }
-        return null;
+    }
+
+    insertAfterNode(prevData, newData) {
+        const newNode = new Node(newData);
+        if (!this.head) {
+            this.head = newNode;
+            newNode.next = newNode; // Point to itself if it's the only node
+            return;
+        }
+        let current = this.head;
+        do {
+            if (current.data === prevData) {
+                newNode.next = current.next;
+                current.next = newNode;
+                return;
+            }
+            current = current.next;
+        } while (current !== this.head);
+        // If prevData not found, insert at the end
+        this.insertAtEnd(newData);
+    }
+
+    deleteAtBeginning() {
+        if (!this.head) return null;
+        let removedData = this.head.data;
+        if (this.head.next === this.head) {
+            this.head = null; // Reset head if it's the only node
+        } else {
+            let current = this.head;
+            while (current.next !== this.head) {
+                current = current.next;
+            }
+            current.next = this.head.next;
+            this.head = this.head.next;
+        }
+        return removedData;
+    }
+
+    deleteAtEnd() {
+        if (!this.head) return null;
+        let removedData = this.head.data;
+        if (this.head.next === this.head) {
+            this.head = null; // Reset head if it's the only node
+        } else {
+            let current = this.head;
+            while (current.next.next !== this.head) {
+                current = current.next;
+            }
+            removedData = current.next.data;
+            current.next = this.head;
+        }
+        return removedData;
+    }
+
+    deleteFromMiddle(dataToDelete) {
+        if (!this.head) return null;
+        if (this.head.data === dataToDelete) {
+            return this.deleteAtBeginning();
+        }
+        let current = this.head;
+        while (current.next !== this.head) {
+            if (current.next.data === dataToDelete) {
+                let removedData = current.next.data;
+                current.next = current.next.next;
+                return removedData;
+            }
+            current = current.next;
+        }
+        return null; // Node with dataToDelete not found
+    }
+
+    search(dataToSearch) {
+        if (!this.head) return null;
+        let current = this.head;
+        do {
+            if (current.data === dataToSearch) {
+                return current;
+            }
+            current = current.next;
+        } while (current !== this.head);
+        return null; // Node with dataToSearch not found
     }
 
     displayList() {

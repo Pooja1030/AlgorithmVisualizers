@@ -291,7 +291,7 @@ li {
 
 
 button,
-select {
+select, input {
   display: inline-block;
   min-width: 120px;
   margin: 10px;
