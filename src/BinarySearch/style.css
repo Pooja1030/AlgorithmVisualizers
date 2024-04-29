@@ -1,0 +1,27 @@
+.rects-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+  }
+  
+  .rect {
+    width: 30px;
+    height: 30px;
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 2px;
+    transition: background-color 0.5s;
+  }
+  
+  .rect.highlight {
+    background-color: yellow;
+  }
+  
+  .rect.target {
+    background-color: red;
+  }
+  

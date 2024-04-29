@@ -1,0 +1,92 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .graph {
+    margin-bottom: 260px;
+  }
+  
+  .canvas {
+    border: 1px solid #ddd;
+    height: 250px; /* Adjust the height as needed */
+  }
+  
+  .vertex-text {
+    font-size: 16px;
+    fill: #fff;
+  }
+  
+  .edge {
+    stroke: #007bff;
+    stroke-width: 2;
+  }
+  
+  .representation {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .ide,
+  .explanation {
+    flex: 1;
+  }
+  
+  .line {
+    border-top: 1px solid #000;
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  .ide span,
+  .explanation span {
+    font-family: "Open Sans", sans-serif;
+    color: #444444;
+    display: block;
+    padding: 5px 10px;
+    margin: 0;
+    border: none;
+    border-top: none;
+  }
+  
+  .ide .op,
+  .explanation .comment {
+    /* color: #007bff; */
+  }
+  
+  .comment {
+    /* background-color: #f8f9fa; */
+  }
+  
+  .comment.w-100 {
+    width: 100%;
+  }
+  
+  .comment::before {
+    content: ' ';
+    display: block;
+    /* border-top: 1px solid #ddd; */
+    margin-top: 5px;
+  }
+
+  .vertex-text {
+    font-size: 16px;
+    fill: #111;
+    dominant-baseline: middle;
+    text-anchor: middle;
+  }
+  
+  
+  @media (max-width: 768px) {
+    .representation {
+      flex-direction: column;
+    }
+  
+    .ide,
+    .explanation {
+      width: 100%;
+    }
+  }
+  

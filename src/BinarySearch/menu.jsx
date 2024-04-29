@@ -46,7 +46,7 @@ class Menu extends Component {
                 <div>
                 <button
                     className='visualize-btn btn-warning btn-lg '
-                    onClick={this.props.onViusalize}
+                    onClick={this.props.onVisualize}
                     disabled={this.props.disable}
                     style={this.isClickable()}
                 >
@@ -54,11 +54,11 @@ class Menu extends Component {
                 </button>
                 <button
                     className='reset-btn btn-secondary m-2'
-                    onClick={this.props.onRandomize}
+                    onClick={this.props.onReset}
                     disabled={this.props.disable}
                     style={this.isClickable()}
                 >
-                    Randomize
+                    Reset
                 </button>
                 </div>
             </nav>

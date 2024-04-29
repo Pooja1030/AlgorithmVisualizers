@@ -1,3 +1,4 @@
+// MinimumSpanningTree.js
 import React, { Component } from 'react';
 import Navbar from '../Components/navbar';
 import Prim from './Prim';
@@ -16,12 +17,16 @@ class MinimumSpanningTree extends Component {
         this.setState({ selectedAlgo: "visualize" });
     }
 
-    SelectAlgo = () => {
-        console.log("Select Algorithm...");
-    };
-
     handleAlgoSelect = (e) => {
         const selectedAlgo = e.target.value;
+        if (selectedAlgo === "visualize") {
+            this.visualizeMST(selectedAlgo);
+        } else {
+            this.setState({ selectedAlgo });
+        }
+    };
+
+    visualizeMST = (selectedAlgo) => {
         this.setState({ selectedAlgo });
     };
 
@@ -36,25 +41,24 @@ class MinimumSpanningTree extends Component {
     }
 
     render() {
+        const { selectedAlgo } = this.state;
+        const selectedComponent = selectedAlgo === "prim" ? <Prim /> : selectedAlgo === "kruskal" ? <Kruskal /> : null;
+
         return (
             <>
                 <Navbar currentPage="Minimum Spanning Tree Visualizer" />
                 <div className='menu'>
                     <div>
                         {this.renderAlgoOptions()}
-                        <button className="visualize-btn" onClick={this.SelectAlgo}>
-                            {this.state.selectedAlgo === "visualize" ? "Visualize" : `Visualize ${this.state.selectedAlgo}`}
+                        <button className="visualize-btn" onClick={() => this.visualizeMST("visualize")}>
+                            {selectedAlgo === "visualize" ? "Visualize" : `Visualize ${selectedAlgo}`}
                         </button>
                         <button className="reset-btn" onClick={() => this.setState({ selectedAlgo: "visualize" })}>Reset</button>
                     </div>
                 </div>
 
                 <div className="algo-container">
-                    {this.state.selectedAlgo === "visualize" ? null :
-                        this.state.selectedAlgo === "prim" ? <Prim /> :
-                            this.state.selectedAlgo === "kruskal" ? <Kruskal /> :
-                                null
-                    }
+                    {selectedComponent}
                 </div>
             </>
         );

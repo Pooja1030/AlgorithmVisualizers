@@ -10,6 +10,7 @@ class BinarySearch extends Component {
     target: null,
     rects: [],
     isRunning: false,
+    currentStep: null,
   };
 
   componentDidMount() {
@@ -21,18 +22,77 @@ class BinarySearch extends Component {
       <React.Fragment>
         <Navbar currentPage="Binary Search Visualizer" />
         <Menu
-          disable={this.state.isRunning}
-          onViusalize={this.handleSearch}
-          onRandomize={this.handleRandomize}
-          onRefresh={this.handleRefresh}
-          onCountChange={this.handleCountChange}
-          onTargetChange={this.handleTargetChange}
-        />
+  disable={this.state.isRunning}
+  onVisualize={this.handleSearch} 
+  onRandomize={this.handleRandomize}
+  onReset={this.handleReset}
+  onCountChange={this.handleCountChange}
+  onTargetChange={this.handleTargetChange}
+/>
+
         <div className='justify-content-center'>
           <Rects
             rects={this.state.rects}
             target={this.state.target}
           />
+        </div>
+        <div className="representation">
+          <div className="ide w-100">
+            <div className="row ml-auto mr-auto">
+              <span>Pseudocode:</span>
+            </div>
+            <div className="row ml-auto mr-auto mt-1">
+              <pre>
+                {`function binarySearch(array, target) {
+  let low = 0;
+  let high = array.length - 1;
+  
+  while (low <= high) {
+    let mid = Math.floor((low + high) / 2);
+    
+    if (array[mid] === target) {
+      return mid;
+    } else if (array[mid] < target) {
+      low = mid + 1;
+    } else {
+      high = mid - 1;
+    }
+  }
+  
+  return -1;
+}`}
+              </pre>
+            </div>
+          </div>
+          <div className="explanation w-100">
+            <div className="row ml-auto mr-auto">
+              <span className="comment w-100">SHORT EXPLANATION</span>
+            </div>
+            <div className="row ml-auto mr-auto mt-1">
+              <span className="comment w-100">---------------------</span>
+            </div>
+            <div className="row ml-auto mr-auto mt-1">
+              <span>1. Set low to 0 and high to length of array - 1.</span>
+            </div>
+            <div className="row ml-auto mr-auto mt-1">
+              <span>2. Repeat while low is less than or equal to high:</span>
+            </div>
+            <div className="row ml-auto mr-auto mt-1">
+              <span>    a. Set mid to the middle index between low and high.</span>
+            </div>
+            <div className="row ml-auto mr-auto mt-1">
+              <span>    b. If the target is found at mid, return mid.</span>
+            </div>
+            <div className="row ml-auto mr-auto mt-1">
+              <span>    c. If the target is less than the value at mid, set high to mid - 1.</span>
+            </div>
+            <div className="row ml-auto mr-auto mt-1">
+              <span>    d. If the target is greater than the value at mid, set low to mid + 1.</span>
+            </div>
+            <div className="row ml-auto mr-auto mt-1">
+              <span>3. If the target is not found, return -1.</span>
+            </div>
+          </div>
         </div>
       </React.Fragment>
     );
@@ -43,12 +103,16 @@ class BinarySearch extends Component {
     const rects = Array.from({ length: this.state.count }, (_, index) => ({
       value: index,
       isTarget: false,
+      isHighlight: false,
     }));
     this.setState({ target, rects });
   }
 
-  handleRefresh = () => {
-    this.setState({ isRunning: false });
+  handleReset = () => {
+    this.setState({
+      isRunning: false,
+      currentStep: null,
+    });
     this.handleRandomize();
   }
 
@@ -93,14 +157,14 @@ class BinarySearch extends Component {
       const { low, high, mid, found, index: targetIndex } = step;
       const updatedRects = this.state.rects.map((rect, i) => {
         if (found && i === targetIndex) {
-          return { ...rect, isTarget: true };
+          return { ...rect, isTarget: true, isHighlight: false };
         } else if (i === low || i === high || i === mid) {
-          return { ...rect, isHighlight: true };
+          return { ...rect, isHighlight: true, isTarget: false };
         } else {
           return { ...rect, isHighlight: false, isTarget: false };
         }
       });
-      this.setState({ rects: updatedRects });
+      this.setState({ rects: updatedRects, currentStep: step });
       setTimeout(() => {
         animateStep(index + 1);
       }, 1000);
