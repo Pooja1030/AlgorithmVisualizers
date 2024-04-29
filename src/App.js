@@ -15,15 +15,10 @@ import Queen from './Queen/queen';
 // import BinarySearch from './BinaryTree/search';
 import BinaryTree from './BinaryTree/searchcopy';
 import BinarySearch from './BinarySearch/binarysearch';
-import LinkedList from './LinkedList/LinkedList copy';
+import LinkedList from './LinkedList/Linkedlist';
 import MinSpanTree from './MinimumSpanningTree/MinimumSpanningTree';
-// import Stack from './Stack/stack';
-// import Queue from './Queue/queue';
-
-import Queue from './Queue/queue copy';
-
-import Stack from './Stack/stack copy';
-// import Stack1 from './Stack/stack';
+import Queue from './Queue/queue';
+import Stack from './Stack/stack';
 
 import HomeDraft from "./Pages/HomeDraft";
 
