@@ -1,18 +1,16 @@
 .queue-visualizer {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     justify-content: space-between;
     min-height: 300px;
 }
 
 .queue {
     display: flex;
-    /* flex-direction: row-reverse; */
     padding: 10px 10px;
     margin: 200px;
     border: #690f58 solid 1px;
-    /* border-top: none; */
     border-radius: 10px 10px;
     min-width: 500px;
     min-height: 50px;
@@ -30,18 +28,18 @@
     font-weight: bold;
     color: white;
     font-size: 20px;
-    animation: que-slideIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    animation: slideIn-enqueue 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 .dequeued {
-    animation: que-slideOut 1s cubic-bezier(0, 0, 0.2, 1);
+    animation: slideOut-dequeue 1s cubic-bezier(0, 0, 0.2, 1);
 }
 
 .controls {
     margin-top: 20px;
 }
 
-@keyframes que-slideIn {
+@keyframes slideIn-enqueue {
     from {
         transform: translateX(200px);
         opacity: 0;
@@ -55,7 +53,7 @@
     }
 }
 
-@keyframes que-slideOut {
+@keyframes slideOut-dequeue {
     from {
         transform: translateX(0);
         opacity: 1;
