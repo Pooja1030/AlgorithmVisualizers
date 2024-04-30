@@ -9,31 +9,25 @@ class MinimumSpanningTree extends Component {
         super();
         this.state = {
             selectedAlgo: "",
+            visualizeClicked: false,
         };
-    }
-
-    componentDidMount() {
-        // Display "Visualize" button by default
-        this.setState({ selectedAlgo: "visualize" });
     }
 
     handleAlgoSelect = (e) => {
         const selectedAlgo = e.target.value;
-        if (selectedAlgo === "visualize") {
-            this.visualizeMST(selectedAlgo);
-        } else {
-            this.setState({ selectedAlgo });
-        }
+        this.setState({ selectedAlgo, visualizeClicked: false });
     };
 
-    visualizeMST = (selectedAlgo) => {
-        this.setState({ selectedAlgo });
+    handleVisualizeClick = () => {
+        if (this.state.selectedAlgo !== "") {
+            this.setState({ visualizeClicked: true });
+        }
     };
 
     renderAlgoOptions() {
         return (
-            <select onChange={this.handleAlgoSelect}>
-                <option disabled selected value="visualize">Select Algorithm</option>
+            <select onChange={this.handleAlgoSelect} value={this.state.selectedAlgo}>
+                <option disabled value="">Select Algorithm</option>
                 <option value="prim">Prim's Algorithm</option>
                 <option value="kruskal">Kruskal's Algorithm</option>
             </select>
@@ -41,8 +35,11 @@ class MinimumSpanningTree extends Component {
     }
 
     render() {
-        const { selectedAlgo } = this.state;
-        const selectedComponent = selectedAlgo === "prim" ? <Prim /> : selectedAlgo === "kruskal" ? <Kruskal /> : null;
+        const { selectedAlgo, visualizeClicked } = this.state;
+        let selectedComponent = null;
+        if (visualizeClicked) {
+            selectedComponent = selectedAlgo === "prim" ? <Prim /> : selectedAlgo === "kruskal" ? <Kruskal /> : null;
+        }
 
         return (
             <>
@@ -50,10 +47,10 @@ class MinimumSpanningTree extends Component {
                 <div className='menu'>
                     <div>
                         {this.renderAlgoOptions()}
-                        <button className="visualize-btn" onClick={() => this.visualizeMST("visualize")}>
-                            {selectedAlgo === "visualize" ? "Visualize" : `Visualize ${selectedAlgo}`}
+                        <button className="visualize-btn" onClick={this.handleVisualizeClick}>
+                            Visualize
                         </button>
-                        <button className="reset-btn" onClick={() => this.setState({ selectedAlgo: "visualize" })}>Reset</button>
+                        <button className="reset-btn" onClick={() => this.setState({ selectedAlgo: "", visualizeClicked: false })}>Reset</button>
                     </div>
                 </div>
 

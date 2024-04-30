@@ -5,11 +5,12 @@
   }
   
   .graph {
-    margin-bottom: 260px;
+    margin-bottom: 50px;
   }
   
   .canvas {
     border: 1px solid #ddd;
+    position: relative;
     height: 250px; /* Adjust the height as needed */
   }
   
