@@ -11,7 +11,7 @@ const LinkedListVisualizer = () => {
     const [linkedlist, setLinkedList] = useState(null); // State to hold the linked list instance
     const [resultText, setResultText] = useState('');
     const [currVal, setCurrVal] = useState('');
-    const [listType, setListType] = useState('Singly');
+    const [listType, setListType] = useState('visualize');
     const [insertPosition, setInsertPosition] = useState('Beginning'); // State to hold the selected position for insertion
     const [deletePosition, setDeletePosition] = useState('Beginning'); // State to hold the selected position for deletion
     const [newValue, setNewValue] = useState('');
