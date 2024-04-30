@@ -6,8 +6,8 @@
   }
   
   .rect {
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     background-color: #007bff;
     color: white;
     display: flex;
@@ -25,3 +25,8 @@
     background-color: red;
   }
   
+  .menu{
+
+    justify-content: space-between;
+    padding: 10px 210px;
+  }

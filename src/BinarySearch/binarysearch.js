@@ -124,11 +124,12 @@ class BinarySearch extends Component {
     this.setState({ target: val });
   }
 
-  handleSearch = () => {
-    this.setState({ isRunning: true });
-    const { target, rects } = this.state;
-    let low = 0;
-    let high = rects.length - 1;
+  handleSearch = (searchValue) => {
+    this.setState({ isRunning: true, target: searchValue }, ()=>{
+
+      const { target, rects } = this.state;
+      let low = 0;
+      let high = rects.length - 1;
     let steps = [];
     while (low <= high) {
       let mid = Math.floor((low + high) / 2);
@@ -145,6 +146,7 @@ class BinarySearch extends Component {
       }
     }
     this.animateSearch(steps);
+  });
   }
 
   animateSearch = (steps) => {
@@ -167,7 +169,7 @@ class BinarySearch extends Component {
       this.setState({ rects: updatedRects, currentStep: step });
       setTimeout(() => {
         animateStep(index + 1);
-      }, 1000);
+      }, 100);
     };
     animateStep(0);
   }
