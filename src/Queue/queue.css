@@ -9,7 +9,7 @@
 .queue {
     display: flex;
     padding: 10px 10px;
-    margin: 200px;
+    margin: 180px;
     border: #690f58 solid 1px;
     border-radius: 10px 10px;
     min-width: 500px;
@@ -38,6 +38,39 @@
 .controls {
     margin-top: 20px;
 }
+
+
+.representation {
+    margin-top: -90px;
+    padding: 20px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+  .representation .ide { 
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+ 
+  }
+  
+  .representation .comment {
+    display: block;
+    font-size: 20px;
+
+  }
+  
+  .representation .comment:not(:last-child) {
+    margin-bottom: 5px;
+  }
+  
+  .representation .row{
+    display: contents;
+    height: 150px;
+  }
+
+
 
 @keyframes slideIn-enqueue {
     from {

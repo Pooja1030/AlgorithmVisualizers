@@ -1,0 +1,68 @@
+/* style1.css */
+
+.result-container {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.operation-result {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+/* 
+.menu {
+  margin-bottom: 20px;
+}
+
+.menu div {
+  display: flex;
+  align-items: center;
+}
+
+.menu select,
+.menu button {
+  margin-right: 10px;
+} */
+
+.binary-tree {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stack-item {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 5px;
+  margin: 5px;
+}
+
+.node {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 5px;
+  margin: 5px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fade-in {
+  animation: fadeInAnimation 0.5s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInAnimation {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
