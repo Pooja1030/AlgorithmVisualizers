@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
 import Navbar from '../Components/navbar';
-
+import BinaryTreeView from './BinaryTreeView'; // Assuming BinaryTreeView component for visualization
+import './style1.css'
 class BinaryTree extends Component {
     constructor() {
         super();
         this.state = {
             selectedTraversal: "",
-            selectedOperation: "",
             tree: null,
             traversalResult: [],
-            operationResult: null,
             stack: [],
             maxStackSize: 1000,
+            insertValue: '',
+            deleteValue: '',
+            searchValue: '',
+            operationResult: null,
+            visualizeClicked: false,
         };
     }
 
     componentDidMount() {
-        this.updateTraversalResult();
+        // Initialize tree or perform any necessary setup
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -26,7 +30,7 @@ class BinaryTree extends Component {
     }
 
     updateTraversalResult() {
-        const { selectedTraversal, tree, stack } = this.state;
+        const { selectedTraversal, tree, stack, visualizeClicked } = this.state;
         let traversalResult = [];
         switch (selectedTraversal) {
             case "inorder":
@@ -42,6 +46,12 @@ class BinaryTree extends Component {
                 break;
         }
         this.setState({ traversalResult });
+
+        if (visualizeClicked) {
+            // Call visualization logic here based on traversalResult and stack
+            // Example: this.visualizeBinaryTree(traversalResult, stack);
+            this.setState({ visualizeClicked: false }); // Reset visualizeClicked
+        }
     }
 
     inorderTraversal(node) {
@@ -86,47 +96,59 @@ class BinaryTree extends Component {
         result.push(node.value);
     }
 
-    insertNode(value) {
+    insertNode = () => {
+        const { insertValue } = this.state;
+        if (insertValue.trim() === '') {
+            this.setState({ operationResult: 'Please enter a value to insert.' });
+            return;
+        }
         this.setState(prevState => {
             if (prevState.stack.length >= prevState.maxStackSize) {
                 return { operationResult: "Maximum stack size exceeded" };
             }
-            const stack = [...prevState.stack, value];
-            const traversalResult = [...stack]; // Update traversal result
-            return { operationResult: `Inserted: ${value}`, stack, traversalResult };
-        });
-    }
-
-    deleteNode(value) {
-        this.setState(prevState => {
-            const index = prevState.stack.indexOf(value);
-            if (index === -1) {
-                return { operationResult: `Element ${value} not found in stack` };
+            const value = parseInt(insertValue);
+            if (!isNaN(value)) {
+                const stack = [...prevState.stack, value];
+                const traversalResult = [...stack]; // Update traversal result
+                return { operationResult: `Inserted: ${value}`, stack, traversalResult, insertValue: '' };
+            } else {
+                return { operationResult: 'Invalid input. Please enter a valid number.' };
             }
-            const stack = [...prevState.stack.slice(0, index), ...prevState.stack.slice(index + 1)];
-            const traversalResult = [...stack]; // Update traversal result
-            return { operationResult: `Deleted: ${value}`, stack, traversalResult };
+        }, () => {
+            this.setState({ visualizeClicked: true }); // Trigger visualization after insertion
         });
     }
 
-    searchNode(value) {
-        const index = this.state.stack.indexOf(value);
-        if (index !== -1) {
-            this.setState({ operationResult: `Node ${value} found` });
-            this.setState({ traversalResult: [value] }); // Update traversal result
+    deleteNode = () => {
+        const { deleteValue, stack } = this.state;
+        const value = parseInt(deleteValue);
+        if (!isNaN(value)) {
+            const index = stack.indexOf(value);
+            if (index === -1) {
+                this.setState({ operationResult: `Element ${value} not found in stack`, deleteValue: '' });
+            } else {
+                const newStack = [...stack.slice(0, index), ...stack.slice(index + 1)];
+                const traversalResult = [...newStack]; // Update traversal result
+                this.setState({ operationResult: `Deleted: ${value}`, stack: newStack, traversalResult, deleteValue: '' });
+            }
         } else {
-            this.setState({ operationResult: `Node ${value} not found in stack` });
+            this.setState({ operationResult: 'Invalid input. Please enter a valid number.', deleteValue: '' });
         }
     }
 
-    resetOperations() {
-        this.setState({
-            selectedTraversal: "",
-            selectedOperation: "",
-            traversalResult: [],
-            operationResult: null,
-            stack: [],
-        });
+    searchNode = () => {
+        const { searchValue, stack } = this.state;
+        const value = parseInt(searchValue);
+        if (!isNaN(value)) {
+            const index = stack.indexOf(value);
+            if (index !== -1) {
+                this.setState({ operationResult: `Node ${value} found`, traversalResult: [value], searchValue: '' });
+            } else {
+                this.setState({ operationResult: `Node ${value} not found in stack`, searchValue: '' });
+            }
+        } else {
+            this.setState({ operationResult: 'Invalid input. Please enter a valid number.', searchValue: '' });
+        }
     }
 
     handleTraversalSelect = (e) => {
@@ -134,58 +156,53 @@ class BinaryTree extends Component {
         this.setState({ selectedTraversal });
     };
 
-    handleOperationSelect = (e) => {
-        const selectedOperation = e.target.value;
-        this.setState({ selectedOperation });
-    };
-
-    handleVisualization = () => {
-        const { selectedOperation } = this.state;
-
-        switch (selectedOperation) {
-            case "insert":
-                const insertValue = parseInt(prompt("Enter the value to insert:"));
-                if (!isNaN(insertValue)) {
-                    this.insertNode(insertValue);
-                }
-                break;
-            case "delete":
-                const deleteValue = parseInt(prompt("Enter the value to delete:"));
-                if (!isNaN(deleteValue)) {
-                    this.deleteNode(deleteValue);
-                }
-                break;
-            case "search":
-                const searchValue = parseInt(prompt("Enter the value to search:"));
-                if (!isNaN(searchValue)) {
-                    this.searchNode(searchValue);
-                }
-                break;
-            default:
-                break;
-        }
-    };
-
-    renderTraversalOptions() {
-        return (
-            <select onChange={this.handleTraversalSelect}>
-                <option disabled selected value="visualize">Select Traversal</option>
-                <option value="inorder">Inorder</option>
-                <option value="preorder">Preorder</option>
-                <option value="postorder">Postorder</option>
-            </select>
-        );
+    handleInsertInputChange = (e) => {
+        this.setState({ insertValue: e.target.value });
     }
 
-    renderOperationOptions() {
-        return (
-            <select onChange={this.handleOperationSelect}>
-                <option disabled selected value="operation">Select Operation</option>
-                <option value="insert">Insert</option>
-                <option value="delete">Delete</option>
-                <option value="search">Search</option>
-            </select>
-        );
+    handleDeleteInputChange = (e) => {
+        this.setState({ deleteValue: e.target.value });
+    }
+
+    handleSearchInputChange = (e) => {
+        this.setState({ searchValue: e.target.value });
+    }
+
+    handleVisualization = () => {
+        const { selectedTraversal, stack } = this.state;
+    
+        if (selectedTraversal) {
+            let traversalResult = [];
+            switch (selectedTraversal) {
+                case "inorder":
+                    traversalResult = this.inorderTraversal(stack); // Assuming traversal on stack
+                    break;
+                case "preorder":
+                    traversalResult = this.preorderTraversal(stack); // Assuming traversal on stack
+                    break;
+                case "postorder":
+                    traversalResult = this.postorderTraversal(stack); // Assuming traversal on stack
+                    break;
+                default:
+                    break;
+            }
+            this.setState({ traversalResult, visualizeClicked: true });
+        } else {
+            this.setState({ operationResult: 'Please select a traversal before visualizing.' });
+        }
+    };
+    
+
+    resetOperations = () => {
+        this.setState({
+            selectedTraversal: "",
+            traversalResult: [],
+            operationResult: null,
+            stack: [],
+            insertValue: '',
+            deleteValue: '',
+            searchValue: '',
+        });
     }
 
     render() {
@@ -194,12 +211,22 @@ class BinaryTree extends Component {
                 <Navbar currentPage="Binary Tree Traversal Visualizer" />
                 <div className='menu'>
                     <div>
-                        {this.renderTraversalOptions()}
-                        {this.renderOperationOptions()}
+                        <select onChange={this.handleTraversalSelect}>
+                            <option disabled selected value="visualize">Select Traversal</option>
+                            <option value="inorder">Inorder</option>
+                            <option value="preorder">Preorder</option>
+                            <option value="postorder">Postorder</option>
+                        </select>
+                        <input type="number" placeholder="Insert value" value={this.state.insertValue} onChange={this.handleInsertInputChange} />
+                        <button className="insert-btn" onClick={this.insertNode}>Insert</button>
+                        <input type="number" placeholder="Delete value" value={this.state.deleteValue} onChange={this.handleDeleteInputChange} />
+                        <button className="delete-btn" onClick={this.deleteNode}>Delete</button>
+                        <input type="number" placeholder="Search value" value={this.state.searchValue} onChange={this.handleSearchInputChange} />
+                        <button className="search-btn" onClick={this.searchNode}>Search</button>
                         <button className="visualize-btn" onClick={this.handleVisualization}>
                             Visualize
                         </button>
-                        <button className="reset-btn" onClick={() => this.resetOperations()}>Reset</button>
+                        <button className="reset-btn" onClick={this.resetOperations}>Reset</button>
                     </div>
                 </div>
 
@@ -216,12 +243,17 @@ class BinaryTree extends Component {
                             </div>
                         ))}
                     </div>
-                    {this.state.operationResult && (
+                    {/* {this.state.operationResult && (
                         <div className="operation-result">
                             {this.state.operationResult}
                         </div>
-                    )}
+                    )} */}
                 </div>
+
+                {/* Visualization component */}
+                {this.state.visualizeClicked && (
+                    <BinaryTreeView tree={this.state.tree} />
+                )}
             </>
         );
     }
