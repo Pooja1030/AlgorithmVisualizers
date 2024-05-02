@@ -32,7 +32,7 @@
     animation: slideIn-push 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
-.popped {    
+.popped {
     animation: slideOut-pop 1s cubic-bezier(0, 0, 0.2, 1);
 }
 
@@ -48,23 +48,20 @@
 
     to {
         transform: translateY(0);
-    background-color: rgb(87, 47, 197);
-
+        background-color: rgb(87, 47, 197);
         opacity: 1;
     }
 }
 
 @keyframes slideOut-pop {
     from {
-      transform: translateY(0);
-      opacity: 1;
-
+        transform: translateY(0);
+        opacity: 1;
     }
+
     to {
-      transform: translateY(-100px);
-      /* opacity: 0.9; */
-    background-color:darkblue;
-
+        transform: translateY(-100px);
+        /* opacity: 0.9; */
+        background-color: darkblue;
     }
-  }
-  
+}

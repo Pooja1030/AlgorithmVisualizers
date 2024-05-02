@@ -68,7 +68,7 @@ const QueueVisualizer = () => {
                     <div className="menu">
                         <DiscreteSlider
                             title='Queue size'
-                            defaultValue={maxSize}
+                            default={maxSize}
                             onCountChange={setSize}
                             step={1}
                             min={1}

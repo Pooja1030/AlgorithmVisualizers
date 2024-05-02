@@ -67,7 +67,7 @@ const StackVisualizer = () => {
                     <div className="menu">
                         <DiscreteSlider
                             title='Stack size'
-                            defaultValue={maxSize}
+                            default={maxSize}
                             onCountChange={setSize}
                             step={1}
                             min={1}
