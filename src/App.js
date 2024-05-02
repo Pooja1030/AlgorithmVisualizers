@@ -31,7 +31,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* <Route path="/" element={<Layout />}> */}
-            <Route index element={<Home />} />
+            <Route index element={<HomeDraft />} />
             <Route path="Sort" element={<Sort />} />
             <Route path="pathfinder" element={<PathfindingVisualizer />} />
             <Route path="recursiveSort" element={<RecursiveSort />} />
@@ -50,7 +50,7 @@ function App() {
             
             <Route path="*" element={<NoPage />} />
 
-            <Route path="home" element={<HomeDraft/>} />
+            <Route path="home" element={<Home/>} />
           {/* </Route> */}
         </Routes>
       </BrowserRouter>

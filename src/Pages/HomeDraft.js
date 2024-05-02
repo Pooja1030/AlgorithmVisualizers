@@ -56,6 +56,48 @@ const list = [
     "algorithms": ["Backtracking"],
     "img": ""
   },
+  {
+    "title": "Binary Tree",
+    "link": "binarytree",
+    "description": "A binary tree is a data structure in which each node has at most two children, referred to as the left child and the right child.",
+    "algorithms": ["Preorder", "Inorder", "Postorder"],
+    "img": ""
+  },
+  {
+    "title": "Stack",
+    "link": "stack",
+    "description": "A stack is a Linear data structure. It follows Last in First Out(LIFO). Elements are inserted and deleted from the top of a stack.",
+    "algorithms": ["push", "pop", "peek", "isEmpty", "size"],
+    "img": ""
+  },
+  {
+    "title": "Queue",
+    "link": "queue",
+    "description": "A Queue is a Linear data structure. It follows First in First Out(FIFO). Elements are inserted at the end of the Queue and deleted from the beginning of a queue.",
+    "algorithms": ["enqueue", "dequeue", "peek", "isEmpty", "size"],
+    "img": ""
+  },
+  {
+    "title": "Binary Search",
+    "link": "binarysearch",
+    "description": "Binary Search is defined as a searching algorithm used in a sorted array by repeatedly dividing the search interval in half.",
+    "algorithms": ["Binary Search"],
+    "img": ""
+  },
+  {
+    "title": "Linked List",
+    "link": "linkedlist",
+    "description": "A linked list is a linear data structure that consists of a series of nodes where each node contains data and a reference (link) to the next node in the sequence. ",
+    "algorithms": ["Singly", "Doubly", "Circular"],
+    "img": ""
+  },
+  {
+    "title": "Minimum Spanning Tree",
+    "link": "MinimumSpanningTree",
+    "description": "An MST has the minimum possible total edge weight. It connects all the vertices of the graph without forming any cycles.",
+    "algorithms": ["Prim's", "Kruskal's"],
+    "img": ""
+  },
 
 ];
 
@@ -63,16 +105,16 @@ const list = [
 const search_tags = ["linked list", "array", "graph", "stack", "queue"];
 
 const HtmlTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: '#f5f5f9',
-    color: 'rgba(0, 0, 0, 0.87)',
-    maxWidth: 250,
-    fontSize: theme.typography.pxToRem(12),
-    border: '1px solid #dadde9',
-  },
-}));
+  <Tooltip {...props} classes={{ popper: className }} />))(({ theme }) => (
+    {
+      [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: '#f5f5f9',
+        color: 'rgba(0, 0, 0, 0.87)',
+        maxWidth: 250,
+        fontSize: theme.typography.pxToRem(12),
+        border: '1px solid #dadde9',
+      },
+    }));
 
 
 export default function HomeDraft() {
@@ -87,16 +129,20 @@ export default function HomeDraft() {
         <section className="hero-section">
 
           <div className="hero-text-content">
-            <h1 className="hero-text-content-h1">Explore Algorithms:<br></br> Learn, Visualize, and Master</h1>
+            <h1 className="hero-text-content-h1">Algorithm Visualizer</h1>
+            <h2 className="hero-text-content-h2">
+            Explore & Understand Algorithms through Interactive Visualization</h2> 
+           
+            {/* <h1 className="hero-text-content-h1">Explore Algorithms:<br></br> Learn, Visualize, and Master</h1>
 
             <h2 className="hero-text-content-h2">
-            Algorithm Visualizer is your interactive gateway to understanding and mastering essential algorithms used in computer science.
-            </h2>
+              Algorithm Visualizer is your interactive gateway to understanding and mastering essential algorithms used in computer science.
+            </h2> */}
 
           </div>
 
 
-          <div className="search-input-hero search-input-with-dropdown">
+          {/* <div className="search-input-hero search-input-with-dropdown">
             <SearchIcon className="search-icon"></SearchIcon>
 
             <form action="/search" className="search-input-form" method="get">
@@ -114,12 +160,12 @@ export default function HomeDraft() {
                 <a href="/search/landing%20page">{item}</a>
               </li>
             )}
-          </ul>
+          </ul> */}
 
         </section>
-</div>
+      </div>
 
-<div className="container">
+      <div className="container">
 
         <section className="dashboard-section">
           {/* <div className="dashboard-section-header">
