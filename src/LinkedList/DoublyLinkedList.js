@@ -4,6 +4,9 @@ class Node {
         this.data = data;
         this.prev = null;
         this.next = null;
+        this.isHead = false; // Property to indicate if the node is the head
+        this.isTail = false; // Property to indicate if the node is the tail
+        this.visited = false;
     }
 }
 
@@ -18,10 +21,18 @@ class DoublyLinkedList {
         if (!this.head) {
             this.head = newNode;
             this.tail = newNode;
+            newNode.isHead = true; // Set isHead to true for the new head node
+            newNode.isTail = true; // Set isTail to true for the new tail node
         } else {
             newNode.next = this.head;
             this.head.prev = newNode;
             this.head = newNode;
+            newNode.isHead = true; // Set isHead to true for the new head node
+        }
+        if (newNode.next) {
+            newNode.next.isHead = false; // Set isHead to false for the old head node
+        } else {
+            newNode.isTail = true; // If the list was empty, set isTail to true for the new tail node
         }
     }
 
@@ -30,10 +41,15 @@ class DoublyLinkedList {
         if (!this.head) {
             this.head = newNode;
             this.tail = newNode;
+            newNode.isHead = true; // Set isHead to true for the new head node
+            newNode.isTail = true; // Set isTail to true for the new tail node
+            return;
         } else {
             newNode.prev = this.tail;
+            newNode.prev.isTail = false; // Set isTail to false for the old tail node
             this.tail.next = newNode;
             this.tail = newNode;
+            newNode.isTail = true; // Set isTail to true for the new tail node
         }
     }
 
@@ -80,25 +96,25 @@ class DoublyLinkedList {
     deleteAtBeginning() {
         if (!this.head) return null;
         const removedData = this.head.data;
-        if (this.head === this.tail) {
-            this.head = null;
-            this.tail = null;
-        } else {
-            this.head = this.head.next;
-            this.head.prev = null;
+        this.head = this.head.next;
+        // Update isHead property of the new head node
+        if (this.head) {
+            this.head.isHead = true;
         }
         return removedData;
     }
 
     deleteFromEnd() {
-        if (!this.tail) return null;
+        if (!this.head) return null;
         const removedData = this.tail.data;
-        if (this.head === this.tail) {
-            this.head = null;
-            this.tail = null;
-        } else {
-            this.tail = this.tail.prev;
+        this.tail = this.tail.prev;
+        // Update isTail property of the new tail node
+        if (this.tail) {
+            this.tail.isTail = true;
             this.tail.next = null;
+        } else {
+            // If there is no tail, the list is empty
+            this.head = null;
         }
         return removedData;
     }
@@ -133,14 +149,25 @@ class DoublyLinkedList {
         return null; // Node with dataToSearch not found
     }
 
+    traverse() {
+        let current = this.head;
+        const result = [];
+        while (current !== null) {
+            current.visited = true;
+            result.push(current);
+            current = current.next;
+        }
+        return result;
+    }
+
     displayList() {
         let current = this.head;
         let listValues = '';
         while (current !== null) {
-            listValues += `${current.data} <-> `;
+            listValues += `${current.data} <--> `;
             current = current.next;
         }
-        listValues += 'null';
+        listValues = 'null <-- '+listValues+'null';
         return listValues;
     }
 }

@@ -11,13 +11,13 @@ const LinkedListVisualizer = () => {
     const [linkedlist, setLinkedList] = useState(null); // State to hold the linked list instance
     const [resultText, setResultText] = useState('');
     const [currVal, setCurrVal] = useState('');
-    const [listType, setListType] = useState('visualize');
+    const [listType, setListType] = useState('');
     const [insertPosition, setInsertPosition] = useState('Beginning'); // State to hold the selected position for insertion
     const [deletePosition, setDeletePosition] = useState('Beginning'); // State to hold the selected position for deletion
     const [newValue, setNewValue] = useState('');
     const [nodeValue, setNodeValue] = useState('');
     const [searchValue, setSearchValue] = useState('');
-    
+
     const handleListTypeChange = (event) => {
         const type = event.target.value.toLowerCase();
         setListType(type);
@@ -53,7 +53,6 @@ const LinkedListVisualizer = () => {
     const handleNodeValueChange = (event) => {
         setNodeValue(event.target.value);
     };
-
 
     const handleSearchInputChange = (event) => {
         setSearchValue(event.target.value);
@@ -137,7 +136,7 @@ const LinkedListVisualizer = () => {
     };
 
     const searchNode = () => {
-        if (linkedlist) {
+        if (linkedlist && searchValue) {
             const valueToSearch = parseInt(searchValue.trim());
             const foundNode = linkedlist.search(valueToSearch);
             if (foundNode) {
@@ -149,6 +148,45 @@ const LinkedListVisualizer = () => {
             }
         }
     };
+
+    const traverseList = () => {
+        if (linkedlist) {
+            const traversalResult = linkedlist.traverse();
+            // console.log(traversalResult); // Output the traversal result to console
+            return traversalResult;
+        }
+    };
+
+    const animateTraversal = async () => {
+        const list = traverseList();
+        if (list.length === 0) return;
+
+        document.getElementById("head-null-node").classList.add('head-null-visited');
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for animation to complete
+        document.getElementById("head-null-node").classList.remove('head-null-visited');
+
+
+        for (let i = 0; i < list.length; i++) {
+            const listNode = list[i];
+            const currentNodeElement = document.getElementById(`list-node-${listNode.data}`);
+
+            listNode.visited = true;
+            currentNodeElement.classList.add('list-node-visited');
+
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for animation to complete
+
+            listNode.visited = false;
+            currentNodeElement.classList.remove('list-node-visited');
+        };
+
+        document.getElementById("null-node").classList.add('null-visited');
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for animation to complete
+        document.getElementById("null-node").classList.remove('null-visited');
+
+        setResultText('Linked List:');
+        setCurrVal(linkedlist.displayList());
+    }
+
 
     // const displayList = () => {
     //     if (linkedlist) {
@@ -168,29 +206,31 @@ const LinkedListVisualizer = () => {
         const nodes = [];
         // head
         nodes.push(
-            <div className="list-node">
+            <div id="head-null-node" className="list-node">
                 <div className="box head">
-                    <div>HEAD</div>
-                    {listType === 'doubly' && <div>NULL</div>}
+                    <div className='head-node'>HEAD</div>
+                    {listType === 'doubly' && current && <div className="prev-null-node">NULL</div>}
                 </div>
                 <div className='arrowIcons'>
-                    <EastIcon />
-                    {listType === 'doubly' && <WestIcon />}
+                    <EastIcon className='nextArrow' id="head-arrow"/>
+                    {listType === 'doubly' && current && <WestIcon className='prevArrow' />}
                 </div>
             </div>
         );
         // other nodes
         while (current !== null) {
             nodes.push(
-                <div key={current.data} className="list-node">
+                <div key={current.data} id={(`list-node-${current.data}`)} className="list-node">
                     <div className="box">
-                        {listType === 'doubly' && <div className="next">prev</div>}
-                        <div className="data">{current.data}</div>
+                        {listType === 'doubly' && <div className="prev">prev</div>}
+                        <div className="data">
+                            {current.data}
+                        </div>
                         <div className="next">next</div>
                     </div>
                     <div className='arrowIcons'>
-                        <EastIcon />
-                        {listType === 'doubly' && current.next && <WestIcon />}
+                        <EastIcon className='nextArrow' />
+                        {listType === 'doubly' && current.next && <WestIcon className='prevArrow' />}
                     </div>
                 </div>
             );
@@ -199,7 +239,7 @@ const LinkedListVisualizer = () => {
         // null
         nodes.push(
             <div key="null" className="list-node">
-                <div className="box null">NULL</div>
+                <div id="null-node" className="box null">NULL</div>
             </div>
         );
         return nodes;
@@ -213,10 +253,10 @@ const LinkedListVisualizer = () => {
                 <div>
                     <div className="menu">
                         <select value={listType} onChange={handleListTypeChange}>
-                            <option disabled value="visualize">Select Linked List</option>
+                            <option disabled value="">Select Linked List</option>
                             <option value="singly">Singly Linked List</option>
                             <option value="doubly">Doubly Linked List</option>
-                            <option value="circular">Circular Linked List</option>
+                            <option disabled value="circular">Circular Linked List</option>
                         </select>
 
                         {/* insert */}
@@ -256,11 +296,13 @@ const LinkedListVisualizer = () => {
                         }
                         <button className='reset-btn' onClick={deleteNode}>Delete</button>
                     </div>
+
+                    {/* search */}
                     <input type="text" value={searchValue} onChange={handleSearchInputChange} placeholder="Search Node" />
                     <button className='visualize-btn' onClick={searchNode}>Search Node</button>
 
+                    <button className='' onClick={animateTraversal}>Traverse</button>
                     <button className='reset-btn' onClick={resetLinkedList}>Reset</button>
-                    {/* <button className='' onClick={displayList}>Display</button> */}
                     <div className="result">{resultText && `${resultText} ${currVal}`}</div>
                 </div>
                 <div className="linkedlist">
