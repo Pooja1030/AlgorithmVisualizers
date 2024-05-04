@@ -7,7 +7,7 @@ class BinaryTreeView extends Component {
         if (!node) return null;
 
         return (
-            <div key={index} className="node">
+            <div key={index} className="tree-node">
                 <div>{node}</div>
             </div>
         );

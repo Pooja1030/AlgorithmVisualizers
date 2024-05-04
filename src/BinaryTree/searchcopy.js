@@ -238,7 +238,7 @@ class BinaryTree extends Component {
                     ))}
                     <div className="traversal-result">
                         {this.state.traversalResult.map((value, index) => (
-                            <div key={index} className="node">
+                            <div key={index} className="tree-node">
                                 {value}
                             </div>
                         ))}
