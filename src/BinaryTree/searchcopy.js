@@ -1,7 +1,9 @@
+/* eslint-disable no-undef */
 import React, { Component } from 'react';
 import Navbar from '../Components/navbar';
 import BinaryTreeView from './BinaryTreeView'; // Assuming BinaryTreeView component for visualization
 import './style1.css'
+import SidePanel from './sidepanelt'; // Import the SidePanel component
 class BinaryTree extends Component {
     constructor() {
         super();
@@ -16,6 +18,24 @@ class BinaryTree extends Component {
             searchValue: '',
             operationResult: null,
             visualizeClicked: false,
+            visualizing:false,
+            sidePanelOpen: false, // State variable to manage side panel visibility
+            algorithmSteps: [{
+                code: `// Step 1: Append the data to the array emulating the functionality of a stack.
+        stack.push(newValue);`
+              },
+              {
+                code: `// Step 2: Truncate the last element of the array and return it.
+        const poppedValue = stack.pop();
+        return poppedValue;`
+              },
+              {
+                code: `// Step 3: Return the element last added to the array without removing it.
+        return stack[stack.length - 1];`
+              }
+              // Add more steps if needed
+            ], // Define state for algorithm steps
+            
         };
     }
 
@@ -190,6 +210,7 @@ class BinaryTree extends Component {
         } else {
             this.setState({ operationResult: 'Please select a traversal before visualizing.' });
         }
+        this.setState({ visualizing: true });
     };
     
 
@@ -205,10 +226,29 @@ class BinaryTree extends Component {
         });
     }
 
+    toggleSidePanel = () => {
+        this.setState(prevState => ({
+            sidePanelOpen: !prevState.sidePanelOpen
+        }));
+    };
+
     render() {
+        const { visualizing, sidePanelOpen, algorithmSteps, toggleSidePanel } = this.state;
         return (
             <>
                 <Navbar currentPage="Binary Tree Traversal Visualizer" />
+
+                {/* Render the side panel toggle button */}
+                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
+
+                {/* Render the side panel component */}
+                <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
+
+                
+            {/* Render the side panel component */}
+            <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
+
+
                 <div className='menu'>
                     <div>
                         <select onChange={this.handleTraversalSelect}>
@@ -232,10 +272,11 @@ class BinaryTree extends Component {
 
                 <div className="result-container">
                     {this.state.stack.map((value, index) => (
-                        <div key={index} className="stack-item">
+                        <div key={index} className={`stack-item ${visualizing ? 'fade-out' : ''}`}>
                             {value}
                         </div>
                     ))}
+                    
                     <div className="traversal-result">
                         {this.state.traversalResult.map((value, index) => (
                             <div key={index} className="tree-node">
@@ -249,6 +290,72 @@ class BinaryTree extends Component {
                         </div>
                     )} */}
                 </div>
+
+                <div className="representation">
+    <div className="row mx-auto" id="binarytree-pseudocode">
+        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+            <div className="ide w-100">
+                <div className="row ml-auto mr-auto 1">
+                    <span className="comment w-100">----------------</span>
+                    <span className="comment w-100 mt-1">| INSERT NODE |</span>
+                    <span className="comment w-100">----------------</span>
+                    <span className="comment w-100 mt-1">
+                        1. Insert a new node with the specified data value into the binary tree.
+                    </span>
+                    <span className="comment w-100 mt-1">
+                        2. Traverse the tree to find the appropriate position for insertion.
+                    </span>
+                    <span className="comment w-100 mt-1"> </span>
+                    <span className="comment w-100 mt-1">
+                        TIME COMPLEXITY: O(log n) - O(n) depending on the tree structure
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+            <div className="ide w-100">
+                <div className="row ml-auto mr-auto 1">
+                    <span className="comment w-100">----------------</span>
+                    <span className="comment w-100 mt-1">| DELETE NODE |</span>
+                    <span className="comment w-100">----------------</span>
+                    <span className="comment w-100 mt-1">
+                        1. Delete a node with the specified data value from the binary tree.
+                    </span>
+                    <span className="comment w-100 mt-1">
+                        2. Traverse the tree to find the node to be deleted.
+                    </span>
+                    <span className="comment w-100 mt-1">
+                        3. Handle different cases based on the number of children of the node.
+                    </span>
+                    <span className="comment w-100 mt-1"> </span>
+                    <span className="comment w-100 mt-1">
+                        TIME COMPLEXITY: O(log n) - O(n) depending on the tree structure
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+            <div className="ide w-100">
+                <div className="row ml-auto mr-auto 1">
+                    <span className="comment w-100">----------------</span>
+                    <span className="comment w-100 mt-1">| SEARCH NODE |</span>
+                    <span className="comment w-100">----------------</span>
+                    <span className="comment w-100 mt-1">
+                        1. Search for a node with the specified data value in the binary tree.
+                    </span>
+                    <span className="comment w-100 mt-1">
+                        2. Traverse the tree to find the node with the matching data value.
+                    </span>
+                    <span className="comment w-100 mt-1"> </span>
+                    <span className="comment w-100 mt-1">
+                        TIME COMPLEXITY: O(log n) - O(n) depending on the tree structure
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
                 {/* Visualization component */}
                 {this.state.visualizeClicked && (

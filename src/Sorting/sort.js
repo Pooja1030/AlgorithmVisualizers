@@ -1,21 +1,11 @@
-
-// import SortingVisualizer from '../SortingVisualizer/SortingVisualizer';
-// import Sorting from './Sorting';
-
-// const Sort = () => {
-//     // return <SortingVisualizer></SortingVisualizer>
-//     return <Sorting></Sorting>
-// };
-
-// export default Sort;
-
-
 import React, { Component } from 'react';
 import { bubbleSort, selectionSort, insertionSort } from "../algorithms/sortingalgorithms"
 import Navbar from '../Components/navbar';
 import { quickSort } from "../algorithms/quickSort";
 import Menu from "./menu";
 import Rects from './rects';
+import SidePanel from './sidepanelso';
+
 
 class Sort extends Component {
     state = {
@@ -28,7 +18,23 @@ class Sort extends Component {
         isRunning1: false,
         isRunning2: false,
         algo1: 0,
-        algo2: 0
+        algo2: 0,
+        sidePanelOpen: false, // State to manage side panel visibility
+        algorithmSteps: [{
+          code: `// Step 1: Append the data to the array emulating the functionality of a stack.
+  stack.push(newValue);`
+        },
+        {
+          code: `// Step 2: Truncate the last element of the array and return it.
+  const poppedValue = stack.pop();
+  return poppedValue;`
+        },
+        {
+          code: `// Step 3: Return the element last added to the array without removing it.
+  return stack[stack.length - 1];`
+        }
+        // Add more steps if needed
+      ],
     }
 
     componentDidMount() {
@@ -37,10 +43,22 @@ class Sort extends Component {
         this.setState({ rects: rect, rects2: rect2 });
     }
 
+    toggleSidePanel = () => {
+        this.setState((prevState) => ({ sidePanelOpen: !prevState.sidePanelOpen }));
+      };
+
     render() {
         return (
             <React.Fragment>
                 <Navbar currentPage="Sorting Visualizer" />
+                 {/* Side panel toggle button */}
+        <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
+          →
+        </button>
+
+         {/* Render the side panel component */}
+         <SidePanel isOpen={this.state.sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={this.state.algorithmSteps} />
+
                 <Menu
                     isDisabled={this.state.isRunning}
                     onDoubleChange={this.handleDouble}
@@ -51,6 +69,8 @@ class Sort extends Component {
                     onAlgoChanged={this.handleAlgoChanged}
                     onSpeedChange={this.handleSpeedChanged}
                 />
+
+
                 <div className='justify-content-center'>
                     <Rects
                         speed={this.state.speed}

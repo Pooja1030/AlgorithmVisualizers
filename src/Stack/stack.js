@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/navbar';
 import DiscreteSlider from '../Components/slider';
+import SidePanel from './sidePanelS'; // Import the SidePanel component
 import './stack.css'; 
 
 const StackVisualizer = () => {
@@ -9,6 +10,32 @@ const StackVisualizer = () => {
     const [poppedDie, setPoppedDie] = useState(null);
     const [resultText, setResultText] = useState(null);
     const [currVal, setCurrVal] = useState(null);
+    const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
+    const [algorithmSteps, setAlgorithmSteps] = useState([]); // Define state for algorithm steps
+    // const [isPlaying, setIsPlaying] = useState(false); // State to manage play-pause functionality
+
+    useEffect(() => {
+        // Define your algorithm steps here
+        const steps = [
+            {
+                code: `// Step 1: Append the data to the array emulating the functionality of a stack.
+stack.push(newValue);`
+            },
+            {
+                code: `// Step 2: Truncate the last element of the array and return it.
+const poppedValue = stack.pop();
+return poppedValue;`
+            },
+            {
+                code: `// Step 3: Return the element last added to the array without removing it.
+return stack[stack.length - 1];`
+            }
+            // Add more steps if needed
+        ];
+
+        setAlgorithmSteps(steps);
+    }, []);
+
 
     const push = () => {
         setResultText(null);
@@ -57,10 +84,33 @@ const StackVisualizer = () => {
         setCurrVal(stack.length);
     };
 
+    const toggleSidePanel = () => {
+        setSidePanelOpen(!sidePanelOpen);
+    };
+
+    // const togglePlayPause = () => {
+    //     setIsPlaying(!isPlaying);
+    // };
+    // const togglePlayPause = () => {
+    //     setIsPlaying(!isPlaying);
+    //   };
+
 
     return (
         <>
             <Navbar currentPage="Stack" />
+
+            {/* Side panel toggle button */}
+            <button className="side-panel-toggle" onClick={toggleSidePanel}>Toggle Side Panel</button>
+
+            {/* Render the play-pause buttons */}
+            {/* <button className="play-pause-btn" onClick={togglePlayPause}>{isPlaying ? 'Pause' : 'Play'}</button> */}
+            {/* <button className="play-pause-btn" onClick={togglePlayPause}>
+        {isPlaying ? 'Pause' : 'Play'}
+      </button> */}
+
+            {/* Render the side panel component */}
+            <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} />
 
             <div className="stack-visualizer">
                 <div>

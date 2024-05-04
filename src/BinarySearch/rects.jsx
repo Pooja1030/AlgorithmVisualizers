@@ -1,5 +1,5 @@
 import React from 'react';
-import "./style.css";
+import "./style4.css";
 
 const Rects = ({ rects, target }) => {
   return (

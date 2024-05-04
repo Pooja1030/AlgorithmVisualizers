@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import Rects from './rects';
-// import '../App.css';
+import SidePanel from './Sidepanels'; // Import the SidePanel component
+import './style4.css'
 
 class BinarySearch extends Component {
   state = {
@@ -11,13 +12,35 @@ class BinarySearch extends Component {
     rects: [],
     isRunning: false,
     currentStep: null,
+    sidePanelOpen: false, // State to manage side panel visibility
+    algorithmSteps: [
+      {
+        code: `// Step 1: Append the data to the array emulating the functionality of a stack.
+stack.push(newValue);`
+      },
+      {
+        code: `// Step 2: Truncate the last element of the array and return it.
+const poppedValue = stack.pop();
+return poppedValue;`
+      },
+      {
+        code: `// Step 3: Return the element last added to the array without removing it.
+return stack[stack.length - 1];`
+      }
+      // Add more steps if needed
+    ]
   };
+  
 
   componentDidMount() {
     this.handleRandomize();
   }
 
   render() {
+
+    const { sidePanelOpen, algorithmSteps } = this.state;
+
+
     return (
       <React.Fragment>
         <Navbar currentPage="Binary Search Visualizer" />
@@ -30,6 +53,13 @@ class BinarySearch extends Component {
   onTargetChange={this.handleTargetChange}
 />
 
+       {/* Side panel toggle button */}
+       <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
+
+{/* Render the side panel component */}
+<SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={algorithmSteps}  />
+
+
         <div className='justify-content-center'>
           <Rects
             rects={this.state.rects}
@@ -37,63 +67,72 @@ class BinarySearch extends Component {
           />
         </div>
         <div className="representation">
-          <div className="ide w-100">
-            <div className="row ml-auto mr-auto">
-              <span>Pseudocode:</span>
+    <div className="row mx-auto" id="binarysearchtree-pseudocode">
+        {/* <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+            <div className="ide w-100">
+                <div className="row ml-auto mr-auto 1">
+                    <span className="comment w-100">----------------</span>
+                    <span className="comment w-100 mt-1">| INSERT NODE |</span>
+                    <span className="comment w-100">----------------</span>
+                    <span className="comment w-100 mt-1">
+                        1. Insert a new node with the specified data value into the binary search tree.
+                    </span>
+                    <span className="comment w-100 mt-1">
+                        2. Traverse the tree to find the appropriate position for insertion based on the value.
+                    </span>
+                    <span className="comment w-100 mt-1"> </span>
+                    <span className="comment w-100 mt-1">
+                        TIME COMPLEXITY: O(log n) - O(n) depending on the tree structure
+                    </span>
+                </div>
             </div>
-            <div className="row ml-auto mr-auto mt-1">
-              <pre>
-                {`function binarySearch(array, target) {
-  let low = 0;
-  let high = array.length - 1;
-  
-  while (low <= high) {
-    let mid = Math.floor((low + high) / 2);
-    
-    if (array[mid] === target) {
-      return mid;
-    } else if (array[mid] < target) {
-      low = mid + 1;
-    } else {
-      high = mid - 1;
-    }
-  }
-  
-  return -1;
-}`}
-              </pre>
+        </div> */}
+        {/* <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+            <div className="ide w-100">
+                <div className="row ml-auto mr-auto 1">
+                    <span className="comment w-100">----------------</span>
+                    <span className="comment w-100 mt-1">| DELETE NODE |</span>
+                    <span className="comment w-100">----------------</span>
+                    <span className="comment w-100 mt-1">
+                        1. Delete a node with the specified data value from the binary search tree.
+                    </span>
+                    <span className="comment w-100 mt-1">
+                        2. Traverse the tree to find the node to be deleted.
+                    </span>
+                    <span className="comment w-100 mt-1">
+                        3. Handle different cases based on the number of children of the node.
+                    </span>
+                    <span className="comment w-100 mt-1"> </span>
+                    <span className="comment w-100 mt-1">
+                        TIME COMPLEXITY: O(log n) - O(n) depending on the tree structure
+                    </span>
+                </div>
             </div>
-          </div>
-          <div className="explanation w-100">
-            <div className="row ml-auto mr-auto">
-              <span className="comment w-100">SHORT EXPLANATION</span>
+        </div> */}
+        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+            <div className="ide w-100">
+                <div className="row ml-auto mr-auto 1">
+                    <span className="comment w-100">----------------</span>
+                    <span className="comment w-100 mt-1">| SEARCH NODE |</span>
+                    <span className="comment w-100">----------------</span>
+                    <span className="comment w-100 mt-1">
+                        1. Search for a node with the specified data value in the binary search tree.
+                    </span>
+                    <span className="comment w-100 mt-1">
+                        2. Traverse the tree recursively, comparing the data value with each node's value.
+                    </span>
+                    <span className="comment w-100 mt-1">
+                        3. If the value matches, return the node; otherwise, continue searching in the left or right subtree.
+                    </span>
+                    <span className="comment w-100 mt-1"> </span>
+                    <span className="comment w-100 mt-1">
+                        TIME COMPLEXITY: O(log n) - O(n) depending on the tree structure
+                    </span>
+                </div>
             </div>
-            <div className="row ml-auto mr-auto mt-1">
-              <span className="comment w-100">---------------------</span>
-            </div>
-            <div className="row ml-auto mr-auto mt-1">
-              <span>1. Set low to 0 and high to length of array - 1.</span>
-            </div>
-            <div className="row ml-auto mr-auto mt-1">
-              <span>2. Repeat while low is less than or equal to high:</span>
-            </div>
-            <div className="row ml-auto mr-auto mt-1">
-              <span>    a. Set mid to the middle index between low and high.</span>
-            </div>
-            <div className="row ml-auto mr-auto mt-1">
-              <span>    b. If the target is found at mid, return mid.</span>
-            </div>
-            <div className="row ml-auto mr-auto mt-1">
-              <span>    c. If the target is less than the value at mid, set high to mid - 1.</span>
-            </div>
-            <div className="row ml-auto mr-auto mt-1">
-              <span>    d. If the target is greater than the value at mid, set low to mid + 1.</span>
-            </div>
-            <div className="row ml-auto mr-auto mt-1">
-              <span>3. If the target is not found, return -1.</span>
-            </div>
-          </div>
         </div>
+    </div>
+</div>
       </React.Fragment>
     );
   }
@@ -173,6 +212,11 @@ class BinarySearch extends Component {
     };
     animateStep(0);
   }
+  toggleSidePanel = () => {
+    this.setState(prevState => ({
+      sidePanelOpen: !prevState.sidePanelOpen,
+    }));
+  };
 }
 
 export default BinarySearch;

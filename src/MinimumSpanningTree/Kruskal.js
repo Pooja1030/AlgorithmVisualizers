@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './Kruskal.css';
+// import sidePanel from './sidepanelm'; // Import the SidePanel component
+
 
 class Kruskal extends Component {
     constructor(props) {
@@ -9,6 +11,7 @@ class Kruskal extends Component {
             edges: [],
             mstEdges: [], // Store edges of the minimum spanning tree
             animationSpeed: 1000,
+            // sidePanelOpen: false // State to manage side panel visibility
         };
     }
 
@@ -64,8 +67,20 @@ class Kruskal extends Component {
         animateMST();
     }
 
+    // toggleSidePanel = () => {
+    //     this.setState(prevState => ({
+    //         sidePanelOpen: !prevState.sidePanelOpen
+    //     }));
+    // };
+
     render() {
         return (
+            <>
+            {/* Render the side panel toggle button */}
+            {/* <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button> */}
+                {/* Render the SidePanel component */}
+                {/* <sidePanel isOpen={this.state.sidePanelOpen} onClose={this.toggleSidePanel} /> */}
+                {/* Render the rest of the Kruskal component */}
             <div className="container">
                 <div className="graph">
                     <h2>Minimum Spanning Tree (Kruskal's Algorithm)</h2>
@@ -137,6 +152,7 @@ class Kruskal extends Component {
                     </div>
                 </div>
             </div>
+            </>
         );
     }
 }

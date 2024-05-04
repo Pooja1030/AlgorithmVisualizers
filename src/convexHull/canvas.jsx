@@ -1,12 +1,22 @@
 import React, {Component} from 'react';
 import './style.css';
 import {convex_hull} from "../algorithms/grahamScan";
+import SidePanel from './sidepanelh'; // Import the SidePanel component
+
+
 class Canvas extends Component {
     state={
         dots:[],
         lines:[],
         canvasWidth:300,
-        canvasHeight:100
+        canvasHeight:100,
+        sidePanelOpen: false, // State variable for managing side panel visibility
+        algorithmSteps: [
+            // Define your algorithm steps here
+            { description: 'Step 1: Describe the first step' },
+            { description: 'Step 2: Describe the second step' },
+            { description: 'Step 3: Describe the third step' }
+        ],
     }
     constructor(props) {
         super(props);
@@ -15,6 +25,7 @@ class Canvas extends Component {
         console.log(window.innerWidth);
         this.myRef = React.createRef();
         this.canvasLineRef = React.createRef();
+        
     }
     componentDidMount() {
         this.redrawDots();
@@ -34,7 +45,17 @@ class Canvas extends Component {
     }
 
     render() {
+
+        const { sidePanelOpen, algorithmSteps } = this.state;
+
         return (
+            <>
+            {/* Render the toggle button for the side panel */}
+            <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
+
+            {/* Render the SidePanel component */}
+            <SidePanel isOpen={sidePanelOpen} onClose={this.closeSidePanel}  algorithmSteps={algorithmSteps} />
+
             <div style={{textAlign:"center"}}>
                 <div className="containerz">
                     <canvas
@@ -51,6 +72,7 @@ class Canvas extends Component {
 
                 </div>
             </div>
+            </>
         );
     }
 
@@ -141,6 +163,14 @@ class Canvas extends Component {
             }
             await sleep(this.props.speed);
         }
+    }
+
+    toggleSidePanel = () => {
+        this.setState({ sidePanelOpen: !this.state.sidePanelOpen });
+    }
+
+    closeSidePanel = () => {
+        this.setState({ sidePanelOpen: false });
     }
 
 }

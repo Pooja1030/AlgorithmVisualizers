@@ -4,6 +4,7 @@ import { getTree } from "./fib";
 import Menu from "./menu";
 import Navbar from '../Components/navbar';
 import Details from "./details";
+import SidePanel from './sidepanelg';
 
 class Graph extends Component {
     constructor() {
@@ -16,7 +17,14 @@ class Graph extends Component {
             n: 0,
             r: 2,
             algo: 0,
-            offset: 0
+            offset: 0,
+            sidePanelOpen: false, // State variable for side panel visibility
+            algorithmSteps: [
+                // Define your algorithm steps here
+                { code: '// Step 1: Describe the first step' },
+                { code: '// Step 2: Describe the second step' },
+                { code: '// Step 3: Describe the third step' }
+            ]
         }
     }
     // setNumber = (event)=>{
@@ -44,6 +52,13 @@ class Graph extends Component {
             this.setState({ r: val });
         }
     }
+
+    toggleSidePanel = () => {
+        this.setState(prevState => ({
+            sidePanelOpen: !prevState.sidePanelOpen
+        }));
+    };
+
     addNumber = () => {
         // console.log(getFibTree(3));
         let tree = getTree(this.state.n, this.state.algo, this.state.r);
@@ -141,6 +156,10 @@ class Graph extends Component {
                 <Details
                     algo={this.state.algo}
                 />
+                 {/* Side panel toggle button */}
+                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}>Toggle Side Panel</button>
+                {/* Side Panel */}
+                <SidePanel algorithmSteps={this.state.algorithmSteps} isOpen={this.state.sidePanelOpen} onClose={this.toggleSidePanel} />
                 <CanvasSvg
                     vertices={this.state.vertices}
                     edges={this.state.edges}

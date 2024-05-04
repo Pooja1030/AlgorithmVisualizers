@@ -1,0 +1,85 @@
+.rects-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.rect {
+  width: 50px;
+  height: 50px;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 2px;
+  transition: background-color 0.5s;
+}
+
+.rect.highlight {
+  background-color: yellow;
+}
+
+.rect.target {
+  background-color: red;
+}
+
+.representation {
+  margin-top: 50px;
+  padding: 20px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.representation .ide {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.representation .comment {
+  display: block;
+  font-size: 20px;
+}
+
+.representation .comment:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.representation .row {
+  display: contents;
+  height: 150px;
+}
+
+.side-panel-toggle {
+  position: fixed;
+  right: 20px;
+  /* bottom: 20px; Adjust this value to change the vertical position */
+  display: inline-block;
+  min-width: 120px;
+  margin: 10px;
+  padding: 15px 25px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  display: flex;
+  align-items: flex-end;
+  background-color: #2196f3;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.side-panel-toggle:hover {
+  background-color: #0d8bff;
+}
+
+/* .menu{
+
+    justify-content: space-between;
+    padding: 10px 210px;
+  } */

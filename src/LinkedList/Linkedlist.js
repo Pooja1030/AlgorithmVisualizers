@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/navbar';
+import SidePanel from './sidepanell'; // Import the SidePanel component
 import './linkedlist.css';
 import SinglyLinkedList from './SinglyLinkedList'; // Import SinglyLinkedList
 import DoublyLinkedList from './DoublyLinkedList'; // Import DoublyLinkedList
@@ -17,7 +18,32 @@ const LinkedListVisualizer = () => {
     const [newValue, setNewValue] = useState('');
     const [nodeValue, setNodeValue] = useState('');
     const [searchValue, setSearchValue] = useState('');
+    const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
+    const [algorithmSteps, setAlgorithmSteps] = useState([]); 
 
+    useEffect(() => {
+        // Define your algorithm steps here
+        const steps = [
+            {
+                code: `// Step 1: Append the data to the array emulating the functionality of a stack.
+stack.push(newValue);`
+            },
+            {
+                code: `// Step 2: Truncate the last element of the array and return it.
+const poppedValue = stack.pop();
+return poppedValue;`
+            },
+            {
+                code: `// Step 3: Return the element last added to the array without removing it.
+return stack[stack.length - 1];`
+            }
+            // Add more steps if needed
+        ];
+
+        setAlgorithmSteps(steps);
+    }, []);
+
+    
     const handleListTypeChange = (event) => {
         const type = event.target.value.toLowerCase();
         setListType(type);
@@ -245,15 +271,22 @@ const LinkedListVisualizer = () => {
         return nodes;
     };
 
+    const toggleSidePanel = () => {
+        setSidePanelOpen(!sidePanelOpen);
+    };
 
     return (
         <>
             <Navbar currentPage="Linked List" />
+            <button className="side-panel-toggle" onClick={toggleSidePanel}>→</button>
+            <SidePanel isOpen={sidePanelOpen} onClose={toggleSidePanel} /> {/* Render the side panel component */}
+            <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} />
+
             <div className="linkedlist-visualizer">
                 <div>
                     <div className="menu">
                         <select value={listType} onChange={handleListTypeChange}>
-                            <option disabled value="">Select Linked List</option>
+                            <option disabled value="visualize">Select Linked List</option>
                             <option value="singly">Singly Linked List</option>
                             <option value="doubly">Doubly Linked List</option>
                             <option disabled value="circular">Circular Linked List</option>
@@ -305,11 +338,67 @@ const LinkedListVisualizer = () => {
                     <button className='reset-btn' onClick={resetLinkedList}>Reset</button>
                     <div className="result">{resultText && `${resultText} ${currVal}`}</div>
                 </div>
+ 
+
+
+
                 <div className="linkedlist">
                     <div className="list">
                         {linkedlist && renderNodes()}
                     </div>
                 </div>
+                <div className="representation">
+    <div className="row mx-auto" id="linkedlist-pseudocode">
+        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+            <div className="ide w-100">
+                <div className="row ml-auto mr-auto 1">
+                    <span className="comment w-100">--------</span>
+                    <span className="comment w-100 mt-1">| INSERT |</span>
+                    <span className="comment w-100 mt-1">--------</span>
+                    <span className="comment w-100 mt-1">
+                        1. Insert the data at the specified position in the linked list.
+                    </span>
+                    <span className="comment w-100 mt-1"> </span>
+                    <span className="comment w-100 mt-1">
+                        TIME COMPLEXITY: O(1) - O(n) depending on the position
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+            <div className="ide w-100">
+                <div className="row ml-auto mr-auto 1">
+                    <span className="comment w-100">-------</span>
+                    <span className="comment w-100 mt-1">| DELETE |</span>
+                    <span className="comment w-100 mt-1">-------</span>
+                    <span className="comment w-100 mt-1">
+                        1. Delete the node at the specified position from the linked list.
+                    </span>
+                    <span className="comment w-100 mt-1"> </span>
+                    <span className="comment w-100 mt-1">
+                        TIME COMPLEXITY: O(1) - O(n) depending on the position
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+            <div className="ide w-100">
+                <div className="row ml-auto mr-auto 1">
+                    <span className="comment w-100">--------</span>
+                    <span className="comment w-100 mt-1">| SEARCH |</span>
+                    <span className="comment w-100 mt-1">--------</span>
+                    <span className="comment w-100 mt-1">
+                        1. Search for a node with the specified data value in the linked list.
+                    </span>
+                    <span className="comment w-100 mt-1"> </span>
+                    <span className="comment w-100 mt-1">
+                        TIME COMPLEXITY: O(n)
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
         </>
     );

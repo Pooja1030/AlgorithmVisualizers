@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import Canvas from "./canvas";
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
+// import SidePanel from './sidepanelh';
 
 class ConvexHull extends Component {
     state={
@@ -13,7 +14,14 @@ class ConvexHull extends Component {
         height:100,
         isRunning:false,
         speed:100,
-        number:50
+        number:50,
+        // sidePanelOpen: false, // State to manage side panel visibility
+        // algorithmSteps: [
+        //     // Define your algorithm steps here
+        //     { description: 'Step 1: Describe the first step' },
+        //     { description: 'Step 2: Describe the second step' },
+        //     { description: 'Step 3: Describe the third step' }
+        // ],
 
     }
     constructor() {
@@ -30,6 +38,15 @@ class ConvexHull extends Component {
         return (
             <div>
                 <Navbar currentPage="Convex Hull"/>
+                 {/* Side panel toggle button */}
+                 {/* <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
+                    →
+                </button> */}
+
+                {/* Render the side panel component */}
+                {/* <SidePanel isOpen={this.state.sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={this.state.algorithmSteps} /> */}
+
+                
                 <Menu
                     onRefresh={this.handleRefreshDots}
                     onVisualize={this.handleVisualize}
