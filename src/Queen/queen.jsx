@@ -2,13 +2,20 @@ import React, {Component} from 'react';
 import Cells from "./cells";
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
+import SidePanel from './sidepanelq';
 
 class Queen extends Component {
     state={
         board:[],
         number:4,
         speed:490,
-        isRunning:false
+        isRunning:false,
+        sidePanelOpen: false, // State variable for managing side panel visibility
+        algorithmSteps: [ // Define your algorithm steps here
+            { description: 'Step 1: Describe the first step' },
+            { description: 'Step 2: Describe the second step' },
+            { description: 'Step 3: Describe the third step' }
+        ],
     }
 
  
@@ -18,6 +25,7 @@ class Queen extends Component {
     }
 
     render() {
+        const { sidePanelOpen, algorithmSteps } = this.state;
         return (
             <div>
                 <Navbar currentPage="N-queens problem"/>
@@ -29,6 +37,13 @@ class Queen extends Component {
                     onClear={this.handleClear}
                     onStop={this.handleStop}
                 />
+  {/* Render the toggle button for the side panel */}
+  <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
+
+{/* Render the SidePanel component */}
+<SidePanel isOpen={sidePanelOpen} onClose={this.closeSidePanel} algorithmSteps={algorithmSteps} />
+
+
                 <div style={{textAlign:"Center"}}>
                     <Cells
                         board={this.state.board}
@@ -100,6 +115,14 @@ class Queen extends Component {
             await sleep(this.state.speed);
         }
         return false;
+    }
+
+    toggleSidePanel = () => {
+        this.setState({ sidePanelOpen: !this.state.sidePanelOpen });
+    }
+
+    closeSidePanel = () => {
+        this.setState({ sidePanelOpen: false });
     }
 
 }
