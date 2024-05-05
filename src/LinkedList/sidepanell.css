@@ -60,16 +60,27 @@
   
   .panel-content {
     padding: 20px;
-    margin-top: -0px;
+    margin-top: -45px;
   }
   
-  .panel-content pre {
+  /* .panel-content pre {
     background-color: #fff;
     border-radius: 5px;
     padding: 10px;
     overflow-x: auto;
     height: 450px;
-  }
+  } */
+
+  .side-panel-content {
+    display: flex;
+    flex-wrap: wrap; /* Allow content to wrap onto the next line */
+}
+
+.algorithm-step {
+    width: 100%; /* Set the width to 100% so that each step takes up the full width of the container */
+    /* Add other styling properties as needed */
+}
+
   
   /* Media query for smaller screens */
   @media (max-width: 768px) {

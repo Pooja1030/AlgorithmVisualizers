@@ -20,7 +20,17 @@ export function aStar(grid, startNode, finishNode) {
       updateUnvisitedNeighbors(closestNode, grid);
     }
   }
-  
+  // Steps for A* Algorithm
+aStar.steps = [
+  { code: " Step 1: Initialize the start node and the open set." },
+  { code: " Step 2: Loop until the open set is empty." },
+  { code: " Step 3: Select the node with the lowest f score from the open set." },
+  { code: " Step 4: If the selected node is the finish node, reconstruct the path." },
+  { code: " Step 5: Generate the neighbors of the selected node." },
+  { code: " Step 6: For each neighbor, calculate tentative g score and add it to the open set." },
+  { code: " Step 7: Repeat the loop." }
+];
+
   function sortNodesByDistance(unvisitedNodes,finishNode) {
     unvisitedNodes.sort((nodeA, nodeB) => (nodeA.distance+Math.abs(finishNode.row-nodeA.row)+Math.abs(finishNode.col-nodeA.col))
                                           - (nodeB.distance+Math.abs(finishNode.row-nodeB.row)+Math.abs(finishNode.col-nodeB.col)));

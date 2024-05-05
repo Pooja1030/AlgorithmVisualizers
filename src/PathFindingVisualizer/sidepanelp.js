@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './sidepanelt.css'; // You can define your styles in this CSS file
+import './sidepanelp.css'; // You can define your styles in this CSS file
 
 const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
   const [currentStep, setCurrentStep] = useState(0);

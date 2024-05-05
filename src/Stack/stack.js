@@ -114,7 +114,7 @@ by TOP and reduce its value.`
             <Navbar currentPage="Stack" />
 
             {/* Side panel toggle button */}
-            <button className="side-panel-toggle" onClick={toggleSidePanel}>Toggle Side Panel</button>
+            <button className="side-panel-toggle" onClick={toggleSidePanel}>→</button>
 
             {/* Render the play-pause buttons */}
             {/* <button className="play-pause-btn" onClick={togglePlayPause}>{isPlaying ? 'Pause' : 'Play'}</button> */}

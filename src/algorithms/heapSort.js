@@ -7,6 +7,17 @@ export default function HeapSort(rects2){
     heapSort(rects,sz);
     return values;
 }
+
+// Algorithm steps for Heap Sort
+export const heapSortSteps = [
+    { code: "Step 1: Build a max heap from the input data." },
+    { code: "Step 2: Swap the root element (maximum value) with the last element of the heap." },
+    { code: "Step 3: Reduce the heap size by 1 and heapify the root element." },
+    { code: "Step 4: Repeat steps 2 and 3 until the heap size is 1." }
+    // Add more steps if needed
+];
+
+
 function heapify(rects,n,i){
     let largest = i; // Initialize largest as root
     let l = 2 * i + 1; // left = 2*i + 1
