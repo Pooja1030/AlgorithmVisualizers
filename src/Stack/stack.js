@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/navbar';
 import DiscreteSlider from '../Components/slider';
 import SidePanel from './sidePanelS'; // Import the SidePanel component
-import './stack.css'; 
+import './stack.css';
+import { gsap } from 'gsap';
 
 const StackVisualizer = () => {
     const [stack, setStack] = useState([]);
@@ -18,19 +19,27 @@ const StackVisualizer = () => {
         // Define your algorithm steps here
         const steps = [
             {
-                code: `// Step 1: Append the data to the array emulating the functionality of a stack.
-stack.push(newValue);`
+                code: `1. A pointer called TOP is used to keep track of the 
+top element in the stack.`
             },
             {
-                code: `// Step 2: Truncate the last element of the array and return it.
-const poppedValue = stack.pop();
-return poppedValue;`
+                code: `2. When initializing the stack, we set its value to -1 
+so that we can check if the stack is empty by comparing TOP == -1.`
             },
             {
-                code: `// Step 3: Return the element last added to the array without removing it.
-return stack[stack.length - 1];`
-            }
-            // Add more steps if needed
+                code: `3. On pushing an element, we increase the value of TOP 
+and place the new element in the position pointed to by TOP.`
+            },
+            {
+                code: `4. On popping an element, we return the element pointed to
+by TOP and reduce its value.`
+            },
+            {
+                code: "5. Before pushing, we check if the stack is already full"
+            },
+            {
+                code: "6. Before popping, we check if the stack is already empty"
+            },
         ];
 
         setAlgorithmSteps(steps);
@@ -68,6 +77,10 @@ return stack[stack.length - 1];`
         if (stack.length > 0) {
             setResultText('Top value: ')
             setCurrVal(stack[stack.length - 1]);
+            const timeline = gsap.timeline();
+            timeline.to(".top", { background: "#992155", duration: 0.5 });
+            timeline.to(".top", { background: "#fb21d3", duration: 0.5, delay: 1 });
+
         } else {
             setResultText("");
             setCurrVal('Stack is empty');
@@ -130,10 +143,10 @@ return stack[stack.length - 1];`
                     </div>
                     <div className="result">{currVal !== null && `${resultText} ${currVal}`}</div>
                 </div>
-                
+
                 <div className="stack">
                     {stack.map((value, index) => (
-                        <div key={index} className="die">
+                        <div key={index} className={`die ${index === stack.length - 1 ? "top" : ""}`}>
                             {value}
                         </div>
                     ))}
@@ -143,16 +156,14 @@ return stack[stack.length - 1];`
                         </div>
                     )}
                 </div>
-                
+
                 <div className="representation">
                     <div class="row mx-auto" id="pop-pseudocode">
                         <div class="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
                             <div class="ide w-100">
                                 <div class="row ml-auto mr-auto 1">
-                                    <span class="comment w-100">--------</span>
-                                    <span class="comment w-100 mt-1">| PUSH |</span>
-                                    <span class="comment w-100 mt-1">--------</span>
-                                    <span class="comment w-100 mt-1">1. Append the data to the array emulating the functionality of a stack.</span>
+                                    <h3>PUSH</h3>
+                                    <span class="comment w-100 mt-1"> Add an element to the top of a stack</span>
                                     <span class="comment w-100 mt-1"> </span>
                                     <span class="comment w-100 mt-1">TIME COMPLEXITY: O(1)</span>
                                 </div>
@@ -161,10 +172,8 @@ return stack[stack.length - 1];`
                         <div class="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
                             <div class="ide w-100">
                                 <div class="row ml-auto mr-auto 1">
-                                    <span class="comment w-100">-------</span>
-                                    <span class="comment w-100 mt-1">| POP |</span>
-                                    <span class="comment w-100 mt-1">-------</span>
-                                    <span class="comment w-100 mt-1">1. Truncate the last element of the array and return it.</span>
+                                    <h3>POP</h3>
+                                    <span class="comment w-100 mt-1"> Remove an element from the top of a stack</span>
                                     <span class="comment w-100 mt-1"> </span>
                                     <span class="comment w-100 mt-1">TIME COMPLEXITY: O(1)</span>
                                 </div>
@@ -173,10 +182,9 @@ return stack[stack.length - 1];`
                         <div class="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
                             <div class="ide w-100">
                                 <div class="row ml-auto mr-auto 1">
-                                    <span class="comment w-100">--------</span>
-                                    <span class="comment w-100 mt-1">| PEEK |</span>
-                                    <span class="comment w-100 mt-1">--------</span>
-                                    <span class="comment w-100 mt-1">1. Return the element last added to the array without removing it.</span>
+
+                                    <h3> PEEK</h3>
+                                    <span class="comment w-100 mt-1">Get the value of the top element without removing it</span>
                                     <span class="comment w-100 mt-1"> </span>
                                     <span class="comment w-100 mt-1">TIME COMPLEXITY: O(1)</span>
                                 </div>
@@ -184,7 +192,7 @@ return stack[stack.length - 1];`
                         </div>
                     </div>
                     {/* <div className="explanation">
-                        <h2>Explanation</h2>
+                        <h3>Explanation</h3>
                         <p>
                             The stack data structure follows the Last-In-First-Out (LIFO) principle.
                             Elements are added and removed from only one end, the top.
