@@ -208,7 +208,7 @@ return stack[stack.length - 1];`
       this.setState({ rects: updatedRects, currentStep: step });
       setTimeout(() => {
         animateStep(index + 1);
-      }, 100);
+      }, 1000);
     };
     animateStep(0);
   }
