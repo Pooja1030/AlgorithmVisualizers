@@ -2,17 +2,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 60px;
+  margin-bottom: 120px;
 }
 
 .list {
-  display: absolute;
-  align-items: flex-start;
+  display: flex;
+  align-items: flex;
 }
 
 .list-node {
   display: flex;
   align-items: center;
+  padding: 20px 0;
 }
 
 .box {
@@ -29,7 +31,7 @@
 }
 
 .data {
-  padding: 5px 20px;
+  min-width: 60px;
 }
 
 .next,
@@ -57,7 +59,7 @@
 
 
 /* Traversal animation */
-
+/* 
 .list-node-visited .box {
   animation-name: visitedAnimation;
   animation-duration: 2s;
@@ -149,49 +151,27 @@
   }
 }
 
-.representation {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-}
 
-.ide {
-    margin-bottom: 20px;
-}
+ */
 
-.comment {
-    /* color: #555; */
-    margin-bottom: 5px;
-}
+/* Define CSS animation for insertion effect */
+/* @keyframes insertionAnimation {
+  0% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+} */
 
-.explanation {
-    font-size: 16px;
-    line-height: 1.6;
-}
-
-
-.side-panel-toggle {
-  position: fixed;
-  right: 20px;
-  /* bottom: 20px; Adjust this value to change the vertical position */
-  display: inline-block;
-  min-width: 120px;
-  margin: 10px;
-  padding: 15px 25px;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  border: 1px solid #dee2e6;
-  border-radius: 5px;
-  display: flex;
-  align-items: flex-end;
-  background-color: #2196f3;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.side-panel-toggle:hover {
-  background-color: #0d8bff;
-}
+/* Apply animation to the newly inserted node */
+/* .list-node-inserted {
+  animation-name: insertionAnimation;
+  animation-duration: 1.5s; 
+  animation-timing-function: ease-in-out;
+  animation-delay: 0s;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+} */

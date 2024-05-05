@@ -7,6 +7,7 @@ import DoublyLinkedList from './DoublyLinkedList'; // Import DoublyLinkedList
 // import CircularLinkedList from './CircularLinkedList'; // Import CircularLinkedList
 import EastIcon from '@mui/icons-material/East';
 import WestIcon from '@mui/icons-material/West';
+import { gsap } from 'gsap';
 
 const LinkedListVisualizer = () => {
     const [linkedlist, setLinkedList] = useState(null); // State to hold the linked list instance
@@ -19,47 +20,31 @@ const LinkedListVisualizer = () => {
     const [nodeValue, setNodeValue] = useState('');
     const [searchValue, setSearchValue] = useState('');
     const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
-    const [algorithmSteps, setAlgorithmSteps] = useState([]); 
+    const [algorithmSteps, setAlgorithmSteps] = useState([]);
 
     useEffect(() => {
         // Define your algorithm steps here
         const steps = [
-            {
-                code: ` Step 1: Insert the data at the beginning of the linked list.
-    linkedlist.insertAtBeginning(data);`
-            },
-            {
-                code: ` Step 2: Insert the data at the end of the linked list.
-    linkedlist.insertAtEnd(data);`
-            },
-            {
-                code: ` Step 3: Append the data after a specific node in the linked list.
-    linkedlist.appendToNode(node, data);`
-            },
-            {
-                code: ` Step 4: Delete the first node from the linked list.
-    linkedlist.deleteFirstNode();`
-            },
-            {
-                code: ` Step 5: Delete the last node from the linked list.
-    linkedlist.deleteLastNode();`
-            },
-            {
-                code: ` Step 6: Traverse the linked list and perform an operation on each node.
-    let currentNode = linkedlist.head;
-    while (currentNode !== null) {
-        // Perform operation on currentNode
-        currentNode = currentNode.next;
-    }`
-            }
-            // Add more steps if needed
+            { code: "1. Insert at the beginning" },
+            { code: "- Create new node" },
+            { code: "- Change next of new node to point to head" },
+            { code: "- Change head to point to recently created node" },
+            { code: "2. Insert at the End" },
+            { code: "- Create new node" },
+            { code: "- Traverse to last node" },
+            { code: "- Change next of last node to recently created node" },
+            { code: "3. Insert at the Middle" },
+            { code: "- Create new node" },
+            { code: "- Traverse to node just before the required position of new node" },
+            { code: "- Change next pointers to include new node in between" },
+
         ];
-    
+
         setAlgorithmSteps(steps);
     }, []);
-    
 
-    
+
+
     const handleListTypeChange = (event) => {
         const type = event.target.value.toLowerCase();
         setListType(type);
@@ -138,6 +123,9 @@ const LinkedListVisualizer = () => {
                 setResultText('Inserted at end:');
                 setCurrVal(newData);
             }
+
+            // Call animateInsertion after performing the insertion
+            animateInsertion(insertPosition, newData);
         }
     };
 
@@ -188,6 +176,7 @@ const LinkedListVisualizer = () => {
                 setResultText('Node not found');
                 setCurrVal('');
             }
+            animateSearch(valueToSearch);
         }
     };
 
@@ -199,43 +188,240 @@ const LinkedListVisualizer = () => {
         }
     };
 
+    const animateHead = (timeline) => {
+        // Highlight head-null node and next arrow
+        timeline.to("#head-null-node .head-node", { color: "#dc16d2", duration: 1 })
+            .to("#head-null-node .head-node", { color: "#007bff", duration: 0.5 })
+            .to("#head-arrow", { fill: "#dc16d2", duration: .5 }, "-=1")
+            .to("#head-arrow", { scale: 1.2, duration: .5 }, "+=.5")
+            .to("#head-arrow", { fill: "#000", scale: 1, duration: .5 });
+    }
+
+    const animateNull = (timeline) => {
+        // Highlight null node
+        timeline.to("#null-node", { color: "#dc16d2", duration: 1 }, "-=1")
+            .to("#null-node", { color: "#007bff", duration: 1 });
+    }
+
+    const animateNodes = (list, timeline) => {
+        list.forEach((listNode, index) => {
+            // If stopPosition is reached, break the loop
+            const currentNode = `#list-node-${listNode.data} `;
+            const currentNodeBox = currentNode + " .box";
+            const nextBox = currentNode + " .next";
+            const nextArrowElement = currentNode + " .nextArrow";
+
+            // timeline
+            // Highlight current node box
+            timeline.to(currentNodeBox, { backgroundColor: "#f9d0ff", color: "#dc16d2", borderColor: "#dc16d2", duration: 1.5 }, "-=1")
+                .to(currentNodeBox, { backgroundColor: "#f0f0f0", color: "#007bff", borderColor: "#007bff", duration: 1 },);
+
+            // Highlight next node box
+            timeline.to(nextBox, { backgroundColor: "#6b94bc", duration: 0.5 }, "-=2")
+                .to(nextBox, { backgroundColor: "#dc16d2", duration: 1 }, "-=1")
+                .to(nextBox, { backgroundColor: "#6b94bc", duration: 0.5 });
+
+            // Highlight next arrow
+            timeline.to(nextArrowElement, { fill: "#dc16d2", duration: .5 }, "-=2")
+                .to(nextArrowElement, { scale: 1.2, duration: .5 },)
+                .to(nextArrowElement, { fill: "#000", scale: 1, duration: .5 });
+        });
+
+    }
+
     const animateTraversal = async () => {
         const list = traverseList();
         if (list.length === 0) return;
 
-        document.getElementById("head-null-node").classList.add('head-null-visited');
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for animation to complete
-        document.getElementById("head-null-node").classList.remove('head-null-visited');
+        const timeline = gsap.timeline();
+
+        // Highlight head-null node and next arrow
+        animateHead(timeline);
+        // Highlight each list node box and next arrow
+        animateNodes(list, timeline);
+        // Highlight null node
+        animateNull(timeline);
+
+        // show travsersal result
+        const traversalResult = linkedlist.displayList();
+        setResultText("Linked list: ");
+        setCurrVal(traversalResult);
+    };
+
+    const animateInsertion = async (insertPosition, newData) => {
+        await new Promise(resolve => setTimeout(resolve, 5)); // Wait for insertion to complete
+
+        const list = traverseList();
+        const index = list.findIndex(node => node.data === newData);
+        let nodesBefore = [];
+        let nodesAfter = [];
+        if (index !== -1) {
+            nodesBefore = list.slice(0, index); // Exclude the node with the data
+            nodesAfter = list.slice(index + 1); // Exclude the node with the data
+        } else {
+            // If the target data is not found, the whole array is considered as nodes before the target
+            nodesBefore = list;
+        }
+
+        const newNode = document.querySelector(`#list-node-${newData} .box`);
+        if (newNode) {
+            gsap.set(newNode, { opacity: 0, y: -75 });
+        } else return;
+
+        const timeline = gsap.timeline();
+
+        const nextBox = `#list-node-${newData} .next`;
+        const nextArrowElement = `#list-node-${newData} .nextArrow`;
+        let prevBox;
+        let prevArrowElement;
+        if (listType === 'doubly') {
+            prevBox = `#list-node-${newData} .prev`;
+            prevArrowElement = `#list-node-${newData} .prevArrow`;
+        }
+
+        // start animation
+        // display node
+        timeline.set(newNode, { opacity: 1, y: -75, },);
+        gsap.set(nextArrowElement, { opacity: 0, fill: "#dc16d2" });
+        prevArrowElement && gsap.set(prevArrowElement, { opacity: 0, fill: "#dc16d2" });
+
+        // animate head
+        animateHead(timeline);
+
+        if (insertPosition === 'Beginning' && listType === 'doubly') {
+            if (nodesAfter.length === 0) {
+                gsap.set("#head-null-node .prev-null-node", { opacity: 0 });
+                gsap.set("#head-null-node .prevArrow", { fill: "#dc16d2", opacity: 0, });
+            } else {
+                timeline.set("#head-null-node .prev-null-node", { color: "#dc16d2", duration: 1 })
+                    .to("#head-null-node .prevArrow", { fill: "#000", scale: 1, duration: .5 });
+                // .to("#head-null-node .prev-null-node", { color: "#007bff", duration: 0.5 })
+                // .to("#head-null-node .prevArrow", { fill: "#dc16d2", duration: .5 }, "-=1")
+                // .to("#head-null-node .prevArrow", { scale: 1.2, duration: .5 }, "+=.5")
+            }
+        }
+
+        // animate nodes before the new node
+        if (insertPosition === 'After Node' || insertPosition === 'End') {
+            animateNodes(nodesBefore, timeline);
+        }
+
+        // slide nodes after new node to right
+        nodesAfter.forEach((listNode, index) => {
+            const currentNode = `#list-node-${listNode.data} `;
+            gsap.set(currentNode, { x: `${listType === 'doubly' ? -206 : -146}` }); // Delay the start of each node's animation
+        });
+        nodesAfter.forEach((listNode, index) => {
+            const currentNode = `#list-node-${listNode.data} `;
+            gsap.to(currentNode, { x: 0, duration: 1, delay: (nodesBefore.length + 1) * 3 }); // Delay the start of each node's animation
+        });
+
+        // hide null node if no nodes after
+        if (nodesAfter.length === 0) {
+            gsap.set("#null-node", { opacity: 0 })
+        }
+        else {
+            gsap.set("#null-node", { x: `${listType === 'doubly' ? -206 : -146}` });
+            gsap.to("#null-node", { x: 0, duration: 1, delay: (nodesBefore.length + 1) * 3 });
+        }
+
+        // place new node
+        timeline.to(newNode, { opacity: 1, y: 0, duration: 1 }, "+=.5");
+
+        // Highlight next node box
+        timeline.to(nextBox, { backgroundColor: "#6b94bc", duration: 0.5 }, "-=2")
+            .to(nextBox, { backgroundColor: "#dc16d2", duration: 1 }, "+=1")
+            .to(nextBox, { backgroundColor: "#6b94bc", duration: 0.5 });
+
+        // point arrow to next node
+        timeline
+            .to(nextArrowElement, { opacity: 1, x: -10, scale: 1.2, duration: 1 }, "-=.5")
+            .to(nextArrowElement, { x: 0, fill: "#000", scale: 1, duration: .5 });
+
+        // if next pointer is null, animate it
+        timeline.to("#null-node", { opacity: 1 })
+        if (nodesAfter.length === 0)
+            animateNull(timeline);
+
+        // Highlight prev node box
+        if (prevBox) {
+            timeline.to(prevBox, { backgroundColor: "#6b94bc", duration: 0.5 }, "-=2")
+                .to(prevBox, { backgroundColor: "#dc16d2", duration: 1 }, "+=1")
+                .to(prevBox, { backgroundColor: "#6b94bc", duration: 0.5 });
+        }
+
+        // if prev node is null, animate it 
+        if (nodesBefore.length === 0 && listType === 'doubly') {
+            timeline.to("#head-null-node .prevArrow", { opacity: 1, x: 10, scale: 1.2, duration: 0.5 },)
+                .to("#head-null-node .prevArrow", { x: 0, fill: "#000", scale: 1, duration: 1 },)
+                .to("#head-null-node .prev-null-node", { opacity: 1, color: "#dc16d2", duration: 1 })
+                .to("#head-null-node .prev-null-node", { color: "#007bff", duration: 0.5 });
+        }
+
+        if (nodesAfter.length > 0 && listType === 'doubly') {
+            const nextNode = nodesAfter[0];
+            const nextPrev = `#list-node-${nextNode.data} .prev`;
+            timeline.to(nextPrev, { backgroundColor: "#6b94bc", duration: 0.5 }, "-=2")
+                .to(nextPrev, { backgroundColor: "#dc16d2", duration: 1 }, "+=1")
+                .to(nextPrev, { backgroundColor: "#6b94bc", duration: 0.5 });
+        }
+
+        // point arrow to prev node
+        if (prevArrowElement) {
+            timeline.set(prevArrowElement, { opacity: 1 })
+            timeline.to(prevArrowElement, { x: "+=10", scale: 1.2, duration: 0.5 },)
+                .to(prevArrowElement, { x: 0, fill: "#000", scale: 1, duration: 1, });
+        }
 
 
-        for (let i = 0; i < list.length; i++) {
-            const listNode = list[i];
-            const currentNodeElement = document.getElementById(`list-node-${listNode.data}`);
+        console.log("finish animation");
+    };
 
-            listNode.visited = true;
-            currentNodeElement.classList.add('list-node-visited');
+    const animateSearch = async (nodeData) => {
+        const list = traverseList();
+        const index = list.findIndex(node => node.data === nodeData);
+        let nodesBefore = [];
+        if (index !== -1) {
+            nodesBefore = list.slice(0, index); // Exclude the node with the data
+        } else {
+            // If the target data is not found, the whole array is considered as nodes before the target
+            nodesBefore = list;
+        }
 
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for animation to complete
+        // start animation
+        const timeline = gsap.timeline();
 
-            listNode.visited = false;
-            currentNodeElement.classList.remove('list-node-visited');
+        // animate head and the nodes before
+        animateHead(timeline);
+        animateNodes(nodesBefore, timeline);
+
+        const searchNode = document.querySelector(`#list-node-${nodeData} .box`);
+        if (!searchNode) {
+            animateNull(timeline);
+            return;
         };
 
-        document.getElementById("null-node").classList.add('null-visited');
-        await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for animation to complete
-        document.getElementById("null-node").classList.remove('null-visited');
+        const nextBox = document.querySelector(`#list-node-${nodeData} .next`);
+        let prevBox = "";
+        if (listType === 'doubly') {
+            prevBox = `#list-node-${nodeData} .prev`;
+        }
 
-        setResultText('Linked List:');
-        setCurrVal(linkedlist.displayList());
-    }
+        // reach the node
+        timeline.to(searchNode, { backgroundColor: "#f9d0ff", color: "#dc16d2", borderColor: "#dc16d2", duration: 1.5 }, "-=1")
+            .to(searchNode, { backgroundColor: "#f0f0f0", color: "#007bff", borderColor: "#007bff", duration: 1 },);
 
+        // Highlight the node found
+        timeline.to(searchNode, { backgroundColor: "#d3f7db", color: "#015719", borderColor: "#08ad37", duration: 1.5 })
+            .to(nextBox, { backgroundColor: "#72cd87", duration: 1.5 }, "<");
+        if (prevBox) timeline.to(prevBox, { backgroundColor: "#72cd87", duration: 1.5 }, "<");
 
-    // const displayList = () => {
-    //     if (linkedlist) {
-    //         setResultText('Linked List:');
-    //         setCurrVal(linkedlist.displayList());
-    //     }
-    // };
+        // reset style
+        timeline.to(searchNode, { backgroundColor: "#f0f0f0", color: "#007bff", borderColor: "#007bff", duration: 1 }, "+=2")
+            .to(nextBox, { backgroundColor: "#6b94bc", duration: 0.5 }, "<");
+        if (prevBox)
+            timeline.to(prevBox, { backgroundColor: "#6b94bc", duration: 0.5 }, "<");
+    };
 
     const resetLinkedList = () => {
         setLinkedList(null);
@@ -254,7 +440,7 @@ const LinkedListVisualizer = () => {
                     {listType === 'doubly' && current && <div className="prev-null-node">NULL</div>}
                 </div>
                 <div className='arrowIcons'>
-                    <EastIcon className='nextArrow' id="head-arrow"/>
+                    <EastIcon className='nextArrow' id="head-arrow" />
                     {listType === 'doubly' && current && <WestIcon className='prevArrow' />}
                 </div>
             </div>
@@ -302,7 +488,7 @@ const LinkedListVisualizer = () => {
                 <div>
                     <div className="menu">
                         <select value={listType} onChange={handleListTypeChange}>
-                            <option disabled value="visualize">Select Linked List</option>
+                            <option disabled value="">Select Linked List</option>
                             <option value="singly">Singly Linked List</option>
                             <option value="doubly">Doubly Linked List</option>
                             {/* <option disabled value="circular">Circular Linked List</option> */}
@@ -354,67 +540,61 @@ const LinkedListVisualizer = () => {
                     <button className='reset-btn' onClick={resetLinkedList}>Reset</button>
                     <div className="result">{resultText && `${resultText} ${currVal}`}</div>
                 </div>
- 
-
-
 
                 <div className="linkedlist">
                     <div className="list">
                         {linkedlist && renderNodes()}
                     </div>
                 </div>
+
+
+
                 <div className="representation">
-    <div className="row mx-auto" id="linkedlist-pseudocode">
-        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-            <div className="ide w-100">
-                <div className="row ml-auto mr-auto 1">
-                    <span className="comment w-100">--------</span>
-                    <span className="comment w-100 mt-1">| INSERT |</span>
-                    <span className="comment w-100 mt-1">--------</span>
-                    <span className="comment w-100 mt-1">
-                        1. Insert the data at the specified position in the linked list.
-                    </span>
-                    <span className="comment w-100 mt-1"> </span>
-                    <span className="comment w-100 mt-1">
-                        TIME COMPLEXITY: O(1) - O(n) depending on the position
-                    </span>
+                    <div className="row mx-auto" id="linkedlist-pseudocode">
+                        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+                            <div className="ide w-100">
+                                <div className="row ml-auto mr-auto 1">
+                                    <h3>INSERT </h3>
+                                    <span className="comment w-100 mt-1">
+                                        Add a new element to the linked list
+                                    </span>
+                                    <span className="comment w-100 mt-1"> </span>
+                                    <span className="comment w-100 mt-1">
+                                        TIME COMPLEXITY: O(1) - O(n) depending on the position
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+                            <div className="ide w-100">
+                                <div className="row ml-auto mr-auto 1">
+                                    <h3>DELETE </h3>
+                                    <span className="comment w-100 mt-1">
+                                        Remove the existing elements
+                                    </span>
+                                    <span className="comment w-100 mt-1"> </span>
+                                    <span className="comment w-100 mt-1">
+                                        TIME COMPLEXITY: O(1) - O(n) depending on the position
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+                            <div className="ide w-100">
+                                <div className="row ml-auto mr-auto 1">
+                                    <h3>SEARCH </h3>
+                                    <span className="comment w-100 mt-1">
+                                        Find a node in the linked list
+                                    </span>
+                                    <span className="comment w-100 mt-1"> </span>
+                                    <span className="comment w-100 mt-1">
+                                        TIME COMPLEXITY: O(n)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-            <div className="ide w-100">
-                <div className="row ml-auto mr-auto 1">
-                    <span className="comment w-100">-------</span>
-                    <span className="comment w-100 mt-1">| DELETE |</span>
-                    <span className="comment w-100 mt-1">-------</span>
-                    <span className="comment w-100 mt-1">
-                        1. Delete the node at the specified position from the linked list.
-                    </span>
-                    <span className="comment w-100 mt-1"> </span>
-                    <span className="comment w-100 mt-1">
-                        TIME COMPLEXITY: O(1) - O(n) depending on the position
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-            <div className="ide w-100">
-                <div className="row ml-auto mr-auto 1">
-                    <span className="comment w-100">--------</span>
-                    <span className="comment w-100 mt-1">| SEARCH |</span>
-                    <span className="comment w-100 mt-1">--------</span>
-                    <span className="comment w-100 mt-1">
-                        1. Search for a node with the specified data value in the linked list.
-                    </span>
-                    <span className="comment w-100 mt-1"> </span>
-                    <span className="comment w-100 mt-1">
-                        TIME COMPLEXITY: O(n)
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
             </div>
         </>
     );
