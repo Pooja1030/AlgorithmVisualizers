@@ -20,21 +20,31 @@ class Sort extends Component {
         algo1: 0,
         algo2: 0,
         sidePanelOpen: false, // State to manage side panel visibility
-        algorithmSteps: [{
-          code: `// Step 1: Append the data to the array emulating the functionality of a stack.
-  stack.push(newValue);`
-        },
-        {
-          code: `// Step 2: Truncate the last element of the array and return it.
-  const poppedValue = stack.pop();
-  return poppedValue;`
-        },
-        {
-          code: `// Step 3: Return the element last added to the array without removing it.
-  return stack[stack.length - 1];`
+        algorithmSteps: {
+            bubbleSort: [
+                { code: " Step 1: Start from the first element, compare it with the next element, and swap if necessary." },
+                { code: " Step 2: Move to the next pair of elements and repeat the process until the list is sorted." }
+                // Add more steps if needed
+            ],
+            selectionSort: [
+                { code: " Step 1: Find the smallest element in the unsorted portion of the array." },
+                { code: " Step 2: Swap it with the first element of the unsorted portion." },
+                { code: " Step 3: Repeat the process for the remaining unsorted elements." }
+                // Add more steps if needed
+            ],
+            insertionSort: [
+                { code: " Step 1: Start with the second element and compare it with the elements before it." },
+                { code: " Step 2: Insert the element into its correct position in the sorted subarray." },
+                { code: " Step 3: Repeat the process until all elements are sorted." }
+                // Add more steps if needed
+            ],
+            quickSort: [
+                { code: " Step 1: Choose a pivot element from the array." },
+                { code: " Step 2: Partition the array into two subarrays based on the pivot." },
+                { code: " Step 3: Recursively apply quicksort to the subarrays." }
+                // Add more steps if needed
+            ]
         }
-        // Add more steps if needed
-      ],
     }
 
     componentDidMount() {

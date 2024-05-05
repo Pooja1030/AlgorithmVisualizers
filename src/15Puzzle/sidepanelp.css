@@ -1,0 +1,106 @@
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 100vh;
+    background-color: #f0f0f0;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure the panel stays above other content */
+  }
+  
+  .side-panel.open {
+    width: 30%;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .buttons-container {
+    margin-top: 80px; /* Adjust the space from the top */
+  }
+
+  .buttons-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 80px;
+  }
+  
+  .toggle-btn,
+  .play-pause-btn,
+  .rewind-btn,
+  .forward-btn {
+    display: inline-block; /* Change to block to stack buttons vertically */
+    width: 10%; /* Take up full width */
+    margin-bottom: 50px; /* Adjust spacing between buttons */
+    padding: 10px;
+    border: none;
+    background-color: #2196f3;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .toggle-btn:hover,
+  .play-pause-btn:hover,
+  .rewind-btn:hover,
+  .forward-btn:hover {
+    background-color: #0d8bff;
+  }
+  
+  .panel-content {
+    padding: 20px;
+    margin-top: -0px;
+  }
+  
+  .panel-content pre {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    overflow-x: auto;
+    height: 450px;
+  }
+  
+  
+  .side-panel-toggle {
+    position: fixed;
+    right: 20px;
+    /* bottom: 20px; Adjust this value to change the vertical position */
+    display: inline-block;
+    min-width: 120px;
+    margin: 10px;
+    padding: 15px 25px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    display: flex;
+    align-items: flex-end;
+    background-color: #2196f3;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.side-panel-toggle:hover {
+    background-color: #0d8bff;
+}
+
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .side-panel {
+      width: 40%;
+    }
+  }
+  

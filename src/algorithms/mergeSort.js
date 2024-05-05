@@ -9,6 +9,15 @@ export default function mergeSort(rects2){
     return values;
 }
 
+// Algorithm steps for Merge Sort
+export const mergeSortSteps = [
+    { code: "Step 1: Divide the array into two halves." },
+    { code: "Step 2: Recursively apply Merge Sort on each half." },
+    { code: "Step 3: Merge the two sorted halves into a single sorted array." },
+    // Add more steps if needed
+];
+
+
 function merge(rects, l, m, r){
   //  console.log(l," ",r);
     let n1 = m-l+1;
@@ -41,6 +50,7 @@ function merge(rects, l, m, r){
     }
 
 }
+
 
 function mergeS(rects,l,r){
 

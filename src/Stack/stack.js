@@ -18,16 +18,16 @@ const StackVisualizer = () => {
         // Define your algorithm steps here
         const steps = [
             {
-                code: `// Step 1: Append the data to the array emulating the functionality of a stack.
+                code: ` Step 1: Append the data to the array emulating the functionality of a stack.
 stack.push(newValue);`
             },
             {
-                code: `// Step 2: Truncate the last element of the array and return it.
+                code: ` Step 2: Truncate the last element of the array and return it.
 const poppedValue = stack.pop();
 return poppedValue;`
             },
             {
-                code: `// Step 3: Return the element last added to the array without removing it.
+                code: ` Step 3: Return the element last added to the array without removing it.
 return stack[stack.length - 1];`
             }
             // Add more steps if needed
@@ -101,7 +101,7 @@ return stack[stack.length - 1];`
             <Navbar currentPage="Stack" />
 
             {/* Side panel toggle button */}
-            <button className="side-panel-toggle" onClick={toggleSidePanel}>Toggle Side Panel</button>
+            <button className="side-panel-toggle" onClick={toggleSidePanel}>→</button>
 
             {/* Render the play-pause buttons */}
             {/* <button className="play-pause-btn" onClick={togglePlayPause}>{isPlaying ? 'Pause' : 'Play'}</button> */}

@@ -6,11 +6,13 @@ import { aStar } from './algorithms/astar';
 import Navbar from '../Components/navbar';
 import Menu from './menu';
 import './PathFindingVisualizer.css';
+import SidePanel from './sidepanelp';
 
-const algorithms = [{ "name": "Dijkstra's Algorithm", "function": dijkstra },
-{ "name": "A* Algorithm", "function": aStar },
-{ "name": "Depth-first Search", "function": dfs },
-{ "name": "Breadth-first search", "function": bfs }
+const algorithms = [
+    { "name": "Dijkstra's Algorithm", "function": dijkstra, "steps": dijkstra.steps },
+    { "name": "A* Algorithm", "function": aStar, "steps": aStar.steps },
+    { "name": "Depth-first Search", "function": dfs, "steps": dfs.steps },
+    { "name": "Breadth-first search", "function": bfs, "steps": bfs.steps }
 ];
 
 export default class PathfindingVisualizer extends Component {
@@ -29,6 +31,7 @@ export default class PathfindingVisualizer extends Component {
             animationSpeed: 100,
             animating: false,
             isDrawerOpen: false,
+            algorithmSteps: [], // Define state for algorithm steps
         }
     }
 
@@ -280,8 +283,6 @@ export default class PathfindingVisualizer extends Component {
         }
     }
 
-
-
     visualize = () => {
         if (this.state.animating) return;
         this.resetGrid();
@@ -297,6 +298,9 @@ export default class PathfindingVisualizer extends Component {
             console.log("Invalid algorithm selected");
             return;
         }
+        
+        const algorithmSteps = selectedAlgorithm.steps; // Assuming each algorithm function has a 'steps' property
+        this.setState({ algorithmSteps });
 
         console.log(this.state.algorithm)
         visitedNodesInOrder = selectedAlgorithm.function(grid, startNode, finishNode);
@@ -332,10 +336,14 @@ export default class PathfindingVisualizer extends Component {
     // toggleDrawer = () => {
     //     this.setState({ isDrawerOpen: !this.state.isDrawerOpen });
     // };
+    toggleSidePanel = () => {
+        this.setState((prevState) => ({ isDrawerOpen: !prevState.isDrawerOpen }));
+    };
+
 
 
     render() {
-        const { grid, mouseIsPressed } = this.state;
+        const { grid, mouseIsPressed, isDrawerOpen, algorithmSteps } = this.state;
 
 
         return (
@@ -344,11 +352,11 @@ export default class PathfindingVisualizer extends Component {
                     // toggleDrawer={this.toggleDrawer}
                      />
                 <Menu
-                   open={this.state.isDrawerOpen}
+                    open={this.state.isDrawerOpen}
                     isDisabled={this.state.animating}
                     onVisualize={this.visualize}
                     onRandomize={this.getInitialGrid}
-                    onAlgoChanged={this.handleAlgoChange}
+                    onAlgoChange={this.handleAlgoChange} // Corrected the prop name
                     onSpeedChange={this.handleSpeedChange}
                 />
 
@@ -380,6 +388,14 @@ export default class PathfindingVisualizer extends Component {
                         </div>
                     </div>
                 </div> */}
+                  {/* Side panel toggle button */}
+                  <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
+                    →
+                </button>
+
+                {/* Render the side panel component */}
+                <SidePanel isOpen={isDrawerOpen} algorithmSteps={algorithmSteps} onClose={this.toggleSidePanel} />
+
 
 
                 <div className="grid">

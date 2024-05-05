@@ -11,11 +11,30 @@ class Queen extends Component {
         speed:490,
         isRunning:false,
         sidePanelOpen: false, // State variable for managing side panel visibility
-        algorithmSteps: [ // Define your algorithm steps here
-            { description: 'Step 1: Describe the first step' },
-            { description: 'Step 2: Describe the second step' },
-            { description: 'Step 3: Describe the third step' }
-        ],
+        algorithmSteps: [
+            {
+              description: 'Step 1: Start with an empty chessboard.'
+            },
+            {
+              description: 'Step 2: Place the first queen in the first column of the first row.'
+            },
+            {
+              description: 'Step 3: Check if the current queen is safe from attack by other queens on the board.'
+            },
+            {
+              description: 'Step 4: If the queen is safe, move to the next column and place the next queen.'
+            },
+            {
+              description: 'Step 5: If all queens are placed and no conflicts occur, a solution is found.'
+            },
+            {
+              description: 'Step 6: If a conflict occurs, backtrack to the previous queen and try a different position.'
+            },
+            {
+              description: 'Step 7: Repeat steps 3-6 until all possible configurations are explored.'
+            },
+          ]
+          
     }
 
  
@@ -42,6 +61,7 @@ class Queen extends Component {
 
 {/* Render the SidePanel component */}
 <SidePanel isOpen={sidePanelOpen} onClose={this.closeSidePanel} algorithmSteps={algorithmSteps} />
+
 
 
                 <div style={{textAlign:"Center"}}>

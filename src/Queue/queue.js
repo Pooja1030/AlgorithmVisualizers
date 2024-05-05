@@ -17,20 +17,19 @@ const QueueVisualizer = () => {
   useEffect(() => {
     // Define your algorithm steps here
     const steps = [
-        {
-            code: `// Step 1: Append the data to the array emulating the functionality of a stack.
-stack.push(newValue);`
-        },
-        {
-            code: `// Step 2: Truncate the last element of the array and return it.
-const poppedValue = stack.pop();
-return poppedValue;`
-        },
-        {
-            code: `// Step 3: Return the element last added to the array without removing it.
-return stack[stack.length - 1];`
-        }
-        // Add more steps if needed
+      {
+        code: ` Step 1: Append the data to the array emulating the functionality of a queue.
+queue.push(newValue);`
+      },
+      {
+        code: ` Step 2: Remove and return the first element of the array emulating the functionality of a queue.
+const dequeuedValue = queue.shift();
+return dequeuedValue;`
+      },
+      {
+        code: ` Step 3: Return the first element of the array without removing it, emulating the functionality of a queue.
+return queue[0];`
+      }
     ];
 
     setAlgorithmSteps(steps);

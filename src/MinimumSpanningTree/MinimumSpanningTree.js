@@ -1,9 +1,8 @@
-// MinimumSpanningTree.js
 import React, { Component } from "react";
 import Navbar from "../Components/navbar";
 import Prim from "./Prim";
 import Kruskal from "./Kruskal";
-import SidePanel from "./sidepanelm"; // Import the SidePanel component
+import SidePanel from "./sidepanelm";
 
 class MinimumSpanningTree extends Component {
   constructor() {
@@ -11,28 +10,24 @@ class MinimumSpanningTree extends Component {
     this.state = {
       selectedAlgo: "",
       visualizeClicked: false,
-      sidePanelOpen: false, // State to manage side panel visibility
-      algorithmSteps: [{
-        code: `// Step 1: Append the data to the array emulating the functionality of a stack.
-stack.push(newValue);`
-      },
-      {
-        code: `// Step 2: Truncate the last element of the array and return it.
-const poppedValue = stack.pop();
-return poppedValue;`
-      },
-      {
-        code: `// Step 3: Return the element last added to the array without removing it.
-return stack[stack.length - 1];`
-      }
-      // Add more steps if needed
-    ], // Define state for algorithm steps
+      sidePanelOpen: false,
+      algorithmSteps: [],
     };
   }
 
   handleAlgoSelect = (e) => {
     const selectedAlgo = e.target.value;
     this.setState({ selectedAlgo, visualizeClicked: false });
+
+    // Generate algorithm steps based on the selected algorithm
+    let algorithmSteps = [];
+    if (selectedAlgo === "kruskal") {
+      algorithmSteps = Kruskal.steps;
+    } else if (selectedAlgo === "prim") {
+      algorithmSteps = Prim.steps;
+    }
+
+    this.setState({ algorithmSteps });
   };
 
   handleVisualizeClick = () => {
@@ -75,16 +70,13 @@ return stack[stack.length - 1];`
         <div className="menu">
           <div>
             {this.renderAlgoOptions()}
-            <button
-              className="visualize-btn"
-              onClick={this.handleVisualizeClick}
-            >
+            <button className="visualize-btn" onClick={this.handleVisualizeClick}>
               Visualize
             </button>
             <button
               className="reset-btn"
               onClick={() =>
-                this.setState({ selectedAlgo: "", visualizeClicked: false })
+                this.setState({ selectedAlgo: "", visualizeClicked: false, algorithmSteps: [] })
               }
             >
               Reset
@@ -98,10 +90,7 @@ return stack[stack.length - 1];`
         </button>
 
         {/* Render the side panel component */}
-        <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
-{/* Render the side panel component */}
-<SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
-
+        <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
         <div className="algo-container">{selectedComponent}</div>
       </>
     );

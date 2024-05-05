@@ -13,9 +13,17 @@ class Canvas extends Component {
         sidePanelOpen: false, // State variable for managing side panel visibility
         algorithmSteps: [
             // Define your algorithm steps here
-            { description: 'Step 1: Describe the first step' },
-            { description: 'Step 2: Describe the second step' },
-            { description: 'Step 3: Describe the third step' }
+            { code: ' Step 1: Initialize the convex hull algorithm.' },
+{ code: ' Step 2: Sort the points based on their polar angle from the leftmost point.' },
+{ code: ' Step 3: Initialize an empty stack to store the convex hull points.' },
+{ code: ' Step 4: Push the first three points onto the stack to form the initial hull.' },
+{ code: ' Step 5: Iterate through the sorted points to find the convex hull.' },
+{ code: ' Step 6: For each point, check if it makes a left turn or a right turn with the last two points on the stack.' },
+{ code: ' Step 7: If it makes a left turn, push the point onto the stack.' },
+{ code: ' Step 8: If it makes a right turn, pop the last point from the stack until the point makes a left turn.' },
+{ code: ' Step 9: After processing all points, the stack contains the convex hull points.' },
+{ code: ' Step 10: Draw lines between adjacent convex hull points to visualize the convex hull.' }
+
         ],
     }
     constructor(props) {

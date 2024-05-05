@@ -4,6 +4,13 @@ import './Kruskal.css';
 
 
 class Kruskal extends Component {
+    static steps = [
+        { code: " Step 1: Sort all the edges by weight (non-decreasing)." },
+        { code: " Step 2: Pick the edge with the smallest weight." },
+        { code: " Step 3: Check if adding that edge to the MST forms a cycle. If it doesn't, add it." },
+        { code: " Step 4: Repeat steps 2 and 3 until the MST has a length of (number of Vertices - 1)." }
+        // Add more steps as needed
+    ];
     constructor(props) {
         super(props);
         this.state = {

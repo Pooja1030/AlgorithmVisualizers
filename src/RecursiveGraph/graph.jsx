@@ -20,10 +20,10 @@ class Graph extends Component {
             offset: 0,
             sidePanelOpen: false, // State variable for side panel visibility
             algorithmSteps: [
-                // Define your algorithm steps here
-                { code: '// Step 1: Describe the first step' },
-                { code: '// Step 2: Describe the second step' },
-                { code: '// Step 3: Describe the third step' }
+                { code: " Step 1: Set initial values for root, vertices, edges, current, n, r, and algo." },
+                { code: " Step 2: Generate the Fibonacci tree based on the input values." },
+                { code: " Step 3: Recursively traverse the tree and add vertices and edges." },
+                { code: " Step 4: Update vertices and edges state to trigger re-rendering." }
             ]
         }
     }
@@ -157,7 +157,7 @@ class Graph extends Component {
                     algo={this.state.algo}
                 />
                  {/* Side panel toggle button */}
-                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}>Toggle Side Panel</button>
+                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}> →</button>
                 {/* Side Panel */}
                 <SidePanel algorithmSteps={this.state.algorithmSteps} isOpen={this.state.sidePanelOpen} onClose={this.toggleSidePanel} />
                 <CanvasSvg

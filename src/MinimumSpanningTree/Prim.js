@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 import './Prim.css';
 
+
 class Prim extends Component {
+    static steps = [
+        { code: " Step 1: Initialize the start node and the open set." },
+        { code: " Step 2: Loop until the open set is empty." },
+        { code: " Step 3: Select the node with the lowest f score from the open set." },
+        { code: " Step 4: If the selected node is the finish node, reconstruct the path." },
+        { code: " Step 5: Generate the neighbors of the selected node." },
+        { code: " Step 6: For each neighbor, calculate tentative g score and add it to the open set." },
+        { code: " Step 7: Repeat the loop." }
+        // Add more steps as needed
+    ];
     constructor(props) {
         super(props);
         this.state = {

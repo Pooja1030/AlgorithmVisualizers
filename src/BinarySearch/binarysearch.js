@@ -15,20 +15,28 @@ class BinarySearch extends Component {
     sidePanelOpen: false, // State to manage side panel visibility
     algorithmSteps: [
       {
-        code: `// Step 1: Append the data to the array emulating the functionality of a stack.
-stack.push(newValue);`
+        code: ` Step 1: Initialize low and high pointers for the array.`
       },
       {
-        code: `// Step 2: Truncate the last element of the array and return it.
-const poppedValue = stack.pop();
-return poppedValue;`
+        code: ` Step 2: Repeat until low pointer is less than or equal to high pointer.`,
       },
       {
-        code: `// Step 3: Return the element last added to the array without removing it.
-return stack[stack.length - 1];`
-      }
-      // Add more steps if needed
+        code: ` Step 3: Calculate mid pointer as the average of low and high pointers.`,
+      },
+      {
+        code: ` Step 4: If the value at mid pointer equals the target, return the index of mid.`,
+      },
+      {
+        code: ` Step 5: If the value at mid pointer is less than the target, move the low pointer to mid + 1.`,
+      },
+      {
+        code: ` Step 6: If the value at mid pointer is greater than the target, move the high pointer to mid - 1.`,
+      },
+      {
+        code: ` Step 7: If the target is not found in the array, return -1.`,
+      },
     ]
+    
   };
   
 
@@ -208,7 +216,7 @@ return stack[stack.length - 1];`
       this.setState({ rects: updatedRects, currentStep: step });
       setTimeout(() => {
         animateStep(index + 1);
-      }, 100);
+      }, 1000);
     };
     animateStep(0);
   }

@@ -5,6 +5,9 @@ import Menu from "./menu";
 import  heapSort  from "../algorithms/heapSort";
 import { quickSortRecursive } from "../algorithms/quickSortRecursive";
 import mergeSort  from "../algorithms/mergeSort";
+import SidePanel from "./sidepanelrs";
+import { quickSort } from "../algorithms/quickSort";
+
 
 class RecursiveSort extends Component {
     state = {
@@ -12,14 +15,38 @@ class RecursiveSort extends Component {
         rects: [],
         speed: 50,
         isRunning: false,
-        algo: 0
+        algo: 0,
+        sidePanelOpen: false, // State variable for side panel visibility
+        algorithmSteps: [],
     }
-
+  
     componentDidMount() {
         var rects = getInitialRects(this.state.count);
         this.setState({rects});
     }
+    handleAlgoSelect = (e) => {
+        const selectedAlgo = e.target.value;
+        this.setState({ selectedAlgo, visualizeClicked: false });
 
+        let algorithmSteps = [];
+    if (selectedAlgo === "merge") {
+      algorithmSteps = mergeSort.steps;
+    } else if (selectedAlgo === "quick") {
+      algorithmSteps = quickSort.steps;
+    }else if (selectedAlgo === "heap"){
+      algorithmSteps = heapSort.steps;
+    }
+
+    this.setState({ algorithmSteps });
+    }
+
+    toggleSidePanel = () => {
+        console.log("Toggle button clicked"); // Add this line
+        this.setState(prevState => ({
+            sidePanelOpen: !prevState.sidePanelOpen
+        }));
+    };
+    
     render() {
         return (
             <React.Fragment>
@@ -33,6 +60,17 @@ class RecursiveSort extends Component {
                     onAlgoChanged={this.handleAlgoChanged}
                     onSpeedChange={this.handleSpeedChanged}
                 />
+
+                 {/* Toggle button for the side panel */}
+                <button className="side-panel-toggle" onClick={this.toggleSidePanel}> →</button>
+                
+                {/* Side Panel */}
+                <SidePanel
+    algorithmSteps={this.state.algorithmSteps}
+    isOpen={this.state.sidePanelOpen}
+    onClose={this.toggleSidePanel}
+/>
+
                 <div className='justify-content-center'>
                     <Rects
                         rects={this.state.rects}

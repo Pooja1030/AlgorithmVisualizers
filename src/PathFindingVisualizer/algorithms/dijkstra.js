@@ -25,6 +25,16 @@ export function dijkstra(grid, startNode, finishNode) {
   }
 }
 
+dijkstra.steps = [
+  { code: " Step 1: Initialize the distances and previous nodes." },
+  { code: " Step 2: Add the start node to the priority queue." },
+  { code: " Step 3: Loop until the priority queue is empty." },
+  { code: " Step 4: Process the node with the smallest distance." },
+  { code: " Step 5: Update distances to neighboring nodes." },
+  { code: " Step 6: Update the priority queue." },
+  { code: " Step 7: Backtrack to find the shortest path." }
+];
+
 function sortNodesByDistance(unvisitedNodes) {
   unvisitedNodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
 }

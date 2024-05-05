@@ -20,21 +20,35 @@ class BinaryTree extends Component {
             visualizeClicked: false,
             visualizing:false,
             sidePanelOpen: false, // State variable to manage side panel visibility
-            algorithmSteps: [{
-                code: `// Step 1: Append the data to the array emulating the functionality of a stack.
-        stack.push(newValue);`
-              },
-              {
-                code: `// Step 2: Truncate the last element of the array and return it.
-        const poppedValue = stack.pop();
-        return poppedValue;`
-              },
-              {
-                code: `// Step 3: Return the element last added to the array without removing it.
-        return stack[stack.length - 1];`
-              }
-              // Add more steps if needed
-            ], // Define state for algorithm steps
+            algorithmSteps: [
+                // Algorithm steps for insert operation
+                {
+                    code: ` Step 1: Insert a new node with the specified data value into the binary tree.`,
+                },
+                {
+                    code: ` Step 2: Traverse the tree to find the appropriate position for insertion.`,
+                },
+                // Add more steps if needed
+                // Algorithm steps for delete operation
+                {
+                    code: ` Step 1: Delete a node with the specified data value from the binary tree.`,
+                },
+                {
+                    code: ` Step 2: Traverse the tree to find the node to be deleted.`,
+                },
+                {
+                    code: ` Step 3: Handle different cases based on the number of children of the node.`,
+                },
+                // Add more steps if needed
+                // Algorithm steps for search operation
+                {
+                    code: ` Step 1: Search for a node with the specified data value in the binary tree.`,
+                },
+                {
+                    code: ` Step 2: Traverse the tree to find the node with the matching data value.`,
+                },
+                // Add more steps if needed
+            ],
             
         };
     }
