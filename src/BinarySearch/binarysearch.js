@@ -117,7 +117,7 @@ class BinarySearch extends Component {
                 </div>
             </div>
         </div> */}
-        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
+        {/* <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
             <div className="ide w-100">
                 <div className="row ml-auto mr-auto 1">
                     <span className="comment w-100">----------------</span>
@@ -138,7 +138,7 @@ class BinarySearch extends Component {
                     </span>
                 </div>
             </div>
-        </div>
+        </div> */}
     </div>
 </div>
       </React.Fragment>

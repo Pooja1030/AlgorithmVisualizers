@@ -18,18 +18,37 @@ const QueueVisualizer = () => {
   useEffect(() => {
     // Define your algorithm steps here
     const steps = [
+      { code: `Working of Queue` },
       {
-        code:`1. two pointers FRONT and REAR`
+        code: `- two pointers FRONT and REAR`
       },
       {
-        code:`2. FRONT track the first element of the queue`
+        code: `- FRONT track the first element of the queue`
       },
       {
-        code:`3. REAR track the last element of the queue`
+        code: `- REAR track the last element of the queue`
       },
       {
-        code:`4. initially, set value of FRONT and REAR to -1`
+        code: `- initially, set value of FRONT and REAR to -1`
       },
+      { code: `Enqueue Operation` },
+      {
+        code: `- check if the queue is full`},
+      {
+        code: `- for the first element, set the value of FRONT to 0`},
+      {
+        code: `- increase the REAR index by 1`},
+      {
+        code: `- add the new element in the position pointed to by REAR`},
+      { code: `Dequeue Operation` },
+      {
+        code: `- check if the queue is empty`},
+      {
+        code: `- return the value pointed by FRONT`},
+      {
+        code: `- increase the FRONT index by 1`},
+      {
+        code: `- for the last element, reset the values of FRONT and REAR to -1`},
     ];
 
     setAlgorithmSteps(steps);
