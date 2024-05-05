@@ -59,12 +59,12 @@ class Canvas extends Component {
             <div style={{textAlign:"center"}}>
                 <div className="containerz">
                     <canvas
-                        className='canvas'
+                        className='convex-canvas'
                         id='canvas1'
                         style={{backgroundColor:"whitesmoke"}}
                         ref={this.canvasLineRef} width={window.innerWidth} height={window.innerHeight-200} />
                     <canvas
-                        className='canvas'
+                        className='convex-canvas'
                         id='canvas2'
                         // style={{backgroundColor:"grey"}}
                         ref={this.myRef} width={window.innerWidth} height={window.innerHeight-200}

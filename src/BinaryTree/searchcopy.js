@@ -261,12 +261,15 @@ class BinaryTree extends Component {
                         <button className="insert-btn" onClick={this.insertNode}>Insert</button>
                         <input type="number" placeholder="Delete value" value={this.state.deleteValue} onChange={this.handleDeleteInputChange} />
                         <button className="delete-btn" onClick={this.deleteNode}>Delete</button>
+                        <div>
                         <input type="number" placeholder="Search value" value={this.state.searchValue} onChange={this.handleSearchInputChange} />
                         <button className="search-btn" onClick={this.searchNode}>Search</button>
+                        
                         <button className="visualize-btn" onClick={this.handleVisualization}>
                             Visualize
                         </button>
                         <button className="reset-btn" onClick={this.resetOperations}>Reset</button>
+                        </div>
                     </div>
                 </div>
 
