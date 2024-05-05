@@ -225,12 +225,12 @@ li {
   backface-visibility: hidden;
 }
 
-
+/* 
 .node {
   fill: #ccc;
   stroke: #fff;
   stroke-width: 2px;
-}
+} */
 
 .link {
   stroke: #777;
@@ -481,9 +481,15 @@ li .li-wrapper {
   padding: 30px;
   min-height: 183px;
   min-width: 300px;
-  background: var(--card-shadow-1);
+  /* background: var(--card-shadow-1); */
+  background-color: #FFF;
   justify-content: space-between;
   align-items: flex-start;
+  transition: 0.5s;
+}
+
+.algo-card:hover{
+  scale: 1.025;
 }
 
 .card-logo {
@@ -571,6 +577,36 @@ li .li-wrapper {
   width: 100%;
   /* padding-bottom: 60px; */
   /* padding-bottom: 30px; */
+}
+.home22-intro:before {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  display: block;
+  background: #6E6BFE;
+  border-radius: 50%;
+  box-shadow: 0 0 1000px 350px #6E6BFE;
+  z-index: -1;
+  right: 0;
+  top: 50%;
+  transform: translate(-80%, -80%);
+  opacity: .2;
+}
+.home22-intro:after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  display: block;
+  background: #6E6BFE;
+  border-radius: 50%;
+  box-shadow: 0 0 1000px 350px #ef6bfe;
+  z-index: -1;
+  left: 0;
+  top: 120%;
+  transform: translate(80%, -80%);
+  opacity: .2;
 }
 
 .nav-logo {

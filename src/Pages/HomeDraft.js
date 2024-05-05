@@ -16,15 +16,13 @@ const list = [
     "algorithms": ["Bubble", "Insertion", "Selection", "Quick"],
     "img": ""
   },
-
   {
-    "title": "Pathfinding Algorithms",
-    "link": "pathfinder",
-    "description": "Pathfinding algorithms are methods of finding the shortest path between two points in a graph, such as a map, a maze, or a network.",
-    "algorithms": ["Dijkstra's ", "A*", "Breadth-first", "Depth-first"],
+    "title": "Binary Search",
+    "link": "binarysearch",
+    "description": "Binary Search is defined as a searching algorithm used in a sorted array by repeatedly dividing the search interval in half.",
+    "algorithms": ["Binary Search"],
     "img": ""
   },
-
   {
     "title": "Recursive Sort",
     "link": "recursiveSort",
@@ -32,35 +30,11 @@ const list = [
     "algorithms": ["Merge", "Heap", "Quick"],
     "img": ""
   },
-
   {
-    "title": "Convex Hull",
-    "link": "convexHull",
-    "description": "The convex hull of a set of points in a plane is the smallest convex polygon that contains all the points within it.",
-    "algorithms": ["Graham Scan"],
-    "img": ""
-  },
-
-  {
-    "title": "Recursion Tree",
-    "link": "graph",
-    "description": "A recursion tree is useful for visualizing the tree of recursive calls and the amount of work done at each call.",
-    "algorithms": ["Fibonacci", "Binomial Coefficient", "Derangement", "Bigmod"],
-    "img": ""
-  },
-
-  {
-    "title": "N-queens Problem",
-    "link": "queen",
-    "description": "The objective of queens problem is to place eight chess queens on an 8×8 chessboard so that no two queens threaten each other.",
-    "algorithms": ["Backtracking"],
-    "img": ""
-  },
-  {
-    "title": "Binary Tree",
-    "link": "binarytree",
-    "description": "A binary tree is a data structure in which each node has at most two children, referred to as the left child and the right child.",
-    "algorithms": ["Preorder", "Inorder", "Postorder"],
+    "title": "Pathfinding Algorithms",
+    "link": "pathfinder",
+    "description": "Pathfinding algorithms are methods of finding the shortest path between two points in a graph, such as a map, a maze, or a network.",
+    "algorithms": ["Dijkstra's ", "A*", "Breadth-first", "Depth-first"],
     "img": ""
   },
   {
@@ -78,17 +52,24 @@ const list = [
     "img": ""
   },
   {
-    "title": "Binary Search",
-    "link": "binarysearch",
-    "description": "Binary Search is defined as a searching algorithm used in a sorted array by repeatedly dividing the search interval in half.",
-    "algorithms": ["Binary Search"],
-    "img": ""
-  },
-  {
     "title": "Linked List",
     "link": "linkedlist",
     "description": "A linked list is a linear data structure that consists of a series of nodes where each node contains data and a reference (link) to the next node in the sequence. ",
     "algorithms": ["Singly", "Doubly", "Circular"],
+    "img": ""
+  },
+  {
+    "title": "N-queens Problem",
+    "link": "queen",
+    "description": "The objective of queens problem is to place eight chess queens on an 8×8 chessboard so that no two queens threaten each other.",
+    "algorithms": ["Backtracking"],
+    "img": ""
+  },
+  {
+    "title": "Convex Hull",
+    "link": "convexHull",
+    "description": "The convex hull of a set of points in a plane is the smallest convex polygon that contains all the points within it.",
+    "algorithms": ["Graham Scan"],
     "img": ""
   },
   {
@@ -98,7 +79,27 @@ const list = [
     "algorithms": ["Prim's", "Kruskal's"],
     "img": ""
   },
-
+  {
+    "title": "Recursion Tree",
+    "link": "graph",
+    "description": "A recursion tree is useful for visualizing the tree of recursive calls and the amount of work done at each call.",
+    "algorithms": ["Fibonacci", "Binomial Coefficient", "Derangement", "Bigmod"],
+    "img": ""
+  },
+  {
+    "title": "15 Puzzle",
+    "link": "puzzle",
+    "description": "The 15 puzzle is a sliding puzzle that consists of a frame of numbered square tiles in random order with one tile missing. The objective is to arrange the tiles in ascending order by making sliding moves that use the empty space.",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "Binary Tree",
+    "link": "binarytree",
+    "description": "A binary tree is a data structure in which each node has at most two children, referred to as the left child and the right child.",
+    "algorithms": ["Preorder", "Inorder", "Postorder"],
+    "img": ""
+  },
 ];
 
 
@@ -121,7 +122,7 @@ export default function HomeDraft() {
   return (
     <>
 
-      <div className="hero-container">
+      <div className="hero-container home22-intro">
         <div className="nav-logo">
           <h3 className="logo-text">Algorithm Visualizer</h3>
         </div>
@@ -131,8 +132,7 @@ export default function HomeDraft() {
           <div className="hero-text-content">
             <h1 className="hero-text-content-h1">Algorithm Visualizer</h1>
             <h2 className="hero-text-content-h2">
-            Explore & Understand Algorithms through Interactive Visualization</h2> 
-           
+              Explore & Understand Algorithms through Interactive Visualization</h2>
             {/* <h1 className="hero-text-content-h1">Explore Algorithms:<br></br> Learn, Visualize, and Master</h1>
 
             <h2 className="hero-text-content-h2">
@@ -192,7 +192,7 @@ export default function HomeDraft() {
                   {item.algorithms.map((algo) => <li className="card-tag">{algo}</li>)}
                 </ul>
 
-                <img className="card-logo" src="https://hrcdn.net/s3_pub/hr-assets/dashboard/ProblemSolving.svg" alt="{item.title}"></img>
+                <img className="card-logo" src={item.img || "https://hrcdn.net/s3_pub/hr-assets/dashboard/ProblemSolving.svg"} alt="{item.title}"></img>
               </Link>
             )}
 
