@@ -4,7 +4,7 @@ import SidePanel from './sidepanell'; // Import the SidePanel component
 import './linkedlist.css';
 import SinglyLinkedList from './SinglyLinkedList'; // Import SinglyLinkedList
 import DoublyLinkedList from './DoublyLinkedList'; // Import DoublyLinkedList
-import CircularLinkedList from './CircularLinkedList'; // Import CircularLinkedList
+// import CircularLinkedList from './CircularLinkedList'; // Import CircularLinkedList
 import EastIcon from '@mui/icons-material/East';
 import WestIcon from '@mui/icons-material/West';
 
@@ -25,23 +25,39 @@ const LinkedListVisualizer = () => {
         // Define your algorithm steps here
         const steps = [
             {
-                code: `// Step 1: Append the data to the array emulating the functionality of a stack.
-stack.push(newValue);`
+                code: ` Step 1: Insert the data at the beginning of the linked list.
+    linkedlist.insertAtBeginning(data);`
             },
             {
-                code: `// Step 2: Truncate the last element of the array and return it.
-const poppedValue = stack.pop();
-return poppedValue;`
+                code: ` Step 2: Insert the data at the end of the linked list.
+    linkedlist.insertAtEnd(data);`
             },
             {
-                code: `// Step 3: Return the element last added to the array without removing it.
-return stack[stack.length - 1];`
+                code: ` Step 3: Append the data after a specific node in the linked list.
+    linkedlist.appendToNode(node, data);`
+            },
+            {
+                code: ` Step 4: Delete the first node from the linked list.
+    linkedlist.deleteFirstNode();`
+            },
+            {
+                code: ` Step 5: Delete the last node from the linked list.
+    linkedlist.deleteLastNode();`
+            },
+            {
+                code: ` Step 6: Traverse the linked list and perform an operation on each node.
+    let currentNode = linkedlist.head;
+    while (currentNode !== null) {
+        // Perform operation on currentNode
+        currentNode = currentNode.next;
+    }`
             }
             // Add more steps if needed
         ];
-
+    
         setAlgorithmSteps(steps);
     }, []);
+    
 
     
     const handleListTypeChange = (event) => {
@@ -55,9 +71,9 @@ return stack[stack.length - 1];`
             case 'doubly':
                 setLinkedList(new DoublyLinkedList());
                 break;
-            case 'circular':
-                setLinkedList(new CircularLinkedList());
-                break;
+            // case 'circular':
+            //     setLinkedList(new CircularLinkedList());
+            //     break;
             default:
                 // Handle default case if needed
                 break;
@@ -289,7 +305,7 @@ return stack[stack.length - 1];`
                             <option disabled value="visualize">Select Linked List</option>
                             <option value="singly">Singly Linked List</option>
                             <option value="doubly">Doubly Linked List</option>
-                            <option disabled value="circular">Circular Linked List</option>
+                            {/* <option disabled value="circular">Circular Linked List</option> */}
                         </select>
 
                         {/* insert */}

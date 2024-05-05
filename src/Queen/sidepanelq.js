@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './sidepanelq.css'; // You can define your styles in this CSS file
 
-const SidePanel = ({ algorithmSteps, isOpen, onClose }) => {
+const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [executedSteps, setExecutedSteps] = useState([]); // State to hold executed steps
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -18,17 +19,23 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose }) => {
   }, [isPlaying, currentStep, algorithmSteps]);
 
   const togglePlayPause = () => {
+    if (executedSteps.length === algorithmSteps.length) {
+      // If all steps are executed, reset and start again
+      setCurrentStep(0);
+      setExecutedSteps([]);
+    }
     setIsPlaying(!isPlaying);
   };
 
   const rewind = () => {
-    setCurrentStep(prevStep => Math.max(prevStep - 1, 0));
+    if (currentStep > 0) {
+      setCurrentStep(prevStep => prevStep - 1);
+      setExecutedSteps(prevSteps => prevSteps.slice(0, currentStep - 1));
+    }
   };
 
   const forward = () => {
-    setCurrentStep(prevStep =>
-      Math.min(prevStep + 1, algorithmSteps.length - 1)
-    );
+    setCurrentStep(prevStep => Math.min(prevStep + 1, algorithmSteps.length - 1));
   };
 
   const handleClose = () => {
@@ -36,6 +43,18 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose }) => {
     setCurrentStep(0); // Reset step when closing
     onClose();
   };
+
+  const handleAlgoChange = (pos, val) => {
+    setCurrentStep(0); // Reset step when algorithm changes
+    setExecutedSteps([]);
+    onAlgoChange(pos, val);
+  };
+
+  useEffect(() => {
+    if (isPlaying) {
+      setExecutedSteps(prevSteps => [...prevSteps, algorithmSteps[currentStep]]);
+    }
+  }, [currentStep, isPlaying, algorithmSteps]);
 
   return (
     <div className={`side-panel ${isOpen ? 'open' : ''}`}>
@@ -56,10 +75,12 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose }) => {
         </button>
       </div>
       {/* Panel content */}
-      {isOpen && algorithmSteps && algorithmSteps.length > 0 && (
+      {isOpen && (
         <div className="panel-content">
-          {/* Render the description of the current step */}
-          <p>{algorithmSteps[currentStep].description}</p>
+          {/* Render the code related to current step */}
+          {executedSteps.map((step, index) => (
+            <p key={index}>{step.code}</p>
+          ))}
         </div>
       )}
     </div>

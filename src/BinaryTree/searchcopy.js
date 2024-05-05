@@ -23,6 +23,9 @@ class BinaryTree extends Component {
             algorithmSteps: [
                 // Algorithm steps for insert operation
                 {
+                    code: `Insertion Steps`
+                },
+                {
                     code: ` Step 1: Insert a new node with the specified data value into the binary tree.`,
                 },
                 {
@@ -30,6 +33,9 @@ class BinaryTree extends Component {
                 },
                 // Add more steps if needed
                 // Algorithm steps for delete operation
+                {
+                    code: `Deletion Steps`
+                },
                 {
                     code: ` Step 1: Delete a node with the specified data value from the binary tree.`,
                 },
@@ -41,6 +47,9 @@ class BinaryTree extends Component {
                 },
                 // Add more steps if needed
                 // Algorithm steps for search operation
+                {
+                    code: `Search Steps`
+                },
                 {
                     code: ` Step 1: Search for a node with the specified data value in the binary tree.`,
                 },
@@ -381,3 +390,59 @@ class BinaryTree extends Component {
 }
 
 export default BinaryTree;
+
+
+
+// algorithmSteps: [
+//     // Algorithm steps for insert operation
+//     {
+//         code: `Insertion Steps:`
+//     },
+//     {
+//         code: ` Step 1: Insert a new node with the specified data value into the binary tree.`,
+//     },
+//     {
+//         code: ` Step 2: Traverse the tree to find the appropriate position for insertion.`,
+//     },
+//     {
+//         code: ` Step 3: If the value to be inserted is less than the current node's value, move to the left subtree; otherwise, move to the right subtree.`,
+//     },
+//     {
+//         code: ` Step 4: Repeat steps 2 and 3 until a suitable position for insertion is found.`,
+//     },
+//     // Add more steps if needed
+//     // Algorithm steps for delete operation
+//     {
+//         code: `Deletion Steps:`
+//     },
+//     {
+//         code: ` Step 1: Delete a node with the specified data value from the binary tree.`,
+//     },
+//     {
+//         code: ` Step 2: Traverse the tree to find the node to be deleted.`,
+//     },
+//     {
+//         code: ` Step 3: Handle different cases based on the number of children of the node.`,
+//     },
+//     {
+//         code: ` Step 4: If the node to be deleted has two children, find the inorder successor or predecessor to replace it.`,
+//     },
+//     // Add more steps if needed
+//     // Algorithm steps for search operation
+//     {
+//         code: `Search Steps:`
+//     },
+//     {
+//         code: ` Step 1: Search for a node with the specified data value in the binary tree.`,
+//     },
+//     {
+//         code: ` Step 2: Traverse the tree to find the node with the matching data value.`,
+//     },
+//     {
+//         code: ` Step 3: If the value to be searched is less than the current node's value, move to the left subtree; otherwise, move to the right subtree.`,
+//     },
+//     {
+//         code: ` Step 4: Repeat step 2 and 3 until the node with the matching value is found or until a leaf node is reached.`,
+//     },
+//     // Add more steps if needed
+// ],
