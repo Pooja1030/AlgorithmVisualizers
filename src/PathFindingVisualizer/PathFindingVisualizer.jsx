@@ -438,4 +438,4 @@ const createNode = (col, row) => {
         isWall: false,
         previousNode: null,
     };
-};
+};    
