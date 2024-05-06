@@ -19,7 +19,7 @@ class Menu extends Component {
                     <SimpleSelect
                         label={"Algorithm"}
                         pos={0}
-                        onValueChanged={this.props.onAlgoChanged}
+                        onValueChanged={this.props.onAlgoChanged ? this.props.onAlgoChanged : () => {}}
                         items={["Dijkstra's Algorithm",
                             "A* Algorithm",
                             "Depth-first Search",
