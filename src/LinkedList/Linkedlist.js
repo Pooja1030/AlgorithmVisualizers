@@ -104,6 +104,7 @@ const LinkedListVisualizer = () => {
                     setResultText('Inserted after ' + prevNodeData + ': ');
                     setCurrVal(newData);
                 } else {
+                    animateTraversal();
                     setResultText('Node not found');
                     setCurrVal('');
                 }
@@ -115,6 +116,7 @@ const LinkedListVisualizer = () => {
                     setResultText('Inserted before ' + nextNodeData + ': ');
                     setCurrVal(newData);
                 } else {
+                    animateTraversal();
                     setResultText('Node not found');
                     setCurrVal('');
                 }
@@ -203,30 +205,33 @@ const LinkedListVisualizer = () => {
             .to("#null-node", { color: "#007bff", duration: 1 });
     }
 
+    const animateNode = (listNode, timeline) => {
+        // If stopPosition is reached, break the loop
+        const currentNode = `#list-node-${listNode.data} `;
+        const currentNodeBox = currentNode + " .box";
+        const nextBox = currentNode + " .next";
+        const nextArrowElement = currentNode + " .nextArrow";
+
+        // timeline
+        // Highlight current node box
+        timeline.to(currentNodeBox, { backgroundColor: "#f9d0ff", color: "#dc16d2", borderColor: "#dc16d2", duration: 1.5 }, "-=1")
+            .to(currentNodeBox, { backgroundColor: "#f0f0f0", color: "#007bff", borderColor: "#007bff", duration: 1 },);
+
+        // Highlight next node box
+        timeline.to(nextBox, { backgroundColor: "#6b94bc", duration: 0.5 }, "-=2")
+            .to(nextBox, { backgroundColor: "#dc16d2", duration: 1 }, "-=1")
+            .to(nextBox, { backgroundColor: "#6b94bc", duration: 0.5 });
+
+        // Highlight next arrow
+        timeline.to(nextArrowElement, { fill: "#dc16d2", duration: .5 }, "-=2")
+            .to(nextArrowElement, { scale: 1.2, duration: .5 },)
+            .to(nextArrowElement, { fill: "#000", scale: 1, duration: .5 });
+    }
+
     const animateNodes = (list, timeline) => {
         list.forEach((listNode, index) => {
-            // If stopPosition is reached, break the loop
-            const currentNode = `#list-node-${listNode.data} `;
-            const currentNodeBox = currentNode + " .box";
-            const nextBox = currentNode + " .next";
-            const nextArrowElement = currentNode + " .nextArrow";
-
-            // timeline
-            // Highlight current node box
-            timeline.to(currentNodeBox, { backgroundColor: "#f9d0ff", color: "#dc16d2", borderColor: "#dc16d2", duration: 1.5 }, "-=1")
-                .to(currentNodeBox, { backgroundColor: "#f0f0f0", color: "#007bff", borderColor: "#007bff", duration: 1 },);
-
-            // Highlight next node box
-            timeline.to(nextBox, { backgroundColor: "#6b94bc", duration: 0.5 }, "-=2")
-                .to(nextBox, { backgroundColor: "#dc16d2", duration: 1 }, "-=1")
-                .to(nextBox, { backgroundColor: "#6b94bc", duration: 0.5 });
-
-            // Highlight next arrow
-            timeline.to(nextArrowElement, { fill: "#dc16d2", duration: .5 }, "-=2")
-                .to(nextArrowElement, { scale: 1.2, duration: .5 },)
-                .to(nextArrowElement, { fill: "#000", scale: 1, duration: .5 });
+            animateNode(listNode, timeline)
         });
-
     }
 
     const animateTraversal = async () => {
@@ -273,38 +278,64 @@ const LinkedListVisualizer = () => {
         const nextBox = `#list-node-${newData} .next`;
         const nextArrowElement = `#list-node-${newData} .nextArrow`;
         let prevBox;
-        let prevArrowElement;
+        let nextPrevArrowElement;
         if (listType === 'doubly') {
             prevBox = `#list-node-${newData} .prev`;
-            prevArrowElement = `#list-node-${newData} .prevArrow`;
+            nextPrevArrowElement = `#list-node-${newData} .prevArrow`;
+        }
+
+        let prevNode;
+        let PrevArrowElement;
+        if (nodesBefore.length > 0 && listType === 'doubly') {
+            prevNode = nodesBefore[nodesBefore.length - 1];
+            PrevArrowElement = `#list-node-${prevNode.data} .prevArrow`;
+        }
+
+        let nextNode;
+        let nextPrev;
+        if (nodesAfter.length > 0 && listType === 'doubly') {
+            nextNode = nodesAfter[0];
+            nextPrev = `#list-node-${nextNode.data} .prev`;
         }
 
         // start animation
         // display node
         timeline.set(newNode, { opacity: 1, y: -75, },);
         gsap.set(nextArrowElement, { opacity: 0, fill: "#dc16d2" });
-        prevArrowElement && gsap.set(prevArrowElement, { opacity: 0, fill: "#dc16d2" });
+        nextPrevArrowElement && gsap.set(nextPrevArrowElement, { opacity: 0, fill: "#dc16d2" });
+        PrevArrowElement && gsap.set(PrevArrowElement, { fill: "#dc16d2", opacity: 0, });
+
+        // hide pointer to null
+        if (insertPosition === 'Beginning' && listType === 'doubly') {
+            gsap.to("#head-null-node .prev-null-node", { opacity: 0, duration: 0.5 });
+            gsap.to("#head-null-node .prevArrow", { fill: "#dc16d2", opacity: 0, duration: 0.5 });
+        }
 
         // animate head
         animateHead(timeline);
 
-        if (insertPosition === 'Beginning' && listType === 'doubly') {
-            if (nodesAfter.length === 0) {
-                gsap.set("#head-null-node .prev-null-node", { opacity: 0 });
-                gsap.set("#head-null-node .prevArrow", { fill: "#dc16d2", opacity: 0, });
-            } else {
-                timeline.set("#head-null-node .prev-null-node", { color: "#dc16d2", duration: 1 })
-                    .to("#head-null-node .prevArrow", { fill: "#000", scale: 1, duration: .5 });
-                // .to("#head-null-node .prev-null-node", { color: "#007bff", duration: 0.5 })
-                // .to("#head-null-node .prevArrow", { fill: "#dc16d2", duration: .5 }, "-=1")
-                // .to("#head-null-node .prevArrow", { scale: 1.2, duration: .5 }, "+=.5")
-            }
-        }
 
         // animate nodes before the new node
-        if (insertPosition === 'After Node' || insertPosition === 'End') {
+        if (insertPosition !== "Beginning") {
             animateNodes(nodesBefore, timeline);
         }
+
+        if (insertPosition === "Before Node") {
+            const nextNodeBox = `#list-node-${nextNode.data} .box`;
+            timeline.to(nextNodeBox, { backgroundColor: "#f9d0ff", color: "#dc16d2", borderColor: "#dc16d2", duration: 1.5 }, "-=1")
+                .to(nextNodeBox, { backgroundColor: "#f0f0f0", color: "#007bff", borderColor: "#007bff", duration: 1 },);
+
+            // Highlight next node box
+            timeline.to(nextPrev, { backgroundColor: "#6b94bc", duration: 0.5 }, "-=2")
+                .to(nextPrev, { backgroundColor: "#dc16d2", duration: 1 }, "-=1")
+                .to(nextPrev, { backgroundColor: "#6b94bc", duration: 0.5 });
+
+            timeline.set(nextPrevArrowElement, { opacity: 1 })
+            timeline.to(nextPrevArrowElement, { x: "+=10", scale: 1.2, duration: 0.5 },)
+                .to(nextPrevArrowElement, { x: 0, fill: "#000", scale: 1, duration: 1, });
+        }
+
+        const slideDelay = insertPosition === "Before Node"?(nodesBefore.length + 1) * 4 : (nodesBefore.length + 1) * 3 ;
 
         // slide nodes after new node to right
         nodesAfter.forEach((listNode, index) => {
@@ -313,7 +344,7 @@ const LinkedListVisualizer = () => {
         });
         nodesAfter.forEach((listNode, index) => {
             const currentNode = `#list-node-${listNode.data} `;
-            gsap.to(currentNode, { x: 0, duration: 1, delay: (nodesBefore.length + 1) * 3 }); // Delay the start of each node's animation
+            gsap.to(currentNode, { x: 0, duration: 1, delay: slideDelay }); // Delay the start of each node's animation
         });
 
         // hide null node if no nodes after
@@ -321,8 +352,9 @@ const LinkedListVisualizer = () => {
             gsap.set("#null-node", { opacity: 0 })
         }
         else {
+        //  else slide to right
             gsap.set("#null-node", { x: `${listType === 'doubly' ? -206 : -146}` });
-            gsap.to("#null-node", { x: 0, duration: 1, delay: (nodesBefore.length + 1) * 3 });
+            gsap.to("#null-node", { x: 0, duration: 1, delay: slideDelay });
         }
 
         // place new node
@@ -350,6 +382,12 @@ const LinkedListVisualizer = () => {
                 .to(prevBox, { backgroundColor: "#6b94bc", duration: 0.5 });
         }
 
+        // point arrow to prev node 
+        if (PrevArrowElement) {
+            timeline.to(PrevArrowElement, { opacity: 1, x: 10, scale: 1.2, duration: 0.5 },)
+                .to(PrevArrowElement, { x: 0, fill: "#000", scale: 1, duration: 1 },);
+        }
+
         // if prev node is null, animate it 
         if (nodesBefore.length === 0 && listType === 'doubly') {
             timeline.to("#head-null-node .prevArrow", { opacity: 1, x: 10, scale: 1.2, duration: 0.5 },)
@@ -358,21 +396,19 @@ const LinkedListVisualizer = () => {
                 .to("#head-null-node .prev-null-node", { color: "#007bff", duration: 0.5 });
         }
 
-        if (nodesAfter.length > 0 && listType === 'doubly') {
-            const nextNode = nodesAfter[0];
-            const nextPrev = `#list-node-${nextNode.data} .prev`;
+        // highlight the prev pointer of next node
+        if (nextPrev && insertPosition !== "Before Node") {
             timeline.to(nextPrev, { backgroundColor: "#6b94bc", duration: 0.5 }, "-=2")
                 .to(nextPrev, { backgroundColor: "#dc16d2", duration: 1 }, "+=1")
                 .to(nextPrev, { backgroundColor: "#6b94bc", duration: 0.5 });
         }
 
         // point arrow to prev node
-        if (prevArrowElement) {
-            timeline.set(prevArrowElement, { opacity: 1 })
-            timeline.to(prevArrowElement, { x: "+=10", scale: 1.2, duration: 0.5 },)
-                .to(prevArrowElement, { x: 0, fill: "#000", scale: 1, duration: 1, });
+        if (nextPrevArrowElement && insertPosition !== "Before Node") {
+            timeline.set(nextPrevArrowElement, { opacity: 1 })
+            timeline.to(nextPrevArrowElement, { x: "+=10", scale: 1.2, duration: 0.5 },)
+                .to(nextPrevArrowElement, { x: 0, fill: "#000", scale: 1, duration: 1, });
         }
-
 
         console.log("finish animation");
     };
