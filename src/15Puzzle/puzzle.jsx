@@ -73,7 +73,7 @@ class Puzzle extends Component {
                         </FlipMove>
                         <button className={"btn btn-secondary"} onClick={this.balsal}>Animate</button>
                     </div>
-                    <button className="side-panel-toggle" onClick={this.toggleSidePanel}>Toggle Side Panel</button>
+                    <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
                     <SidePanel algorithmSteps={this.state.algorithmSteps} isOpen={this.state.sidePanelOpen} onClose={this.toggleSidePanel} />
                 </div>
             </div>
