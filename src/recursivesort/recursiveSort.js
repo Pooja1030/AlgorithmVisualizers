@@ -1,13 +1,14 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import Rects from "../Sorting/rects";
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
-import  heapSort  from "../algorithms/heapSort";
+import heapSort from "../algorithms/heapSort";
 import { quickSortRecursive } from "../algorithms/quickSortRecursive";
-import mergeSort  from "../algorithms/mergeSort";
+import mergeSort from "../algorithms/mergeSort";
 import SidePanel from "./sidepanelrs";
 import { quickSort } from "../algorithms/quickSort";
-
+import { mergeSortSteps } from "../algorithms/mergeSort"; // Import mergeSortSteps 
+import { heapSortSteps } from "../algorithms/heapSort"
 
 class RecursiveSort extends Component {
     state = {
@@ -19,38 +20,35 @@ class RecursiveSort extends Component {
         sidePanelOpen: false, // State variable for side panel visibility
         algorithmSteps: [],
     }
-  
+
     componentDidMount() {
         var rects = getInitialRects(this.state.count);
-        this.setState({rects});
-    }
-    handleAlgoSelect = (e) => {
-        const selectedAlgo = e.target.value;
-        this.setState({ selectedAlgo, visualizeClicked: false });
-
-        let algorithmSteps = [];
-    if (selectedAlgo === "merge") {
-      algorithmSteps = mergeSort.steps;
-    } else if (selectedAlgo === "quick") {
-      algorithmSteps = quickSort.steps;
-    }else if (selectedAlgo === "heap"){
-      algorithmSteps = heapSort.steps;
+        this.setState({ rects });
+        this.setAlgorithmSteps(0);
     }
 
-    this.setState({ algorithmSteps });
+    setAlgorithmSteps = (selectedAlgo) => {
+        // Define your algorithm steps here
+        let steps = [];
+        if (selectedAlgo === 0) {
+            steps = mergeSortSteps;
+        } else if (selectedAlgo === 1) {
+            steps = heapSortSteps;
+        } else if (selectedAlgo === 2) {
+            steps = quickSort.steps;
+        }
+
+        this.setState({ algorithmSteps: steps });
     }
 
     toggleSidePanel = () => {
-        console.log("Toggle button clicked"); // Add this line
-        this.setState(prevState => ({
-            sidePanelOpen: !prevState.sidePanelOpen
-        }));
+        this.setState(prevState => ({ sidePanelOpen: !prevState.sidePanelOpen }));
     };
-    
+
     render() {
         return (
             <React.Fragment>
-                <Navbar currentPage="Recursive Sort"/>
+                <Navbar currentPage="Recursive Sort" />
                 <Menu className="menu"
                     isDisabled={this.state.isRunning}
                     onVisualize={this.handleSort}
@@ -61,15 +59,15 @@ class RecursiveSort extends Component {
                     onSpeedChange={this.handleSpeedChanged}
                 />
 
-                 {/* Toggle button for the side panel */}
+                {/* Toggle button for the side panel */}
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}> →</button>
-                
+
                 {/* Side Panel */}
                 <SidePanel
-    algorithmSteps={this.state.algorithmSteps}
-    isOpen={this.state.sidePanelOpen}
-    onClose={this.toggleSidePanel}
-/>
+                    algorithmSteps={this.state.algorithmSteps}
+                    isOpen={this.state.sidePanelOpen}
+                    onClose={this.toggleSidePanel}
+                />
 
                 <div className='justify-content-center'>
                     <Rects
@@ -83,34 +81,35 @@ class RecursiveSort extends Component {
 
     handleRandomize = () => {
         const rect = getInitialRects(this.state.count);
-        this.setState({rects: rect});
+        this.setState({ rects: rect });
     }
     handleRefresh = () => {
         const rects = this.state.rects;
         for (let i = 0; i < rects.length; i++) {
-            const rect = {...rects[i], isSorted: false, isSorting: false}
+            const rect = { ...rects[i], isSorted: false, isSorting: false }
             rects[i] = rect;
         }
-        this.setState({rects});
+        this.setState({ rects });
     }
     handleCountChange = (val) => {
-        this.setState({count: val});
+        this.setState({ count: val });
         this.handleRandomize();
     }
     handleAlgoChanged = (pos, val) => {
         if (pos === 0) {
-            this.setState({algo: val});
+            this.setState({ algo: val });
+            this.setAlgorithmSteps(val);
         }
         console.log(this.state.algo)
     }
     handleSpeedChanged = (val) => {
         const speed = (110 - val);
-        this.setState({speed});
+        this.setState({ speed });
     }
 
     handleSort = () => {
 
-        this.setState({isRunning: true});
+        this.setState({ isRunning: true });
         let steps;
         let rects2;
         switch (this.state.algo) {
@@ -135,143 +134,143 @@ class RecursiveSort extends Component {
 
     }
 
-    handleQuick = async (steps) =>{
-        this.setState({isRunning: true});
+    handleQuick = async (steps) => {
+        this.setState({ isRunning: true });
         let prevRect = this.state.rects;
         for (let j = 0; j < this.state.count; j++) {
-            prevRect[j] = {...prevRect[j], isLeft: false,isSorting: false,isRight:false,isRange:false,isSorted: false};
+            prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isRange: false, isSorted: false };
         }
-        this.setState({rects: prevRect});
+        this.setState({ rects: prevRect });
         let hasChanged = -1;
         let changed;
-        for(let i=0;i<steps.length;i++){
+        for (let i = 0; i < steps.length; i++) {
             let step = steps[i];
-            if( hasChanged!==-1 ){
-                let {left,right} = changed;
-                prevRect[left] = {...prevRect[left], isLeft: false,isSorting: false,isRight:false,isRange:false};
-                prevRect[right] = {...prevRect[right], isLeft: false,isSorting: false,isRight:false,isRange:false};
+            if (hasChanged !== -1) {
+                let { left, right } = changed;
+                prevRect[left] = { ...prevRect[left], isLeft: false, isSorting: false, isRight: false, isRange: false };
+                prevRect[right] = { ...prevRect[right], isLeft: false, isSorting: false, isRight: false, isRange: false };
             }
-            if( step.changedRange ){
-                await sleep(this.state.speed);await sleep(this.state.speed);await sleep(this.state.speed);await sleep(this.state.speed);
-                let {left,right} = step;
+            if (step.changedRange) {
+                await sleep(this.state.speed); await sleep(this.state.speed); await sleep(this.state.speed); await sleep(this.state.speed);
+                let { left, right } = step;
                 for (let j = 0; j < this.state.count; j++) {
-                    prevRect[j] = {...prevRect[j], isLeft: false,isSorting: false,isRight:false,isRange:false};
+                    prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isRange: false };
                 }
-                for (let j = left; j <=right; j++) {
-                    prevRect[j] = {...prevRect[j], isLeft: false,isSorting: false,isRight:true,isRange:true};
+                for (let j = left; j <= right; j++) {
+                    prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: true, isRange: true };
                 }
-                this.setState({rects: prevRect});
-                await sleep(this.state.speed);await sleep(this.state.speed);await sleep(this.state.speed);await sleep(this.state.speed);
+                this.setState({ rects: prevRect });
+                await sleep(this.state.speed); await sleep(this.state.speed); await sleep(this.state.speed); await sleep(this.state.speed);
                 for (let j = 0; j < this.state.count; j++) {
-                    prevRect[j] = {...prevRect[j], isLeft: false,isSorting: false,isRight:false};
+                    prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false };
                 }
-            }else if(step.swap){
-                let {left,right} = step;
-                prevRect[left] = {...prevRect[left], isLeft: false,isSorting: true,isRight:false,isRange:false};
-                prevRect[right] = {...prevRect[right], isLeft: true,isSorting: false,isRight:false,isRange:false};
+            } else if (step.swap) {
+                let { left, right } = step;
+                prevRect[left] = { ...prevRect[left], isLeft: false, isSorting: true, isRight: false, isRange: false };
+                prevRect[right] = { ...prevRect[right], isLeft: true, isSorting: false, isRight: false, isRange: false };
                 let temp = prevRect[left];
                 prevRect[left] = prevRect[right];
                 prevRect[right] = temp;
                 hasChanged = 1;
                 changed = step;
             }
-            this.setState({rects: prevRect});
+            this.setState({ rects: prevRect });
             await sleep(this.state.speed);
             if (i === steps.length - 1) {
                 for (let j = 0; j < this.state.count; j++) {
-                    prevRect[j] = {...prevRect[j], isLeft: false,isSorting: false,isRight:false,isSorted: false,isRange:false};
+                    prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isSorted: false, isRange: false };
                 }
-                this.setState({rects: prevRect});
+                this.setState({ rects: prevRect });
                 for (let j = 0; j < this.state.count; j++) {
-                    prevRect[j] = {...prevRect[j], isLeft: false,isSorting: false,isRight:false,isSorted: true,isRange:false};
-                    this.setState({rects: prevRect});
+                    prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isSorted: true, isRange: false };
+                    this.setState({ rects: prevRect });
                     await sleep(10);
                 }
-                this.setState({isRunning: false,rects: prevRect});
+                this.setState({ isRunning: false, rects: prevRect });
             }
         }
     }
-    handleHeap = async (steps) =>{
-        this.setState({isRunning: true});
+    handleHeap = async (steps) => {
+        this.setState({ isRunning: true });
         let prevRect = this.state.rects;
         for (let j = 0; j < this.state.count; j++) {
-            prevRect[j] = {...prevRect[j], isLeft: false,isSorting: false,isRight:false,isRange:false,isSorted: false};
+            prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isRange: false, isSorted: false };
         }
-        this.setState({rects: prevRect});
+        this.setState({ rects: prevRect });
 
-        for(let i = 0;i<steps.length;i++){
+        for (let i = 0; i < steps.length; i++) {
             let step = steps[i];
             for (let i = 0; i < this.state.count; i++) {
-                prevRect[i] = {...prevRect[i], isLeft: false,isSorting: false,isRight:false};
+                prevRect[i] = { ...prevRect[i], isLeft: false, isSorting: false, isRight: false };
             }
-            let {left,right,sorted} = step;
-            prevRect[left] = {...prevRect[left],isLeft:true};
-            prevRect[right] = {...prevRect[right],isRight:true};
-            this.setState({rects: prevRect});
+            let { left, right, sorted } = step;
+            prevRect[left] = { ...prevRect[left], isLeft: true };
+            prevRect[right] = { ...prevRect[right], isRight: true };
+            this.setState({ rects: prevRect });
             await sleep(this.state.speed);
             let temp = prevRect[left];
             prevRect[left] = prevRect[right];
             prevRect[right] = temp;
-            this.setState({rects: prevRect});
-            if( sorted ) prevRect[left] = {...prevRect[left],isSorted: true};
-            await sleep(this.state.speed);await sleep(this.state.speed);await sleep(this.state.speed);
+            this.setState({ rects: prevRect });
+            if (sorted) prevRect[left] = { ...prevRect[left], isSorted: true };
+            await sleep(this.state.speed); await sleep(this.state.speed); await sleep(this.state.speed);
             if (i === steps.length - 1) {
 
                 for (let i = 0; i < this.state.count; i++) {
-                    prevRect[i] = {...prevRect[i], isLeft: false,isSorting: false,isRight:false,isSorted: true};
-                    this.setState({rects: prevRect});
+                    prevRect[i] = { ...prevRect[i], isLeft: false, isSorting: false, isRight: false, isSorted: true };
+                    this.setState({ rects: prevRect });
                     await sleep(this.state.speed);
                 }
-                this.setState({isRunning: false,rects: prevRect});
+                this.setState({ isRunning: false, rects: prevRect });
             }
         }
     }
     handleMerge = async (steps) => {
-        this.setState({isRunning1: true});
+        this.setState({ isRunning1: true });
 
 
         let prevRect = this.state.rects;
         for (let j = 0; j < this.state.count; j++) {
-            prevRect[j] = {...prevRect[j], isLeft: false,isSorting: false,isRight:false,isRange:false,isSorted: false};
+            prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isRange: false, isSorted: false };
         }
-        this.setState({rects: prevRect});
+        this.setState({ rects: prevRect });
         await sleep(this.state.speed);
-      
+
         for (let ii = 0; ii < steps.length; ii++) {
             let step = steps[ii];
             for (let i = 0; i < this.state.count; i++) {
-                prevRect[i] = {...prevRect[i], isLeft: false,isSorting: false,isRight:false};
+                prevRect[i] = { ...prevRect[i], isLeft: false, isSorting: false, isRight: false };
             }
-           
+
             for (let i = step.left; i <= step.mid; i++) {
-                prevRect[i] = {...prevRect[i], isLeft: true,isSorting: false};
+                prevRect[i] = { ...prevRect[i], isLeft: true, isSorting: false };
             }
             for (let i = step.mid + 1; i <= step.right; i++) {
-                prevRect[i] = {...prevRect[i], isRight: true,isLeft:false,isSorting: false};
+                prevRect[i] = { ...prevRect[i], isRight: true, isLeft: false, isSorting: false };
             }
-            this.setState({rects: prevRect});
-            await sleep(this.state.speed);await sleep(this.state.speed);await sleep(this.state.speed);
+            this.setState({ rects: prevRect });
+            await sleep(this.state.speed); await sleep(this.state.speed); await sleep(this.state.speed);
 
-            for(let i= step.left;i<=step.right;i++){
-                prevRect[i] = {...prevRect[i],width:step.val[i-step.left].width,isSorting: true };
-                this.setState({rects: prevRect});
+            for (let i = step.left; i <= step.right; i++) {
+                prevRect[i] = { ...prevRect[i], width: step.val[i - step.left].width, isSorting: true };
+                this.setState({ rects: prevRect });
                 await sleep(this.state.speed);
             }
 
             if (ii === steps.length - 1) {
 
                 for (let i = 0; i < this.state.count; i++) {
-                    prevRect[i] = {...prevRect[i], isLeft: false,isSorting: false,isRight:false,isSorted: true};
-                    this.setState({rects: prevRect});
+                    prevRect[i] = { ...prevRect[i], isLeft: false, isSorting: false, isRight: false, isSorted: true };
+                    this.setState({ rects: prevRect });
                     await sleep(this.state.speed);
                 }
-                this.setState({isRunning: false});
+                this.setState({ isRunning: false });
             }
 
-            this.setState({rects: prevRect});
+            this.setState({ rects: prevRect });
             await sleep(this.state.speed);
             prevRect = this.state.rects;
-            this.setState({rects: prevRect});
+            this.setState({ rects: prevRect });
         }
     }
 
