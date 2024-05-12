@@ -15,7 +15,7 @@ class Puzzle extends Component {
             squares: times(16, i => ({
                 value: i
             })),
-            sidePanelOpen: false,
+            sidePanelOpen: false, // Default state for side panel
             algorithmSteps: [
                 { 
                     code: ' Step 1: Shuffle the puzzle tiles randomly to create a solvable configuration.',
@@ -43,6 +43,9 @@ class Puzzle extends Component {
     }
 
     balsal = async () => {
+        // Open side panel when the user clicks on the "Animate" button
+        this.setState({ sidePanelOpen: true });
+
         for (let i = 0; i < 15; i++) {
             this.setState({
                 squares: this.state.squares.slice().swap(i, i + 1)
