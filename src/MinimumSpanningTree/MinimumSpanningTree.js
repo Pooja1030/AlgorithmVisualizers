@@ -1,3 +1,4 @@
+// MinimumSpanningTree.js
 import React, { Component } from "react";
 import Navbar from "../Components/navbar";
 import Prim from "./Prim";
@@ -32,7 +33,8 @@ class MinimumSpanningTree extends Component {
 
   handleVisualizeClick = () => {
     if (this.state.selectedAlgo !== "") {
-      this.setState({ visualizeClicked: true });
+      // Open side panel
+      this.setState({ visualizeClicked: true, sidePanelOpen: true });
     }
   };
 
