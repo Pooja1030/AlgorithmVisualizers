@@ -110,7 +110,7 @@ class RecursiveSort extends Component {
 
     handleSort = () => {
 
-        this.setState({ isRunning: true });
+        this.setState({ isRunning: true, sidePanelOpen: true });
         let steps;
         let rects2;
         switch (this.state.algo) {
