@@ -1,36 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import './sidepanelso.css'; // You can define your styles in this CSS file
 
-const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
+const SidePanel = ({ algorithmSteps, isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [executedSteps, setExecutedSteps] = useState([]); // State to hold executed steps
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (isPlaying && currentStep < algorithmSteps.length - 1) {
+    let interval;
+    if (isPlaying && currentStep < algorithmSteps.length - 1) {
+      interval = setInterval(() => {
         setCurrentStep(prevStep => prevStep + 1);
-      } else {
-        setIsPlaying(false); // Pause when all steps are played
-      }
-    }, 1000); // Change the interval as per your requirement
+      }, 1000); // Change the interval as per your requirement
+    } else {
+      clearInterval(interval);
+      setIsPlaying(false); // Pause when all steps are played or stopped manually
+    }
 
     return () => clearInterval(interval);
   }, [isPlaying, currentStep, algorithmSteps]);
 
   const togglePlayPause = () => {
-    if (executedSteps.length === algorithmSteps.length) {
-      // If all steps are executed, reset and start again
-      setCurrentStep(0);
-      setExecutedSteps([]);
-    }
     setIsPlaying(!isPlaying);
   };
 
   const rewind = () => {
     if (currentStep > 0) {
       setCurrentStep(prevStep => prevStep - 1);
-      setExecutedSteps(prevSteps => prevSteps.slice(0, currentStep - 1));
     }
   };
 
@@ -44,17 +40,9 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
     onClose();
   };
 
-  const handleAlgoChange = (pos, val) => {
-    setCurrentStep(0); // Reset step when algorithm changes
-    setExecutedSteps([]);
-    onAlgoChange(pos, val);
-  };
-
   useEffect(() => {
-    if (isPlaying) {
-      setExecutedSteps(prevSteps => [...prevSteps, algorithmSteps[currentStep]]);
-    }
-  }, [currentStep, isPlaying, algorithmSteps]);
+    setExecutedSteps(algorithmSteps.slice(0, currentStep + 1));
+  }, [currentStep, algorithmSteps]);
 
   return (
     <div className={`side-panel ${isOpen ? 'open' : ''}`}>
@@ -67,10 +55,10 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
         <button className="toggle-btn" onClick={togglePlayPause}>
           {isPlaying ? 'Pause' : 'Play'}
         </button>
-        <button className="rewind-btn" onClick={rewind}>
+        <button className="rewind-btn" onClick={rewind} disabled={currentStep === 0}>
           Rewind
         </button>
-        <button className="forward-btn" onClick={forward}>
+        <button className="forward-btn" onClick={forward} disabled={currentStep === algorithmSteps.length - 1}>
           Forward
         </button>
       </div>
