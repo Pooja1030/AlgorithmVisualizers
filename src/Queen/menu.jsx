@@ -29,7 +29,7 @@ class Menu extends Component {
                 <div>
                     <button
                         className='visualize-btn btn-warning btn-lg '
-                        onClick={this.props.onViusalize}
+                        onClick={this.props.onVisualize}
                         disabled={this.props.isDisabled}
                         style={this.isClickable()}
                     >
