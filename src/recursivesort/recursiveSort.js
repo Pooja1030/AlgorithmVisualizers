@@ -9,6 +9,7 @@ import SidePanel from "./sidepanelrs";
 import { quickSort } from "../algorithms/quickSort";
 import { mergeSortSteps } from "../algorithms/mergeSort"; // Import mergeSortSteps 
 import { heapSortSteps } from "../algorithms/heapSort"
+import { quickSortSteps } from "../algorithms/quickSortRecursive"
 
 class RecursiveSort extends Component {
     state = {
@@ -35,7 +36,7 @@ class RecursiveSort extends Component {
         } else if (selectedAlgo === 1) {
             steps = heapSortSteps;
         } else if (selectedAlgo === 2) {
-            steps = quickSort.steps;
+            steps = quickSortSteps;
         }
 
         this.setState({ algorithmSteps: steps });
