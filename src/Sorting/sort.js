@@ -103,7 +103,7 @@ class Sort extends Component {
     };
 
     handleSort = async () => {
-        this.setState({ isRunning: true });
+        this.setState({ isRunning: true, sidePanelOpen: true });
         let steps1;
         let algorithmSteps;
         switch (this.state.algo1) {
