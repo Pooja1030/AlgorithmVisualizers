@@ -172,29 +172,32 @@ class BinarySearch extends Component {
   }
 
   handleSearch = (searchValue) => {
-    this.setState({ isRunning: true, target: searchValue }, ()=>{
-
+    this.setState({ isRunning: true, target: searchValue }, () => {
       const { target, rects } = this.state;
       let low = 0;
       let high = rects.length - 1;
-    let steps = [];
-    while (low <= high) {
-      let mid = Math.floor((low + high) / 2);
-      steps.push({ low, high, mid });
-      if (rects[mid].value === target) {
-        steps.push({ found: true, index: mid });
-        break;
-      } else if (rects[mid].value < target) {
-        steps.push({ mid, direction: 'right' });
-        low = mid + 1;
-      } else {
-        steps.push({ mid, direction: 'left' });
-        high = mid - 1;
+      let steps = [];
+      while (low <= high) {
+        let mid = Math.floor((low + high) / 2);
+        steps.push({ low, high, mid });
+        if (rects[mid].value === target) {
+          steps.push({ found: true, index: mid });
+          break;
+        } else if (rects[mid].value < target) {
+          steps.push({ mid, direction: 'right' });
+          low = mid + 1;
+        } else {
+          steps.push({ mid, direction: 'left' });
+          high = mid - 1;
+        }
       }
-    }
-    this.animateSearch(steps);
-  });
+      this.animateSearch(steps);
+  
+      // Trigger side panel and display algorithm steps
+      this.setState({ sidePanelOpen: true });
+    });
   }
+  
 
   animateSearch = (steps) => {
     const animateStep = (index) => {
