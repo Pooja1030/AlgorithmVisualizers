@@ -7,15 +7,21 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
   const [executedSteps, setExecutedSteps] = useState([]); // State to hold executed steps
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    let timeoutId;
+
+    const playNextStep = () => {
       if (isPlaying && currentStep < algorithmSteps.length - 1) {
         setCurrentStep(prevStep => prevStep + 1);
       } else {
         setIsPlaying(false); // Pause when all steps are played
       }
-    }, 1000); // Change the interval as per your requirement
+    };
 
-    return () => clearInterval(interval);
+    if (isPlaying) {
+      timeoutId = setTimeout(playNextStep, 1000); // Change the delay as per your requirement
+    }
+
+    return () => clearTimeout(timeoutId);
   }, [isPlaying, currentStep, algorithmSteps]);
 
   const togglePlayPause = () => {
@@ -77,9 +83,9 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
       {/* Panel content */}
       {isOpen && (
         <div className="panel-content">
-          {/* Render the code related to current step */}
+          {/* Render the algorithm steps */}
           {executedSteps.map((step, index) => (
-            <p key={index}>{step.code}</p>
+            <p key={index}>{step.description}</p>
           ))}
         </div>
       )}

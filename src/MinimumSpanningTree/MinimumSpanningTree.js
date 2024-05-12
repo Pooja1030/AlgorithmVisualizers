@@ -33,7 +33,7 @@ class MinimumSpanningTree extends Component {
 
   handleVisualizeClick = () => {
     if (this.state.selectedAlgo !== "") {
-      // Open side panel
+      // Open side panel and trigger visualization
       this.setState({ visualizeClicked: true, sidePanelOpen: true });
     }
   };
