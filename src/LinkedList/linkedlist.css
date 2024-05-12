@@ -18,9 +18,9 @@
 }
 
 .box {
-  border: 2px solid #007bff;
-  background-color: #f0f0f0;
-  color: #007bff;
+  border: 2px solid #1363DF;
+  background-color: #FFF7FC;
+  color: #1363DF;
   min-width: 60px;
   height: 60px;
   display: flex;
@@ -37,8 +37,8 @@
 .next,
 .prev {
   padding: 17px 10px;
-  background-color: #72a1cd;
-  color: #f0f0f0;
+  background-color: #5B8FB9;
+  color: #FFF7FC;
 }
 
 .head,
@@ -53,125 +53,6 @@
 .arrowIcons {
   display: flex;
   flex-direction: column;
-  /* opacity: 0; */
   z-index: -1;
 }
 
-
-/* Traversal animation */
-/* 
-.list-node-visited .box {
-  animation-name: visitedAnimation;
-  animation-duration: 2s;
-  animation-timing-function: ease-in-out;
-  animation-delay: 0;
-  animation-direction: alternate;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  animation-play-state: running;
-}
-
-@keyframes visitedAnimation {
-  0% {
-    background-color: #f9d0ff;
-    color: #dc16d2;
-    border-color: #dc16d2;
-  }
-  90% {
-    background-color: #f9d0ff;
-    color: #dc16d2;
-    border-color: #dc16d2;
-  }
-
-  100% {
-    background-color: #f0f0f0;
-  }
-}
-
-.list-node-visited .next {
-  animation: nextAnimation 1.5s linear 1.5s alternate 1 forwards running;
-}
-
-@keyframes nextAnimation {
-  0% {
-    background-color: #6b94bc;
-  }
-
-  10% {
-    background-color: #dc16d2;
-  }
-  85% {
-    background-color: #dc16d2;
-  }
-
-  100% {
-    background-color: #6b94bc;
-  }
-}
-
-.list-node-visited .nextArrow {
-  animation: arrowsAnimation 2s linear 1.5s alternate 1 forwards running;
-}
-
-.head-null-visited .nextArrow {
-  animation: arrowsAnimation 1s linear 0s alternate 1 forwards running;
-}
-
-@keyframes arrowsAnimation {
-  0% {
-    color: #dc16d2;
-    scale: 1.2;
-  }
-  
-  75% {
-    color: #dc16d2;
-  }
-
-  100% {
-    color: #000;
-    scale: 1;
-  }
-}
-
-.null-visited, .head-null-visited .head-node{
-  animation: head-null-Animation 1s linear 0s alternate 1 forwards running;
-}
-
-@keyframes head-null-Animation {
-  0% {
-    color: #dc16d2;
-  }
-  
-  75% {
-    color: #dc16d2;
-  }
-
-  100% {
-    color: #007bff
-  }
-}
-
-
- */
-
-/* Define CSS animation for insertion effect */
-/* @keyframes insertionAnimation {
-  0% {
-    transform: translateY(-100px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-} */
-
-/* Apply animation to the newly inserted node */
-/* .list-node-inserted {
-  animation-name: insertionAnimation;
-  animation-duration: 1.5s; 
-  animation-timing-function: ease-in-out;
-  animation-delay: 0s;
-  animation-direction: alternate;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  animation-play-state: running;
-} */
