@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../Components/navbar";
 import DiscreteSlider from "../Components/slider";
-import SidePanel from './sidepanelQ'; // Import the SidePanel component
-import "./queue.css"
+import SidePanel from './sidepanelQ';
+import "./queue.css";
 import { gsap } from 'gsap';
 
 const QueueVisualizer = () => {
@@ -11,57 +11,65 @@ const QueueVisualizer = () => {
   const [dequeuedElement, setDequeuedElement] = useState(null);
   const [resultText, setResultText] = useState(null);
   const [currVal, setCurrVal] = useState(null);
-  const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
+  const [sidePanelOpen, setSidePanelOpen] = useState(false);
   const [algorithmSteps, setAlgorithmSteps] = useState([]);
-
+  const [lastOperation, setLastOperation] = useState(null);
+  const [currentStep, setCurrentStep] = useState(0);
+  const stepsRef = useRef([
+    { code: `Working of Queue` },
+    { code: `- two pointers FRONT and REAR` },
+    { code: `- FRONT track the first element of the queue` },
+    { code: `- REAR track the last element of the queue` },
+    { code: `- initially, set value of FRONT and REAR to -1` },
+    { code: `Enqueue Operation` },
+    { code: `- check if the queue is full`},
+    { code: `- for the first element, set the value of FRONT to 0`},
+    { code: `- increase the REAR index by 1`},
+    { code: `- add the new element in the position pointed to by REAR`},
+    { code: `Dequeue Operation` },
+    { code: `- check if the queue is empty`},
+    { code: `- return the value pointed by FRONT`},
+    { code: `- increase the FRONT index by 1`},
+    { code: `- for the last element, reset the values of FRONT and REAR to -1`},
+  ]);
 
   useEffect(() => {
-    // Define your algorithm steps here
-    const steps = [
-      { code: `Working of Queue` },
-      {
-        code: `- two pointers FRONT and REAR`
-      },
-      {
-        code: `- FRONT track the first element of the queue`
-      },
-      {
-        code: `- REAR track the last element of the queue`
-      },
-      {
-        code: `- initially, set value of FRONT and REAR to -1`
-      },
-      { code: `Enqueue Operation` },
-      {
-        code: `- check if the queue is full`},
-      {
-        code: `- for the first element, set the value of FRONT to 0`},
-      {
-        code: `- increase the REAR index by 1`},
-      {
-        code: `- add the new element in the position pointed to by REAR`},
-      { code: `Dequeue Operation` },
-      {
-        code: `- check if the queue is empty`},
-      {
-        code: `- return the value pointed by FRONT`},
-      {
-        code: `- increase the FRONT index by 1`},
-      {
-        code: `- for the last element, reset the values of FRONT and REAR to -1`},
-    ];
-
-    setAlgorithmSteps(steps);
+    setAlgorithmSteps(stepsRef.current);
   }, []);
 
+  const setStepsAndAnimate = (steps) => {
+    setAlgorithmSteps(steps);
+    startAnimationSteps();
+  };
 
+  const startAnimationSteps = () => {
+    const timeline = gsap.timeline();
+    algorithmSteps.forEach((step, index) => {
+      timeline.to(`#step-${index}`, { opacity: 1, duration: 0.5 });
+      timeline.to(`#step-${index}`, { opacity: 0, duration: 0.5, delay: 1 });
+    });
+  };
 
-  const enqueue = () => {
+  const updateOperation = (operation, newValue = null) => {
     setResultText(null);
     setCurrVal(null);
+    if (lastOperation !== operation) {
+      setSidePanelOpen(true);
+      setLastOperation(operation);
+      setCurrentStep(0);
+    }
+    const updatedSteps = [
+      { code: `${operation} ${newValue !== null ? newValue : ''}` },
+      // Add more steps if needed
+    ];
+    setStepsAndAnimate(updatedSteps);
+  };
+
+  const enqueue = () => {
     if (queue.length < maxSize) {
-      const newValue = Math.floor(Math.random() * 10) + 1; // Generate random value
+      const newValue = Math.floor(Math.random() * 10) + 1;
       setQueue((prevQueue) => [...prevQueue, newValue]);
+      updateOperation('Enqueueing', newValue);
     } else {
       setResultText("");
       setCurrVal("Queue is full");
@@ -71,12 +79,10 @@ const QueueVisualizer = () => {
   const dequeue = () => {
     if (queue.length > 0) {
       setResultText("Dequeued: ");
-      setCurrVal(queue[queue.length - 1]);
-      setDequeuedElement(queue[0]); // Store the dequeued element
-      setQueue((prevQueue) => prevQueue.slice(1)); // Remove the first element from the queue
-      setTimeout(() => {
-        setDequeuedElement(null); // Clear the dequeued element after the animation duration
-      }, 500); // Adjust animation duration as needed
+      setCurrVal(queue[0]);
+      setDequeuedElement(queue[0]);
+      setQueue((prevQueue) => prevQueue.slice(1));
+      updateOperation('Dequeueing', queue[0]);
     } else {
       setResultText("");
       setCurrVal("Queue is empty");
@@ -86,10 +92,11 @@ const QueueVisualizer = () => {
   const peek = () => {
     if (queue.length > 0) {
       setResultText("Front: ");
-      setCurrVal(queue[0]); // Peek at the first element in the queue
+      setCurrVal(queue[0]);
       const timeline = gsap.timeline();
       timeline.to(".top", { background: "#992155", duration: 0.5 });
       timeline.to(".top", { background: "#fb21d3", duration: 0.5, delay: 1 });
+      updateOperation('Peeking', queue[0]);
     } else {
       setResultText("");
       setCurrVal("Queue is empty");
@@ -100,6 +107,7 @@ const QueueVisualizer = () => {
     setResultText("Is empty: ");
     setCurrVal(queue.length === 0 ? "True" : "False");
   };
+  
   const isFull = () => {
     setResultText("Is full: ");
     setCurrVal(queue.length === maxSize ? "True" : "False");
@@ -111,20 +119,41 @@ const QueueVisualizer = () => {
   };
 
   const toggleSidePanel = () => {
-    setSidePanelOpen(!sidePanelOpen);
+  if (lastOperation && sidePanelOpen) {
+    setAlgorithmSteps(stepsRef.current);
+    setCurrentStep(0);
+    setLastOperation(null); // Reset lastOperation when closing the triggered side panel
+  } else if (!sidePanelOpen) {
+    setAlgorithmSteps(stepsRef.current); // Reset algorithm steps when opening the side panel
+    setCurrentStep(0);
+  }
+  setSidePanelOpen(!sidePanelOpen);
+};
+
+
+  const rewind = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+      const timeline = gsap.timeline();
+      timeline.to(`#step-${currentStep}`, { opacity: 0, duration: 0.5 });
+      timeline.to(`#step-${currentStep - 1}`, { opacity: 1, duration: 0.5 });
+    }
+  };
+
+  const forward = () => {
+    if (currentStep < algorithmSteps.length - 1) {
+      setCurrentStep(currentStep + 1);
+      const timeline = gsap.timeline();
+      timeline.to(`#step-${currentStep}`, { opacity: 0, duration: 0.5 });
+      timeline.to(`#step-${currentStep + 1}`, { opacity: 1, duration: 0.5 });
+    }
   };
 
   return (
     <>
       <Navbar currentPage="Queue" />
-
-      {/* Side panel toggle button */}
       <button className="side-panel-toggle" onClick={toggleSidePanel}>→</button>
-
-      {/* Render the side panel component */}
-      {/* <SidePanel isOpen={sidePanelOpen} onClose={toggleSidePanel} /> */}
-      <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} />
-
+      <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} rewind={rewind} forward={forward} />
       <div className="queue-visualizer">
         <div>
           <div className="menu">
@@ -146,9 +175,9 @@ const QueueVisualizer = () => {
         </div>
 
         <div className="queue">
-          {dequeuedElement && ( // Render the dequeqed element with animation if it exists
+          {dequeuedElement && (
             <div
-              className="element dequeued "
+              className="element dequeued"
               onAnimationEnd={() => setDequeuedElement(null)}
             >
               {dequeuedElement}
@@ -163,52 +192,15 @@ const QueueVisualizer = () => {
 
         <div className="representation">
           <div className="row mx-auto" id="queue-pseudocode">
-            <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-              <div className="ide w-100">
-                <div className="row ml-auto mr-auto 1">
-
-                  <h3>ENQUEUE </h3>
-                  <span className="comment w-100 mt-1">
-                    Add an element to the end of the queue
-                  </span>
-                  <span className="comment w-100 mt-1"> </span>
-                  <span className="comment w-100 mt-1">
-                    TIME COMPLEXITY: O(1)
-                  </span>
+            {algorithmSteps.map((step, index) => (
+              <div key={index} id={`step-${index}`} className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0" style={{ opacity: index === currentStep ? 1 : 0 }}>
+                <div className="ide w-100">
+                  <div className="row ml-auto mr-auto 1">
+                    <h3>{step.code}</h3>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-              <div className="ide w-100">
-                <div className="row ml-auto mr-auto 1">
-
-                  <h3>DEQUEUE </h3>
-                  <span className="comment w-100 mt-1">
-                    Remove an element from the front of the queue
-                  </span>
-                  <span className="comment w-100 mt-1"> </span>
-                  <span className="comment w-100 mt-1">
-                    TIME COMPLEXITY: O(1)
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-              <div className="ide w-100">
-                <div className="row ml-auto mr-auto 1">
-
-                  <h3>PEEK </h3>
-                  <span className="comment w-100 mt-1">
-                    Get the value of the front of the queue without removing it
-
-                  </span>
-                  <span className="comment w-100 mt-1"> </span>
-                  <span className="comment w-100 mt-1">
-                    TIME COMPLEXITY: O(1)
-                  </span>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
