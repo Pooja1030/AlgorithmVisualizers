@@ -27,52 +27,61 @@ class Graph extends Component {
             ]
         }
     }
-    // setNumber = (event)=>{
-    //     let value = event.target.valueAsNumber;
-    //     if(value!== NaN && value<99)
-    //         this.setState({inputNumber:value});
-    //
-    //     // document
-    // }
+
     setAlgo = (pos, val) => {
         if (pos === 0) {
-            // console.log("sup 0");
             this.setState({ algo: val });
         }
     }
+
     setN = (pos, val) => {
         if (pos === 0) {
-            // console.log("sup 0");
             this.setState({ n: val });
         }
     }
+
     setR = (pos, val) => {
         if (pos === 0) {
-            // console.log("sup 0");
             this.setState({ r: val });
         }
     }
 
     toggleSidePanel = () => {
+        const selectedAlgorithm = this.getSelectedAlgorithm(); // Get the selected algorithm
+        const selectedAlgorithmSteps = setAlgorithmSteps(selectedAlgorithm); // Get steps for the selected algorithm
         this.setState(prevState => ({
-            sidePanelOpen: !prevState.sidePanelOpen
+            sidePanelOpen: !prevState.sidePanelOpen,
+            algorithmSteps: selectedAlgorithmSteps // Update algorithm steps
         }));
     };
 
+    getSelectedAlgorithm() {
+        switch (this.state.algo) {
+            case 0:
+                return "Fibonacci";
+            case 1:
+                return "Binomial Coefficient";
+            case 2:
+                return "Dearangement";
+            case 3:
+                return "Bigmod";
+            case 4:
+                return "Stirling2";
+            // Add cases for other algorithms
+            default:
+                return ""; // Default case if algo value doesn't match any algorithm
+        }
+    }
+
     addNumber = () => {
-        // console.log(getFibTree(3));
         let tree = getTree(this.state.n, this.state.algo, this.state.r);
         this.setState({ edges: [], vertices: [], offset: tree.x });
-        // this.setState.vertices = [];
-        // this.setState({});
         this.recur(tree, undefined);
-
     }
-    recur = async (node, parent) => {
 
+    recur = async (node, parent) => {
         let vertices = this.state.vertices;
         let current = this.state.vertices.length;
-
 
         if (parent !== undefined) {
             if (node.children.length)
@@ -86,17 +95,15 @@ class Graph extends Component {
                 });
             else
                 vertices.push({
-                    label:
-                        node.tree.label,
+                    label: node.tree.label,
                     val: node.tree.node,
                     x: node.x,
                     y: node.y,
                     px: parent.x,
                     py: parent.y
                 });
+
             this.setState({ vertices, current });
-
-
 
             let edges = this.state.edges;
             edges.push({
@@ -109,8 +116,7 @@ class Graph extends Component {
         } else {
             if (node.children.length)
                 vertices.push({
-                    label:
-                        node.tree.label,
+                    label: node.tree.label,
                     val: 0,
                     x: node.x,
                     y: node.y,
@@ -119,8 +125,7 @@ class Graph extends Component {
                 });
             else
                 vertices.push({
-                    label:
-                        node.tree.label,
+                    label: node.tree.label,
                     val: node.tree.node,
                     x: node.x,
                     y: node.y,
@@ -131,11 +136,8 @@ class Graph extends Component {
         }
         await sleep(500);
 
-
         for (let i = 0; i < node.children.length; i++) {
             await this.recur(node.children[i], node);
-            // let verticess = [...this.state.vertices];
-            // verticess[current].val+=node.children[i].tree.node;
             this.setState({ current });
             await sleep(500);
         }
@@ -143,6 +145,7 @@ class Graph extends Component {
         verticess[current].val = node.tree.node;
         this.setState({ vertices: verticess });
     }
+
     render() {
         return (
             <div>
@@ -151,11 +154,12 @@ class Graph extends Component {
                     setN={this.setN}
                     setR={this.setR}
                     onAlgoChanged={this.setAlgo}
-                    onStart={this.addNumber}
+                    onStart={() => {
+                        this.addNumber();
+                    }}
+                    algorithmSteps={this.state.algorithmSteps} // Pass algorithm steps to the Menu component
                 />
-                <Details
-                    algo={this.state.algo}
-                />
+                <Details algo={this.state.algo} />
                  {/* Side panel toggle button */}
                  <button className="side-panel-toggle" onClick={this.toggleSidePanel}> →</button>
                 {/* Side Panel */}
@@ -170,7 +174,88 @@ class Graph extends Component {
         );
     }
 }
+
+function setAlgorithmSteps(task) {
+    let algorithmSteps = [];
+    switch (task) {
+        case "Fibonacci":
+            algorithmSteps = generateFibonacciSteps();
+            break;
+        case "Binomial Coefficient":
+            algorithmSteps = generateBinomialCoefficientSteps();
+            break;
+        case "Derangement":
+            algorithmSteps = generateDerangementSteps();
+            break;
+        case "Bigmod":
+            algorithmSteps = generateBigmodSteps();
+            break;
+        case "Stirling2":
+            algorithmSteps = generateStirling2Steps();
+            break;
+        // Add cases for other tasks
+        default:
+            algorithmSteps = [];
+    }
+    return algorithmSteps;
+}
+
+function generateFibonacciSteps() {
+    return [
+        { code: "Fibonacci Sequence" },
+        { code: "The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones." },
+        { code: "Step 1: Set initial values for the first two Fibonacci numbers." },
+        { code: "Step 2: Calculate the next Fibonacci number by adding the previous two numbers." },
+        { code: "Step 3: Repeat step 2 until the desired number of Fibonacci numbers are generated." }
+    ];
+}
+
+function generateBinomialCoefficientSteps() {
+    return [
+        { code: "Binomial Coefficient" },
+        { code: "The binomial coefficient is a mathematical function that gives the number of combinations of size k that can be chosen from n distinct items." },
+        { code: "Step 1: Define the binomial coefficient formula." },
+        { code: "Step 2: Calculate the factorial of the input values." },
+        { code: "Step 3: Apply the binomial coefficient formula to calculate the result." }
+    ];
+}
+
+// Function to generate steps for the Derangement task
+function generateDerangementSteps() {
+    return [
+        { code: "Derangement" },
+        { code: "A derangement is a permutation of the elements of a set, such that no element appears in its original position." },
+        { code: "Step 1: Determine the total number of elements in the set." },
+        { code: "Step 2: Calculate the number of derangements using a recursive formula or combinatorial method." },
+        { code: "Step 3: Use the calculated value to solve problems related to permutations with restrictions." }
+    ];
+}
+
+// Function to generate steps for the Bigmod task
+function generateBigmodSteps() {
+    return [
+        { code: "Bigmod" },
+        { code: "Bigmod is a mathematical operation to calculate large exponents modulo a number efficiently." },
+        { code: "Step 1: Define the base, exponent, and modulus." },
+        { code: "Step 2: Implement an efficient algorithm such as binary exponentiation to compute (base^exponent) % modulus." },
+        { code: "Step 3: Return the result of the bigmod operation." }
+    ];
+}
+
+// Function to generate steps for the Stirling2 task
+function generateStirling2Steps() {
+    return [
+        { code: "Stirling2" },
+        { code: "Stirling numbers of the second kind represent the number of ways to partition a set of n elements into k non-empty subsets." },
+        { code: "Step 1: Determine the total number of elements in the set (n) and the number of subsets (k)." },
+        { code: "Step 2: Use a recursive or combinatorial method to calculate the Stirling number of the second kind for the given parameters." },
+        { code: "Step 3: Interpret the calculated value in the context of combinatorial problems involving partitions and subsets." }
+    ];
+}
+
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 export default Graph;
