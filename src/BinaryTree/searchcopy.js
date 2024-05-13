@@ -20,44 +20,44 @@ class BinaryTree extends Component {
             visualizeClicked: false,
             visualizing:false,
             sidePanelOpen: false, // State variable to manage side panel visibility
-            algorithmSteps: [
+            algorithmSteps: [],
                 // Algorithm steps for insert operation
-                {
-                    code: `Insertion Steps`
-                },
-                {
-                    code: ` Step 1: Insert a new node with the specified data value into the binary tree.`,
-                },
-                {
-                    code: ` Step 2: Traverse the tree to find the appropriate position for insertion.`,
-                },
+                // {
+                //     code: `Insertion Steps`
+                // },
+                // {
+                //     code: ` Step 1: Insert a new node with the specified data value into the binary tree.`,
+                // },
+                // {
+                //     code: ` Step 2: Traverse the tree to find the appropriate position for insertion.`,
+                // },
                 // Add more steps if needed
                 // Algorithm steps for delete operation
-                {
-                    code: `Deletion Steps`
-                },
-                {
-                    code: ` Step 1: Delete a node with the specified data value from the binary tree.`,
-                },
-                {
-                    code: ` Step 2: Traverse the tree to find the node to be deleted.`,
-                },
-                {
-                    code: ` Step 3: Handle different cases based on the number of children of the node.`,
-                },
+                // {
+                //     code: `Deletion Steps`
+                // },
+                // {
+                //     code: ` Step 1: Delete a node with the specified data value from the binary tree.`,
+                // },
+                // {
+                //     code: ` Step 2: Traverse the tree to find the node to be deleted.`,
+                // },
+                // {
+                //     code: ` Step 3: Handle different cases based on the number of children of the node.`,
+                // },
                 // Add more steps if needed
                 // Algorithm steps for search operation
-                {
-                    code: `Search Steps`
-                },
-                {
-                    code: ` Step 1: Search for a node with the specified data value in the binary tree.`,
-                },
-                {
-                    code: ` Step 2: Traverse the tree to find the node with the matching data value.`,
-                },
+                // {
+                //     code: `Search Steps`
+                // },
+                // {
+                //     code: ` Step 1: Search for a node with the specified data value in the binary tree.`,
+                // },
+                // {
+                //     code: ` Step 2: Traverse the tree to find the node with the matching data value.`,
+                // },
                 // Add more steps if needed
-            ],
+            // ],
             
         };
     }
@@ -211,31 +211,151 @@ class BinaryTree extends Component {
         this.setState({ searchValue: e.target.value });
     }
 
-    handleVisualization = () => {
-        const { selectedTraversal, stack } = this.state;
-    
-        if (selectedTraversal) {
-            let traversalResult = [];
-            switch (selectedTraversal) {
-                case "inorder":
-                    traversalResult = this.inorderTraversal(stack); // Assuming traversal on stack
-                    break;
-                case "preorder":
-                    traversalResult = this.preorderTraversal(stack); // Assuming traversal on stack
-                    break;
-                case "postorder":
-                    traversalResult = this.postorderTraversal(stack); // Assuming traversal on stack
-                    break;
-                default:
-                    break;
-            }
-            this.setState({ traversalResult, visualizeClicked: true });
-        } else {
-            this.setState({ operationResult: 'Please select a traversal before visualizing.' });
+    handleOperationClick = (operation) => {
+        let algorithmSteps = [];
+        switch (operation) {
+            case 'insert':
+                algorithmSteps = [
+                    { code: 'Insertion Steps:' },
+                    { code: 'Step 1: Insert a new node with the specified data value into the binary tree.' },
+                    { code: 'Step 2: Traverse the tree to find the appropriate position for insertion.' },
+                    // Add more steps if needed
+                ];
+                break;
+            case 'delete':
+                algorithmSteps = [
+                    { code: 'Deletion Steps:' },
+                    { code: 'Step 1: Delete a node with the specified data value from the binary tree.' },
+                    { code: 'Step 2: Traverse the tree to find the node to be deleted.' },
+                    // Add more steps if needed
+                ];
+                break;
+            case 'search':
+                algorithmSteps = [
+                    { code: 'Search Steps:' },
+                    { code: 'Step 1: Search for a node with the specified data value in the binary tree.' },
+                    { code: 'Step 2: Traverse the tree to find the node with the matching data value.' },
+                    // Add more steps if needed
+                ];
+                break;
+            default:
+                break;
         }
-        this.setState({ visualizing: true });
+        // Open side panel and update algorithm steps
+        this.setState({ sidePanelOpen: true, algorithmSteps });
+    };
+
+
+ // Inside the handleVisualization method
+handleVisualization = () => {
+    const { selectedTraversal, stack } = this.state;
+    if (selectedTraversal) {
+        let traversalResult = [];
+        switch (selectedTraversal) {
+            case "inorder":
+                traversalResult = this.inorderTraversal(stack); // Assuming traversal on stack
+                break;
+            case "preorder":
+                traversalResult = this.preorderTraversal(stack); // Assuming traversal on stack
+                break;
+            case "postorder":
+                traversalResult = this.postorderTraversal(stack); // Assuming traversal on stack
+                break;
+            default:
+                break;
+        }
+        // Trigger visualization with traversal result
+        this.setState({ visualizationData: traversalResult });
+
+        // Update algorithm steps based on selected traversal
+        let algorithmSteps = [];
+        switch (selectedTraversal) {
+            case "inorder":
+                algorithmSteps = [
+                    { code: 'Inorder Traversal Steps:' },
+                    { code: 'Step 1: Follow step 2 to 4 until root != NULL' },
+                    { code: 'Step 2: Inorder (root -> left)' },
+                    { code: 'Step 3: Write root -> data' },
+                    { code: 'Step 4: Inorder (root -> right)' },
+                    // Add more steps if needed
+                ];
+                break;
+            case "preorder":
+                algorithmSteps = [
+                    { code: 'Preorder Traversal Steps:' },
+                    { code: 'Step 1: Follow step 2 to 4 until root != NULL' },
+                    { code: 'Step 2: Write root -> data' },
+                    { code: 'Step 3: Preorder (root -> left)' },
+                    { code: 'Step 4: Preorder (root -> right)' },
+                    // Add more steps if needed
+                ];
+                break;
+            case "postorder":
+                algorithmSteps = [
+                    { code: 'Postorder Traversal Steps:' },
+                    { code: 'Step 1: Follow step 2 to 4 until root != NULL' },
+                    { code: 'Step 2: Postorder (root -> left)' },
+                    { code: 'Step 3: Postorder (root -> right)' },
+                    { code: 'Step 4: Write root -> data' },
+                    // Add more steps if needed
+                ];
+                break;
+            default:
+                break;
+        }
+
+        // Open side panel and pass algorithm steps
+        this.setState({ sidePanelOpen: true, algorithmSteps });
+    } else {
+        this.setState({ operationResult: 'Please select a traversal before visualizing.' });
+    }
+};
+
+
+
+
+    updateAlgorithmSteps = (steps) => {
+        this.setState({ algorithmSteps: steps });
     };
     
+    handleOperationClick = (operation) => {
+        // Update algorithm steps and open side panel on operation click
+        switch (operation) {
+            case 'insert':
+                // Update algorithm steps for insert operation
+                this.updateAlgorithmSteps([
+                    { code: 'Insertion Steps:' },
+                    { code: 'Step 1: Insert a new node with the specified data value into the binary tree.' },
+                    { code: 'Step 2: Traverse the tree to find the appropriate position for insertion.' },
+                    // Add more steps if needed
+                ]);
+                break;
+            case 'delete':
+                // Update algorithm steps for delete operation
+                this.updateAlgorithmSteps([
+                    { code: 'Deletion Steps:' },
+                    { code: 'Step 1: Delete a node with the specified data value from the binary tree.' },
+                    { code: 'Step 2: Traverse the tree to find the node to be deleted.' },
+                    // Add more steps if needed
+                ]);
+                break;
+            case 'search':
+                // Update algorithm steps for search operation
+                this.updateAlgorithmSteps([
+                    { code: 'Search Steps:' },
+                    { code: 'Step 1: Search for a node with the specified data value in the binary tree.' },
+                    { code: 'Step 2: Traverse the tree to find the node with the matching data value.' },
+                    // Add more steps if needed
+                ]);
+                break;
+            default:
+                break;
+        }
+        // Open side panel
+        this.setState({ sidePanelOpen: true });
+    };
+
+
 
     resetOperations = () => {
         this.setState({
@@ -264,9 +384,6 @@ class BinaryTree extends Component {
                 {/* Render the side panel toggle button */}
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
 
-                {/* Render the side panel component */}
-                <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
-
                 
             {/* Render the side panel component */}
             <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
@@ -281,12 +398,12 @@ class BinaryTree extends Component {
                             <option value="postorder">Postorder</option>
                         </select>
                         <input type="number" placeholder="Insert value" value={this.state.insertValue} onChange={this.handleInsertInputChange} />
-                        <button className="insert-btn" onClick={this.insertNode}>Insert</button>
+                        <button className="insert-btn" onClick={() => this.handleOperationClick('insert')}>Insert</button>
                         <input type="number" placeholder="Delete value" value={this.state.deleteValue} onChange={this.handleDeleteInputChange} />
-                        <button className="delete-btn" onClick={this.deleteNode}>Delete</button>
+                        <button className="delete-btn" onClick={() => this.handleOperationClick('delete')}>Delete</button>
                         <div>
                         <input type="number" placeholder="Search value" value={this.state.searchValue} onChange={this.handleSearchInputChange} />
-                        <button className="search-btn" onClick={this.searchNode}>Search</button>
+                        <button className="search-btn" onClick={() => this.handleOperationClick('search')}>Search</button>
                         
                         <button className="visualize-btn" onClick={this.handleVisualization}>
                             Visualize
