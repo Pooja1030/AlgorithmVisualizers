@@ -88,4 +88,3 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
 };
 
 export default SidePanel;
-  

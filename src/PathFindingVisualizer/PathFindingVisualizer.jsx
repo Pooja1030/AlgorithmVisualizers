@@ -279,36 +279,44 @@ export default class PathfindingVisualizer extends Component {
 
     handleAlgoChange = (pos, val) => {
         if (pos === 0) {
-            this.setState({ algorithm: algorithms[val].name });
+            this.setState({ 
+                algorithm: algorithms[val].name,
+                algorithmSteps: [] // Reset algorithm steps when algorithm changes
+            }, () => {
+                // Close side panel if open
+                if (this.state.isDrawerOpen) {
+                    this.toggleSidePanel();
+                }
+            });
         }
-    }
+    };
 
     visualize = () => {
         if (this.state.animating) return;
         this.resetGrid();
-
+    
         const { grid, startNodeRow, startNodeCol, finishNodeRow, finishNodeCol } = this.state;
         const startNode = grid[startNodeRow][startNodeCol];
         const finishNode = grid[finishNodeRow][finishNodeCol];
-
-        let visitedNodesInOrder;
-
+    
         const selectedAlgorithm = algorithms.find(algorithm => algorithm.name === this.state.algorithm);
         if (!selectedAlgorithm) {
             console.log("Invalid algorithm selected");
             return;
         }
-        
-        const algorithmSteps = selectedAlgorithm.steps; // Assuming each algorithm function has a 'steps' property
-        this.setState({ algorithmSteps });
-
-        console.log(this.state.algorithm)
-        visitedNodesInOrder = selectedAlgorithm.function(grid, startNode, finishNode);
-
+    
+        // Set algorithm steps before visualization
+        this.setState({ algorithmSteps: selectedAlgorithm.steps });
+    
+        const visitedNodesInOrder = selectedAlgorithm.function(grid, startNode, finishNode);
         const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-
+    
         this.animateVisitedNodes(visitedNodesInOrder, nodesInShortestPathOrder);
+    
+        // Open side panel
+        this.toggleSidePanel();
     }
+    
 
     resetGrid() {
         if (this.state.animating) return;
