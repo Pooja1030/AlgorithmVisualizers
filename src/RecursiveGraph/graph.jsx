@@ -62,7 +62,7 @@ class Graph extends Component {
             case 1:
                 return "Binomial Coefficient";
             case 2:
-                return "Dearangement";
+                return "Derangement";
             case 3:
                 return "Bigmod";
             case 4:
