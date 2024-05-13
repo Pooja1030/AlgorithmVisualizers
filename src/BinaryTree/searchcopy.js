@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Navbar from '../Components/navbar';
 import BinaryTreeView from './BinaryTreeView'; // Assuming BinaryTreeView component for visualization
 import './style1.css'
+
 import SidePanel from './sidepanelt'; // Import the SidePanel component
 class BinaryTree extends Component {
     constructor() {
@@ -215,6 +216,7 @@ class BinaryTree extends Component {
         let algorithmSteps = [];
         switch (operation) {
             case 'insert':
+                this.insertNode(); // Perform insert operation
                 algorithmSteps = [
                     { code: 'Insertion Steps:' },
                     { code: 'Step 1: Insert a new node with the specified data value into the binary tree.' },
@@ -223,6 +225,7 @@ class BinaryTree extends Component {
                 ];
                 break;
             case 'delete':
+                this.deleteNode(); // Perform delete operation
                 algorithmSteps = [
                     { code: 'Deletion Steps:' },
                     { code: 'Step 1: Delete a node with the specified data value from the binary tree.' },
@@ -231,6 +234,7 @@ class BinaryTree extends Component {
                 ];
                 break;
             case 'search':
+                this.searchNode(); // Perform search operation
                 algorithmSteps = [
                     { code: 'Search Steps:' },
                     { code: 'Step 1: Search for a node with the specified data value in the binary tree.' },
@@ -244,72 +248,71 @@ class BinaryTree extends Component {
         // Open side panel and update algorithm steps
         this.setState({ sidePanelOpen: true, algorithmSteps });
     };
-
-
- // Inside the handleVisualization method
-handleVisualization = () => {
-    const { selectedTraversal, stack } = this.state;
-    if (selectedTraversal) {
-        let traversalResult = [];
-        switch (selectedTraversal) {
-            case "inorder":
-                traversalResult = this.inorderTraversal(stack); // Assuming traversal on stack
-                break;
-            case "preorder":
-                traversalResult = this.preorderTraversal(stack); // Assuming traversal on stack
-                break;
-            case "postorder":
-                traversalResult = this.postorderTraversal(stack); // Assuming traversal on stack
-                break;
-            default:
-                break;
+    
+    handleVisualization = () => {
+        const { selectedTraversal, stack } = this.state;
+        if (selectedTraversal) {
+            let traversalResult = [];
+            switch (selectedTraversal) {
+                case "inorder":
+                    traversalResult = this.inorderTraversal(stack); // Assuming traversal on stack
+                    break;
+                case "preorder":
+                    traversalResult = this.preorderTraversal(stack); // Assuming traversal on stack
+                    break;
+                case "postorder":
+                    traversalResult = this.postorderTraversal(stack); // Assuming traversal on stack
+                    break;
+                default:
+                    break;
+            }
+            // Trigger visualization with traversal result
+            this.setState({ visualizationData: traversalResult });
+    
+            // Update algorithm steps based on selected traversal
+            let algorithmSteps = [];
+            switch (selectedTraversal) {
+                case "inorder":
+                    algorithmSteps = [
+                        { code: 'Inorder Traversal Steps:' },
+                        { code: 'Step 1: Follow step 2 to 4 until root != NULL' },
+                        { code: 'Step 2: Inorder (root -> left)' },
+                        { code: 'Step 3: Write root -> data' },
+                        { code: 'Step 4: Inorder (root -> right)' },
+                        // Add more steps if needed
+                    ];
+                    break;
+                case "preorder":
+                    algorithmSteps = [
+                        { code: 'Preorder Traversal Steps:' },
+                        { code: 'Step 1: Follow step 2 to 4 until root != NULL' },
+                        { code: 'Step 2: Write root -> data' },
+                        { code: 'Step 3: Preorder (root -> left)' },
+                        { code: 'Step 4: Preorder (root -> right)' },
+                        // Add more steps if needed
+                    ];
+                    break;
+                case "postorder":
+                    algorithmSteps = [
+                        { code: 'Postorder Traversal Steps:' },
+                        { code: 'Step 1: Follow step 2 to 4 until root != NULL' },
+                        { code: 'Step 2: Postorder (root -> left)' },
+                        { code: 'Step 3: Postorder (root -> right)' },
+                        { code: 'Step 4: Write root -> data' },
+                        // Add more steps if needed
+                    ];
+                    break;
+                default:
+                    break;
+            }
+    
+            // Open side panel and pass algorithm steps
+            this.setState({ sidePanelOpen: true, algorithmSteps });
+        } else {
+            this.setState({ operationResult: 'Please select a traversal before visualizing.' });
         }
-        // Trigger visualization with traversal result
-        this.setState({ visualizationData: traversalResult });
-
-        // Update algorithm steps based on selected traversal
-        let algorithmSteps = [];
-        switch (selectedTraversal) {
-            case "inorder":
-                algorithmSteps = [
-                    { code: 'Inorder Traversal Steps:' },
-                    { code: 'Step 1: Follow step 2 to 4 until root != NULL' },
-                    { code: 'Step 2: Inorder (root -> left)' },
-                    { code: 'Step 3: Write root -> data' },
-                    { code: 'Step 4: Inorder (root -> right)' },
-                    // Add more steps if needed
-                ];
-                break;
-            case "preorder":
-                algorithmSteps = [
-                    { code: 'Preorder Traversal Steps:' },
-                    { code: 'Step 1: Follow step 2 to 4 until root != NULL' },
-                    { code: 'Step 2: Write root -> data' },
-                    { code: 'Step 3: Preorder (root -> left)' },
-                    { code: 'Step 4: Preorder (root -> right)' },
-                    // Add more steps if needed
-                ];
-                break;
-            case "postorder":
-                algorithmSteps = [
-                    { code: 'Postorder Traversal Steps:' },
-                    { code: 'Step 1: Follow step 2 to 4 until root != NULL' },
-                    { code: 'Step 2: Postorder (root -> left)' },
-                    { code: 'Step 3: Postorder (root -> right)' },
-                    { code: 'Step 4: Write root -> data' },
-                    // Add more steps if needed
-                ];
-                break;
-            default:
-                break;
-        }
-
-        // Open side panel and pass algorithm steps
-        this.setState({ sidePanelOpen: true, algorithmSteps });
-    } else {
-        this.setState({ operationResult: 'Please select a traversal before visualizing.' });
-    }
-};
+    };
+    
 
 
 
@@ -318,42 +321,6 @@ handleVisualization = () => {
         this.setState({ algorithmSteps: steps });
     };
     
-    handleOperationClick = (operation) => {
-        // Update algorithm steps and open side panel on operation click
-        switch (operation) {
-            case 'insert':
-                // Update algorithm steps for insert operation
-                this.updateAlgorithmSteps([
-                    { code: 'Insertion Steps:' },
-                    { code: 'Step 1: Insert a new node with the specified data value into the binary tree.' },
-                    { code: 'Step 2: Traverse the tree to find the appropriate position for insertion.' },
-                    // Add more steps if needed
-                ]);
-                break;
-            case 'delete':
-                // Update algorithm steps for delete operation
-                this.updateAlgorithmSteps([
-                    { code: 'Deletion Steps:' },
-                    { code: 'Step 1: Delete a node with the specified data value from the binary tree.' },
-                    { code: 'Step 2: Traverse the tree to find the node to be deleted.' },
-                    // Add more steps if needed
-                ]);
-                break;
-            case 'search':
-                // Update algorithm steps for search operation
-                this.updateAlgorithmSteps([
-                    { code: 'Search Steps:' },
-                    { code: 'Step 1: Search for a node with the specified data value in the binary tree.' },
-                    { code: 'Step 2: Traverse the tree to find the node with the matching data value.' },
-                    // Add more steps if needed
-                ]);
-                break;
-            default:
-                break;
-        }
-        // Open side panel
-        this.setState({ sidePanelOpen: true });
-    };
 
 
 
