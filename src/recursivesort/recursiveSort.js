@@ -20,6 +20,12 @@ class RecursiveSort extends Component {
         algo: 0,
         sidePanelOpen: false, // State variable for side panel visibility
         algorithmSteps: [],
+        timeComplexity: '',
+        spaceComplexity: '',
+        comparisons: 0,
+        swaps: 0,
+        memoryUsage: 0,
+        complexityInterval: null,
     }
 
     componentDidMount() {
@@ -31,15 +37,23 @@ class RecursiveSort extends Component {
     setAlgorithmSteps = (selectedAlgo) => {
         // Define your algorithm steps here
         let steps = [];
+        let timeComplexity = '';
+        let spaceComplexity = '';
         if (selectedAlgo === 0) {
             steps = mergeSortSteps;
+            timeComplexity = 'O(n log n)';
+            spaceComplexity = 'O(n)';
         } else if (selectedAlgo === 1) {
             steps = heapSortSteps;
+            timeComplexity = 'O(n log n)';
+            spaceComplexity = 'O(1)';
         } else if (selectedAlgo === 2) {
             steps = quickSortSteps;
+            timeComplexity = 'O(n log n) average, O(n^2) worst';
+            spaceComplexity = 'O(log n)';
         }
 
-        this.setState({ algorithmSteps: steps });
+        this.setState({ algorithmSteps: steps, timeComplexity, spaceComplexity });
     }
 
     toggleSidePanel = () => {
@@ -63,6 +77,12 @@ class RecursiveSort extends Component {
                 {/* Toggle button for the side panel */}
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}> →</button>
 
+                {/* Time and Space Complexity */}
+                <div className='time-space-complexity'>
+                    <p>Time Complexity: {this.state.timeComplexity}</p>
+                    <p>Space Complexity: {this.state.spaceComplexity}</p>
+                </div>
+
                 {/* Side Panel */}
                 <SidePanel
                     algorithmSteps={this.state.algorithmSteps}
@@ -74,7 +94,6 @@ class RecursiveSort extends Component {
                     <Rects
                         rects={this.state.rects}
                     />
-
                 </div>
             </React.Fragment>
         )
@@ -84,37 +103,34 @@ class RecursiveSort extends Component {
         const rect = getInitialRects(this.state.count);
         this.setState({ rects: rect });
     }
+
     handleRefresh = () => {
-        const rects = this.state.rects;
-        for (let i = 0; i < rects.length; i++) {
-            const rect = { ...rects[i], isSorted: false, isSorting: false }
-            rects[i] = rect;
-        }
+        const rects = this.state.rects.map(rect => ({ ...rect, isSorted: false, isSorting: false }));
         this.setState({ rects });
     }
+
     handleCountChange = (val) => {
         this.setState({ count: val });
         this.handleRandomize();
     }
+
     handleAlgoChanged = (pos, val) => {
         if (pos === 0) {
             this.setState({ algo: val });
             this.setAlgorithmSteps(val);
         }
-        console.log(this.state.algo)
     }
+
     handleSpeedChanged = (val) => {
         const speed = (110 - val);
         this.setState({ speed });
     }
 
     handleSort = () => {
-
         this.setState({ isRunning: true, sidePanelOpen: true });
         let steps;
         let rects2;
         switch (this.state.algo) {
-
             case 0:
                 steps = mergeSort(this.state.rects);
                 this.handleMerge(steps);
@@ -132,12 +148,33 @@ class RecursiveSort extends Component {
             default:
         }
 
+        // Start monitoring time and space complexities
+        this.monitorComplexities();
+    }
 
+    monitorComplexities = () => {
+        let complexityInterval = setInterval(() => {
+            // Calculate time complexity based on number of comparisons or swaps
+            let comparisons = this.state.comparisons || 0;
+            let swaps = this.state.swaps || 0;
+            let timeComplexity = `O(${comparisons + swaps})`;
+
+            // Calculate space complexity based on memory usage
+            let memoryUsage = this.state.memoryUsage || 0;
+            let spaceComplexity = `O(${memoryUsage}) bytes`;
+
+            // Update the state with new complexities
+            this.setState({ timeComplexity, spaceComplexity });
+        }, 1000); // Update every second
+
+        // Store the interval ID in the state
+        this.setState({ complexityInterval });
     }
 
     handleQuick = async (steps) => {
-        this.setState({ isRunning: true });
+        this.setState({ isRunning: true, comparisons: 0, swaps: 0, memoryUsage: 0 });
         let prevRect = this.state.rects;
+
         for (let j = 0; j < this.state.count; j++) {
             prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isRange: false, isSorted: false };
         }
@@ -152,7 +189,7 @@ class RecursiveSort extends Component {
                 prevRect[right] = { ...prevRect[right], isLeft: false, isSorting: false, isRight: false, isRange: false };
             }
             if (step.changedRange) {
-                await sleep(this.state.speed); await sleep(this.state.speed); await sleep(this.state.speed); await sleep(this.state.speed);
+                await sleep(this.state.speed);
                 let { left, right } = step;
                 for (let j = 0; j < this.state.count; j++) {
                     prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isRange: false };
@@ -161,7 +198,7 @@ class RecursiveSort extends Component {
                     prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: true, isRange: true };
                 }
                 this.setState({ rects: prevRect });
-                await sleep(this.state.speed); await sleep(this.state.speed); await sleep(this.state.speed); await sleep(this.state.speed);
+                await sleep(this.state.speed);
                 for (let j = 0; j < this.state.count; j++) {
                     prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false };
                 }
@@ -174,6 +211,9 @@ class RecursiveSort extends Component {
                 prevRect[right] = temp;
                 hasChanged = 1;
                 changed = step;
+
+                // Update swaps
+                this.setState(prevState => ({ swaps: prevState.swaps + 1 }));
             }
             this.setState({ rects: prevRect });
             await sleep(this.state.speed);
@@ -191,8 +231,9 @@ class RecursiveSort extends Component {
             }
         }
     }
+
     handleHeap = async (steps) => {
-        this.setState({ isRunning: true });
+        this.setState({ isRunning: true, comparisons: 0, swaps: 0, memoryUsage: 0 });
         let prevRect = this.state.rects;
         for (let j = 0; j < this.state.count; j++) {
             prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isRange: false, isSorted: false };
@@ -214,7 +255,7 @@ class RecursiveSort extends Component {
             prevRect[right] = temp;
             this.setState({ rects: prevRect });
             if (sorted) prevRect[left] = { ...prevRect[left], isSorted: true };
-            await sleep(this.state.speed); await sleep(this.state.speed); await sleep(this.state.speed);
+            await sleep(this.state.speed);
             if (i === steps.length - 1) {
 
                 for (let i = 0; i < this.state.count; i++) {
@@ -226,10 +267,9 @@ class RecursiveSort extends Component {
             }
         }
     }
+
     handleMerge = async (steps) => {
         this.setState({ isRunning1: true });
-
-
         let prevRect = this.state.rects;
         for (let j = 0; j < this.state.count; j++) {
             prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isRange: false, isSorted: false };
@@ -250,7 +290,7 @@ class RecursiveSort extends Component {
                 prevRect[i] = { ...prevRect[i], isRight: true, isLeft: false, isSorting: false };
             }
             this.setState({ rects: prevRect });
-            await sleep(this.state.speed); await sleep(this.state.speed); await sleep(this.state.speed);
+            await sleep(this.state.speed);
 
             for (let i = step.left; i <= step.right; i++) {
                 prevRect[i] = { ...prevRect[i], width: step.val[i - step.left].width, isSorting: true };
