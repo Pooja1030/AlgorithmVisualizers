@@ -4,7 +4,6 @@ import SidePanel from './sidepanell'; // Import the SidePanel component
 import './linkedlist.css';
 import SinglyLinkedList from './SinglyLinkedList'; // Import SinglyLinkedList
 import DoublyLinkedList from './DoublyLinkedList'; // Import DoublyLinkedList
-// import CircularLinkedList from './CircularLinkedList'; // Import CircularLinkedList
 import EastIcon from '@mui/icons-material/East';
 import WestIcon from '@mui/icons-material/West';
 import { gsap } from 'gsap';
@@ -21,9 +20,9 @@ const LinkedListVisualizer = () => {
     const [searchValue, setSearchValue] = useState('');
     const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
     const [algorithmSteps, setAlgorithmSteps] = useState([]);
-
+    const [timeComplexity, setTimeComplexity] = useState('');
+    const [spaceComplexity, setSpaceComplexity] = useState('');
     useEffect(() => {
-        // Define your algorithm steps here
         const steps = [
             { code: "1. Insert at the beginning" },
             { code: "- Create new node" },
@@ -56,11 +55,7 @@ const LinkedListVisualizer = () => {
             case 'doubly':
                 setLinkedList(new DoublyLinkedList());
                 break;
-            // case 'circular':
-            //     setLinkedList(new CircularLinkedList());
-            //     break;
             default:
-                // Handle default case if needed
                 break;
         }
     };
@@ -93,16 +88,24 @@ const LinkedListVisualizer = () => {
                 newData = Math.floor(Math.random() * 100) + 1; // Generate random data if no value is specified
             }
             if (insertPosition === 'Beginning') {
+                const startTime = performance.now();
                 linkedlist.insertAtBeginning(newData);
+                const endTime = performance.now();
                 setResultText('Inserted at beginning:');
                 setCurrVal(newData);
+                setTimeComplexity(`${endTime - startTime} milliseconds`);
+                setSpaceComplexity('O(1)');
             } else if (insertPosition === 'After Node') {
                 const prevNodeData = parseInt(nodeValue.trim());
                 const foundNode = linkedlist.search(prevNodeData);
                 if (foundNode) {
+                    const startTime = performance.now();
                     linkedlist.insertAfterNode(prevNodeData, newData);
+                    const endTime = performance.now();
                     setResultText('Inserted after ' + prevNodeData + ': ');
                     setCurrVal(newData);
+                    setTimeComplexity(`${endTime - startTime} milliseconds`);
+                    setSpaceComplexity('O(1)');
                 } else {
                     animateTraversal();
                     setResultText('Node not found');
@@ -112,84 +115,115 @@ const LinkedListVisualizer = () => {
                 const nextNodeData = parseInt(nodeValue.trim());
                 const foundNode = linkedlist.search(nextNodeData);
                 if (foundNode) {
+                    const startTime = performance.now();
                     linkedlist.insertBeforeNode(nextNodeData, newData);
+                    const endTime = performance.now();
                     setResultText('Inserted before ' + nextNodeData + ': ');
                     setCurrVal(newData);
+                    setTimeComplexity(`${endTime - startTime} milliseconds`);
+                    setSpaceComplexity('O(1)');
                 } else {
                     animateTraversal();
                     setResultText('Node not found');
                     setCurrVal('');
                 }
-            } else if (insertPosition === 'End') {
+            } else {
+                const startTime = performance.now();
                 linkedlist.insertAtEnd(newData);
+                const endTime = performance.now();
                 setResultText('Inserted at end:');
                 setCurrVal(newData);
+                setTimeComplexity(`${endTime - startTime} milliseconds`);
+                setSpaceComplexity('O(1)');
             }
-
-            // Call animateInsertion after performing the insertion
-            animateInsertion(insertPosition, newData);
+        } else {
+            animateTraversal();
+            setResultText('Select a linked list type first!');
         }
     };
 
-    const deleteNode = async () => {
-        if (linkedlist) {
-            const animationPromise = new Promise(resolve => {
-                // Call animateDeletion with the appropriate parameters
-                animateDeletion(deletePosition, parseInt(nodeValue.trim()), resolve);
-            });
 
-            // Wait for the completion of the deletion animation
-            await animationPromise;
-
+    // Function to delete a node from the linked list
+    const deleteNode = () => {
+        if (linkedlist && linkedlist.head !== null) {
             if (deletePosition === 'Beginning') {
-                const removedData = linkedlist.deleteAtBeginning();
-                if (removedData !== null) {
-                    setResultText('Deleted from beginning:');
-                    setCurrVal(removedData);
-                } else {
-                    setResultText('List is empty');
-                    setCurrVal('');
-                }
-            } else if (deletePosition === 'Middle') {
-                const dataToDelete = parseInt(nodeValue.trim());
-                const foundNode = linkedlist.search(dataToDelete);
+                const startTime = performance.now();
+                const deletedNodeData = linkedlist.deleteAtBeginning();
+                const endTime = performance.now();
+                setResultText('Deleted from beginning:');
+                setCurrVal(deletedNodeData);
+                setTimeComplexity(`${endTime - startTime} milliseconds`);
+                setSpaceComplexity('O(1)');
+            } else if (deletePosition === 'After Node') {
+                const prevNodeData = parseInt(nodeValue.trim());
+                const foundNode = linkedlist.search(prevNodeData);
                 if (foundNode) {
-                    linkedlist.deleteFromMiddle(dataToDelete);
-                    setResultText('Deleted node:');
-                    setCurrVal(dataToDelete);
+                    const startTime = performance.now();
+                    const deletedNodeData = linkedlist.deleteAfterNode(prevNodeData);
+                    const endTime = performance.now();
+                    setResultText('Deleted after ' + prevNodeData + ': ');
+                    setCurrVal(deletedNodeData);
+                    setTimeComplexity(`${endTime - startTime} milliseconds`);
+                    setSpaceComplexity('O(1)');
                 } else {
                     animateTraversal();
                     setResultText('Node not found');
                     setCurrVal('');
                 }
-            }
-            else if (deletePosition === 'End') {
-                const removedData = linkedlist.deleteFromEnd();
-                if (removedData !== null) {
-                    setResultText('Deleted from end:');
-                    setCurrVal(removedData);
+            } else if (deletePosition === 'Before Node') {
+                const nextNodeData = parseInt(nodeValue.trim());
+                const foundNode = linkedlist.search(nextNodeData);
+                if (foundNode) {
+                    const startTime = performance.now();
+                    const deletedNodeData = linkedlist.deleteBeforeNode(nextNodeData);
+                    const endTime = performance.now();
+                    setResultText('Deleted before ' + nextNodeData + ': ');
+                    setCurrVal(deletedNodeData);
+                    setTimeComplexity(`${endTime - startTime} milliseconds`);
+                    setSpaceComplexity('O(1)');
                 } else {
-                    setResultText('List is empty');
+                    animateTraversal();
+                    setResultText('Node not found');
                     setCurrVal('');
                 }
+            } else {
+                const startTime = performance.now();
+                const deletedNodeData = linkedlist.deleteAtEnd();
+                const endTime = performance.now();
+                setResultText('Deleted from end:');
+                setCurrVal(deletedNodeData);
+                setTimeComplexity(`${endTime - startTime} milliseconds`);
+                setSpaceComplexity('O(1)');
             }
+        } else {
+            animateTraversal();
+            setResultText('List is empty!');
         }
     };
 
-    const searchNode = () => {
-        if (linkedlist && searchValue) {
-            const valueToSearch = parseInt(searchValue.trim());
-            const foundNode = linkedlist.search(valueToSearch);
+
+     // Function to search for a node in the linked list
+     const searchNode = () => {
+        if (linkedlist) {
+            const searchData = parseInt(searchValue.trim());
+            const foundNode = linkedlist.search(searchData);
             if (foundNode) {
                 setResultText('Node found:');
-                setCurrVal(valueToSearch);
+                setCurrVal(foundNode.data);
+                setTimeComplexity('O(n)');
+                setSpaceComplexity('O(1)');
             } else {
                 setResultText('Node not found');
                 setCurrVal('');
             }
-            animateSearch(valueToSearch);
+        } else {
+            animateTraversal();
+            setResultText('Select a linked list type first!');
         }
     };
+
+  
+
 
     const traverseList = () => {
         if (linkedlist) {
@@ -763,8 +797,12 @@ const LinkedListVisualizer = () => {
                 </div>
 
 
-
-                <div className="representation">
+                <div className="col-9">
+                        <h3>Time Complexity: {timeComplexity}</h3>
+                        <h3>Space Complexity: {spaceComplexity}</h3>
+                        {/* Visualization area */}
+                    </div>
+                {/* <div className="representation">
                     <div className="row mx-auto" id="linkedlist-pseudocode">
                         <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
                             <div className="ide w-100">
@@ -809,7 +847,7 @@ const LinkedListVisualizer = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </>
     );

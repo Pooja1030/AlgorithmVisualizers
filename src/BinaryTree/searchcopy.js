@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Navbar from '../Components/navbar';
 import BinaryTreeView from './BinaryTreeView'; // Assuming BinaryTreeView component for visualization
 import './style1.css'
-
 import SidePanel from './sidepanelt'; // Import the SidePanel component
 class BinaryTree extends Component {
     constructor() {
@@ -22,44 +21,6 @@ class BinaryTree extends Component {
             visualizing:false,
             sidePanelOpen: false, // State variable to manage side panel visibility
             algorithmSteps: [],
-                // Algorithm steps for insert operation
-                // {
-                //     code: `Insertion Steps`
-                // },
-                // {
-                //     code: ` Step 1: Insert a new node with the specified data value into the binary tree.`,
-                // },
-                // {
-                //     code: ` Step 2: Traverse the tree to find the appropriate position for insertion.`,
-                // },
-                // Add more steps if needed
-                // Algorithm steps for delete operation
-                // {
-                //     code: `Deletion Steps`
-                // },
-                // {
-                //     code: ` Step 1: Delete a node with the specified data value from the binary tree.`,
-                // },
-                // {
-                //     code: ` Step 2: Traverse the tree to find the node to be deleted.`,
-                // },
-                // {
-                //     code: ` Step 3: Handle different cases based on the number of children of the node.`,
-                // },
-                // Add more steps if needed
-                // Algorithm steps for search operation
-                // {
-                //     code: `Search Steps`
-                // },
-                // {
-                //     code: ` Step 1: Search for a node with the specified data value in the binary tree.`,
-                // },
-                // {
-                //     code: ` Step 2: Traverse the tree to find the node with the matching data value.`,
-                // },
-                // Add more steps if needed
-            // ],
-            
         };
     }
 
@@ -214,6 +175,7 @@ class BinaryTree extends Component {
 
     handleOperationClick = (operation) => {
         let algorithmSteps = [];
+        let timeComplexity = '';
         switch (operation) {
             case 'insert':
                 this.insertNode(); // Perform insert operation
@@ -223,6 +185,7 @@ class BinaryTree extends Component {
                     { code: 'Step 2: Traverse the tree to find the appropriate position for insertion.' },
                     // Add more steps if needed
                 ];
+                timeComplexity = 'O(log n)';
                 break;
             case 'delete':
                 this.deleteNode(); // Perform delete operation
@@ -232,6 +195,7 @@ class BinaryTree extends Component {
                     { code: 'Step 2: Traverse the tree to find the node to be deleted.' },
                     // Add more steps if needed
                 ];
+                timeComplexity = 'O(log n)';
                 break;
             case 'search':
                 this.searchNode(); // Perform search operation
@@ -241,13 +205,15 @@ class BinaryTree extends Component {
                     { code: 'Step 2: Traverse the tree to find the node with the matching data value.' },
                     // Add more steps if needed
                 ];
+                timeComplexity = 'O(log n)';
                 break;
             default:
                 break;
         }
         // Open side panel and update algorithm steps
-        this.setState({ sidePanelOpen: true, algorithmSteps });
+        this.setState({ sidePanelOpen: true, algorithmSteps, timeComplexity });
     };
+
     
     handleVisualization = () => {
         const { selectedTraversal, stack } = this.state;
@@ -321,6 +287,12 @@ class BinaryTree extends Component {
         this.setState({ algorithmSteps: steps });
     };
     
+    calculateSpaceComplexity() {
+        // Calculate space complexity based on the current state
+        // For example, if using a stack, space complexity is O(n) where n is the number of elements in the stack
+        return `O(${this.state.stack.length})`;
+    }
+
 
 
 
@@ -336,6 +308,8 @@ class BinaryTree extends Component {
         });
     }
 
+
+
     toggleSidePanel = () => {
         this.setState(prevState => ({
             sidePanelOpen: !prevState.sidePanelOpen
@@ -343,7 +317,9 @@ class BinaryTree extends Component {
     };
 
     render() {
-        const { visualizing, sidePanelOpen, algorithmSteps, toggleSidePanel } = this.state;
+        const { visualizing, sidePanelOpen, algorithmSteps, toggleSidePanel, timeComplexity  } = this.state;
+        const spaceComplexity = this.calculateSpaceComplexity();
+
         return (
             <>
                 <Navbar currentPage="Binary Tree Traversal Visualizer" />
@@ -394,83 +370,26 @@ class BinaryTree extends Component {
                             </div>
                         ))}
                     </div>
-                    {/* {this.state.operationResult && (
-                        <div className="operation-result">
-                            {this.state.operationResult}
-                        </div>
-                    )} */}
                 </div>
-
-                <div className="representation">
-    <div className="row mx-auto" id="binarytree-pseudocode">
-        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-            <div className="ide w-100">
-                <div className="row ml-auto mr-auto 1">
-                    <span className="comment w-100">----------------</span>
-                    <span className="comment w-100 mt-1">| INSERT NODE |</span>
-                    <span className="comment w-100">----------------</span>
-                    <span className="comment w-100 mt-1">
-                        1. Insert a new node with the specified data value into the binary tree.
-                    </span>
-                    <span className="comment w-100 mt-1">
-                        2. Traverse the tree to find the appropriate position for insertion.
-                    </span>
-                    <span className="comment w-100 mt-1"> </span>
-                    <span className="comment w-100 mt-1">
-                        TIME COMPLEXITY: O(log n) - O(n) depending on the tree structure
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-            <div className="ide w-100">
-                <div className="row ml-auto mr-auto 1">
-                    <span className="comment w-100">----------------</span>
-                    <span className="comment w-100 mt-1">| DELETE NODE |</span>
-                    <span className="comment w-100">----------------</span>
-                    <span className="comment w-100 mt-1">
-                        1. Delete a node with the specified data value from the binary tree.
-                    </span>
-                    <span className="comment w-100 mt-1">
-                        2. Traverse the tree to find the node to be deleted.
-                    </span>
-                    <span className="comment w-100 mt-1">
-                        3. Handle different cases based on the number of children of the node.
-                    </span>
-                    <span className="comment w-100 mt-1"> </span>
-                    <span className="comment w-100 mt-1">
-                        TIME COMPLEXITY: O(log n) - O(n) depending on the tree structure
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-            <div className="ide w-100">
-                <div className="row ml-auto mr-auto 1">
-                    <span className="comment w-100">----------------</span>
-                    <span className="comment w-100 mt-1">| SEARCH NODE |</span>
-                    <span className="comment w-100">----------------</span>
-                    <span className="comment w-100 mt-1">
-                        1. Search for a node with the specified data value in the binary tree.
-                    </span>
-                    <span className="comment w-100 mt-1">
-                        2. Traverse the tree to find the node with the matching data value.
-                    </span>
-                    <span className="comment w-100 mt-1"> </span>
-                    <span className="comment w-100 mt-1">
-                        TIME COMPLEXITY: O(log n) - O(n) depending on the tree structure
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
                 {/* Visualization component */}
                 {this.state.visualizeClicked && (
                     <BinaryTreeView tree={this.state.tree} />
                 )}
+
+                {/* <div>
+                    <h3>Operation Result:</h3>
+                    <p>{this.state.operationResult}</p>
+                </div> */}
+
+                <div className="complexity-container">
+  <div className="complexity">
+    <p>Time Complexity: {timeComplexity}</p>
+    <p>Space Complexity: {spaceComplexity}</p>
+  </div>
+</div>
+
             </>
         );
     }
