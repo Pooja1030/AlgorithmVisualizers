@@ -50,7 +50,7 @@ class Graph extends Component {
         const selectedAlgorithm = this.getSelectedAlgorithm(); // Get the selected algorithm
         const selectedAlgorithmSteps = setAlgorithmSteps(selectedAlgorithm); // Get steps for the selected algorithm
         this.setState(prevState => ({
-            sidePanelOpen: !prevState.sidePanelOpen,
+            sidePanelOpen: true, // Open the side panel
             algorithmSteps: selectedAlgorithmSteps // Update algorithm steps
         }));
     };
@@ -76,7 +76,12 @@ class Graph extends Component {
     addNumber = () => {
         let tree = getTree(this.state.n, this.state.algo, this.state.r);
         this.setState({ edges: [], vertices: [], offset: tree.x });
+    
+        // Recursively traverse the tree and add vertices and edges
         this.recur(tree, undefined);
+    
+        // Trigger the side panel and generate algorithm steps
+        this.toggleSidePanel();
     }
 
     recur = async (node, parent) => {
