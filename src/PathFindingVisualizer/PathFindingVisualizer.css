@@ -40,3 +40,20 @@ color: #fff;
   /* padding: 10px 60px; */
 }
 
+.complexity-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.complexity-item {
+  margin: 0 10px;
+}
+
+.complexity-label {
+  font-weight: bold;
+}
+
+.complexity-value {
+  margin-left: 5px;
+}

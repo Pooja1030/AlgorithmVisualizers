@@ -8,11 +8,36 @@ import Menu from './menu';
 import './PathFindingVisualizer.css';
 import SidePanel from './sidepanelp';
 
+// Define the algorithms with their functions, steps, time complexity, and space complexity
 const algorithms = [
-    { "name": "Dijkstra's Algorithm", "function": dijkstra, "steps": dijkstra.steps },
-    { "name": "A* Algorithm", "function": aStar, "steps": aStar.steps },
-    { "name": "Depth-first Search", "function": dfs, "steps": dfs.steps },
-    { "name": "Breadth-first search", "function": bfs, "steps": bfs.steps }
+    { 
+        name: "Dijkstra's Algorithm", 
+        function: dijkstra, 
+        steps: dijkstra.steps,
+        timeComplexity: "O((V + E) * log(V))",
+        spaceComplexity: "O(V + E)"
+    },
+    { 
+        name: "A* Algorithm", 
+        function: aStar, 
+        steps: aStar.steps,
+        timeComplexity: "O((V + E) * log(V))",
+        spaceComplexity: "O(V + E)"
+    },
+    { 
+        name: "Depth-first Search", 
+        function: dfs, 
+        steps: dfs.steps,
+        timeComplexity: "O(V + E)",
+        spaceComplexity: "O(V)"
+    },
+    { 
+        name: "Breadth-first search", 
+        function: bfs, 
+        steps: bfs.steps,
+        timeComplexity: "O(V + E)",
+        spaceComplexity: "O(V)"
+    }
 ];
 
 export default class PathfindingVisualizer extends Component {
@@ -32,6 +57,8 @@ export default class PathfindingVisualizer extends Component {
             animating: false,
             isDrawerOpen: false,
             algorithmSteps: [], // Define state for algorithm steps
+            timeComplexity: "", // Define state for time complexity
+            spaceComplexity: "", // Define state for space complexity
         }
     }
 
@@ -305,17 +332,30 @@ export default class PathfindingVisualizer extends Component {
             return;
         }
     
-        // Set algorithm steps before visualization
-        this.setState({ algorithmSteps: selectedAlgorithm.steps });
-    
+        // Execute the algorithm to get visited nodes and shortest path nodes
+        const startTime = performance.now(); // Start measuring time
         const visitedNodesInOrder = selectedAlgorithm.function(grid, startNode, finishNode);
-        const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+        const endTime = performance.now(); // End measuring time
+        const executionTime = endTime - startTime; // Calculate execution time
     
-        this.animateVisitedNodes(visitedNodesInOrder, nodesInShortestPathOrder);
+        const spaceComplexity = Object.keys(grid).length * Object.keys(grid[0]).length * 4; // Space complexity in bytes (assuming each node object takes 4 bytes)
+    
+        // Set algorithm steps before visualization
+        this.setState({
+            algorithmSteps: selectedAlgorithm.steps,
+            timeComplexity: `${executionTime.toFixed(2)} ms`, // Time complexity in milliseconds
+            spaceComplexity: `${spaceComplexity} bytes` // Space complexity in bytes
+        });
+    
+        // Animate visited nodes and shortest path nodes
+        this.animateVisitedNodes(visitedNodesInOrder, getNodesInShortestPathOrder(finishNode));
     
         // Open side panel
         this.toggleSidePanel();
     }
+    
+    
+    
     
 
     resetGrid() {
@@ -351,7 +391,7 @@ export default class PathfindingVisualizer extends Component {
 
 
     render() {
-        const { grid, mouseIsPressed, isDrawerOpen, algorithmSteps } = this.state;
+        const { grid, mouseIsPressed, isDrawerOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
 
 
         return (
@@ -404,7 +444,17 @@ export default class PathfindingVisualizer extends Component {
                 {/* Render the side panel component */}
                 <SidePanel isOpen={isDrawerOpen} algorithmSteps={algorithmSteps} onClose={this.toggleSidePanel} />
 
-
+                  {/* Display time and space complexity */}
+                  <div className="complexity-container">
+                    <div className="complexity-item">
+                        <span className="complexity-label">Time Complexity:</span>
+                        <span className="complexity-value">{timeComplexity}</span>
+                    </div>
+                    <div className="complexity-item">
+                        <span className="complexity-label">Space Complexity:</span>
+                        <span className="complexity-value">{spaceComplexity}</span>
+                    </div>
+                </div>
 
                 <div className="grid">
                     {grid.map((row, rowIdx) => {
@@ -431,6 +481,7 @@ export default class PathfindingVisualizer extends Component {
                             </div>
                         );
                     })}
+                    
                 </div>
             </>
         );
