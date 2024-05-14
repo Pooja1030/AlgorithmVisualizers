@@ -3,6 +3,8 @@ import Cells from "./cells";
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import SidePanel from './sidepanelq';
+import './style.css';
+
 
 class Queen extends Component {
     state = {
@@ -42,14 +44,14 @@ class Queen extends Component {
     }
 
     render() {
-        const { sidePanelOpen, algorithmSteps } = this.state;
+        const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
         return (
             <div>
                 <Navbar currentPage="N-queens problem" />
                 <Menu
                     onSpeedChange={this.handleSpeedChange}
                     onCountChange={this.handleQueenChange}
-                    onVisualize={this.startAlgo} // Corrected typo
+                    onVisualize={this.startAlgo}
                     isDisabled={this.state.isRunning}
                     onClear={this.handleClear}
                     onStop={this.handleStop}
@@ -59,11 +61,19 @@ class Queen extends Component {
                     isOpen={sidePanelOpen}
                     onClose={this.closeSidePanel}
                     algorithmSteps={algorithmSteps}
+                    timeComplexity={timeComplexity}
+                    spaceComplexity={spaceComplexity}
                 />
                 <div style={{ textAlign: "Center" }}>
                     <Cells
                         board={this.state.board}
                     />
+                </div>
+                <div className="complexity-analysis">
+                    <div className="analysis-title">Time Complexity</div>
+                    <div className="analysis-result">{timeComplexity}</div>
+                    <div className="analysis-title">Space Complexity</div>
+                    <div className="analysis-result">{spaceComplexity}</div>
                 </div>
             </div>
         );
@@ -90,13 +100,31 @@ class Queen extends Component {
     }
 
     startAlgo = async () => {
-        this.setState({ isRunning: true, sidePanelOpen: true }); // Open side panel
+        this.setState({ isRunning: true, sidePanelOpen: true });
+    
+        // Measure start time for time complexity
+        const startTime = performance.now();
+    
         const newBoard = this.state.board.slice();
         await this.queensAlgo(newBoard, 0);
-        const newBoard2 = this.turnOffAttack(this.state.board, this.state.number);
-        this.setState({ board: newBoard2, isRunning: false, sidePanelOpen: false }); // Close side panel
+    
+        // Measure end time for time complexity
+        const endTime = performance.now();
+        const executionTime = endTime - startTime;
+    
+        // Estimate space complexity
+        const spaceComplexity = 'O(N^2)'; // Example: Assuming 2D array for board representation
+    
+        // Update state with time and space complexity
+        this.setState({ 
+            board: newBoard, 
+            isRunning: false, 
+            sidePanelOpen: false,
+            timeComplexity: `O(N!) - ${executionTime.toFixed(2)} ms`,
+            spaceComplexity
+        });
     }
-
+    
     queensAlgo = async (board, col) => {
         if (col >= this.state.number) {
             return true;
