@@ -21,3 +21,26 @@
 .full-height {
     height: calc(100vh);
 }
+
+/* Styles for the time and space complexity analysis */
+.complexity-analysis {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 80%;
+    margin-left: auto; /* Align to the right */
+    margin-right: auto; /* Align to the right */
+}
+
+.analysis-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.analysis-result {
+    font-size: 18px;
+    margin-bottom: 10px; /* Add some spacing between items */
+}
