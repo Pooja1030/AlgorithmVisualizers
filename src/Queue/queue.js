@@ -15,6 +15,8 @@ const QueueVisualizer = () => {
   const [algorithmSteps, setAlgorithmSteps] = useState([]);
   const [lastOperation, setLastOperation] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const [timeComplexity, setTimeComplexity] = useState(null);
+  const [spaceComplexity, setSpaceComplexity] = useState(null);
   const stepsRef = useRef([
     { code: `Working of Queue` },
     { code: `- two pointers FRONT and REAR` },
@@ -32,6 +34,7 @@ const QueueVisualizer = () => {
     { code: `- increase the FRONT index by 1`},
     { code: `- for the last element, reset the values of FRONT and REAR to -1`},
   ]);
+
 
   useEffect(() => {
     setAlgorithmSteps(stepsRef.current);
@@ -101,6 +104,7 @@ const QueueVisualizer = () => {
     }
 
     setStepsAndAnimate(updatedSteps);
+    analyzeQueueOperation(operation);
   };
 
   const enqueue = () => {
@@ -178,6 +182,78 @@ const QueueVisualizer = () => {
     // Forward logic if needed
   };
 
+  const analyzeQueueOperation = (operation) => {
+    const timeComplexity = measureTimeComplexity(operation);
+    const spaceComplexity = measureSpaceComplexity(operation);
+    setTimeComplexity(timeComplexity);
+    setSpaceComplexity(spaceComplexity);
+  };
+
+  // Function to measure time complexity of queue operations
+  const measureTimeComplexity = (operation) => {
+    const start = performance.now();
+    // Execute the queue operation here
+    switch (operation) {
+      case 'Enqueue':
+        // Enqueue operation implementation
+        break;
+      case 'Dequeue':
+        // Dequeue operation implementation
+        break;
+      case 'Peek':
+        // Peek operation implementation
+        break;
+      case 'IsEmpty':
+        // IsEmpty operation implementation
+        break;
+      case 'IsFull':
+        // IsFull operation implementation
+        break;
+      case 'Size':
+        // Size operation implementation
+        break;
+      default:
+        break;
+    }
+    const end = performance.now();
+    const executionTime = end - start;
+    return executionTime;
+  };
+
+  // Function to measure space complexity of queue operations
+  const measureSpaceComplexity = (operation) => {
+    let space = 0;
+    switch (operation) {
+      case 'Enqueue':
+        // For Enqueue operation, the space complexity is O(1)
+        space = 1;
+        break;
+      case 'Dequeue':
+        // For Dequeue operation, the space complexity is O(1)
+        space = 1;
+        break;
+      case 'Peek':
+        // For Peek operation, the space complexity is O(1)
+        space = 1;
+        break;
+      case 'IsEmpty':
+        // For IsEmpty operation, the space complexity is O(1)
+        space = 1;
+        break;
+      case 'IsFull':
+        // For IsFull operation, the space complexity is O(1)
+        space = 1;
+        break;
+      case 'Size':
+        // For Size operation, the space complexity is O(1)
+        space = 1;
+        break;
+      default:
+        break;
+    }
+    return space;
+  };
+
   return (
     <>
       <Navbar currentPage="Queue" />
@@ -219,7 +295,14 @@ const QueueVisualizer = () => {
           ))}
         </div>
 
-        <div className="representation">
+        <div className="complexity-analysis">
+            <div className="analysis-title">Time Complexity:</div>
+            <div className="analysis-result">{timeComplexity !== null ? `${timeComplexity} ms` : "Not measured"}</div>
+            <div className="analysis-title">Space Complexity:</div>
+            <div className="analysis-result">{spaceComplexity !== null ? `O(${spaceComplexity})` : "Not measured"}</div>
+          </div>
+
+        {/* <div className="representation">
           <div className="row mx-auto" id="queue-pseudocode">
             {algorithmSteps.map((step, index) => (
               <div key={index} id={`step-${index}`} className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0" style={{ opacity: index === currentStep ? 1 : 0 }}>
@@ -231,7 +314,7 @@ const QueueVisualizer = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

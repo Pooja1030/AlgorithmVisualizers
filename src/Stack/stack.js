@@ -13,7 +13,10 @@ const StackVisualizer = () => {
     const [currVal, setCurrVal] = useState(null);
     const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
     const [algorithmSteps, setAlgorithmSteps] = useState([]); // Define state for algorithm steps
+    const [timeComplexity, setTimeComplexity] = useState(null); // State to store time complexity
+    const [spaceComplexity, setSpaceComplexity] = useState(null); // State to store space complexity
 
+    
     useEffect(() => {
         // Define your algorithm steps here
         const steps = [
@@ -44,6 +47,42 @@ by TOP and reduce its value.`
         setAlgorithmSteps(steps);
     }, []);
 
+
+     // Function to measure time complexity of stack operations
+     const measureTimeComplexity = (operation) => {
+        const start = performance.now();
+        // Execute the stack operation here
+        if (operation === 'push') {
+            // Push operation implementation
+        } else if (operation === 'pop') {
+            // Pop operation implementation
+        } else if (operation === 'peek') {
+            // Peek operation implementation
+        } else if (operation === 'isEmpty') {
+            // IsEmpty operation implementation
+        } else if (operation === 'size') {
+            // Size operation implementation
+        }
+        const end = performance.now();
+        const executionTime = end - start;
+        setTimeComplexity(executionTime); // Set the time complexity
+    };
+// Function to measure space complexity of stack operations
+const measureSpaceComplexity = (operation) => {
+    // Analyze the space requirements of the stack operation
+    // Set space complexity value accordingly
+    const space = operation === 'push' ? 1 : operation === 'pop' ? -1 : 0; // Example space complexity logic
+    setSpaceComplexity(space);
+};
+
+   // Function to perform stack operation analysis
+   const analyzeStackOperation = (operation) => {
+    measureTimeComplexity(operation);
+    measureSpaceComplexity(operation);
+};
+
+
+
     const push = () => {
         setResultText(null);
         setCurrVal(null);
@@ -55,6 +94,7 @@ by TOP and reduce its value.`
             setResultText("");
             setCurrVal('Stack is full');
         }
+        analyzeStackOperation('push');
     };
 
     const pop = () => {
@@ -71,6 +111,7 @@ by TOP and reduce its value.`
             setResultText("");
             setCurrVal('Stack is empty');
         }
+        analyzeStackOperation('pop');
     };
 
     const peek = () => {
@@ -84,16 +125,19 @@ by TOP and reduce its value.`
             setResultText("");
             setCurrVal('Stack is empty');
         }
+        analyzeStackOperation('peek');
     };
 
     const isEmpty = () => {
         setResultText('Is empty: ')
         setCurrVal(stack.length === 0 ? 'True' : 'False');
+        analyzeStackOperation('isEmpty');
     };
 
     const size = () => {
         setResultText('Size: ')
         setCurrVal(stack.length);
+        analyzeStackOperation('size');
     };
 
     const toggleSidePanel = () => {
@@ -195,6 +239,15 @@ by TOP and reduce its value.`
                             {poppedDie}
                         </div>
                     )}
+                </div>
+
+                   {/* Display time and space complexity analysis */}
+             {/* Display time and space complexity analysis */}
+             <div className="complexity-analysis">
+                    <div className="analysis-title">Time Complexity</div>
+                    <div className="analysis-result">{timeComplexity !== null && `Time complexity: ${timeComplexity} ms`}</div>
+                    <div className="analysis-title">Space Complexity</div>
+                    <div className="analysis-result">{spaceComplexity !== null && `Space complexity: ${spaceComplexity}`}</div>
                 </div>
             </div>
         </>
