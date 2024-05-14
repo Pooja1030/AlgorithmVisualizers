@@ -78,6 +78,16 @@
   background-color: #0d8bff;
 }
 
+.time-space-complexity {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.time-space-complexity p {
+  margin: 5px 0;
+}
+
+
 /* .menu{
 
     justify-content: space-between;

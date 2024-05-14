@@ -13,14 +13,47 @@ class MinimumSpanningTree extends Component {
       visualizeClicked: false,
       sidePanelOpen: false,
       algorithmSteps: [],
+      timeComplexity: "",
+      spaceComplexity: "",
     };
+  }
+
+  // Function to calculate time complexity based on the selected algorithm
+  calculateTimeComplexity(selectedAlgo) {
+    let timeComplexity = "";
+    switch (selectedAlgo) {
+      case "prim":
+        timeComplexity = "O(V^2)"; // Real time complexity of Prim's Algorithm
+        break;
+      case "kruskal":
+        timeComplexity = "O(E log V)"; // Real time complexity of Kruskal's Algorithm
+        break;
+      default:
+        timeComplexity = "";
+    }
+    return timeComplexity;
+  }
+
+  // Function to calculate space complexity based on the selected algorithm
+  calculateSpaceComplexity(selectedAlgo) {
+    let spaceComplexity = "";
+    switch (selectedAlgo) {
+      case "prim":
+        spaceComplexity = "O(V)"; // Real space complexity of Prim's Algorithm
+        break;
+      case "kruskal":
+        spaceComplexity = "O(E + V)"; // Real space complexity of Kruskal's Algorithm
+        break;
+      default:
+        spaceComplexity = "";
+    }
+    return spaceComplexity;
   }
 
   handleAlgoSelect = (e) => {
     const selectedAlgo = e.target.value;
     this.setState({ selectedAlgo, visualizeClicked: false });
 
-    // Generate algorithm steps based on the selected algorithm
     let algorithmSteps = [];
     if (selectedAlgo === "kruskal") {
       algorithmSteps = Kruskal.steps;
@@ -28,13 +61,17 @@ class MinimumSpanningTree extends Component {
       algorithmSteps = Prim.steps;
     }
 
-    this.setState({ algorithmSteps });
+    const timeComplexity = this.calculateTimeComplexity(selectedAlgo);
+    const spaceComplexity = this.calculateSpaceComplexity(selectedAlgo);
+    this.setState({ algorithmSteps, timeComplexity, spaceComplexity });
   };
 
   handleVisualizeClick = () => {
     if (this.state.selectedAlgo !== "") {
-      // Open side panel and trigger visualization
-      this.setState({ visualizeClicked: true, sidePanelOpen: true });
+      const timeComplexity = this.calculateTimeComplexity(this.state.selectedAlgo);
+      const spaceComplexity = this.calculateSpaceComplexity(this.state.selectedAlgo);
+  
+      this.setState({ visualizeClicked: true, sidePanelOpen: true, timeComplexity, spaceComplexity });
     }
   };
 
@@ -55,7 +92,7 @@ class MinimumSpanningTree extends Component {
   }
 
   render() {
-    const { selectedAlgo, visualizeClicked, sidePanelOpen, algorithmSteps } = this.state;
+    const { selectedAlgo, visualizeClicked, sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
     let selectedComponent = null;
     if (visualizeClicked) {
       selectedComponent =
@@ -86,12 +123,17 @@ class MinimumSpanningTree extends Component {
           </div>
         </div>
 
-        {/* Side panel toggle button */}
+        {selectedAlgo && (
+          <div className="complexity-info">
+            <p>Time Complexity: {timeComplexity}</p>
+            <p>Space Complexity: {spaceComplexity}</p>
+          </div>
+        )}
+
         <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
           →
         </button>
 
-        {/* Render the side panel component */}
         <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
         <div className="algo-container">{selectedComponent}</div>
       </>

@@ -1,3 +1,4 @@
+// BinarySearch.js
 import React, { Component } from 'react';
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
@@ -35,38 +36,49 @@ class BinarySearch extends Component {
       {
         code: ` Step 7: If the target is not found in the array, return -1.`,
       },
-    ]
-    
+    ],
+    timeComplexity: "", // State to store time complexity
+    spaceComplexity: "", // State to store space complexity
   };
   
-
   componentDidMount() {
     this.handleRandomize();
   }
 
+  // Function to calculate time complexity of binary search
+  calculateTimeComplexity(count) {
+    // Binary search has O(log n) time complexity
+    return `O(log ${count})`;
+  }
+
+  // Function to calculate space complexity of binary search
+  calculateSpaceComplexity() {
+    // Binary search has O(1) space complexity (constant space)
+    return "O(1)";
+  }
+
   render() {
 
-    const { sidePanelOpen, algorithmSteps } = this.state;
+    const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
 
 
     return (
       <React.Fragment>
         <Navbar currentPage="Binary Search Visualizer" />
         <Menu
-  disable={this.state.isRunning}
-  onVisualize={this.handleSearch} 
-  onRandomize={this.handleRandomize}
-  onReset={this.handleReset}
-  onCountChange={this.handleCountChange}
-  onTargetChange={this.handleTargetChange}
-/>
+          disable={this.state.isRunning}
+          onVisualize={this.handleSearch} 
+          onRandomize={this.handleRandomize}
+          onReset={this.handleReset}
+          onCountChange={this.handleCountChange}
+          onTargetChange={this.handleTargetChange}
+        />
 
-       {/* Side panel toggle button */}
-       <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
+        {/* Side panel toggle button */}
+        <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
 
-{/* Render the side panel component */}
-<SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={algorithmSteps}  />
-
+        {/* Render the side panel component */}
+        <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={algorithmSteps}  />
 
         <div className='justify-content-center'>
           <Rects
@@ -74,77 +86,30 @@ class BinarySearch extends Component {
             target={this.state.target}
           />
         </div>
-        <div className="representation">
-    <div className="row mx-auto" id="binarysearchtree-pseudocode">
-        {/* <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-            <div className="ide w-100">
-                <div className="row ml-auto mr-auto 1">
-                    <span className="comment w-100">----------------</span>
-                    <span className="comment w-100 mt-1">| INSERT NODE |</span>
-                    <span className="comment w-100">----------------</span>
-                    <span className="comment w-100 mt-1">
-                        1. Insert a new node with the specified data value into the binary search tree.
-                    </span>
-                    <span className="comment w-100 mt-1">
-                        2. Traverse the tree to find the appropriate position for insertion based on the value.
-                    </span>
-                    <span className="comment w-100 mt-1"> </span>
-                    <span className="comment w-100 mt-1">
-                        TIME COMPLEXITY: O(log n) - O(n) depending on the tree structure
-                    </span>
+        <div>
+          {/* Display time and space complexity */}
+          <div>
+            <p>Time Complexity: {timeComplexity}</p>
+            <p>Space Complexity: {spaceComplexity}</p>
+          </div>
+          {/* <div className="row mx-auto" id="binarysearchtree-pseudocode">
+              {/* Pseudocode */}
+              {/* {algorithmSteps.map((step, index) => (
+                <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0" key={index}>
+                  <div className="ide w-100">
+                    <div className="row ml-auto mr-auto 1">
+                      <span className="comment w-100">{step.code}</span>
+                    </div>
+                  </div>
                 </div>
-            </div>
-        </div> */}
-        {/* <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-            <div className="ide w-100">
-                <div className="row ml-auto mr-auto 1">
-                    <span className="comment w-100">----------------</span>
-                    <span className="comment w-100 mt-1">| DELETE NODE |</span>
-                    <span className="comment w-100">----------------</span>
-                    <span className="comment w-100 mt-1">
-                        1. Delete a node with the specified data value from the binary search tree.
-                    </span>
-                    <span className="comment w-100 mt-1">
-                        2. Traverse the tree to find the node to be deleted.
-                    </span>
-                    <span className="comment w-100 mt-1">
-                        3. Handle different cases based on the number of children of the node.
-                    </span>
-                    <span className="comment w-100 mt-1"> </span>
-                    <span className="comment w-100 mt-1">
-                        TIME COMPLEXITY: O(log n) - O(n) depending on the tree structure
-                    </span>
-                </div>
-            </div>
-        </div> */}
-        {/* <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-            <div className="ide w-100">
-                <div className="row ml-auto mr-auto 1">
-                    <span className="comment w-100">----------------</span>
-                    <span className="comment w-100 mt-1">| SEARCH NODE |</span>
-                    <span className="comment w-100">----------------</span>
-                    <span className="comment w-100 mt-1">
-                        1. Search for a node with the specified data value in the binary search tree.
-                    </span>
-                    <span className="comment w-100 mt-1">
-                        2. Traverse the tree recursively, comparing the data value with each node's value.
-                    </span>
-                    <span className="comment w-100 mt-1">
-                        3. If the value matches, return the node; otherwise, continue searching in the left or right subtree.
-                    </span>
-                    <span className="comment w-100 mt-1"> </span>
-                    <span className="comment w-100 mt-1">
-                        TIME COMPLEXITY: O(log n) - O(n) depending on the tree structure
-                    </span>
-                </div>
-            </div>
-        </div> */}
-    </div>
-</div>
+              ))}
+          </div> */} 
+        </div>
       </React.Fragment>
     );
   }
 
+  // Function to handle randomization of array
   handleRandomize = () => {
     const target = Math.floor(Math.random() * this.state.count);
     const rects = Array.from({ length: this.state.count }, (_, index) => ({
@@ -155,6 +120,7 @@ class BinarySearch extends Component {
     this.setState({ target, rects });
   }
 
+  // Function to handle reset
   handleReset = () => {
     this.setState({
       isRunning: false,
@@ -163,14 +129,17 @@ class BinarySearch extends Component {
     this.handleRandomize();
   }
 
+  // Function to handle count change
   handleCountChange = (val) => {
     this.setState({ count: val }, this.handleRandomize);
   }
 
+  // Function to handle target change
   handleTargetChange = (val) => {
     this.setState({ target: val });
   }
 
+  // Function to handle binary search
   handleSearch = (searchValue) => {
     this.setState({ isRunning: true, target: searchValue }, () => {
       const { target, rects } = this.state;
@@ -193,12 +162,14 @@ class BinarySearch extends Component {
       }
       this.animateSearch(steps);
   
-      // Trigger side panel and display algorithm steps
-      this.setState({ sidePanelOpen: true });
+      // Update time and space complexity
+      const timeComplexity = this.calculateTimeComplexity(this.state.count);
+      const spaceComplexity = this.calculateSpaceComplexity();
+      this.setState({ sidePanelOpen: true, timeComplexity, spaceComplexity });
     });
   }
-  
 
+  // Function to animate the search
   animateSearch = (steps) => {
     const animateStep = (index) => {
       if (index === steps.length) {
@@ -223,6 +194,8 @@ class BinarySearch extends Component {
     };
     animateStep(0);
   }
+
+  // Function to toggle side panel
   toggleSidePanel = () => {
     this.setState(prevState => ({
       sidePanelOpen: !prevState.sidePanelOpen,
