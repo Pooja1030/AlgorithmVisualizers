@@ -78,18 +78,24 @@
   background-color: #0d8bff;
 }
 
+/* CSS for time and space complexity display */
 .time-space-complexity {
   margin-top: 20px;
-  font-size: 16px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  width: 80%;
+  margin: 0 auto; /* Center the container */
+  text-align: center; /* Align content in the center */
 }
 
 .time-space-complexity p {
+  font-size: 16px;
   margin: 5px 0;
 }
 
+.time-space-complexity p:first-child {
+  margin-top: 0;
+}
 
-/* .menu{
-
-    justify-content: space-between;
-    padding: 10px 210px;
-  } */

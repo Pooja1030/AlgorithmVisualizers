@@ -41,7 +41,7 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
   const handleClose = () => {
     setIsPlaying(false); // Stop playback when closing
     setCurrentStep(0); // Reset step when closing
-    onClose();
+    onClose(); // Call the onClose function passed from the parent component
   };
 
   const handleAlgoChange = (pos, val) => {

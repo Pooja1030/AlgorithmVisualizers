@@ -4,7 +4,7 @@ import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import Rects from './rects';
 import SidePanel from './Sidepanels'; // Import the SidePanel component
-import './style4.css'
+
 
 class BinarySearch extends Component {
   state = {

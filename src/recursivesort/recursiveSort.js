@@ -77,11 +77,7 @@ class RecursiveSort extends Component {
                 {/* Toggle button for the side panel */}
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}> →</button>
 
-                {/* Time and Space Complexity */}
-                <div className='time-space-complexity'>
-                    <p>Time Complexity: {this.state.timeComplexity}</p>
-                    <p>Space Complexity: {this.state.spaceComplexity}</p>
-                </div>
+               
 
                 {/* Side Panel */}
                 <SidePanel
@@ -94,6 +90,12 @@ class RecursiveSort extends Component {
                     <Rects
                         rects={this.state.rects}
                     />
+                </div>
+
+                 {/* Time and Space Complexity */}
+                 <div className='time-space-complexity'>
+                    <p>Time Complexity: {this.state.timeComplexity}</p>
+                    <p>Space Complexity: {this.state.spaceComplexity}</p>
                 </div>
             </React.Fragment>
         )

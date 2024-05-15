@@ -62,17 +62,7 @@
     padding: 20px;
     margin-top: -45px;
   }
-  
-  /* .panel-content p {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 10px;
-    overflow-x: auto;
-    height: 450px;
-  } */
-  
-
-  
+    
   .side-panel-toggle {
     position: fixed;
     right: 20px;
@@ -108,7 +98,25 @@
   /* Add other styling properties as needed */
 }
 
+/* New styles for complexity analysis */
+.complexity-analysis {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  width: 80%;
+}
 
+.analysis-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.analysis-result {
+  font-size: 18px;
+}
 
   /* Media query for smaller screens */
   @media (max-width: 768px) {

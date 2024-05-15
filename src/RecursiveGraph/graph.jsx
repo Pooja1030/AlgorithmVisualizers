@@ -5,6 +5,7 @@ import Menu from "./menu";
 import Navbar from '../Components/navbar';
 import Details from "./details";
 import SidePanel from './sidepanelg';
+import './style7.css';
 
 class Graph extends Component {
     constructor() {
@@ -24,8 +25,28 @@ class Graph extends Component {
                 { code: " Step 2: Generate the Fibonacci tree based on the input values." },
                 { code: " Step 3: Recursively traverse the tree and add vertices and edges." },
                 { code: " Step 4: Update vertices and edges state to trigger re-rendering." }
-            ]
+            ],
+            timeComplexity: '',
+            spaceComplexity: ''
         }
+    }
+
+    
+    // Function to calculate time complexity
+    calculateTimeComplexity = (callback) => {
+        const startTime = performance.now();
+        callback();
+        const endTime = performance.now();
+        const executionTime = endTime - startTime;
+        this.setState({ timeComplexity: `Time Complexity: ${executionTime.toFixed(2)} milliseconds` });
+    }
+
+    // Function to calculate space complexity
+    calculateSpaceComplexity = () => {
+        // Perform the operation for which you want to calculate space complexity
+        // For example:
+        const treeSize = this.state.vertices.length + this.state.edges.length;
+        this.setState({ spaceComplexity: `Space Complexity: ${treeSize} units` });
     }
 
     setAlgo = (pos, val) => {
@@ -50,7 +71,7 @@ class Graph extends Component {
         const selectedAlgorithm = this.getSelectedAlgorithm(); // Get the selected algorithm
         const selectedAlgorithmSteps = setAlgorithmSteps(selectedAlgorithm); // Get steps for the selected algorithm
         this.setState(prevState => ({
-            sidePanelOpen: true, // Open the side panel
+            sidePanelOpen: !prevState.sidePanelOpen, // Toggle the side panel state
             algorithmSteps: selectedAlgorithmSteps // Update algorithm steps
         }));
     };
@@ -74,14 +95,19 @@ class Graph extends Component {
     }
 
     addNumber = () => {
-        let tree = getTree(this.state.n, this.state.algo, this.state.r);
-        this.setState({ edges: [], vertices: [], offset: tree.x });
-    
-        // Recursively traverse the tree and add vertices and edges
-        this.recur(tree, undefined);
-    
-        // Trigger the side panel and generate algorithm steps
-        this.toggleSidePanel();
+        this.calculateTimeComplexity(() => {
+            let tree = getTree(this.state.n, this.state.algo, this.state.r);
+            this.setState({ edges: [], vertices: [], offset: tree.x });
+
+            // Recursively traverse the tree and add vertices and edges
+            this.recur(tree, undefined);
+
+            // Calculate space complexity
+            this.calculateSpaceComplexity();
+
+            // Trigger the side panel and generate algorithm steps
+            this.toggleSidePanel();
+        });
     }
 
     recur = async (node, parent) => {
@@ -175,6 +201,13 @@ class Graph extends Component {
                     current={this.state.current}
                     offset={this.state.offset}
                 />
+
+                 {/* Display time and space complexity */}
+                 <div className="complexity-analysis">
+                    <div className="analysis-title">Complexity Analysis</div>
+                    <div className="analysis-result">{this.state.timeComplexity}</div>
+                    <div className="analysis-result">{this.state.spaceComplexity}</div>
+                </div>
             </div>
         );
     }

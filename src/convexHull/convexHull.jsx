@@ -21,8 +21,9 @@ class ConvexHull extends Component {
             { description: 'Step 3: Iterate through the sorted points and add them to the convex hull if they make a counterclockwise turn with the last two points on the hull.' },
             { description: 'Step 4: Continue adding points until you reach the starting point again.' },
             { description: 'Step 5: The set of points added forms the convex hull.' }
-          ],
-          
+        ],
+        timeComplexity: '', // State to hold time complexity
+        spaceComplexity: '' // State to hold space complexity
     }
 
     constructor() {
@@ -36,12 +37,25 @@ class ConvexHull extends Component {
             height: window.innerHeight - 100,
             dots: getNewDots(this.state.number)
         });
+        this.calculateComplexities(); // Calculate complexities after dots are set
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.dots !== this.state.dots) {
+            this.calculateComplexities(); // Recalculate complexities if dots change
+        }
     }
 
     render() {
         return (
             <div>
                 <Navbar currentPage="Convex Hull" />
+                {/* Display time and space complexities */}
+                <div className="complexities">
+                    <p>Time Complexity: {this.state.timeComplexity}</p>
+                    <p>Space Complexity: {this.state.spaceComplexity}</p>
+                </div>
+                {/* Rest of the component */}
                 {/* Side panel toggle button */}
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
                     →
@@ -66,6 +80,14 @@ class ConvexHull extends Component {
                 />
             </div>
         );
+    }
+
+    calculateComplexities() {
+        // You can calculate the complexities based on the current state or data
+        // For example, you can estimate time and space complexities based on the number of dots
+        const timeComplexity = 'O(n log n)'; // Placeholder value, replace with actual calculation
+        const spaceComplexity = 'O(n)'; // Placeholder value, replace with actual calculation
+        this.setState({ timeComplexity, spaceComplexity });
     }
 
     handleValueIncease = (value) => {

@@ -17,3 +17,67 @@ nav {
   margin: 0 60px;
   justify-content: center;
 }
+
+/* Time and space complexity analysis */
+.complexity-analysis {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  width: 80%;
+}
+
+.analysis-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.analysis-result {
+  font-size: 18px;
+}
+
+/* Time and space complexity display */
+.complexities {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  width: 80%;
+  margin: 0 auto; /* Center the container */
+  text-align: center; /* Align content in the center */
+}
+
+.complexity-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.complexity-value {
+  font-size: 18px;
+}
+/* Time and space complexity display */
+.time-space-complexity {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  width: 80%;
+  margin: 0 auto; /* Center the container */
+  text-align: center; /* Align content in the center */
+}
+
+.time-space-complexity p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.time-space-complexity p:first-child {
+  margin-top: 0;
+}
