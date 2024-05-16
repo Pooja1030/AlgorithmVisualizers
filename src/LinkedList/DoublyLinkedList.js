@@ -170,6 +170,71 @@ class DoublyLinkedList {
         listValues = 'null <-- '+listValues+'null';
         return listValues;
     }
+
+    steps(operation) {
+        switch (operation) {
+            case "insertAtBeginning":
+                return  [
+                    { code: "1. Create new node" },
+                    { code: "2. Set prev and next pointers of new node" },
+                    { code: "3. Make new node as head node" },
+                ]
+            case "insertAfterNode":
+                return [
+                    { code: "1. Create new node" },
+                    { code: "2. Traverse to node just before the required position of new node" },
+                    { code: "3. Set the next pointer of new node and previous node" },
+                    { code: "4. Set the prev pointer of new node and the next node" },
+                ]
+            case "insertBeforeNode":
+                return [
+                    { code: "1. Create new node" },
+                    { code: "2. Traverse to the node before which you want to insert the new node." },
+                    { code: "3. Set the next pointer of new node and previous node" },
+                    { code: "4. Set the prev pointer of new node and the next node" },
+                ]
+            case "insertAtEnd":
+                return [
+                    { code: "1. Create new node" },
+                    { code: "2. Traverse to last node" },
+                    { code: "3. Set prev and next pointers of new node and the previous node" },
+                ]
+            case "deleteAtBeginning":
+                return [
+                    { code: "1. Point head to the second node" },
+                    { code: "2. update the head to point to the second node (if it exists)." },
+                    { code: "3. Update the previous pointer of the new head to be null." },
+                ]
+            case "deleteFromMiddle":
+                 return [
+                    { code: "1. Traverse to element before the element to be deleted" },
+                    { code: "2. Update the pointers of the previous and next nodes of the node to be deleted to bypass it." },
+                ]
+            case "deleteFromEnd":
+                return [
+                    { code: "1. Traverse to the last element" },
+                    { code: "2. Change next pointer of second last node to null" },
+                ]
+            case "search":
+                return [
+                    { code: "1. Make head as the current node." },
+                    { code: "2. Run a loop until the current node is NULL because the last element points to NULL." },
+                    { code: "3. In each iteration, check if the key of the node is equal to item. If it the key matches the item, return true otherwise return false." },
+                ]
+            case "traverse":
+                return [
+                    { code: "1. Initialize a pointer to the head node" },
+                    { code: "2. Check that the pointer is null or not null, if it is null then return." },
+                    { code: "3. While the pointer is not null, access the data from that node and store it to print." },
+                    { code: "4. Move the pointer to next node." },
+                    { code: "5. Check the pointer is null or not null, until it reaches to the end of the list." },
+                ]
+            default:
+                return [
+                    { code: "" },
+                ]
+        }
+    }
 }
 
 export default DoublyLinkedList;
