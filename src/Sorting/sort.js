@@ -113,33 +113,47 @@ class Sort extends Component {
         this.setState({ isRunning: true, sidePanelOpen: true });
         let steps;
         let algorithmSteps;
+        let startTime, endTime;
         let timeComplexity = '';
         let spaceComplexity = '';
-    
+        let spaceUsage = 0;
+        
         switch (this.state.algo1) {
             case 0:
+                startTime = performance.now();
                 steps = bubbleSort(this.state.rects); // Call bubbleSort to get steps
+                endTime = performance.now();
                 algorithmSteps = bubbleSortSteps; // Set algorithmSteps to bubbleSortSteps
-                timeComplexity = 'O(n^2)'; // Update time complexity
-                spaceComplexity = 'O(1)'; // Update space complexity
+                timeComplexity = `${(endTime - startTime).toFixed(2)} ms`; // Update time complexity
+                spaceUsage = this.state.rects.length * 4; // Assuming each rect object takes 4 bytes
+                spaceComplexity = `${spaceUsage} bytes`; // Update space complexity
                 break;
             case 1:
+                startTime = performance.now();
                 steps = selectionSort(this.state.rects); // Call selectionSort to get steps
+                endTime = performance.now();
                 algorithmSteps = selectionSortSteps; // Set algorithmSteps to selectionSortSteps
-                timeComplexity = 'O(n^2)'; // Update time complexity
-                spaceComplexity = 'O(1)'; // Update space complexity
+                timeComplexity = `${(endTime - startTime).toFixed(2)} ms`; // Update time complexity
+                spaceUsage = this.state.rects.length * 4; // Assuming each rect object takes 4 bytes
+                spaceComplexity = `${spaceUsage} bytes`; // Update space complexity
                 break;
             case 2:
+                startTime = performance.now();
                 steps = insertionSort(this.state.rects); // Call insertionSort to get steps
+                endTime = performance.now();
                 algorithmSteps = insertionSortSteps; // Set algorithmSteps to insertionSortSteps
-                timeComplexity = 'O(n^2)'; // Update time complexity
-                spaceComplexity = 'O(1)'; // Update space complexity
+                timeComplexity = `${(endTime - startTime).toFixed(2)} ms`; // Update time complexity
+                spaceUsage = this.state.rects.length * 4; // Assuming each rect object takes 4 bytes
+                spaceComplexity = `${spaceUsage} bytes`; // Update space complexity
                 break;
             case 3:
+                startTime = performance.now();
                 steps = quickSort(this.state.rects2); // Call quickSort to get steps
+                endTime = performance.now();
                 algorithmSteps = quickSortSteps; // Set algorithmSteps to quickSortSteps
-                timeComplexity = 'Best Case: O(n log n), Worst Case: O(n^2)'; // Update time complexity
-                spaceComplexity = 'Best Case: O(log n), Worst Case: O(n)'; // Update space complexity
+                timeComplexity = `${(endTime - startTime).toFixed(2)} ms`; // Update time complexity
+                spaceUsage = this.state.rects2.length * 4; // Assuming each rect object takes 4 bytes
+                spaceComplexity = `${spaceUsage} bytes`; // Update space complexity
                 break;
             default:
                 console.error("Invalid algorithm selected or steps not defined for the algorithm.");
@@ -189,6 +203,8 @@ class Sort extends Component {
             spaceComplexity
         });
     };
+    
+    
     
     
 
