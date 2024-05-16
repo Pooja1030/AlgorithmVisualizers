@@ -128,50 +128,97 @@ class RecursiveSort extends Component {
         this.setState({ speed });
     }
 
-    handleSort = () => {
+    handleSort = async () => {
         this.setState({ isRunning: true, sidePanelOpen: true });
         let steps;
         let rects2;
+        let startTime, endTime;
+        let comparisons = 0;
+        let swaps = 0;
+        let memoryUsage = 0;
+        
         switch (this.state.algo) {
             case 0:
+                startTime = performance.now();
                 steps = mergeSort(this.state.rects);
-                this.handleMerge(steps);
+                endTime = performance.now();
+                comparisons = steps.reduce((acc, step) => acc + step.comparisons, 0);
+                swaps = steps.reduce((acc, step) => acc + step.swaps, 0);
+                memoryUsage = this.state.rects.length * 4; // Assuming each rect object takes 4 bytes
                 break;
             case 1:
+                startTime = performance.now();
                 rects2 = this.state.rects.slice();
                 steps = heapSort(rects2);
-                this.handleHeap(steps);
+                endTime = performance.now();
+                comparisons = steps.reduce((acc, step) => acc + step.comparisons, 0);
+                swaps = steps.reduce((acc, step) => acc + step.swaps, 0);
+                memoryUsage = this.state.rects.length * 4; // Assuming each rect object takes 4 bytes
                 break;
             case 2:
+                startTime = performance.now();
                 rects2 = this.state.rects.slice();
                 steps = quickSortRecursive(rects2);
-                this.handleQuick(steps);
+                endTime = performance.now();
+                comparisons = steps.reduce((acc, step) => acc + step.comparisons, 0);
+                swaps = steps.reduce((acc, step) => acc + step.swaps, 0);
+                memoryUsage = this.state.rects.length * 4; // Assuming each rect object takes 4 bytes
                 break;
             default:
+                break;
         }
-
-        // Start monitoring time and space complexities
-        this.monitorComplexities();
+    
+        // Calculate real-time and space complexity
+        const executionTime = endTime - startTime;
+        const timeComplexity = `${executionTime.toFixed(2)} ms`;
+        const spaceComplexity = `${memoryUsage} bytes`;
+    
+        // Update state with complexities and stop running
+        this.setState({
+            isRunning: false,
+            timeComplexity,
+            spaceComplexity,
+            comparisons,
+            swaps,
+            memoryUsage
+        });
+    
+        // Visualize the sorting process after sorting completes
+        switch (this.state.algo) {
+            case 0:
+                await this.handleMerge(steps);
+                break;
+            case 1:
+                await this.handleHeap(steps);
+                break;
+            case 2:
+                await this.handleQuick(steps);
+                break;
+            default:
+                break;
+        }
     }
+    
+    
 
-    monitorComplexities = () => {
-        let complexityInterval = setInterval(() => {
-            // Calculate time complexity based on number of comparisons or swaps
-            let comparisons = this.state.comparisons || 0;
-            let swaps = this.state.swaps || 0;
-            let timeComplexity = `O(${comparisons + swaps})`;
+    // monitorComplexities = () => {
+    //     let complexityInterval = setInterval(() => {
+    //         // Calculate time complexity based on number of comparisons or swaps
+    //         let comparisons = this.state.comparisons || 0;
+    //         let swaps = this.state.swaps || 0;
+    //         let timeComplexity = `O(${comparisons + swaps})`;
 
-            // Calculate space complexity based on memory usage
-            let memoryUsage = this.state.memoryUsage || 0;
-            let spaceComplexity = `O(${memoryUsage}) bytes`;
+    //         // Calculate space complexity based on memory usage
+    //         let memoryUsage = this.state.memoryUsage || 0;
+    //         let spaceComplexity = `O(${memoryUsage}) bytes`;
 
-            // Update the state with new complexities
-            this.setState({ timeComplexity, spaceComplexity });
-        }, 1000); // Update every second
+    //         // Update the state with new complexities
+    //         this.setState({ timeComplexity, spaceComplexity });
+    //     }, 1000); // Update every second
 
-        // Store the interval ID in the state
-        this.setState({ complexityInterval });
-    }
+    //     // Store the interval ID in the state
+    //     this.setState({ complexityInterval });
+    // }
 
     handleQuick = async (steps) => {
         this.setState({ isRunning: true, comparisons: 0, swaps: 0, memoryUsage: 0 });
