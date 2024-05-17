@@ -100,6 +100,13 @@ const list = [
     "algorithms": ["Preorder", "Inorder", "Postorder"],
     "img": ""
   },
+  {
+    "title": "Linear Regression",
+    "link": "linear-regression",
+    "description": "",
+    "algorithms": [],
+    "img": ""
+  },
 ];
 
 
