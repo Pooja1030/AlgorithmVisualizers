@@ -145,6 +145,64 @@ class SinglyLinkedList {
         listValues += 'null';
         return listValues;
     }
+
+    steps(operation) {
+        switch (operation) {
+            case "insertAtBeginning":
+                return  [
+                    { code: "1. Create new node" },
+                    { code: "2. Change next of new node to point to head" },
+                    { code: "3. Change head to point to recently created node" },
+                ]
+            case "insertAfterNode":
+                return [
+                    { code: "1. Create new node" },
+                    { code: "2. Traverse to node just before the required position of new node" },
+                    { code: "3. Change next pointers to include new node in between" },
+                ]
+            case "insertAtEnd":
+                return [
+                    { code: "1. Create new node" },
+                    { code: "2. Traverse to last node" },
+                    { code: "3. Change next of last node to recently created node" },
+                ]
+            case "deleteAtBeginning":
+                return [
+                    { code: "1. Point head to the second node" },
+                ]
+            case "deleteFromMiddle":
+                 return [
+                    { code: "1. Traverse to element before the element to be deleted" },
+                    { code: "2. Change next pointers to exclude the node from the chain" },
+                ]
+            case "deleteFromEnd":
+                return [
+                    { code: "1. Traverse to second last element" },
+                    { code: "2. Change its next pointer to null" },
+                ]
+            case "search":
+                return [
+                    { code: "1. Make head as the current node." },
+                    { code: "2. Run a loop until the current node is NULL because the last element points to NULL." },
+                    { code: "3. In each iteration, check if the key of the node is equal to item. If it the key matches the item, return true otherwise return false." },
+                ]
+            case "traverse":
+                return [
+                    { code: "1. Initialize a pointer to the head node" },
+                    { code: "2. Check that the pointer is null or not null, if it is null then return." },
+                    { code: "3. While the pointer is not null, access the data from that node and store it to print." },
+                    { code: "4. Move the pointer to next node." },
+                    { code: "5. Check the pointer is null or not null, until it reaches to the end of the list." },
+                ]
+            default:
+                return [
+                    { code: "" },
+                ]
+        }
+    }
 }
 
+
+
 export default SinglyLinkedList;
+

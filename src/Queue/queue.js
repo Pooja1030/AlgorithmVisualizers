@@ -54,8 +54,8 @@ const QueueVisualizer = () => {
   };
 
   const updateOperation = (operation, newValue = null, dequeuedValue = null) => {
-    setResultText(null);
-    setCurrVal(null);
+    // setResultText(null);
+    // setCurrVal(null);
     if (lastOperation !== operation) {
       setSidePanelOpen(true);
       setLastOperation(operation);
@@ -111,6 +111,8 @@ const QueueVisualizer = () => {
     if (queue.length < maxSize) {
       const newValue = Math.floor(Math.random() * 10) + 1;
       setQueue((prevQueue) => [...prevQueue, newValue]);
+      setResultText("Enqueued: ");
+      setCurrVal(newValue);
       updateOperation('Enqueue', newValue);
     } else {
       setResultText("");
