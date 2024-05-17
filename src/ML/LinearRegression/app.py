@@ -6,6 +6,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
+import os
 
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests
@@ -13,8 +14,14 @@ CORS(app)  # Allow cross-origin requests
 @app.route('/linear-regression-data', methods=['GET'])
 def get_linear_regression_data():
     print('Request received at /linear-regression-data')  # Debug print
+     # Get the directory of the current file
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Construct the relative path to the CSV file
+    csv_path = os.path.join(base_dir, "Book1.csv")
+
     # Load and preprocess the dataset
-    df = pd.read_csv("D:/ML/Book1.csv")
+    df = pd.read_csv(csv_path)
     x = df['x'].values.reshape(-1, 1)
     y = df['y'].values.reshape(-1, 1)
     

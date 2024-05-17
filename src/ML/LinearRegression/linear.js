@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as d3 from 'd3';
 import { gsap } from 'gsap';
 import { Tooltip } from '@mui/material';
-// import Navbar from '../Components/navbar';
+import Navbar from '../../Components/navbar';
 
 function LinearRegressionVisualization() {
   const [data, setData] = useState(null);
@@ -138,8 +138,7 @@ useEffect(() => {
 
   return (
     <div>
-      {/* <Navbar currentPage="LinearRegression" /> */}
-      <h1>Linear Regression Visualization</h1>
+      <Navbar currentPage="Linear Regression" /> 
       <p>Data visualization should appear below:</p>
       {/* <div>Data: {JSON.stringify(data)}</div> Display raw data for debugging */}
       <svg id="chart"></svg>
