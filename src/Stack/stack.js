@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from '../Components/navbar';
 import DiscreteSlider from '../Components/slider';
 import SidePanel from './sidePanelS'; // Import the SidePanel component
@@ -16,70 +16,37 @@ const StackVisualizer = () => {
     const [timeComplexity, setTimeComplexity] = useState(null); // State to store time complexity
     const [spaceComplexity, setSpaceComplexity] = useState(null); // State to store space complexity
 
-    
-    useEffect(() => {
-        // Define your algorithm steps here
-        const steps = [
-            {
-                code: `1. A pointer called TOP is used to keep track of the 
-top element in the stack.`
-            },
-            {
-                code: `2. When initializing the stack, we set its value to -1 
-so that we can check if the stack is empty by comparing TOP == -1.`
-            },
-            {
-                code: `3. On pushing an element, we increase the value of TOP 
-and place the new element in the position pointed to by TOP.`
-            },
-            {
-                code: `4. On popping an element, we return the element pointed to
-by TOP and reduce its value.`
-            },
-            {
-                code: "5. Before pushing, we check if the stack is already full"
-            },
-            {
-                code: "6. Before popping, we check if the stack is already empty"
-            },
-        ];
-
-        setAlgorithmSteps(steps);
-    }, []);
-
-
-     // Function to measure time complexity of stack operations
-     const measureTimeComplexity = (operation) => {
-        const start = performance.now();
+    // Function to measure time complexity of stack operations
+    const measureTimeComplexity = (operation) => {
+        let timeComplexity = "";
         // Execute the stack operation here
         if (operation === 'push') {
-            // Push operation implementation
+            timeComplexity = "O(1)";
         } else if (operation === 'pop') {
-            // Pop operation implementation
+            timeComplexity = "O(1)";
         } else if (operation === 'peek') {
-            // Peek operation implementation
+            timeComplexity = "O(1)";
         } else if (operation === 'isEmpty') {
-            // IsEmpty operation implementation
+            timeComplexity = "O(1)";
         } else if (operation === 'size') {
-            // Size operation implementation
+            timeComplexity = "O(1)";
         }
-        const end = performance.now();
-        const executionTime = end - start;
-        setTimeComplexity(executionTime); // Set the time complexity
+        setTimeComplexity(timeComplexity); // Set the time complexity
     };
-// Function to measure space complexity of stack operations
-const measureSpaceComplexity = (operation) => {
-    // Analyze the space requirements of the stack operation
-    // Set space complexity value accordingly
-    const space = operation === 'push' ? 1 : operation === 'pop' ? -1 : 0; // Example space complexity logic
-    setSpaceComplexity(space);
-};
 
-   // Function to perform stack operation analysis
-   const analyzeStackOperation = (operation) => {
-    measureTimeComplexity(operation);
-    measureSpaceComplexity(operation);
-};
+    // Function to measure space complexity of stack operations
+    const measureSpaceComplexity = (operation) => {
+        // Analyze the space requirements of the stack operation
+        // Set space complexity value accordingly
+        const space = operation === 'push' ? 1 : operation === 'pop' ? -1 : 0; // Example space complexity logic
+        setSpaceComplexity(space);
+    };
+
+    // Function to perform stack operation analysis
+    const analyzeStackOperation = (operation) => {
+        measureTimeComplexity(operation);
+        measureSpaceComplexity(operation);
+    };
 
 
 
@@ -89,6 +56,8 @@ const measureSpaceComplexity = (operation) => {
         if (stack.length < maxSize) {
             const newValue = Math.floor(Math.random() * 10) + 1; // Generate random value for new die
             setStack(prevStack => [...prevStack, newValue]);
+            setResultText('Pushed: ');
+            setCurrVal(newValue);
             triggerSidePanel('Push');
         } else {
             setResultText("");
@@ -150,7 +119,6 @@ const measureSpaceComplexity = (operation) => {
             case 'Push':
                 setAlgorithmSteps([
                     { code: "Push Operation" },
-                    { code: "Push operation includes various steps, which are as follows :" },
                     { code: "Step 1: First, check whether or not the stack is full" },
                     { code: "Step 2: If the stack is complete, then exit" },
                     { code: "Step 3: If not, increment the top by one" },
@@ -161,7 +129,6 @@ const measureSpaceComplexity = (operation) => {
             case 'Pop':
                 setAlgorithmSteps([
                     { code: "Pop Operation" },
-                    { code: "Pop operation includes various steps, which are as follows :" },
                     { code: "Step 1: First, check whether or not the stack is empty" },
                     { code: "Step 2: If the stack is empty, then exit" },
                     { code: "Step 3: If not, access the topmost data element" },
@@ -172,7 +139,6 @@ const measureSpaceComplexity = (operation) => {
             case 'IsEmpty':
                 setAlgorithmSteps([
                     { code: "IsEmpty Operation" },
-                    { code: "IsEmpty operation includes various steps, which are as follows :" },
                     { code: "Step 1: Check if the stack is empty" },
                     { code: "Step 2: If the stack is empty, return true" },
                     { code: "Step 3: If not, return false" }
@@ -181,7 +147,6 @@ const measureSpaceComplexity = (operation) => {
             case 'Peek':
                 setAlgorithmSteps([
                     { code: "Peek Operation" },
-                    { code: "Peek operation includes various steps, which are as follows :" },
                     { code: "Step 1: Check if the stack is empty" },
                     { code: "Step 2: If the stack is empty, display an error message" },
                     { code: "Step 3: If not, return the top element of the stack" }
@@ -190,17 +155,16 @@ const measureSpaceComplexity = (operation) => {
             case 'Size':
                 setAlgorithmSteps([
                     { code: "Size Operation" },
-                    { code: "Size operation includes various steps, which are as follows :" },
                     { code: "Step 1: Get the number of elements in the stack" },
                     { code: "Step 2: Return the count of elements" }
                 ]);
                 break;
             default:
-                
+
                 break;
         }
     };
-    
+
 
     return (
         <>
@@ -241,15 +205,14 @@ const measureSpaceComplexity = (operation) => {
                     )}
                 </div>
 
-                   {/* Display time and space complexity analysis */}
-             {/* Display time and space complexity analysis */}
-             <div className="complexity-analysis">
+                {/* Display time and space complexity analysis */}
+                {(timeComplexity || spaceComplexity) && <div className="complexity-analysis">
                     <div className="analysis-title">Time Complexity</div>
-                    <div className="analysis-result">{timeComplexity !== null && `Time complexity: ${timeComplexity} ms`}</div>
+                    <div className="analysis-result">{timeComplexity !== null && `Time complexity: ${timeComplexity}`}</div>
                     <div className="analysis-title">Space Complexity</div>
                     <div className="analysis-result">{spaceComplexity !== null && `Space complexity: ${spaceComplexity}`}</div>
                 </div>
-            </div>
+                }</div>
         </>
     );
 };

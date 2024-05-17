@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from '../Components/navbar';
 import SidePanel from '../Components/sidepanel'; // Import the SidePanel component
 import './linkedlist.css';
@@ -95,7 +95,7 @@ const LinkedListVisualizer = () => {
                         setTimeComplexity(`${endTime - startTime} milliseconds`);
                         setSpaceComplexity('O(1)');
                     } else {
-                        animateTraversal();
+                        animateSearch(prevNodeData);
                         setResultText('Node not found');
                         setCurrVal('');
                     }
@@ -122,7 +122,7 @@ const LinkedListVisualizer = () => {
                         setTimeComplexity(`${endTime - startTime} milliseconds`);
                         setSpaceComplexity('O(1)');
                     } else {
-                        animateTraversal();
+                        animateSearch(nextNodeData);
                         setResultText('Node not found');
                         setCurrVal('');
                     }
@@ -189,7 +189,7 @@ const LinkedListVisualizer = () => {
                         setTimeComplexity(`${endTime - startTime} milliseconds`);
                         setSpaceComplexity('O(1)');
                     } else {
-                        animateTraversal();
+                        animateSearch(dataToDelete);
                         setResultText('Node not found');
                         setCurrVal('');
                     }
