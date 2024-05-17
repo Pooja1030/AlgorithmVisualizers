@@ -83,12 +83,17 @@ class ConvexHull extends Component {
     }
 
     calculateComplexities() {
-        // You can calculate the complexities based on the current state or data
-        // For example, you can estimate time and space complexities based on the number of dots
-        const timeComplexity = 'O(n log n)'; // Placeholder value, replace with actual calculation
-        const spaceComplexity = 'O(n)'; // Placeholder value, replace with actual calculation
+        const { dots } = this.state;
+        
+        // Calculate space complexity based on the size of the dots array
+        const spaceComplexity = `${dots.length * 16} bytes`; // Assuming each dot object occupies 16 bytes
+        
+        // Calculate time complexity based on the number of dots and the current speed
+        const timeComplexity = `${(dots.length * 16 * 8) / this.state.speed} milliseconds`; // Assuming each dot object operation takes 8 milliseconds
+        
         this.setState({ timeComplexity, spaceComplexity });
     }
+    
 
     handleValueIncease = (value) => {
         this.setState({ number: value });

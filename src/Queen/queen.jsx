@@ -101,7 +101,7 @@ class Queen extends Component {
 
     startAlgo = async () => {
         this.setState({ isRunning: true, sidePanelOpen: true });
-    
+        
         // Measure start time for time complexity
         const startTime = performance.now();
     
@@ -113,14 +113,14 @@ class Queen extends Component {
         const executionTime = endTime - startTime;
     
         // Estimate space complexity
-        const spaceComplexity = 'O(N^2)'; // Example: Assuming 2D array for board representation
+        const spaceComplexity = `${Math.pow(this.state.number, 2) * 8} bytes`; // Assuming each cell occupies 8 bytes
     
         // Update state with time and space complexity
         this.setState({ 
             board: newBoard, 
             isRunning: false, 
             sidePanelOpen: false,
-            timeComplexity: `O(N!) - ${executionTime.toFixed(2)} ms`,
+            timeComplexity: `${executionTime.toFixed(2)} ms`,
             spaceComplexity
         });
     }

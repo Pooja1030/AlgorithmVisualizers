@@ -52,9 +52,13 @@ class BinarySearch extends Component {
   }
 
   // Function to calculate space complexity of binary search
-  calculateSpaceComplexity() {
-    // Binary search has O(1) space complexity (constant space)
-    return "O(1)";
+  calculateSpaceComplexity(count) {
+    // The space complexity of an array of n elements is roughly n * size_of_element_in_bytes
+    // Here, each element in rects array is an object with a few properties, so we estimate the size of each element as the size of an empty object.
+    // The size of an empty object is platform-dependent, but we can estimate it to be around 8 bytes.
+    const elementSizeInBytes = 8; // Estimated size of an empty object in bytes
+    const spaceComplexityInBytes = count * elementSizeInBytes;
+    return spaceComplexityInBytes;
   }
 
   render() {
@@ -90,7 +94,7 @@ class BinarySearch extends Component {
           {/* Display time and space complexity */}
           <div>
             <p>Time Complexity: {timeComplexity}</p>
-            <p>Space Complexity: {spaceComplexity}</p>
+            <p>Space Complexity: {spaceComplexity} bytes</p>
           </div>
           {/* <div className="row mx-auto" id="binarysearchtree-pseudocode">
               {/* Pseudocode */}
@@ -146,6 +150,7 @@ class BinarySearch extends Component {
       let low = 0;
       let high = rects.length - 1;
       let steps = [];
+      const startTime = performance.now(); // Start measuring time
       while (low <= high) {
         let mid = Math.floor((low + high) / 2);
         steps.push({ low, high, mid });
@@ -160,11 +165,16 @@ class BinarySearch extends Component {
           high = mid - 1;
         }
       }
+      const endTime = performance.now(); // Stop measuring time
+      const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
+      const timeComplexity = `${executionTime} ms`; // Display execution time
+
+      // Calculate space complexity
+      const spaceComplexity = this.calculateSpaceComplexity(rects.length);
+
       this.animateSearch(steps);
-  
+
       // Update time and space complexity
-      const timeComplexity = this.calculateTimeComplexity(this.state.count);
-      const spaceComplexity = this.calculateSpaceComplexity();
       this.setState({ sidePanelOpen: true, timeComplexity, spaceComplexity });
     });
   }

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { Component } from 'react';
 import Navbar from "../Components/navbar";
 import DiscreteSlider from '../Components/slider';
@@ -26,6 +27,8 @@ class MST extends Component {
 			algorithmSteps: [],
 			timeComplexity: "",
 			spaceComplexity: "",
+			startTime: 0,
+            endTime: 0,
 		};
 		this.animationTimeline = gsap.timeline({ paused: true }); // Initialize GSAP timeline
 	}
@@ -42,9 +45,9 @@ class MST extends Component {
 		const algorithm = event.target.value;
 		this.setState({ algorithm, visitedEdges: [], mstEdges: [] }); // Clear vertices and MST edges
 		this.setAlgoSteps(algorithm);
-		const timeComplexity = this.calculateTimeComplexity(algorithm);
-		const spaceComplexity = this.calculateSpaceComplexity(algorithm);
-		this.setState({ timeComplexity, spaceComplexity });
+		// const timeComplexity = this.calculateTimeComplexity(algorithm);
+		// const spaceComplexity = this.calculateSpaceComplexity(algorithm);
+		// this.setState({ timeComplexity, spaceComplexity });
 	
 	}
 
@@ -85,19 +88,37 @@ class MST extends Component {
 		const { vertices, edges, algorithm } = this.state;
 		let mstEdges = [];
 		let visitedEdges = []; // List to store visited edges
-
+	
+		const startTime = performance.now(); // Start measuring time
+	
 		if (algorithm === 'kruskal') {
 			({ mstEdges, visitedEdges } = kruskal(vertices, edges));
 		} else if (algorithm === 'prim') {
 			({ mstEdges, visitedEdges } = prim(vertices, edges));
 		}
-
-		this.setState({ mstEdges, visitedEdges });
+	
+		const endTime = performance.now(); // Stop measuring time
+	
+		const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
+		const timeComplexity = `${executionTime} ms`; // Display execution time
+	
+		// Define space complexity
+		const spaceComplexity = "O(E + V)";
+	
+		this.setState({ mstEdges, visitedEdges, timeComplexity, spaceComplexity }); // Set execution time and space complexity
 	}
+	
+	
 
 	visualize() {
 		this.calculateMST()
 		this.setState({ sidePanelOpen: true });
+
+		// Calculate and set the real-time and space complexity
+        const { algorithm, startTime, endTime } = this.state;
+        const elapsedTime = endTime - startTime;
+        const spaceComplexity = this.calculateSpaceComplexity(algorithm);
+        this.setState({ timeComplexity: `${elapsedTime} ms`, spaceComplexity });
 	}
 
 	setAlgoSteps = (algorithm) => {
@@ -125,37 +146,36 @@ class MST extends Component {
 		this.setState({ algorithmSteps });
 	}
 
-	// Function to calculate time complexity based on the selected algorithm
-	calculateTimeComplexity(algorithm) {
-		let timeComplexity = "";
-		switch (algorithm) {
-			case "prim":
-				timeComplexity = "O(V^2)"; // Real time complexity of Prim's Algorithm
-				break;
-			case "kruskal":
-				timeComplexity = "O(E log V)"; // Real time complexity of Kruskal's Algorithm
-				break;
-			default:
-				timeComplexity = "";
-		}
-		return timeComplexity;
-	}
+	
+// Function to calculate space complexity based on the selected algorithm
+calculateSpaceComplexity(algorithm) {
+    let spaceComplexity = "";
+    switch (algorithm) {
+        case "prim":
+            // Assuming each vertex occupies 4 bytes for ID and 8 bytes for x and y coordinates
+            const vertexSize = 4 + 8 + 8; // ID (4 bytes) + x (8 bytes) + y (8 bytes)
+            const edgeSize = 4 + 4 + 4 + 4; // fromID (4 bytes) + toID (4 bytes) + weight (4 bytes) + id (4 bytes)
+            const numVertices = this.state.vertices.length;
+            const numEdges = this.state.edges.length;
+            // Space complexity estimation
+            spaceComplexity = (numVertices * vertexSize + numEdges * edgeSize) + " bytes"; 
+            break;
+        case "kruskal":
+            // Assuming each vertex occupies 4 bytes for ID and 8 bytes for x and y coordinates
+            const vertexSizeKruskal = 4 + 8 + 8; // ID (4 bytes) + x (8 bytes) + y (8 bytes)
+            const edgeSizeKruskal = 4 + 4 + 4 + 4; // fromID (4 bytes) + toID (4 bytes) + weight (4 bytes) + id (4 bytes)
+            const numVerticesKruskal = this.state.vertices.length;
+            const numEdgesKruskal = this.state.edges.length;
+            // Space complexity estimation
+            spaceComplexity = (numVerticesKruskal * vertexSizeKruskal + numEdgesKruskal * edgeSizeKruskal) + " bytes"; 
+            break;
+        default:
+            spaceComplexity = "";
+    }
+    return spaceComplexity;
+}
 
-	// Function to calculate space complexity based on the selected algorithm
-	calculateSpaceComplexity(algorithm) {
-		let spaceComplexity = "";
-		switch (algorithm) {
-			case "prim":
-				spaceComplexity = "O(V)"; // Real space complexity of Prim's Algorithm
-				break;
-			case "kruskal":
-				spaceComplexity = "O(E + V)"; // Real space complexity of Kruskal's Algorithm
-				break;
-			default:
-				spaceComplexity = "";
-		}
-		return spaceComplexity;
-	}
+
 
 	toggleSidePanel = () => {
 		this.setState((prevState) => ({ sidePanelOpen: !prevState.sidePanelOpen }));
@@ -163,8 +183,14 @@ class MST extends Component {
 
 
 	render() {
-		const { vertices, edges, visitedEdges, mstEdges, maxHeight, maxWidth, algorithm, animationSpeed } = this.state;
-		const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
+		const { vertices, edges, visitedEdges, mstEdges, maxHeight, maxWidth, algorithm, animationSpeed,startTime, endTime } = this.state;
+		const { sidePanelOpen, algorithmSteps } = this.state;
+
+		// Calculate real-time complexity in milliseconds
+        const timeComplexity = (endTime - startTime).toFixed(2) + " ms";
+
+        // Calculate space complexity
+        const spaceComplexity = this.calculateSpaceComplexity(algorithm);
 
 		return (
 			<div>
@@ -209,15 +235,14 @@ class MST extends Component {
 					width={maxWidth} height={maxHeight} speed={animationSpeed} />
 
 
-				{algorithm && (
-					<div className="complexity-analysis">
-						<div className="analysis-title">Time Complexity:</div>
-						<div className="analysis-result">{timeComplexity !== null ? `${timeComplexity} ms` : "Not measured"}</div>
-						<div className="analysis-title">Space Complexity:</div>
-						<div className="analysis-result">{spaceComplexity !== null ? `O(${spaceComplexity})` : "Not measured"}</div>
-					</div>
+<div className="complexity-analysis">
+                    <div className="analysis-title">Time Complexity:</div>
+                    <div className="analysis-result">{timeComplexity}</div>
+                    <div className="analysis-title">Space Complexity:</div>
+                    <div className="analysis-result">{spaceComplexity !== "" ? `O(${spaceComplexity})` : "Not measured"}</div>
+                </div>
 
-				)}
+				
 
 			</div>
 		);
