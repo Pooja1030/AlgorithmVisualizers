@@ -5,22 +5,23 @@ import * as d3 from 'd3';
 import { gsap } from 'gsap';
 
 function KNN() {
-  const [input, setInput] = useState([5.1, 3.5, 1.4, 0.2]); // Default input values for Iris dataset
+  const [input, setInput] = useState(Array(4).fill('')); // Initialize with empty strings
   const [prediction, setPrediction] = useState('');
   const [data, setData] = useState(null);
   const svgRef = useRef(null);
 
   const handleInputChange = (index, value) => {
     const newInput = [...input];
-    newInput[index] = parseFloat(value);
+    newInput[index] = value;
     setInput(newInput);
   };
 
   const handlePredict = () => {
-    axios.post('http://localhost:5000/predict', { data: input })
+    const inputValues = input.map(val => parseFloat(val));
+    axios.post('http://localhost:5000/predict', { data: inputValues })
       .then(response => {
         setPrediction(response.data.prediction);
-        animatePrediction(input, response.data.neighbors);
+        animatePrediction(inputValues, response.data.neighbors);
       })
       .catch(error => console.error('Error predicting:', error));
   };
