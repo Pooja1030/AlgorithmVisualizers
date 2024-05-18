@@ -199,6 +199,34 @@ const Home = () => {
                         // algorithm={getAlgoList("mini")}
                         link="LinearRegressionVisualization"
                     />
+                    <VizItem
+                        id="LogisticRegression"
+                        title="LogisticRegression"
+                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
+                        // algorithm={getAlgoList("mini")}
+                        link="LogisticRegressionVisualization"
+                    />
+                    <VizItem
+                        id="MultipleLinearRegression"
+                        title="MultipleLinearRegression"
+                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
+                        // algorithm={getAlgoList("mini")}
+                        link="MultipleLinearRegressionVisualization"
+                    />
+                    <VizItem
+                        id="KMeans"
+                        title="KMeans"
+                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
+                        // algorithm={getAlgoList("mini")}
+                        link="KMeans"
+                    />
+                    <VizItem
+                        id="KNN"
+                        title="KNN"
+                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
+                        // algorithm={getAlgoList("mini")}
+                        link="KNN"
+                    />
                    
         
                     
