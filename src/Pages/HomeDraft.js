@@ -107,6 +107,34 @@ const list = [
     "algorithms": [],
     "img": ""
   },
+  {
+    "title": "Logistic Regression",
+    "link": "logistic-regression",
+    "description": "",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "Multiple Linear Regression",
+    "link": "multiplelinear-regression",
+    "description": "",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "KMeans",
+    "link": "KMeans",
+    "description": "",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "KNN",
+    "link": "KNN",
+    "description": "",
+    "algorithms": [],
+    "img": ""
+  },
 ];
 
 
