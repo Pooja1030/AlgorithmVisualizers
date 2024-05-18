@@ -20,6 +20,10 @@ import Mst from './MST/mst';
 
 import HomeDraft from "./Pages/HomeDraft";
 import LinearRegressionVisualization from './ML/LinearRegression/linear';
+import LogisticRegressionVisualization from './ML/LogisticRegression/logistic';
+import MultipleLinearRegressionVisualization from './ML/Multiplelinearregression/multiplelinear';
+import KMeansVisualization from './ML/KMeans/Kmeans';
+import KNN from './ML/KNN/KNN';
 
 function App() {
   return (
@@ -42,6 +46,10 @@ function App() {
             <Route path="queue" element={<Queue />} />
             <Route path="LinkedList" element={<LinkedList />} />
             <Route path="linear-regression" element={<LinearRegressionVisualization />} />
+            <Route path="logistic-regression" element={<LogisticRegressionVisualization />} />
+            <Route path="multiplelinear-regression" element={<MultipleLinearRegressionVisualization />} />
+            <Route path="KMeans" element={<KMeansVisualization />} />
+            <Route path="KNN" element={<KNN />} />
             <Route path="*" element={<NoPage />} />
             <Route path="home" element={<Home />} />
           </Routes>
@@ -51,4 +59,5 @@ function App() {
   );
 }
 
-export default App;
+export default App;         
+  
