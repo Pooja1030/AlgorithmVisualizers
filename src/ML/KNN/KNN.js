@@ -1,5 +1,6 @@
 // KNN.js
 import React, { useState, useEffect, useRef } from 'react';
+import Navbar from "../../Components/navbar";
 import axios from 'axios';
 import * as d3 from 'd3';
 import { gsap } from 'gsap';
@@ -136,7 +137,7 @@ function KNN() {
 
   return (
     <div>
-      <h1>KNN Prediction</h1>
+      <Navbar currentPage="K-Nearest Neighbours" /> 
       <div>
         {input.map((val, index) => (
           <div key={index}>

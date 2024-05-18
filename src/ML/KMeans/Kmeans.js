@@ -1,5 +1,6 @@
 // KMeansVisualization.js
 import React, { useEffect, useState } from 'react';
+import Navbar from "../../Components/navbar";
 import axios from 'axios';
 import * as d3 from 'd3';
 import { gsap } from 'gsap';
@@ -126,7 +127,8 @@ function KMeansVisualization() {
 
   return (
     <div>
-      <h1>K-means Clustering Visualization</h1>
+      <Navbar currentPage="K-means Clustering" /> 
+
       <label htmlFor="numClusters">Number of clusters:</label>
       <input
         type="number"

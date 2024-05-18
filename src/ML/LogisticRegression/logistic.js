@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Navbar from "../../Components/navbar";
 import axios from 'axios';
 import { gsap } from 'gsap';
 
@@ -20,9 +21,16 @@ function LogisticRegressionVisualization() {
 
   return (
     <div>
-      <h1>Logistic Regression Results</h1>
+      <Navbar currentPage="Logistic Regression" /> 
+
       {results ? (
         <div>
+          <h2 className="result-card">Count Plot</h2>
+          <img src="http://localhost:5000/count-plot" alt="Count Plot" className="result-card" />
+          <h2 className="result-card">Line Plot</h2>
+          <img src="http://localhost:5000/line-plot" alt="Line Plot" className="result-card" />
+          
+          <h3>Logistic Regression Results</h3>
           <h2 className="result-card">Confusion Matrix</h2>
           <pre className="result-card">{JSON.stringify(results.confusion_matrix, null, 2)}</pre>
           <h2 className="result-card">Accuracy Score</h2>
@@ -39,10 +47,6 @@ function LogisticRegressionVisualization() {
       ) : (
         <p>Loading results...</p>
       )}
-      <h2 className="result-card">Count Plot</h2>
-      <img src="http://localhost:5000/count-plot" alt="Count Plot" className="result-card" />
-      <h2 className="result-card">Line Plot</h2>
-      <img src="http://localhost:5000/line-plot" alt="Line Plot" className="result-card" />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Navbar from "../../Components/navbar";
 import axios from 'axios';
 import * as d3 from 'd3';
 import { gsap } from 'gsap';
@@ -112,7 +113,7 @@ function MultipleLinearRegressionVisualization() {
 
   return (
     <div>
-      <h1>Multiple Linear Regression Visualization</h1>
+      <Navbar currentPage="Multiple Linear Regression" /> 
       <svg id="chart"></svg>
       {data && <div>Mean Squared Error: {data.mse}</div>}
       {!data && <div>Loading data...</div>}
