@@ -4,6 +4,7 @@ import DiscreteSlider from '../Components/slider';
 import Canvas from './canvas'; // Updated name
 import {
   addNodeToBST,
+  findParentNode,
   searchBST,
   deleteNodeFromBST,
   generateRandomBST,
@@ -134,38 +135,73 @@ class BinaryTree extends Component {
       });
     }, Promise.resolve());
   }
-
-
-  searchNodeById = (node, id) => {
-    if (!node) return null;
-    if (node.id === id) return node;
-    return this.searchNodeById(node.left, id) || this.searchNodeById(node.right, id);
-  }
-
   // Method to add a node to the tree
-  addNode = () => {
-    const { nodeValue, tree } = this.state;
+  addNode = async () => {
+    const { nodeValue, tree, animationSpeed } = this.state;
     const value = parseInt(nodeValue, 10);
 
     if (!isNaN(value)) {
-      // const newNode = createNode(value); // Create a new node with a unique identifier
+      const findPosition = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
       const updatedTree = addNodeToBST(tree, value);
       this.setState({ tree: updatedTree, nodeValue: '' });
+
+      new Promise(resolve => setTimeout(resolve, 500));
+
+      const parentNode = findParentNode(tree, value);
+      const newNode = parentNode.left.value === value ? parentNode.left : parentNode.right;
+
+      // Highlight the newly inserted node and the edge connecting it to its parent
+      if (newNode) {
+        const nodeElement = document.querySelector(`#node-${newNode.id}`);
+        const edgeId = parentNode.id ? `#edge-${parentNode.id}-${newNode.id}` : null;
+        console.log(edgeId);
+        const edgeElement = edgeId ? document.querySelector(edgeId) : null;
+
+        if (nodeElement) {
+          gsap.to(nodeElement, {
+            duration: 1,
+            fill: 'maroon',
+            r: 20,
+          });
+          gsap.to(nodeElement, {
+            duration: 1,
+            fill: 'blue',
+            r: 15,
+            delay: 1
+          });
+        }
+
+        if (edgeElement) {
+          gsap.to(edgeElement, {
+            duration: 1,
+            stroke: 'transparent',
+          });
+          gsap.to(edgeElement, {
+            duration: 1,
+            stroke: 'maroon',
+            delay: 1
+          });
+          gsap.to(edgeElement, {
+            duration: 1,
+            stroke: 'black',
+            delay: 1.5 // Delay the animation to start after the node animation completes
+          });
+        }
+      }
     }
   }
 
   // Method to search for a node in the tree
-  searchNode = () => {
-    const { searchValue, tree } = this.state;
+  searchNode = async () => {
+    const { searchValue, tree, animationSpeed } = this.state;
     const value = parseInt(searchValue, 10);
-
     if (!isNaN(value)) {
-      const found = searchBST(tree, value);
-      if (found) {
-        this.setState({ resultText: `Node ${value} found!` });
-      } else {
-        this.setState({ resultText: `Node ${value} not found!.` });
+      this.setState({ resultText: [] }); // Clear previous search results
+      const found = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
+      if (!found) {
+        this.setState({ resultText: ['Node not found'] });
       }
+      // this.setState({ resultText: ['Node found'] });
     }
   }
 
@@ -197,47 +233,47 @@ class BinaryTree extends Component {
             step={5}
             min={10}
             max={100}
-            />
+          />
           {/* Select dropdown for traversal type */}
-            <div>
-          <select value={traversalType} onChange={this.handleTraversalTypeChange}>
-            <option value="inorder">Inorder Traversal</option>
-            <option value="preorder">Preorder Traversal</option>
-            <option value="postorder">Postorder Traversal</option>
-          </select>
-
-          {/* Button to perform traversal */}
-          <button className='traverse-btn' onClick={this.traverse}>Traverse</button>
-        </div>
-
-            <div>
-          <button className='generate-random-btn' onClick={this.generateRandomTree}>Generate Random Tree</button>
-          <button className='reset-btn' onClick={this.resetTree}>Reset</button>
-        </div>
-        </div>
           <div>
-            <input
-              type='text'
-              value={nodeValue}
-              onChange={this.handleInputChange}
-              placeholder='Enter node value'
-            />
-            <button className='add-node-btn' onClick={this.addNode}>Insert</button>
-            <input
-              type='text'
-              value={searchValue}
-              onChange={this.handleSearchInputChange}
-              placeholder='Enter value to search'
-            />
-            <button className='search-node-btn' onClick={this.searchNode}>Search</button>
-            <input
-              type='text'
-              value={deleteValue}
-              onChange={this.handleDeleteInputChange}
-              placeholder='Enter value to delete'
-            />
-            <button className='delete-node-btn' onClick={this.deleteNode}>Delete</button>
+            <select value={traversalType} onChange={this.handleTraversalTypeChange}>
+              <option value="inorder">Inorder Traversal</option>
+              <option value="preorder">Preorder Traversal</option>
+              <option value="postorder">Postorder Traversal</option>
+            </select>
+
+            {/* Button to perform traversal */}
+            <button className='traverse-btn' onClick={this.traverse}>Traverse</button>
           </div>
+
+          <div>
+            <button className='generate-random-btn' onClick={this.generateRandomTree}>Generate Random Tree</button>
+            <button className='reset-btn' onClick={this.resetTree}>Reset</button>
+          </div>
+        </div>
+        <div>
+          <input
+            type='number'
+            value={nodeValue}
+            onChange={this.handleInputChange}
+            placeholder='Node value'
+          />
+          <button className='add-node-btn' onClick={this.addNode}>Insert</button>
+          <input
+            type='number'
+            value={searchValue}
+            onChange={this.handleSearchInputChange}
+            placeholder='Search node'
+          />
+          <button className='search-node-btn' onClick={this.searchNode}>Search</button>
+          <input
+            type='number'
+            value={deleteValue}
+            onChange={this.handleDeleteInputChange}
+            placeholder='Delete node'
+          />
+          <button className='delete-node-btn' onClick={this.deleteNode}>Delete</button>
+        </div>
         <div className="result">{`${resultText}`}</div>
         <Canvas tree={tree} animationSpeed={animationSpeed} />
       </div>

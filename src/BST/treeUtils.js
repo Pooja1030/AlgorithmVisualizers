@@ -1,3 +1,5 @@
+import gsap from "gsap/all";
+
 function generateUniqueId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
 }
@@ -47,19 +49,53 @@ export function createNode(value) {
   };
 }
 
-export function searchBST(tree, value) {
+export function searchBST(tree, value, setResultText, animationSpeed) {
   let current = tree;
-  while (current) {
-    if (value === current.value) {
-      return true;
+  const animationTimeline = gsap.timeline();
+  const animationDuration = 0.5;
+  const delay = (50 - animationSpeed) / 100;
+
+  const visitNode = (node) => {
+    return new Promise(resolve => {
+      ((node) => {
+        const nodeElement = document.querySelector(`#node-${node.id}`);
+        animationTimeline.to(nodeElement, {
+          duration: animationDuration,
+          delay: delay,
+          fill: 'red',
+          onComplete: () => {
+            resolve();
+          }
+        });
+        animationTimeline.to(nodeElement, {
+          duration: 1,
+          fill: 'blue'
+        });
+      })(current);
+    });
+  };
+
+  return new Promise(async (resolve) => {
+    while (current) {
+      await visitNode(current);
+      if (value === current.value) {
+        animationTimeline.to(`#node-${current.id}`, {
+          duration: animationDuration,
+          // delay: delay,
+          fill: 'green',
+          r:20
+        });
+        resolve(true);
+        return;
+      }
+      if (value < current.value) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
     }
-    if (value < current.value) {
-      current = current.left;
-    } else {
-      current = current.right;
-    }
-  }
-  return false;
+    resolve(false);
+  });
 }
 
 export function deleteNodeFromBST(tree, value) {
@@ -106,4 +142,23 @@ export function preorderTraversal(node) {
 export function postorderTraversal(node) {
   if (!node) return [];
   return [...postorderTraversal(node.left), ...postorderTraversal(node.right), node];
+}
+
+export function findParentNode(tree, value) {
+  let parent = null;
+  let current = tree;
+
+  while (current) {
+      if (value === current.value) {
+          return parent ? parent : null;
+      }
+      parent = current;
+      if (value < current.value) {
+          current = current.left;
+      } else {
+          current = current.right;
+      }
+  }
+
+  return null;
 }
