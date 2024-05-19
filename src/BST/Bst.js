@@ -7,12 +7,15 @@ import {
   findParentNode,
   searchBST,
   deleteNodeFromBST,
+  findNode,
   generateRandomBST,
   inorderTraversal,
+  findMinValue,
   preorderTraversal,
   postorderTraversal
 } from './treeUtils';
 import { gsap } from 'gsap';
+import { purple } from '@mui/material/colors';
 
 class BinaryTree extends Component {
   constructor(props) {
@@ -135,6 +138,7 @@ class BinaryTree extends Component {
       });
     }, Promise.resolve());
   }
+
   // Method to add a node to the tree
   addNode = async () => {
     const { nodeValue, tree, animationSpeed } = this.state;
@@ -205,19 +209,107 @@ class BinaryTree extends Component {
     }
   }
 
-  // Method to delete a node from the tree
-  deleteNode = () => {
-    const { deleteValue, tree } = this.state;
+  deleteNode = async () => {
+    const { deleteValue, tree, animationSpeed } = this.state;
     const value = parseInt(deleteValue, 10);
 
     if (!isNaN(value)) {
-      const newTree = deleteNodeFromBST(tree, value);
-      if (newTree === tree)
-        this.setState({ resultText: `Node ${value} not found!` });
-      this.setState({ tree: newTree, deleteValue: '' });
-    }
+      const found = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
+      if (!found) {
+        this.setState({ resultText: ['Node not found'] });
+        return;
+      }
 
+      // Find the parent node and the node to be deleted
+      const parentNode = findParentNode(tree, value);
+      const nodeToDelete = findNode(tree, value);
+      const isLeftChild = parentNode && parentNode.left && parentNode.left.value === value;
+
+      // Animate the removal of the node and the edge connecting it to its parent
+      if (nodeToDelete) {
+        const nodeElement = document.querySelector(`#node-${nodeToDelete.id}`);
+        const edgeId = parentNode ? `#edge-${parentNode.id}-${nodeToDelete.id}` : null;
+        const edgeElement = edgeId ? document.querySelector(edgeId) : null;
+
+        if (nodeElement) {
+          gsap.to(nodeElement, {
+            duration: 0.5,
+            fill: 'red',
+            r: 10,
+            delay: 1,
+            onComplete: () => {
+              // Remove the node from the DOM after the animation completes
+              nodeElement.remove();
+            }
+          });
+        }
+
+        // If the node has a single child or no children, handle the simple case
+        if (!nodeToDelete.left || !nodeToDelete.right) {
+          const childNode = nodeToDelete.left || nodeToDelete.right;
+
+          if (childNode) {
+            const newNodeElement = document.querySelector(`#node-${childNode.id}`);
+            if (newNodeElement) {
+              // Animate the new node to the deleted node's position
+              gsap.to(newNodeElement, {
+                duration: 2,
+                fill: "#fb21d3",
+                delay: 1,
+                onComplete: () => {
+                  new Promise(resolve => setTimeout(resolve, 4000));
+                  // Update the tree structure after the animation completes
+                  const newTree = deleteNodeFromBST(tree, value);
+                  this.setState({ tree: newTree, resultText: `Node ${value} deleted!`, deleteValue: '' });
+                }
+              });
+            }
+          } else {
+            if (edgeElement) {
+              gsap.to(edgeElement, {
+                duration: 1,
+                stroke: 'transparent',
+                onComplete: () => {
+                  // Remove the edge from the DOM after the animation completes
+                  edgeElement.remove();
+                }
+              });
+            }
+            new Promise(resolve => setTimeout(resolve, 3000));
+            // Update the tree structure after the animation completes
+            const newTree = deleteNodeFromBST(tree, value);
+            this.setState({ tree: newTree, resultText: `Node ${value} deleted!`, deleteValue: '' });
+          }
+        } else {
+          // If the node has two children, find the successor
+          const successor = findMinValue(nodeToDelete.right);
+          const newSuccessor = findNode(tree, successor.value);
+          const found = await searchBST(nodeToDelete.right, successor.value, (resultText) => this.setState({ resultText }), animationSpeed);
+
+          const newNodeElement = document.querySelector(`#node-${newSuccessor.id}`);
+
+          if (newNodeElement) {
+            // Animate the new node to the deleted node's position
+            gsap.to(newNodeElement, {
+              duration: 2,
+              fill: "#fb21d3",
+              delay: 1,
+              onComplete: () => {
+                new Promise(resolve => setTimeout(resolve, 4000));
+                const newTree = deleteNodeFromBST(tree, value);
+                this.setState({ tree: newTree, resultText: `Node ${value} deleted!`, deleteValue: '' });
+              }
+            });
+          } else {
+            new Promise(resolve => setTimeout(resolve, 3000));
+            const newTree = deleteNodeFromBST(tree, value);
+            this.setState({ tree: newTree, resultText: `Node ${value} deleted!`, deleteValue: '' });
+          }
+        }
+      }
+    }
   }
+
 
 
   render() {

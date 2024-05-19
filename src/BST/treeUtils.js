@@ -62,7 +62,7 @@ export function searchBST(tree, value, setResultText, animationSpeed) {
         animationTimeline.to(nodeElement, {
           duration: animationDuration,
           delay: delay,
-          fill: 'red',
+          fill: 'maroon',
           onComplete: () => {
             resolve();
           }
@@ -114,7 +114,7 @@ export function deleteNodeFromBST(tree, value) {
       return tree.left;
     }
 
-    const minValue = findMinValue(tree.right);
+    const minValue = findMinValue(tree.right).value;
     tree.value = minValue;
     tree.right = deleteNodeFromBST(tree.right, minValue);
   }
@@ -126,7 +126,7 @@ export function findMinValue(node) {
   while (current.left) {
     current = current.left;
   }
-  return current.value;
+  return current;
 }
 
 export function inorderTraversal(node) {
@@ -142,6 +142,23 @@ export function preorderTraversal(node) {
 export function postorderTraversal(node) {
   if (!node) return [];
   return [...postorderTraversal(node.left), ...postorderTraversal(node.right), node];
+}
+
+export function findNode(tree, value) {
+  let current = tree;
+
+  while (current) {
+      if (value === current.value) {
+          return current;
+      }
+      if (value < current.value) {
+          current = current.left;
+      } else {
+          current = current.right;
+      }
+  }
+
+  return null;
 }
 
 export function findParentNode(tree, value) {
