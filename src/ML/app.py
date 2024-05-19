@@ -13,14 +13,26 @@ from sklearn.cluster import KMeans
 import io
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
+
+# Set the matplotlib backend to 'Agg' to avoid GUI-related warnings
+import matplotlib
+matplotlib.use('Agg')
+
 
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests
 
+# Get the directory of the current file
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
 # Linear Regression Data
 @app.route('/linear-regression-data', methods=['GET'])
 def get_linear_regression_data():
-    df = pd.read_csv("D:/ML/Book1.csv")
+    # Construct the relative path to the CSV file
+    csv_path = os.path.join(base_dir, "Book1.csv")
+    # Load and preprocess the dataset
+    df = pd.read_csv(csv_path)
     x = df['x'].values.reshape(-1, 1)
     y = df['y'].values.reshape(-1, 1)
     x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.50)
@@ -43,7 +55,10 @@ def get_linear_regression_data():
 # Logistic Regression Results
 @app.route('/logistic-regression-results', methods=['GET'])
 def get_logistic_regression_results():
-    data = pd.read_csv("diabetes.csv")
+    # Construct the relative path to the CSV file
+    csv_path = os.path.join(base_dir, "diabetes.csv")
+    # Load and preprocess the dataset
+    data = pd.read_csv(csv_path)
     dependent_variable = 'Outcome'
     independent_variables = list(set(data.columns.tolist()) - {dependent_variable})
     x = data[independent_variables].values
@@ -74,7 +89,10 @@ def get_logistic_regression_results():
 # Count Plot
 @app.route('/count-plot', methods=['GET'])
 def get_count_plot():
-    data = pd.read_csv("diabetes.csv")
+   # Construct the relative path to the CSV file
+    csv_path = os.path.join(base_dir, "diabetes.csv")
+    # Load and preprocess the dataset
+    data = pd.read_csv(csv_path)
     plt.figure()
     sns.countplot(x='Outcome', data=data)
     plt.xlabel('Outcome')
@@ -88,7 +106,10 @@ def get_count_plot():
 # Line Plot
 @app.route('/line-plot', methods=['GET'])
 def get_line_plot():
-    data = pd.read_csv("diabetes.csv")
+   # Construct the relative path to the CSV file
+    csv_path = os.path.join(base_dir, "diabetes.csv")
+    # Load and preprocess the dataset
+    data = pd.read_csv(csv_path)
     plt.figure()
     data['Outcome'].plot()
     plt.xlabel('Index')
@@ -98,6 +119,39 @@ def get_line_plot():
     img.seek(0)
     plt.close()
     return send_file(img, mimetype='image/png')
+
+# Multiple linear regression
+ 
+@app.route("/train", methods=["GET"])
+def train_model():
+     # Construct the relative path to the CSV file
+    csv_path = os.path.join(base_dir, "kc_house_data.csv")
+
+    # Load and preprocess the dataset
+    dataset = pd.read_csv(csv_path)
+    dataset = dataset.drop(["id", "date"], axis=1)
+    X = dataset.iloc[:, 1:].values
+    y = dataset.iloc[:, 0].values
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=1 / 3, random_state=0
+    )
+
+    regressor = LinearRegression()
+    regressor.fit(X_train, y_train)
+
+    y_pred = regressor.predict(X_test)
+
+    response = {
+        "X_test": X_test.tolist(),
+        "y_test": y_test.tolist(),
+        "y_pred": y_pred.tolist(),
+        "coefficients": regressor.coef_.tolist(),
+        "intercept": regressor.intercept_.tolist(),
+        "mse": np.mean((y_pred - y_test) ** 2),
+    }
+
+    return jsonify(response)
+
 
 # KNN Iris Data
 @app.route('/data', methods=['GET'])
