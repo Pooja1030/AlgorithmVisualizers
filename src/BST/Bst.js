@@ -246,4 +246,3 @@ class BinaryTree extends Component {
 }
 
 export default BinaryTree;
-
