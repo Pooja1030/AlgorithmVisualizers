@@ -16,12 +16,13 @@ import Queen from './Queen/queen';
 import BinaryTree from './BinaryTree/searchcopy';
 import BinarySearch from './BinarySearch/binarysearch';
 import LinkedList from './LinkedList/Linkedlist';
-// import MinSpanTree from './MinimumSpanningTree/MinimumSpanningTree';
+import MinSpanTree from './MinimumSpanningTree/MinimumSpanningTree';
 import Queue from './Queue/queue';
 import Stack from './Stack/stack';
-import Mst from './MST/mst';
 
 import HomeDraft from "./Pages/HomeDraft";
+import Mst from './MST/mst';
+import BST from './BST/Bst';
 
 function App() {
   return (
@@ -42,11 +43,14 @@ function App() {
             <Route path="BinaryTree" element={<BinaryTree />} />
             <Route path="BinarySearch" element={<BinarySearch />} />
             {/* <Route path="LinkedList" element={<LinkedList/>} /> */}
-            <Route path="MinimumSpanningTree" element={<Mst />}/>
+            <Route path="MinimumSpanningTree" element={< Mst/>} />
             <Route path="stack" element={<Stack />} />
             <Route path="queue" element={<Queue />} />
             <Route path="LinkedList" element={<LinkedList />} />
 
+            <Route path='mst' element={<MinSpanTree />}/>
+            <Route path='bst' element={<BST />}/>
+            
             <Route path="*" element={<NoPage />} />
 
             <Route path="home" element={<Home />} />
