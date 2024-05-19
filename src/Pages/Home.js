@@ -80,8 +80,8 @@ const Home = () => {
     return (
         <>
         
-            <div className="title-logo">
-               A Student Visualizing Tool
+             <div className="title-logo">
+                Algorithm Visualizer
             </div>
             <div id="main">
 
