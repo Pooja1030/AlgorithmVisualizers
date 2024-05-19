@@ -38,11 +38,11 @@ function App() {
             <Route path="graph" element={<Graph />} />
             <Route path="puzzle" element={<Puzzle />} />
             <Route path="queen" element={<Queen />} />
+            <Route path="BinaryTree" element={<BST />} />
             <Route path="BinarySearch" element={<BinarySearch />} />
             <Route path="MinimumSpanningTree" element={<Mst />} />
             <Route path="stack" element={<Stack />} />
             <Route path="queue" element={<Queue />} />
-            <Route path="BinaryTree" element={<BST />}/>
             <Route path="LinkedList" element={<LinkedList />} />
             <Route path="linear-regression" element={<LinearRegressionVisualization />} />
             <Route path="logistic-regression" element={<LogisticRegressionVisualization />} />
