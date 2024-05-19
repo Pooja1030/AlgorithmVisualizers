@@ -155,17 +155,16 @@ class BinaryTree extends Component {
   }
 
   // Method to search for a node in the tree
-  searchNode = () => {
-    const { searchValue, tree } = this.state;
+  searchNode = async () => {
+    const { searchValue, tree, animationSpeed } = this.state;
     const value = parseInt(searchValue, 10);
-
     if (!isNaN(value)) {
-      const found = searchBST(tree, value);
-      if (found) {
-        this.setState({ resultText: `Node ${value} found!` });
-      } else {
-        this.setState({ resultText: `Node ${value} not found!.` });
-      }
+        this.setState({ resultText: [] }); // Clear previous search results
+        const found = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
+        if (!found) {
+          this.setState({ resultText: ['Node not found'] });
+        }
+        // this.setState({ resultText: ['Node found'] });
     }
   }
 
@@ -217,24 +216,24 @@ class BinaryTree extends Component {
         </div>
           <div>
             <input
-              type='text'
+              type='number'
               value={nodeValue}
               onChange={this.handleInputChange}
-              placeholder='Enter node value'
+              placeholder='Node value'
             />
             <button className='add-node-btn' onClick={this.addNode}>Insert</button>
             <input
-              type='text'
+              type='number'
               value={searchValue}
               onChange={this.handleSearchInputChange}
-              placeholder='Enter value to search'
+              placeholder='Search node'
             />
             <button className='search-node-btn' onClick={this.searchNode}>Search</button>
             <input
-              type='text'
+              type='number'
               value={deleteValue}
               onChange={this.handleDeleteInputChange}
-              placeholder='Enter value to delete'
+              placeholder='Delete node'
             />
             <button className='delete-node-btn' onClick={this.deleteNode}>Delete</button>
           </div>
