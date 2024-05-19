@@ -81,7 +81,7 @@ const Home = () => {
         <>
         
             <div className="title-logo">
-                Algorithm Visualizer
+                A Student Visualizing Tool
             </div>
             <div id="main">
 
