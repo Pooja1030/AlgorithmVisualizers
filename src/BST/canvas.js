@@ -41,13 +41,13 @@ class Canvas extends Component {
 
         // Draw left edge and subtree
         if (node.left) {
-            this.drawEdge(svg, x, y, x - xOffset, y + yOffset);
+            this.drawEdge(svg, node, node.left, x, y, x - xOffset, y + yOffset);
             this.drawTree(svg, node.left, x - xOffset, y + yOffset, xOffset / 2, yOffset);
         }
 
         // Draw right edge and subtree
         if (node.right) {
-            this.drawEdge(svg, x, y, x + xOffset, y + yOffset);
+            this.drawEdge(svg, node, node.right, x, y, x + xOffset, y + yOffset);
             this.drawTree(svg, node.right, x + xOffset, y + yOffset, xOffset / 2, yOffset);
         }
 
@@ -73,8 +73,9 @@ class Canvas extends Component {
         svg.appendChild(text);
     }
 
-    drawEdge(svg, x1, y1, x2, y2) {
+    drawEdge(svg, from, to, x1, y1, x2, y2) {
         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('id', `edge-${from.id}-${to.id}`);
         line.setAttribute('x1', x1);
         line.setAttribute('y1', y1);
         line.setAttribute('x2', x2);

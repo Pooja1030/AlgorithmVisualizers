@@ -143,3 +143,22 @@ export function postorderTraversal(node) {
   if (!node) return [];
   return [...postorderTraversal(node.left), ...postorderTraversal(node.right), node];
 }
+
+export function findParentNode(tree, value) {
+  let parent = null;
+  let current = tree;
+
+  while (current) {
+      if (value === current.value) {
+          return parent ? parent : null;
+      }
+      parent = current;
+      if (value < current.value) {
+          current = current.left;
+      } else {
+          current = current.right;
+      }
+  }
+
+  return null;
+}
