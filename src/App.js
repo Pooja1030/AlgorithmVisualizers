@@ -18,9 +18,6 @@ import Queue from './Queue/queue';
 import Stack from './Stack/stack';
 import Mst from './MST/mst';
 import BST from "./BST/Bst"
-
-
-
 import HomeDraft from "./Pages/HomeDraft";
 import LinearRegressionVisualization from './ML/LinearRegression/linear';
 import LogisticRegressionVisualization from './ML/LogisticRegression/logistic';
@@ -42,12 +39,11 @@ function App() {
             <Route path="graph" element={<Graph />} />
             <Route path="puzzle" element={<Puzzle />} />
             <Route path="queen" element={<Queen />} />
-            {/* <Route path="BinaryTree" element={<BinaryTree />} /> */}
+            <Route path="BinaryTree" element={<BST />} />
             <Route path="BinarySearch" element={<BinarySearch />} />
             <Route path="MinimumSpanningTree" element={<Mst />} />
             <Route path="stack" element={<Stack />} />
             <Route path="queue" element={<Queue />} />
-            <Route path="BinaryTree" element={<BST />}/>
             <Route path="LinkedList" element={<LinkedList />} />
             <Route path="linear-regression" element={<LinearRegressionVisualization />} />
             <Route path="logistic-regression" element={<LogisticRegressionVisualization />} />
@@ -56,6 +52,8 @@ function App() {
             <Route path="KNN" element={<KNN />} />
             <Route path="*" element={<NoPage />} />
             <Route path="home" element={<Home />} />
+            
+            <Route path="bst" element={<BinaryTree />} />
           </Routes>
         </BrowserRouter>
       </React.StrictMode>
