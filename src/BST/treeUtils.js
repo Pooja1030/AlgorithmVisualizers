@@ -83,7 +83,7 @@ export function searchBST(tree, value, setResultText, animationSpeed) {
           duration: animationDuration,
           // delay: delay,
           fill: 'green',
-          r:20
+          r: 20
         });
         resolve(true);
         return;
@@ -148,14 +148,14 @@ export function findNode(tree, value) {
   let current = tree;
 
   while (current) {
-      if (value === current.value) {
-          return current;
-      }
-      if (value < current.value) {
-          current = current.left;
-      } else {
-          current = current.right;
-      }
+    if (value === current.value) {
+      return current;
+    }
+    if (value < current.value) {
+      current = current.left;
+    } else {
+      current = current.right;
+    }
   }
 
   return null;
@@ -166,16 +166,69 @@ export function findParentNode(tree, value) {
   let current = tree;
 
   while (current) {
-      if (value === current.value) {
-          return parent ? parent : null;
-      }
-      parent = current;
-      if (value < current.value) {
-          current = current.left;
-      } else {
-          current = current.right;
-      }
+    if (value === current.value) {
+      return parent ? parent : null;
+    }
+    parent = current;
+    if (value < current.value) {
+      current = current.left;
+    } else {
+      current = current.right;
+    }
   }
 
   return null;
+}
+
+export function steps(operation) {
+  switch (operation) {
+    case "addNodeToBST":
+      return [
+        { code: "1. Start at the root node." },
+        { code: "2. Compare each node: " },
+        { code: "(i) Is the value lower? Go left. " },
+        { code: "(ii) Is the value higher? Go right. " },
+        { code: "3. Continue to compare nodes with the new value until there is no right or left to compare with. That is where the new node is inserted." },
+      ]
+    case "searchBST":
+      return [
+        { code: "1. Start at the root node. " },
+        { code: "2. If this is the value we are looking for, return." },
+        { code: "3. If the value we are looking for is higher, continue searching in the right subtree. " },
+        { code: "4. If the value we are looking for is lower, continue searching in the left subtree.  " },
+        { code: "5. If the subtree we want to search does not exist, return NULL." },
+      ]
+    case "deleteNodeFromBST":
+      return [
+        { code: "1. If the node is a leaf node, remove it by removing the link to it." },
+        { code: "2. If the node only has one child node, connect the parent node of the node you want to remove to that child node. " },
+        { code: "3. If the node has both right and left child nodes: Find the node's in-order successor, change values with that node, then delete it. " },
+      ]
+    case "inorderTraversal":
+      return [
+        { code: 'Inorder Traversal:' },
+        { code: '1: Follow step 2 to 4 until root != NULL' },
+        { code: '2: Inorder (root -> left)' },
+        { code: '3: Write root -> data' },
+        { code: '4: Inorder (root -> right)' },
+      ]
+    case "preorderTraversal":
+      return [
+        { code: 'Preorder Traversal:' },
+        { code: '1: Follow step 2 to 4 until root != NULL' },
+        { code: '2: Write root -> data' },
+        { code: '3: Preorder (root -> left)' },
+        { code: '4: Preorder (root -> right)' },
+      ]
+    case "postorderTraversal":
+      return [
+        { code: 'Postorder Traversal:' },
+        { code: '1: Follow step 2 to 4 until root != NULL' },
+        { code: '2: Postorder (root -> left)' },
+        { code: '3: Postorder (root -> right)' },
+        { code: '4: Write root -> data' },
+      ]
+    default:
+      return []
+  }
 }
