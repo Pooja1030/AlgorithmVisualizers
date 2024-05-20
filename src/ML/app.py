@@ -214,5 +214,23 @@ def predict_cluster():
     cluster = kmeans.predict([new_data])
     return jsonify({'cluster': int(cluster[0])})
 
+# Multi-linear Regression
+@app.route("/train", methods=["GET"])
+def train_model():
+    X, y = load_data()
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1 / 3, random_state=0)
+    regressor = LinearRegression()
+    regressor.fit(X_train, y_train)
+    y_pred = regressor.predict(X_test)
+    response = {
+        "X_test": X_test.tolist(),
+        "y_test": y_test.tolist(),
+        "y_pred": y_pred.tolist(),
+        "coefficients": regressor.coef_.tolist(),
+        "intercept": regressor.intercept_.tolist(),
+        "mse": np.mean((y_pred - y_test) ** 2),
+    }
+    return jsonify(response)
+
 if __name__ == '__main__':
     app.run(port=5000)
