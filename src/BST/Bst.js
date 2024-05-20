@@ -4,18 +4,17 @@ import DiscreteSlider from '../Components/slider';
 import Canvas from './canvas'; // Updated name
 import {
   addNodeToBST,
-  findParentNode,
   searchBST,
   deleteNodeFromBST,
-  findNode,
   generateRandomBST,
   inorderTraversal,
-  findMinValue,
   preorderTraversal,
-  postorderTraversal
+  postorderTraversal,
+  findNode,
+  findMinValue,
+  findParentNode,
 } from './treeUtils';
 import { gsap } from 'gsap';
-import { purple } from '@mui/material/colors';
 
 class BinaryTree extends Component {
   constructor(props) {
@@ -32,7 +31,6 @@ class BinaryTree extends Component {
     };
     this.animationTimeline = gsap.timeline({ paused: true }); // Initialize GSAP timeline
   }
-
 
   componentDidMount() {
     this.generateRandomTree(); // Generate a random tree on page load
@@ -101,11 +99,9 @@ class BinaryTree extends Component {
     this.performTraversalAnimation(traversalResult, animationSpeed);
   }
 
-
   performTraversalAnimation = (traversalResult, animationSpeed) => {
     if (this.isAnimating) return;
     this.setState({ resultText: "" });
-    const { tree } = this.state;
     const animationTimeline = gsap.timeline();
 
     // Function to animate visiting a node
@@ -116,7 +112,7 @@ class BinaryTree extends Component {
         const delay = (50 - animationSpeed) / 100;
         animationTimeline.to(nodeElement, {
           duration: animationDuration * 2,
-          fill: '#21affb',
+          fill: '#c3439f',
           delay: delay,
         });
         animationTimeline.to(nodeElement, {
@@ -151,14 +147,13 @@ class BinaryTree extends Component {
 
       new Promise(resolve => setTimeout(resolve, 500));
 
-      const parentNode = findParentNode(tree, value);
-      const newNode = parentNode.left.value === value ? parentNode.left : parentNode.right;
+      const parentNode = findParentNode(updatedTree, value);
+      const newNode = findNode(updatedTree, value);
 
       // Highlight the newly inserted node and the edge connecting it to its parent
       if (newNode) {
         const nodeElement = document.querySelector(`#node-${newNode.id}`);
-        const edgeId = parentNode.id ? `#edge-${parentNode.id}-${newNode.id}` : null;
-        console.log(edgeId);
+        const edgeId = parentNode ? `#edge-${parentNode.id}-${newNode.id}` : null;
         const edgeElement = edgeId ? document.querySelector(edgeId) : null;
 
         if (nodeElement) {
@@ -223,7 +218,6 @@ class BinaryTree extends Component {
       // Find the parent node and the node to be deleted
       const parentNode = findParentNode(tree, value);
       const nodeToDelete = findNode(tree, value);
-      const isLeftChild = parentNode && parentNode.left && parentNode.left.value === value;
 
       // Animate the removal of the node and the edge connecting it to its parent
       if (nodeToDelete) {
@@ -374,4 +368,3 @@ class BinaryTree extends Component {
 }
 
 export default BinaryTree;
-
