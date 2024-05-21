@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../Components/navbar";
 import DiscreteSlider from "../Components/slider";
-import SidePanel from './sidepanelQ';
+import SidePanel from '../Components/sidepanel';
 import "./queue.css";
 import { gsap } from 'gsap';
+import { ArrowUpwardRounded, ArrowDownwardRounded } from "@material-ui/icons";
 
 const QueueVisualizer = () => {
   const [queue, setQueue] = useState([]);
@@ -11,6 +12,8 @@ const QueueVisualizer = () => {
   const [dequeuedElement, setDequeuedElement] = useState(null);
   const [resultText, setResultText] = useState(null);
   const [currVal, setCurrVal] = useState(null);
+  const [frontIndex, setFrontIndex] = useState(-1); // State variable for the index of the front pointer
+  const [rearIndex, setRearIndex] = useState(-1); // State variable for the index of the rear pointer
   const [sidePanelOpen, setSidePanelOpen] = useState(false);
   const [algorithmSteps, setAlgorithmSteps] = useState([]);
   const [lastOperation, setLastOperation] = useState(null);
@@ -100,6 +103,8 @@ const QueueVisualizer = () => {
     if (queue.length < maxSize) {
       const newValue = Math.floor(Math.random() * 10) + 1;
       setQueue((prevQueue) => [...prevQueue, newValue]);
+      setFrontIndex(0)
+      setRearIndex(queue.length); // Update rear pointer index
       setResultText("Enqueued: ");
       setCurrVal(newValue);
       updateOperation('Enqueue', newValue);
@@ -122,6 +127,11 @@ const QueueVisualizer = () => {
       setResultText("Dequeued: ");
       setCurrVal(dequeuedValue);
       setDequeuedElement(dequeuedValue);
+      setRearIndex(queue.length - 2); // Update rear pointer index
+      if (queue.length === 1) {
+        setFrontIndex(-1)
+        setRearIndex(-1); // Update rear pointer index
+      }
       setQueue((prevQueue) => prevQueue.slice(1));
       updateOperation('Dequeue', null, dequeuedValue);
     } else {
@@ -149,10 +159,10 @@ const QueueVisualizer = () => {
       setResultText("");
       setCurrVal("Queue is empty");
     }
-     const end = performance.now();
-     const executionTime = end - start;
-     setTimeComplexity(`${executionTime.toFixed(2)} ms`);
-     setSpaceComplexity("O(1) bytes"); // Space complexity for Peek is O(1)
+    const end = performance.now();
+    const executionTime = end - start;
+    setTimeComplexity(`${executionTime.toFixed(2)} ms`);
+    setSpaceComplexity("O(1) bytes"); // Space complexity for Peek is O(1)
   };
 
   const isEmpty = () => {
@@ -161,22 +171,22 @@ const QueueVisualizer = () => {
     // IsEmpty operation implementation
     setResultText("Is empty: ");
     setCurrVal(queue.length === 0 ? "True" : "False");
-     const end = performance.now();
-     const executionTime = end - start;
-     setTimeComplexity(`${executionTime.toFixed(2)} ms`);
-     setSpaceComplexity("O(1) bytes"); // Space complexity for IsEmpty is O(1)
+    const end = performance.now();
+    const executionTime = end - start;
+    setTimeComplexity(`${executionTime.toFixed(2)} ms`);
+    setSpaceComplexity("O(1) bytes"); // Space complexity for IsEmpty is O(1)
   };
-  
+
   const isFull = () => {
     // IsFull operation logic
     const start = performance.now();
     // IsFull operation implementation
     setResultText("Is full: ");
     setCurrVal(queue.length === maxSize ? "True" : "False");
-     const end = performance.now();
-     const executionTime = end - start;
-     setTimeComplexity(`${executionTime.toFixed(2)} ms`);
-     setSpaceComplexity("O(1) bytes"); // Space complexity for IsFull is O(1)
+    const end = performance.now();
+    const executionTime = end - start;
+    setTimeComplexity(`${executionTime.toFixed(2)} ms`);
+    setSpaceComplexity("O(1) bytes"); // Space complexity for IsFull is O(1)
   };
 
   const size = () => {
@@ -239,6 +249,14 @@ const QueueVisualizer = () => {
         </div>
 
         <div className="queue">
+
+          {frontIndex >= 0 &&
+            <div className="pointer front">
+              {frontIndex}
+              <span>Front</span>
+              <ArrowDownwardRounded />
+            </div>
+          }
           {dequeuedElement && (
             <div
               className="element dequeued"
@@ -252,7 +270,12 @@ const QueueVisualizer = () => {
               {value}
             </div>
           ))}
-        </div>
+          {rearIndex >= 0 && <div className="pointer rear">
+            <ArrowUpwardRounded />
+            <span>Rear</span>
+            {rearIndex}
+          </div>
+          }</div>
 
         <div className="complexity-analysis">
           <div className="analysis-title">Time Complexity:</div>
