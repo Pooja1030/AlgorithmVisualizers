@@ -393,6 +393,10 @@ export default class PathfindingVisualizer extends Component {
     render() {
         const { grid, mouseIsPressed, isDrawerOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
 
+        // Default time and space complexities (for initial rendering)
+    const defaultTimeComplexity = "O((V + E) * log(V))";
+    const defaultSpaceComplexity = "O(V + E)";
+
 
         return (
             <>
@@ -448,11 +452,11 @@ export default class PathfindingVisualizer extends Component {
                   <div className="complexity-container">
                     <div className="complexity-item">
                         <span className="complexity-label">Time Complexity:</span>
-                        <span className="complexity-value">{timeComplexity}</span>
+                        <span className="complexity-value">{timeComplexity || defaultTimeComplexity}</span>
                     </div>
                     <div className="complexity-item">
                         <span className="complexity-label">Space Complexity:</span>
-                        <span className="complexity-value">{spaceComplexity}</span>
+                        <span className="complexity-value">{spaceComplexity || defaultSpaceComplexity}</span>
                     </div>
                 </div>
 

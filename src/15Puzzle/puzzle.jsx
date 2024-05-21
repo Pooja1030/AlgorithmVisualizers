@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from '../Components/navbar';
 import FlipMove from 'react-flip-move';
 import '../helpers/array_helpers';
@@ -32,10 +32,9 @@ const Puzzle = () => {
             code: ' Step 5: Display the solution steps (optional).',
             description: 'Display the solution steps if desired. Once the puzzle is solved, you may want to show the sequence of moves or steps taken to solve the puzzle. This can provide insights into the solving process and help users understand how the solution was achieved.'
         }
-        // Add more steps as needed
     ]);
-    const [timeComplexity, setTimeComplexity] = useState('');
-    const [spaceComplexity, setSpaceComplexity] = useState('');
+    const [timeComplexity, setTimeComplexity] = useState('O(n)');
+    const [spaceComplexity, setSpaceComplexity] = useState('O(1)');
 
     const balsal = async () => {
         // Open side panel when the user clicks on the "Animate" button

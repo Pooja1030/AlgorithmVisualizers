@@ -22,8 +22,8 @@ class ConvexHull extends Component {
             { description: 'Step 4: Continue adding points until you reach the starting point again.' },
             { description: 'Step 5: The set of points added forms the convex hull.' }
         ],
-        timeComplexity: '', // State to hold time complexity
-        spaceComplexity: '' // State to hold space complexity
+         timeComplexity: 'O(N log N)', // Default time complexity
+            spaceComplexity: 'O(N)' // Default space complexity
     }
 
     constructor() {
@@ -52,8 +52,8 @@ class ConvexHull extends Component {
                 <Navbar currentPage="Convex Hull" />
                 {/* Display time and space complexities */}
                 <div className="complexities">
-                    <p>Time Complexity: {this.state.timeComplexity}</p>
-                    <p>Space Complexity: {this.state.spaceComplexity}</p>
+                    <p>Time Complexity: {this.state.isRunning ? this.state.timeComplexity : 'O(N log N)'}</p>
+                    <p>Space Complexity: {this.state.isRunning ? this.state.spaceComplexity : 'O(N)'}</p>
                 </div>
                 {/* Rest of the component */}
                 {/* Side panel toggle button */}
@@ -92,6 +92,18 @@ class ConvexHull extends Component {
         const timeComplexity = `${(dots.length * 16 * 8) / this.state.speed} milliseconds`; // Assuming each dot object operation takes 8 milliseconds
         
         this.setState({ timeComplexity, spaceComplexity });
+    }
+
+    handleAlgorithmStart = () => {
+        this.setState({ isRunning: true });
+    }
+
+    handleAlgorithmEnd = (time, space) => {
+        this.setState({
+            isRunning: false,
+            timeComplexity: `${time.toFixed(2)} ms`,
+            spaceComplexity: `${space} bytes`
+        });
     }
     
 

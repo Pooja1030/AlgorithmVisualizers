@@ -6,7 +6,7 @@ import SidePanel from './sidepanelso';
 import { bubbleSort, selectionSort, insertionSort } from "../algorithms/sortingalgorithms";
 import { bubbleSortSteps, selectionSortSteps, insertionSortSteps } from "../algorithms/sortingalgorithms";
 import { quickSort , quickSortSteps } from '../algorithms/quickSort';
- 
+
 class Sort extends Component {
     state = {
         count: 20,
@@ -19,8 +19,8 @@ class Sort extends Component {
         algo2: 0,
         sidePanelOpen: false,
         algorithmSteps: [],
-        timeComplexity: '',
-        spaceComplexity: '',
+        timeComplexity: 'O(n^2)', // Default time complexity
+        spaceComplexity: 'O(1)', // Default space complexity
     };
 
     componentDidMount() {
@@ -64,8 +64,8 @@ class Sort extends Component {
                             rects={this.state.rects2}
                         />}
                 </div>
-                  {/* Display real-time and space complexities */}
-                  <div className='complexities'>
+                {/* Display real-time and space complexities */}
+                <div className='complexities'>
                     <p>Time Complexity: {this.state.timeComplexity}</p>
                     <p>Space Complexity: {this.state.spaceComplexity}</p>
                 </div>
@@ -117,7 +117,7 @@ class Sort extends Component {
         let timeComplexity = '';
         let spaceComplexity = '';
         let spaceUsage = 0;
-        
+
         switch (this.state.algo1) {
             case 0:
                 startTime = performance.now();
@@ -159,26 +159,26 @@ class Sort extends Component {
                 console.error("Invalid algorithm selected or steps not defined for the algorithm.");
                 break;
         }
-    
+
         // Execute the sorting algorithm steps one by one with visualization
         for (let i = 0; i < steps.length; i++) {
             const step = steps[i];
             const prevRects = [...this.state.rects];
             const { xx, yy, changed } = step;
-    
+
             // Highlight the elements being compared or swapped
             prevRects[xx] = { ...prevRects[xx], isSorting: true };
             prevRects[yy] = { ...prevRects[yy], isSorting: true };
             this.setState({ rects: prevRects });
-    
+
             // Highlight the current algorithm step in the side panel
             if (algorithmSteps[i] && algorithmSteps[i].code) {
                 this.setState(prevState => ({ algorithmSteps: [...prevState.algorithmSteps, algorithmSteps[i]] }));
             }
-    
+
             // Wait for a short duration to visualize the step
             await new Promise(resolve => setTimeout(resolve, this.state.speed));
-    
+
             // If elements are swapped, update the state with the swapped elements
             if (changed) {
                 const temp = prevRects[xx];
@@ -186,27 +186,23 @@ class Sort extends Component {
                 prevRects[yy] = temp;
                 this.setState({ rects: prevRects });
             }
-    
-            // Highlight the elements being compared or swapped
+
+            // Unhighlight the elements after comparison or swap
             prevRects[xx] = { ...prevRects[xx], isSorting: false };
             prevRects[yy] = { ...prevRects[yy], isSorting: false };
             this.setState({ rects: prevRects });
-    
+
             // Wait for a short duration before proceeding to the next step
             await new Promise(resolve => setTimeout(resolve, this.state.speed));
         }
-    
-        // Update state with time and space complexity
+
+        // Update state with real-time and space complexity
         this.setState({
             isRunning: false,
             timeComplexity,
             spaceComplexity
         });
     };
-    
-    
-    
-    
 
     getInitialRects = (tot) => {
         const rects = [];

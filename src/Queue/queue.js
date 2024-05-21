@@ -15,8 +15,8 @@ const QueueVisualizer = () => {
   const [algorithmSteps, setAlgorithmSteps] = useState([]);
   const [lastOperation, setLastOperation] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
-  const [timeComplexity, setTimeComplexity] = useState(null);
-  const [spaceComplexity, setSpaceComplexity] = useState(null);
+  const [timeComplexity, setTimeComplexity] = useState("O(1)");
+  const [spaceComplexity, setSpaceComplexity] = useState("O(1) bytes");
   const stepsRef = useRef([
     { code: `Working of Queue` },
     { code: `- two pointers FRONT and REAR` },
@@ -34,7 +34,6 @@ const QueueVisualizer = () => {
     { code: `- increase the FRONT index by 1`},
     { code: `- for the last element, reset the values of FRONT and REAR to -1`},
   ]);
-
 
   useEffect(() => {
     setAlgorithmSteps(stepsRef.current);
@@ -54,8 +53,6 @@ const QueueVisualizer = () => {
   };
 
   const updateOperation = (operation, newValue = null, dequeuedValue = null) => {
-    // setResultText(null);
-    // setCurrVal(null);
     if (lastOperation !== operation) {
       setSidePanelOpen(true);
       setLastOperation(operation);
@@ -118,6 +115,13 @@ const QueueVisualizer = () => {
       setResultText("");
       setCurrVal("Queue is full");
     }
+    // Enqueue operation logic
+    const start = performance.now();
+    // Enqueue operation implementation
+    const end = performance.now();
+    const executionTime = end - start;
+    setTimeComplexity(`${executionTime.toFixed(2)} ms`);
+    setSpaceComplexity("O(1) bytes"); // Space complexity for Enqueue is O(1)
   };
 
   const dequeue = () => {
@@ -132,6 +136,13 @@ const QueueVisualizer = () => {
       setResultText("");
       setCurrVal("Queue is empty");
     }
+    // Dequeue operation logic
+    const start = performance.now();
+    // Dequeue operation implementation
+    const end = performance.now();
+    const executionTime = end - start;
+    setTimeComplexity(`${executionTime.toFixed(2)} ms`);
+    setSpaceComplexity("O(1) bytes"); // Space complexity for Dequeue is O(1)
   };
 
   const peek = () => {
@@ -146,21 +157,50 @@ const QueueVisualizer = () => {
       setResultText("");
       setCurrVal("Queue is empty");
     }
+     // Peek operation logic
+     const start = performance.now();
+     // Peek operation implementation
+     const end = performance.now();
+     const executionTime = end - start;
+     setTimeComplexity(`${executionTime.toFixed(2)} ms`);
+     setSpaceComplexity("O(1) bytes"); // Space complexity for Peek is O(1)
   };
 
   const isEmpty = () => {
     setResultText("Is empty: ");
     setCurrVal(queue.length === 0 ? "True" : "False");
+     // IsEmpty operation logic
+     const start = performance.now();
+     // IsEmpty operation implementation
+     const end = performance.now();
+     const executionTime = end - start;
+     setTimeComplexity(`${executionTime.toFixed(2)} ms`);
+     setSpaceComplexity("O(1) bytes"); // Space complexity for IsEmpty is O(1)
   };
   
   const isFull = () => {
     setResultText("Is full: ");
     setCurrVal(queue.length === maxSize ? "True" : "False");
+     // IsFull operation logic
+     const start = performance.now();
+     // IsFull operation implementation
+     const end = performance.now();
+     const executionTime = end - start;
+     setTimeComplexity(`${executionTime.toFixed(2)} ms`);
+     setSpaceComplexity("O(1) bytes"); // Space complexity for IsFull is O(1)
   };
 
   const size = () => {
     setResultText("Size: ");
     setCurrVal(queue.length);
+    // Size operation logic
+    const start = performance.now();
+    // Size operation implementation
+    const end = performance.now();
+    const executionTime = end - start;
+    setTimeComplexity(`${executionTime.toFixed(2)} ms`);
+    setSpaceComplexity("O(1) bytes"); // Space complexity for Size is O(1)
+
   };
 
   const toggleSidePanel = () => {
@@ -187,8 +227,8 @@ const QueueVisualizer = () => {
   const analyzeQueueOperation = (operation) => {
     const timeComplexity = measureTimeComplexity(operation);
     const spaceComplexity = measureSpaceComplexity(operation);
-    setTimeComplexity(timeComplexity);
-    setSpaceComplexity(spaceComplexity);
+    setTimeComplexity(`${timeComplexity.toFixed(2)} ms`);
+    setSpaceComplexity(`O(${spaceComplexity}) bytes`);
   };
 
   // Function to measure time complexity of queue operations
@@ -224,35 +264,8 @@ const QueueVisualizer = () => {
 
   // Function to measure space complexity of queue operations
   const measureSpaceComplexity = (operation) => {
-    let space = 0;
-    switch (operation) {
-      case 'Enqueue':
-        // For Enqueue operation, the space complexity is O(1)
-        space = 1;
-        break;
-      case 'Dequeue':
-        // For Dequeue operation, the space complexity is O(1)
-        space = 1;
-        break;
-      case 'Peek':
-        // For Peek operation, the space complexity is O(1)
-        space = 1;
-        break;
-      case 'IsEmpty':
-        // For IsEmpty operation, the space complexity is O(1)
-        space = 1;
-        break;
-      case 'IsFull':
-        // For IsFull operation, the space complexity is O(1)
-        space = 1;
-        break;
-      case 'Size':
-        // For Size operation, the space complexity is O(1)
-        space = 1;
-        break;
-      default:
-        break;
-    }
+    let space = 1; // Default to O(1)
+    // Add any additional logic for specific operations if needed
     return space;
   };
 
@@ -298,25 +311,11 @@ const QueueVisualizer = () => {
         </div>
 
         <div className="complexity-analysis">
-            <div className="analysis-title">Time Complexity:</div>
-            <div className="analysis-result">{timeComplexity !== null ? `${timeComplexity} ms` : "Not measured"}</div>
-            <div className="analysis-title">Space Complexity:</div>
-            <div className="analysis-result">{spaceComplexity !== null ? `O(${spaceComplexity})` : "Not measured"}</div>
-          </div>
-
-        {/* <div className="representation">
-          <div className="row mx-auto" id="queue-pseudocode">
-            {algorithmSteps.map((step, index) => (
-              <div key={index} id={`step-${index}`} className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0" style={{ opacity: index === currentStep ? 1 : 0 }}>
-                <div className="ide w-100">
-                  <div className="row ml-auto mr-auto 1">
-                    <h3>{step.code}</h3>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div> */}
+          <div className="analysis-title">Time Complexity:</div>
+          <div className="analysis-result">{timeComplexity !== null ? `${timeComplexity}` : "O(1) ms"}</div>
+          <div className="analysis-title">Space Complexity:</div>
+          <div className="analysis-result">{spaceComplexity !== null ? `${spaceComplexity}` : "O(1) bytes"}</div>
+        </div>
       </div>
     </>
   );

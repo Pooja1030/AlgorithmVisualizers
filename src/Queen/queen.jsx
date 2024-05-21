@@ -5,7 +5,6 @@ import Menu from "./menu";
 import SidePanel from './sidepanelq';
 import './style.css';
 
-
 class Queen extends Component {
     state = {
         board: [],
@@ -35,7 +34,9 @@ class Queen extends Component {
             {
                 code: 'Step 7: Repeat steps 3-6 until all possible configurations are explored.'
             },
-        ]
+        ],
+        timeComplexity: "O(N!)", // Default time complexity for N-Queens problem
+        spaceComplexity: "O(N^2)", // Default space complexity for N-Queens problem
     }
 
     componentDidMount() {
@@ -65,9 +66,7 @@ class Queen extends Component {
                     spaceComplexity={spaceComplexity}
                 />
                 <div style={{ textAlign: "Center" }}>
-                    <Cells
-                        board={this.state.board}
-                    />
+                    <Cells board={this.state.board} />
                 </div>
                 <div className="complexity-analysis">
                     <div className="analysis-title">Time Complexity</div>
@@ -158,18 +157,17 @@ class Queen extends Component {
     }
 
     toggleSidePanel = () => {
-    const { sidePanelOpen } = this.state;
-    this.setState({ sidePanelOpen: !sidePanelOpen }, () => {
-        if (!sidePanelOpen) {
-            this.handlePlay();
-        }
-    });
-}
+        const { sidePanelOpen } = this.state;
+        this.setState({ sidePanelOpen: !sidePanelOpen }, () => {
+            if (!sidePanelOpen) {
+                this.handlePlay();
+            }
+        });
+    }
 
     closeSidePanel = () => {
         this.setState({ sidePanelOpen: false });
     }
-
 }
 
 export default Queen;
@@ -233,7 +231,7 @@ const getChecked = (board, row, col, N) => {
             newBoard[i][j] = { ...newBoard[i][j], isChecked: true };
         }
     }
-    for (let i = row, j = col; i >= 0 && j < N; i--, j++) {
+    for (let i = row, j = col; i >=    0 && j < N; i--, j++) {
         if (newBoard[i][j].isPresent) {
             newBoard[i][j] = { ...newBoard[i][j], isAttacked: true };
             pos = false;
@@ -269,3 +267,4 @@ const getCell = (row, col) => {
         isCurrent: false
     }
 }
+

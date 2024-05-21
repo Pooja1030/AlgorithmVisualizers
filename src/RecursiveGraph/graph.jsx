@@ -26,27 +26,24 @@ class Graph extends Component {
                 { code: " Step 3: Recursively traverse the tree and add vertices and edges." },
                 { code: " Step 4: Update vertices and edges state to trigger re-rendering." }
             ],
-            timeComplexity: '',
-            spaceComplexity: ''
+            timeComplexity: 'O(n)', // Default time complexity
+            spaceComplexity: 'O(n)' // Default space complexity
         }
     }
 
-    
     // Function to calculate time complexity
     calculateTimeComplexity = (callback) => {
         const startTime = performance.now();
         callback();
         const endTime = performance.now();
         const executionTime = endTime - startTime;
-        this.setState({ timeComplexity: `Time Complexity: ${executionTime.toFixed(2)} milliseconds` });
+        this.setState({ timeComplexity: `${executionTime.toFixed(2)} milliseconds` });
     }
 
     // Function to calculate space complexity
     calculateSpaceComplexity = () => {
-        // Perform the operation for which you want to calculate space complexity
-        // For example:
         const treeSize = this.state.vertices.length + this.state.edges.length;
-        this.setState({ spaceComplexity: `Space Complexity: ${treeSize} units` });
+        this.setState({ spaceComplexity: `${treeSize} units` });
     }
 
     setAlgo = (pos, val) => {
@@ -191,8 +188,8 @@ class Graph extends Component {
                     algorithmSteps={this.state.algorithmSteps} // Pass algorithm steps to the Menu component
                 />
                 <Details algo={this.state.algo} />
-                 {/* Side panel toggle button */}
-                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}> →</button>
+                {/* Side panel toggle button */}
+                <button className="side-panel-toggle" onClick={this.toggleSidePanel}> →</button>
                 {/* Side Panel */}
                 <SidePanel algorithmSteps={this.state.algorithmSteps} isOpen={this.state.sidePanelOpen} onClose={this.toggleSidePanel} />
                 <CanvasSvg
@@ -202,11 +199,11 @@ class Graph extends Component {
                     offset={this.state.offset}
                 />
 
-                 {/* Display time and space complexity */}
-                 <div className="complexity-analysis">
+                {/* Display time and space complexity */}
+                <div className="complexity-analysis">
                     <div className="analysis-title">Complexity Analysis</div>
-                    <div className="analysis-result">{this.state.timeComplexity}</div>
-                    <div className="analysis-result">{this.state.spaceComplexity}</div>
+                    <div className="analysis-result">Time Complexity: {this.state.timeComplexity}</div>
+                    <div className="analysis-result">Space Complexity: {this.state.spaceComplexity}</div>
                 </div>
             </div>
         );
@@ -290,7 +287,6 @@ function generateStirling2Steps() {
         { code: "Step 3: Interpret the calculated value in the context of combinatorial problems involving partitions and subsets." }
     ];
 }
-
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

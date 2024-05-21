@@ -32,8 +32,8 @@ class BinaryTree extends Component {
       isAnimating: false, // Flag to track animation state,
       sidePanelOpen: false, // State variable to manage side panel visibility
       algorithmSteps: [],
-      timeComplexity: "",
-      spaceComplexity: "",
+      timeComplexity: "O(n)", // Default time complexity
+      spaceComplexity: "O(n)", // Default space complexity
     };
     this.animationTimeline = gsap.timeline({ paused: true }); // Initialize GSAP timeline
   }
@@ -141,9 +141,9 @@ class BinaryTree extends Component {
     }
     const endTime = performance.now(); // Stop measuring time
     const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
-    const timeComplexity = `${executionTime} ms`; // Display execution time
+    const timeComplexity = `O(n) - ${executionTime} ms`;; // Display execution time
    // Calculate space complexity
-   const spaceComplexity = `${this.estimateSpaceComplexity(tree)} bytes`;
+   const spaceComplexity = `O(n) - ${this.estimateSpaceComplexity(tree)} bytes`;
 
     this.setState({ algorithmSteps, timeComplexity, spaceComplexity });
     // Perform traversal animation
@@ -202,10 +202,10 @@ class BinaryTree extends Component {
       const endTime = performance.now(); // Stop measuring time
 
       const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
-      const timeComplexity = `${executionTime} ms`; // Display execution time
+      const timeComplexity = `O(n) - ${executionTime} ms`; // Display execution time
 
       // Calculate space complexity
-      const spaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
+      const spaceComplexity = `O(n) - ${this.estimateSpaceComplexity(updatedTree)} bytes`;
 
 
       this.setState({ tree: updatedTree, nodeValue: '', timeComplexity, spaceComplexity, sidePanelOpen: true });
@@ -263,7 +263,7 @@ class BinaryTree extends Component {
       const algorithmSteps = steps("searchBST");
       const timeComplexity = ""; // Display execution time
        // Calculate space complexity
-       const spaceComplexity = `${this.estimateSpaceComplexity(tree)} bytes`;
+       const spaceComplexity = `o(n) - ${this.estimateSpaceComplexity(tree)} bytes`;
       this.setState({ resultText: [], algorithmSteps, timeComplexity, spaceComplexity, sidePanelOpen: true  }); // Clear previous search results
 
       const found = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
@@ -331,9 +331,9 @@ class BinaryTree extends Component {
                   const endTime = performance.now(); // Stop measuring time
   
                   const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
-                  const timeComplexity = `${executionTime} ms`; // Display execution time
+                  const timeComplexity = `O(n) - ${executionTime} ms`; // Display execution time
                   // Calculate space complexity
-                  const spaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
+                  const spaceComplexity = `O(n) - ${this.estimateSpaceComplexity(updatedTree)} bytes`;
   
                   this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', timeComplexity, spaceComplexity });
                 }
@@ -358,9 +358,9 @@ class BinaryTree extends Component {
             const endTime = performance.now(); // Stop measuring time
   
             const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
-            const timeComplexity = `${executionTime} ms`; // Display execution time
+            const timeComplexity = `O(n) - ${executionTime} ms`; // Display execution time
             // Calculate space complexity
-            const spaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
+            const spaceComplexity = `O(n) - ${this.estimateSpaceComplexity(updatedTree)} bytes`;
   
             this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', timeComplexity, spaceComplexity });
           }

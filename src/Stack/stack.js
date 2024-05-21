@@ -13,100 +13,94 @@ const StackVisualizer = () => {
     const [currVal, setCurrVal] = useState(null);
     const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
     const [algorithmSteps, setAlgorithmSteps] = useState([]); // Define state for algorithm steps
-    const [timeComplexity, setTimeComplexity] = useState(null); // State to store time complexity
-    const [spaceComplexity, setSpaceComplexity] = useState(null); // State to store space complexity
+    const [timeComplexity, setTimeComplexity] = useState("O(1)"); // Initialize with default time complexity
+    const [spaceComplexity, setSpaceComplexity] = useState("O(1) bytes"); // Initialize with default space complexity
 
-    // Function to measure time complexity of stack operations
-    const measureTimeComplexity = (operation) => {
-        let timeComplexity = "";
-        // Execute the stack operation here
-        if (operation === 'push') {
-            timeComplexity = "O(1)";
-        } else if (operation === 'pop') {
-            timeComplexity = "O(1)";
-        } else if (operation === 'peek') {
-            timeComplexity = "O(1)";
-        } else if (operation === 'isEmpty') {
-            timeComplexity = "O(1)";
-        } else if (operation === 'size') {
-            timeComplexity = "O(1)";
-        }
-        setTimeComplexity(timeComplexity); // Set the time complexity
+    // Function to measure the execution time of stack operations
+    const measureExecutionTime = (operationFunc) => {
+        const startTime = performance.now();
+        operationFunc();
+        const endTime = performance.now();
+        return (endTime - startTime).toFixed(2) + ' ms';
     };
 
-    // Function to measure space complexity of stack operations
-    const measureSpaceComplexity = (operation) => {
-        // Analyze the space requirements of the stack operation
-        // Set space complexity value accordingly
-        const space = operation === 'push' ? 1 : operation === 'pop' ? -1 : 0; // Example space complexity logic
-        setSpaceComplexity(space);
+    // Function to estimate the memory usage of the stack (approximation)
+    const estimateMemoryUsage = () => {
+        // For simplicity, let's assume each number in the stack takes approximately 16 bytes.
+        const bytesPerElement = 16;
+        return (stack.length * bytesPerElement) + ' bytes';
     };
 
     // Function to perform stack operation analysis
-    const analyzeStackOperation = (operation) => {
-        measureTimeComplexity(operation);
-        measureSpaceComplexity(operation);
+    const analyzeStackOperation = (operation, operationFunc) => {
+        const timeComplexity = measureExecutionTime(operationFunc);
+        const spaceComplexity = estimateMemoryUsage();
+        setTimeComplexity(timeComplexity);
+        setSpaceComplexity(spaceComplexity);
     };
 
-
-
     const push = () => {
-        setResultText(null);
-        setCurrVal(null);
-        if (stack.length < maxSize) {
-            const newValue = Math.floor(Math.random() * 10) + 1; // Generate random value for new die
-            setStack(prevStack => [...prevStack, newValue]);
-            setResultText('Pushed: ');
-            setCurrVal(newValue);
-            triggerSidePanel('Push');
-        } else {
-            setResultText("");
-            setCurrVal('Stack is full');
-        }
-        analyzeStackOperation('push');
+        analyzeStackOperation('push', () => {
+            setResultText(null);
+            setCurrVal(null);
+            if (stack.length < maxSize) {
+                const newValue = Math.floor(Math.random() * 10) + 1; // Generate random value for new die
+                setStack(prevStack => [...prevStack, newValue]);
+                setResultText('Pushed: ');
+                setCurrVal(newValue);
+                triggerSidePanel('Push');
+            } else {
+                setResultText("");
+                setCurrVal('Stack is full');
+            }
+        });
     };
 
     const pop = () => {
-        if (stack.length > 0) {
-            setResultText('Popped: ');
-            setCurrVal(stack[stack.length - 1]);
-            setPoppedDie(stack[stack.length - 1]); // Store the popped die
-            setStack(prevStack => prevStack.slice(0, -1)); // Remove top die from stack
-            setTimeout(() => {
-                setPoppedDie(null); // Clear the popped die after the animation duration
-            }, 500); // Adjust animation duration as needed
-            triggerSidePanel('Pop');
-        } else {
-            setResultText("");
-            setCurrVal('Stack is empty');
-        }
-        analyzeStackOperation('pop');
+        analyzeStackOperation('pop', () => {
+            if (stack.length > 0) {
+                setResultText('Popped: ');
+                setCurrVal(stack[stack.length - 1]);
+                setPoppedDie(stack[stack.length - 1]); // Store the popped die
+                setStack(prevStack => prevStack.slice(0, -1)); // Remove top die from stack
+                setTimeout(() => {
+                    setPoppedDie(null); // Clear the popped die after the animation duration
+                }, 500); // Adjust animation duration as needed
+                triggerSidePanel('Pop');
+            } else {
+                setResultText("");
+                setCurrVal('Stack is empty');
+            }
+        });
     };
 
     const peek = () => {
-        if (stack.length > 0) {
-            setResultText('Top value: ')
-            setCurrVal(stack[stack.length - 1]);
-            const timeline = gsap.timeline();
-            timeline.to(".top", { background: "#992155", duration: 0.5 });
-            timeline.to(".top", { background: "#fb21d3", duration: 0.5, delay: 1 });
-        } else {
-            setResultText("");
-            setCurrVal('Stack is empty');
-        }
-        analyzeStackOperation('peek');
+        analyzeStackOperation('peek', () => {
+            if (stack.length > 0) {
+                setResultText('Top value: ')
+                setCurrVal(stack[stack.length - 1]);
+                const timeline = gsap.timeline();
+                timeline.to(".top", { background: "#992155", duration: 0.5 });
+                timeline.to(".top", { background: "#fb21d3", duration: 0.5, delay: 1 });
+            } else {
+                setResultText("");
+                setCurrVal('Stack is empty');
+            }
+        });
     };
 
     const isEmpty = () => {
-        setResultText('Is empty: ')
-        setCurrVal(stack.length === 0 ? 'True' : 'False');
-        analyzeStackOperation('isEmpty');
+        analyzeStackOperation('isEmpty', () => {
+            setResultText('Is empty: ')
+            setCurrVal(stack.length === 0 ? 'True' : 'False');
+        });
     };
 
     const size = () => {
-        setResultText('Size: ')
-        setCurrVal(stack.length);
-        analyzeStackOperation('size');
+        analyzeStackOperation('size', () => {
+            setResultText('Size: ')
+            setCurrVal(stack.length);
+        });
     };
 
     const toggleSidePanel = () => {
@@ -160,11 +154,9 @@ const StackVisualizer = () => {
                 ]);
                 break;
             default:
-
                 break;
         }
     };
-
 
     return (
         <>
@@ -206,13 +198,13 @@ const StackVisualizer = () => {
                 </div>
 
                 {/* Display time and space complexity analysis */}
-                {(timeComplexity || spaceComplexity) && <div className="complexity-analysis">
+                <div className="complexity-analysis">
                     <div className="analysis-title">Time Complexity</div>
-                    <div className="analysis-result">{timeComplexity !== null && `Time complexity: ${timeComplexity}`}</div>
+                    <div className="analysis-result">Execution time: {timeComplexity}</div>
                     <div className="analysis-title">Space Complexity</div>
-                    <div className="analysis-result">{spaceComplexity !== null && `Space complexity: ${spaceComplexity}`}</div>
+                    <div className="analysis-result">Memory usage: {spaceComplexity}</div>
                 </div>
-                }</div>
+            </div>
         </>
     );
 };
