@@ -841,54 +841,6 @@ const LinkedListVisualizer = () => {
                     <div className="analysis-title">Space Complexity:</div>
                     <div className="analysis-result">{spaceComplexity !== null ? `${spaceComplexity}` : "Not measured"}</div>
                 </div>
-
-
-                {/* <div className="representation">
-                    <div className="row mx-auto" id="linkedlist-pseudocode">
-                        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-                            <div className="ide w-100">
-                                <div className="row ml-auto mr-auto 1">
-                                    <h3>INSERT </h3>
-                                    <span className="comment w-100 mt-1">
-                                        Add a new element to the linked list
-                                    </span>
-                                    <span className="comment w-100 mt-1"> </span>
-                                    <span className="comment w-100 mt-1">
-                                        TIME COMPLEXITY: O(1) - O(n) depending on the position
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-                            <div className="ide w-100">
-                                <div className="row ml-auto mr-auto 1">
-                                    <h3>DELETE </h3>
-                                    <span className="comment w-100 mt-1">
-                                        Remove the existing elements
-                                    </span>
-                                    <span className="comment w-100 mt-1"> </span>
-                                    <span className="comment w-100 mt-1">
-                                        TIME COMPLEXITY: O(1) - O(n) depending on the position
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0">
-                            <div className="ide w-100">
-                                <div className="row ml-auto mr-auto 1">
-                                    <h3>SEARCH </h3>
-                                    <span className="comment w-100 mt-1">
-                                        Find a node in the linked list
-                                    </span>
-                                    <span className="comment w-100 mt-1"> </span>
-                                    <span className="comment w-100 mt-1">
-                                        TIME COMPLEXITY: O(n)
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
             </div>
         </>
     );
