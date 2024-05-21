@@ -23,16 +23,6 @@ const QueueVisualizer = () => {
     { code: `- FRONT track the first element of the queue` },
     { code: `- REAR track the last element of the queue` },
     { code: `- initially, set value of FRONT and REAR to -1` },
-    { code: `Enqueue Operation` },
-    { code: `- check if the queue is full`},
-    { code: `- for the first element, set the value of FRONT to 0`},
-    { code: `- increase the REAR index by 1`},
-    { code: `- add the new element in the position pointed to by REAR`},
-    { code: `Dequeue Operation` },
-    { code: `- check if the queue is empty`},
-    { code: `- return the value pointed by FRONT`},
-    { code: `- increase the FRONT index by 1`},
-    { code: `- for the last element, reset the values of FRONT and REAR to -1`},
   ]);
 
   useEffect(() => {
@@ -101,10 +91,12 @@ const QueueVisualizer = () => {
     }
 
     setStepsAndAnimate(updatedSteps);
-    analyzeQueueOperation(operation);
   };
 
   const enqueue = () => {
+    // Enqueue operation logic
+    const start = performance.now();
+    // Enqueue operation implementation
     if (queue.length < maxSize) {
       const newValue = Math.floor(Math.random() * 10) + 1;
       setQueue((prevQueue) => [...prevQueue, newValue]);
@@ -115,9 +107,6 @@ const QueueVisualizer = () => {
       setResultText("");
       setCurrVal("Queue is full");
     }
-    // Enqueue operation logic
-    const start = performance.now();
-    // Enqueue operation implementation
     const end = performance.now();
     const executionTime = end - start;
     setTimeComplexity(`${executionTime.toFixed(2)} ms`);
@@ -125,6 +114,9 @@ const QueueVisualizer = () => {
   };
 
   const dequeue = () => {
+    // Dequeue operation logic
+    const start = performance.now();
+    // Dequeue operation implementation
     if (queue.length > 0) {
       const dequeuedValue = queue[0];
       setResultText("Dequeued: ");
@@ -136,9 +128,6 @@ const QueueVisualizer = () => {
       setResultText("");
       setCurrVal("Queue is empty");
     }
-    // Dequeue operation logic
-    const start = performance.now();
-    // Dequeue operation implementation
     const end = performance.now();
     const executionTime = end - start;
     setTimeComplexity(`${executionTime.toFixed(2)} ms`);
@@ -146,6 +135,9 @@ const QueueVisualizer = () => {
   };
 
   const peek = () => {
+    // Peek operation logic
+    const start = performance.now();
+    // Peek operation implementation
     if (queue.length > 0) {
       setResultText("Front: ");
       setCurrVal(queue[0]);
@@ -157,9 +149,6 @@ const QueueVisualizer = () => {
       setResultText("");
       setCurrVal("Queue is empty");
     }
-     // Peek operation logic
-     const start = performance.now();
-     // Peek operation implementation
      const end = performance.now();
      const executionTime = end - start;
      setTimeComplexity(`${executionTime.toFixed(2)} ms`);
@@ -167,11 +156,11 @@ const QueueVisualizer = () => {
   };
 
   const isEmpty = () => {
+    // IsEmpty operation logic
+    const start = performance.now();
+    // IsEmpty operation implementation
     setResultText("Is empty: ");
     setCurrVal(queue.length === 0 ? "True" : "False");
-     // IsEmpty operation logic
-     const start = performance.now();
-     // IsEmpty operation implementation
      const end = performance.now();
      const executionTime = end - start;
      setTimeComplexity(`${executionTime.toFixed(2)} ms`);
@@ -179,11 +168,11 @@ const QueueVisualizer = () => {
   };
   
   const isFull = () => {
+    // IsFull operation logic
+    const start = performance.now();
+    // IsFull operation implementation
     setResultText("Is full: ");
     setCurrVal(queue.length === maxSize ? "True" : "False");
-     // IsFull operation logic
-     const start = performance.now();
-     // IsFull operation implementation
      const end = performance.now();
      const executionTime = end - start;
      setTimeComplexity(`${executionTime.toFixed(2)} ms`);
@@ -191,11 +180,11 @@ const QueueVisualizer = () => {
   };
 
   const size = () => {
-    setResultText("Size: ");
-    setCurrVal(queue.length);
     // Size operation logic
     const start = performance.now();
     // Size operation implementation
+    setResultText("Size: ");
+    setCurrVal(queue.length);
     const end = performance.now();
     const executionTime = end - start;
     setTimeComplexity(`${executionTime.toFixed(2)} ms`);
@@ -222,51 +211,6 @@ const QueueVisualizer = () => {
 
   const forward = () => {
     // Forward logic if needed
-  };
-
-  const analyzeQueueOperation = (operation) => {
-    const timeComplexity = measureTimeComplexity(operation);
-    const spaceComplexity = measureSpaceComplexity(operation);
-    setTimeComplexity(`${timeComplexity.toFixed(2)} ms`);
-    setSpaceComplexity(`O(${spaceComplexity}) bytes`);
-  };
-
-  // Function to measure time complexity of queue operations
-  const measureTimeComplexity = (operation) => {
-    const start = performance.now();
-    // Execute the queue operation here
-    switch (operation) {
-      case 'Enqueue':
-        // Enqueue operation implementation
-        break;
-      case 'Dequeue':
-        // Dequeue operation implementation
-        break;
-      case 'Peek':
-        // Peek operation implementation
-        break;
-      case 'IsEmpty':
-        // IsEmpty operation implementation
-        break;
-      case 'IsFull':
-        // IsFull operation implementation
-        break;
-      case 'Size':
-        // Size operation implementation
-        break;
-      default:
-        break;
-    }
-    const end = performance.now();
-    const executionTime = end - start;
-    return executionTime;
-  };
-
-  // Function to measure space complexity of queue operations
-  const measureSpaceComplexity = (operation) => {
-    let space = 1; // Default to O(1)
-    // Add any additional logic for specific operations if needed
-    return space;
   };
 
   return (
