@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import DiscreteSlider from '../Components/slider';
-// import DiscreteSlider from './slider';
+
 class Menu extends Component {
     render() {
         return (
