@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Cells from "./cells";
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
-import SidePanel from './sidepanelq';
+import SidePanel from '../Components/sidepanel';
 import './style.css';
 
 class Queen extends Component {
@@ -13,27 +13,13 @@ class Queen extends Component {
         isRunning: false,
         sidePanelOpen: false, // State variable for managing side panel visibility
         algorithmSteps: [
-            {
-                code: 'Step 1: Start with an empty chessboard.'
-            },
-            {
-                code: 'Step 2: Place the first queen in the first column of the first row.'
-            },
-            {
-                code: 'Step 3: Check if the current queen is safe from attack by other queens on the board.'
-            },
-            {
-                code: 'Step 4: If the queen is safe, move to the next column and place the next queen.'
-            },
-            {
-                code: 'Step 5: If all queens are placed and no conflicts occur, a solution is found.'
-            },
-            {
-                code: 'Step 6: If a conflict occurs, backtrack to the previous queen and try a different position.'
-            },
-            {
-                code: 'Step 7: Repeat steps 3-6 until all possible configurations are explored.'
-            },
+            {code: 'Step 1: Start with an empty chessboard.'},
+            {code: 'Step 2: Place the first queen in the first column of the first row.'},
+            {code: 'Step 3: Check if the current queen is safe from attack by other queens on the board.'},
+            {code: 'Step 4: If the queen is safe, move to the next column and place the next queen.'},
+            {code: 'Step 5: If all queens are placed and no conflicts occur, a solution is found.'},
+            {code: 'Step 6: If a conflict occurs, backtrack to the previous queen and try a different position.'},
+            {code: 'Step 7: Repeat steps 3-6 until all possible configurations are explored.'},
         ],
         timeComplexity: "O(N!)", // Default time complexity for N-Queens problem
         spaceComplexity: "O(N^2)", // Default space complexity for N-Queens problem
