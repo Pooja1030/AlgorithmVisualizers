@@ -14,8 +14,22 @@
     border: #690f58 solid 1px;
     border-top: none;
     border-radius: 0 0 10px 10px;
-    min-width: 150px;
+    width: 150px;
     min-height: 200px;
+    align-items: flex-start;
+}
+
+.pointer.top {
+    flex-direction: row;
+    margin-top: auto;
+    margin-bottom: -35px;
+    margin-left: 160px;
+    color: red;
+}
+
+.pointer span {
+    font-weight: bold;
+    padding: 0 5px;
 }
 
 .die {
@@ -39,73 +53,4 @@
 
 .controls {
     margin-top: 20px;
-}
-
-/* New styles for complexity analysis */
-.complexity-analysis {
-    margin-top: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    width: 80%;
-}
-
-.analysis-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.analysis-result {
-    font-size: 18px;
-}
-
-.side-panel-toggle {
-    position: fixed;
-    right: 20px;
-    top: 10px;
-    min-width: 10px;
-    margin: 10px;
-    padding: 15px 25px;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    display: flex;
-    align-items: flex-end;
-    background-color: #2196f3;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.side-panel-toggle:hover {
-    background-color: #0d8bff;
-}
-
-@keyframes slideIn-push {
-    from {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        background-color: rgb(87, 47, 197);
-        opacity: 1;
-    }
-}
-
-@keyframes slideOut-pop {
-    from {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    to {
-        transform: translateY(-100px);
-        background-color: darkblue;
-    }
 }

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Navbar from '../Components/navbar';
 import DiscreteSlider from '../Components/slider';
-import SidePanel from './sidePanelS'; // Import the SidePanel component
+import SidePanel from '../Components/sidepanel'; // Import the SidePanel component
 import './stack.css';
 import { gsap } from 'gsap';
+import { ArrowBackRounded } from '@mui/icons-material';
 
 const StackVisualizer = () => {
     const [stack, setStack] = useState([]);
@@ -11,6 +12,7 @@ const StackVisualizer = () => {
     const [poppedDie, setPoppedDie] = useState(null);
     const [resultText, setResultText] = useState(null);
     const [currVal, setCurrVal] = useState(null);
+    const [topIndex, setTopIndex] = useState(-1); // State variable for the index of the peeked element
     const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
     const [algorithmSteps, setAlgorithmSteps] = useState([]); // Define state for algorithm steps
     const [timeComplexity, setTimeComplexity] = useState("O(1)"); // Initialize with default time complexity
@@ -45,6 +47,7 @@ const StackVisualizer = () => {
             setCurrVal(null);
             if (stack.length < maxSize) {
                 const newValue = Math.floor(Math.random() * 10) + 1; // Generate random value for new die
+                setTopIndex(stack.length);
                 setStack(prevStack => [...prevStack, newValue]);
                 setResultText('Pushed: ');
                 setCurrVal(newValue);
@@ -62,6 +65,7 @@ const StackVisualizer = () => {
                 setResultText('Popped: ');
                 setCurrVal(stack[stack.length - 1]);
                 setPoppedDie(stack[stack.length - 1]); // Store the popped die
+                setTopIndex(stack.length - 2);
                 setStack(prevStack => prevStack.slice(0, -1)); // Remove top die from stack
                 setTimeout(() => {
                     setPoppedDie(null); // Clear the popped die after the animation duration
@@ -185,6 +189,7 @@ const StackVisualizer = () => {
                 </div>
 
                 <div className="stack">
+
                     {stack.map((value, index) => (
                         <div key={index} className={`die ${index === stack.length - 1 ? "top" : ""}`}>
                             {value}
@@ -195,6 +200,13 @@ const StackVisualizer = () => {
                             {poppedDie}
                         </div>
                     )}
+                    {topIndex >= 0 &&
+                        <div className="pointer top">
+                            <ArrowBackRounded />
+                            <span>Top</span>
+                            {topIndex}
+                        </div>
+                    }
                 </div>
 
                 {/* Display time and space complexity analysis */}
