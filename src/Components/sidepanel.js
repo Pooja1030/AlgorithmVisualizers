@@ -5,6 +5,20 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [executedSteps, setExecutedSteps] = useState([]); // State to hold executed steps
+  const [prevAlgorithmSteps, setPrevAlgorithmSteps] = useState([]); // State to track previous algorithm steps
+
+  useEffect(() => {
+    if (!isOpen) {
+      // Reset steps when the panel is closed
+      setCurrentStep(0);
+      setExecutedSteps([]);
+    } else if (algorithmSteps !== prevAlgorithmSteps) {
+      // Reset steps when algorithm steps change
+      setCurrentStep(0);
+      setExecutedSteps([]);
+      setPrevAlgorithmSteps(algorithmSteps);
+    }
+  }, [isOpen, algorithmSteps, prevAlgorithmSteps]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -47,6 +61,7 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
   const handleAlgoChange = (pos, val) => {
     setCurrentStep(0); // Reset step when algorithm changes
     setExecutedSteps([]);
+    setPrevAlgorithmSteps([]); // Reset previous algorithm steps
     onAlgoChange(pos, val);
   };
 
