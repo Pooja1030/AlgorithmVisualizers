@@ -1,98 +1,159 @@
-import React, { useState } from 'react';
+import React, { useState,Component } from 'react';
 import Navbar from '../Components/navbar';
-import FlipMove from 'react-flip-move';
-import '../helpers/array_helpers';
+import SidePanel from '../Components/sidepanel';
+import './helpers/array_helpers';
 import './style.css';
+import FlipMove from 'react-flip-move';
 import { times } from 'lodash';
-import SidePanel from './sidepanelp';
 
 const FLIP_DURATION = 750;
 
-const Puzzle = () => {
-    const [squares, setSquares] = useState(times(16, i => ({ value: i })));
-    const [sidePanelOpen, setSidePanelOpen] = useState(false);
-    const [algorithmSteps, setAlgorithmSteps] = useState([
-        { 
-            code: ' Step 1: Shuffle the puzzle tiles randomly to create a solvable configuration.',
-            description: 'Shuffle the puzzle tiles randomly to create a solvable configuration. This step ensures that the puzzle starts in a randomized state, allowing for a challenge to solve.'
-        },
-        { 
-            code: ' Step 2: Implement an algorithm to solve the puzzle.',
-            description: 'Implement an algorithm to solve the puzzle. There are various algorithms available for solving puzzles like the 15 Puzzle, such as A* search algorithm, breadth-first search, depth-first search, etc. Choose an algorithm that suits your needs and implement it.'
-        },
-        { 
-            code: ' Step 3: Execute the algorithm to solve the puzzle.',
-            description: 'Execute the implemented algorithm to solve the puzzle. This step involves running the algorithm on the initial puzzle configuration generated in step 1. The algorithm will systematically rearrange the tiles until the puzzle is solved.'
-        },
-        { 
-            code: ' Step 4: Check if the puzzle is solved.',
-            description: 'Check if the puzzle is solved after executing the algorithm. Verify whether the puzzle tiles are arranged in the correct order according to the puzzle rules. If the puzzle is solved, proceed to the next step; otherwise, continue executing the algorithm.'
-        },
-        { 
-            code: ' Step 5: Display the solution steps (optional).',
-            description: 'Display the solution steps if desired. Once the puzzle is solved, you may want to show the sequence of moves or steps taken to solve the puzzle. This can provide insights into the solving process and help users understand how the solution was achieved.'
-        }
-    ]);
-    const [timeComplexity, setTimeComplexity] = useState('O(n)');
-    const [spaceComplexity, setSpaceComplexity] = useState('O(1)');
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-    const balsal = async () => {
-        // Open side panel when the user clicks on the "Animate" button
-        setSidePanelOpen(true);
+// Function to generate a hardcoded sequence of moves to solve the puzzle
+function generateMoveSequence() {
+    return [
+        [0, 1], [1, 2], [2, 3], [3, 7],
+        [7, 6], [6, 5], [5, 4], [4, 0],
+        [0, 1], [1, 5], [5, 6], [6, 7],
+        [7, 11], [11, 15]
 
-        // Measure time complexity
-        const start = performance.now();
+        // !!! This is not the solution, Find & add steps here
+    ];
+}
 
-        for (let i = 0; i < 15; i++) {
-            setSquares(prevSquares => prevSquares.slice().swap(i, i + 1));
-            await sleep(500);
-        }
-
-        const end = performance.now();
-        const duration = end - start;
-        setTimeComplexity(`O(n) - ${duration.toFixed(2)} ms`);
-
-        // Measure space complexity
-        const space = 1024; // Example space allocation
-        setSpaceComplexity(`O(1) - ${space} bytes`);
+class Puzzle extends Component {
+    constructor() {
+        super();
+        this.state = {
+            squares: times(16, i => ({
+                value: i
+            })),
+            moveIndex: 0,
+            moves: generateMoveSequence(),
+            isPlaying: false,
+            intervalId: null,
+            sidePanelOpen: false, // State to manage side panel visibility
+            algorithmSteps: [
+                {code: ' Step 1: Shuffle the puzzle tiles randomly to create a solvable configuration.',},
+                {code: ' Step 2: Implement an algorithm to solve the puzzle.',},
+                {code: ' Step 3: Execute the algorithm to solve the puzzle.',},
+                {code: ' Step 4: Check if the puzzle is solved.',},
+                {code: ' Step 5: Display the solution steps (optional).',}],
+            timeComplexity: "O(n)", // State to store time complexity
+            spaceComplexity: "O(1)", // State to store space complexity
+        };
     }
 
-    const toggleSidePanel = () => {
-        setSidePanelOpen(prevState => !prevState);
+    componentDidMount() {
+        this.setState({ intervalId: setInterval(this.handleNextStep, FLIP_DURATION) });
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.intervalId);
+    }
+
+    handleNext = () => {
+        if (this.state.moveIndex < this.state.moves.length) {
+            this.setState(state => {
+                const move = state.moves[state.moveIndex];
+                const newSquares = state.squares.slice();
+                const temp = newSquares[move[0]];
+                newSquares[move[0]] = newSquares[move[1]];
+                newSquares[move[1]] = temp;
+                return {
+                    squares: newSquares,
+                    moveIndex: state.moveIndex + 1
+                };
+            });
+        }
     };
 
-    return (
-        <div style={{ backgroundColor: "#57407c" }} className={'full-height'}>
-            <Navbar currentPage="15 Puzzle" />
-            <div className={'justify-content-around '} style={{ textAlign: "center" }}>
-                <div style={{ textAlign: "center", height: "440px", width: "440px", margin: 'auto' }} className={"m-5"}>
-                    <FlipMove duration={FLIP_DURATION} easing="cubic-bezier(.12,.36,.14,1.2)">
-                        {squares.map((stt) =>
-                            <div key={stt.value} className={stt.value === 0 ? "square " : stt.value % 2 === 0 ? 'square shadow correct pt-1' : 'square shadow painted pt-1'}>
-                                {stt.value === 0 ? "" : stt.value}
-                            </div>
-                        )}
-                        <br />
-                    </FlipMove>
-                    <button className={"btn btn-secondary"} onClick={balsal}>Animate</button>
-                </div>
-                <button className="side-panel-toggle" onClick={toggleSidePanel}>→</button>
-                <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} />
+    handlePrevious = () => {
+        if (this.state.moveIndex > 0) {
+            this.setState(state => {
+                const move = state.moves[state.moveIndex - 1];
+                const newSquares = state.squares.slice();
+                const temp = newSquares[move[1]];
+                newSquares[move[1]] = newSquares[move[0]];
+                newSquares[move[0]] = temp;
+                return {
+                    squares: newSquares,
+                    moveIndex: state.moveIndex - 1
+                };
+            });
+        }
+    };
 
-                {/* Render time and space complexity */}
-                <div className="complexity-analysis">
+    handlePlayPause = () => {
+        const { isPlaying, intervalId } = this.state;
+        if (isPlaying) {
+            clearInterval(intervalId);
+        } else {
+            const newIntervalId = setInterval(this.handleNext, FLIP_DURATION);
+            this.setState({ intervalId: newIntervalId });
+        }
+        this.setState({ isPlaying: !isPlaying });
+    }
+
+
+    reset = () => {
+        this.setState({
+            squares: times(16, i => ({
+                value: i
+            })),
+            moveIndex: 0
+        });
+    };
+
+    // Function to toggle side panel
+    toggleSidePanel = () => {
+        this.setState(prevState => ({
+            sidePanelOpen: !prevState.sidePanelOpen,
+        }));
+    };
+
+    render() {
+        // const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
+
+        return (
+            <div style={{ backgroundColor: "#57407c" }} className={'full-height'}>
+                <Navbar currentPage="15 Puzzle" />
+
+                {/* Side panel toggle button */}
+                {/* <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button> */}
+
+                {/* Render the side panel component */}
+                {/* <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={algorithmSteps} /> */}
+
+                <div className={'justify-content-around '} style={{ textAlign: "Center" }}>
+                    <div style={{ textAlign: "center", height: "440px", width: "440px", margin: 'auto' }} className={"m-5"}>
+                        <FlipMove duration={FLIP_DURATION} easing="cubic-bezier(.12,.36,.14,1.2)">
+                            {this.state.squares.map((stt) => (
+                                <div key={stt.value} className={stt.value === 0 ? "square " : stt.value % 2 === 0 ? 'square shadow correct pt-1' : 'square shadow painted pt-1'}>
+                                    {stt.value === 0 ? "" : stt.value}
+                                </div>
+                            ))}
+                            <br />
+                        </FlipMove>
+                        <button className={"btn btn-secondary m-2"} onClick={this.handlePrevious}>Previous</button>
+                        <button className={"btn btn-secondary m-1"} onClick={this.handlePlayPause}>{this.state.isPlaying ? "Pause" : "Play"}</button>
+                        <button className={"btn btn-secondary m-2"} onClick={this.handleNext}>Next</button>
+                        <button className={"btn btn-secondary m-2"} onClick={this.reset}>Reset</button>
+                    </div>
+                </div>
+                  {/* Render time and space complexity */}
+                  {/* <div className="complexity-analysis">
                     <div className="analysis-title">Time Complexity</div>
                     <div className="analysis-result">{timeComplexity}</div>
                     <div className="analysis-title">Space Complexity</div>
                     <div className="analysis-result">{spaceComplexity}</div>
-                </div>
+                </div> */}
             </div>
-        </div>
-    );
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+        );
+    }
 }
 
 export default Puzzle;
