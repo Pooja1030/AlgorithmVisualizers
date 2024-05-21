@@ -2,8 +2,6 @@
   margin: 10px;
 }
 
-
-
 .visualize-btn{    
 background-color: #5a43c3;
 color: #fff;
@@ -38,22 +36,4 @@ color: #fff;
 .menu{
   justify-content: space-between;
   /* padding: 10px 60px; */
-}
-
-.complexity-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.complexity-item {
-  margin: 0 10px;
-}
-
-.complexity-label {
-  font-weight: bold;
-}
-
-.complexity-value {
-  margin-left: 5px;
 }

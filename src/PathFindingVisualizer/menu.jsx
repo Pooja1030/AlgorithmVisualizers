@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import DiscreteSlider from "../Components/slider";
 import SimpleSelect from "../Components/simpleSelect";
-import RangeSlider from '../Components/douleSlider';
-import SwitchLabels from "../Components/formControlLabel";
-import CustomizedSlider from '../Components/douleSlider';
-import Drawer from '@mui/material/Drawer';
 
 class Menu extends Component {
     render() {
@@ -51,6 +47,16 @@ class Menu extends Component {
                         >
                             Reset
                         </button>
+                    </div>
+                    <div>
+                        <div className='node-type'>
+                            <div className='node node-start'></div>
+                            <p> Start Node </p>
+                        </div>
+                        <div className='node-type'>
+                            <div className='node node-finish'></div>
+                            <p>Finish Node</p>
+                        </div>
                     </div>
                 </nav>
             // </Drawer>
