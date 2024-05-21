@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import Rects from './rects';
-import SidePanel from './Sidepanels'; // Import the SidePanel component
+import SidePanel from '../Components/sidepanel'; // Import the SidePanel component
 
 
 class BinarySearch extends Component {
   state = {
-    count: 20,
+    count: 10,
     target: null,
     rects: [],
     isRunning: false,
@@ -92,10 +92,13 @@ class BinarySearch extends Component {
         </div>
         <div>
           {/* Display time and space complexity */}
-          <div>
-            <p>Time Complexity: {timeComplexity}</p>
-            <p>Space Complexity: {spaceComplexity} bytes</p>
-          </div>
+         {/* Display time and space complexity analysis */}
+         <div className="complexity-analysis">
+                    <div className="analysis-title">Time Complexity</div>
+                    <div className="analysis-result">Execution time: {timeComplexity}</div>
+                    <div className="analysis-title">Space Complexity</div>
+                    <div className="analysis-result">Memory usage: {spaceComplexity}</div>
+                </div>
           {/* <div className="row mx-auto" id="binarysearchtree-pseudocode">
               {/* Pseudocode */}
               {/* {algorithmSteps.map((step, index) => (
@@ -190,11 +193,13 @@ class BinarySearch extends Component {
       const { low, high, mid, found, index: targetIndex } = step;
       const updatedRects = this.state.rects.map((rect, i) => {
         if (found && i === targetIndex) {
-          return { ...rect, isTarget: true, isHighlight: false };
-        } else if (i === low || i === high || i === mid) {
-          return { ...rect, isHighlight: true, isTarget: false };
+          return { ...rect, isTarget: true, isHighlight: false, isMid: false };
+        } else if (i === low || i === high) {
+          return { ...rect, isHighlight: true, isMid: false, isTarget: false };
+        } else if (i === mid) {
+          return { ...rect, isMid: true, isTarget: false };
         } else {
-          return { ...rect, isHighlight: false, isTarget: false };
+          return { ...rect, isHighlight: false, isMid: false, isTarget: false };
         }
       });
       this.setState({ rects: updatedRects, currentStep: step });

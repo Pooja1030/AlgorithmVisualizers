@@ -18,84 +18,12 @@
 }
 
 .rect.highlight {
-  background-color: yellow;
+  background-color: rgb(255, 0, 166);
+}
+.rect.mid {
+  background-color: rgb(115, 0, 165);
 }
 
 .rect.target {
-  background-color: red;
+  background-color: rgb(0, 149, 27);
 }
-
-.representation {
-  margin-top: 50px;
-  padding: 20px;
-  border: 1px solid #fff;
-  border-radius: 5px;
-  background-color: #fff;
-}
-
-.representation .ide {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.representation .comment {
-  display: block;
-  font-size: 20px;
-}
-
-.representation .comment:not(:last-child) {
-  margin-bottom: 5px;
-}
-
-.representation .row {
-  display: contents;
-  height: 150px;
-}
-
-.side-panel-toggle {
-  position: fixed;
-  right: 20px;
-  /* bottom: 20px; Adjust this value to change the vertical position */
-  display: inline-block;
-  min-width: 120px;
-  margin: 10px;
-  padding: 15px 25px;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  border: 1px solid #dee2e6;
-  border-radius: 5px;
-  display: flex;
-  align-items: flex-end;
-  background-color: #2196f3;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.side-panel-toggle:hover {
-  background-color: #0d8bff;
-}
-
-/* CSS for time and space complexity display */
-.time-space-complexity {
-  margin-top: 20px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  width: 80%;
-  margin: 0 auto; /* Center the container */
-  text-align: center; /* Align content in the center */
-}
-
-.time-space-complexity p {
-  font-size: 16px;
-  margin: 5px 0;
-}
-
-.time-space-complexity p:first-child {
-  margin-top: 0;
-}
-

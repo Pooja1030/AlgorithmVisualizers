@@ -1,7 +1,7 @@
 // Menu.js
 import React, { Component } from 'react';
-import DiscreteSlider from "./slider";
-import RangeSlider from "./douleSlider";
+import DiscreteSlider from '../Components/slider';
+import RangeSlider from "../Components/douleSlider";
 
 class Menu extends Component {
     state = {
@@ -26,10 +26,10 @@ class Menu extends Component {
             <nav className="nav menu alert-dark">
                 {/* Existing code for sliders */}
                 <DiscreteSlider
-                    default={20}
-                    min={10}
-                    max={100}
-                    step={10}
+                    default={10}
+                    min={5}
+                    max={30}
+                    step={5}
                     title="Numbers"
                     onCountChange={this.props.onCountChange}
                     disable={this.props.disable}

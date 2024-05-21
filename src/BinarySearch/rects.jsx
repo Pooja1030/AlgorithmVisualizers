@@ -7,7 +7,10 @@ const Rects = ({ rects, target }) => {
       {rects.map((rect, index) => (
         <div
           key={index}
-          className={`rect ${rect.isHighlight ? 'highlight' : ''} ${rect.isTarget ? 'target' : ''}`}
+          className={`rect 
+          ${rect.isHighlight ? 'highlight' : ''}
+          ${rect.isMid ? 'mid' : ''}
+           ${rect.isTarget ? 'target' : ''}`}
         >
           {rect.value}
         </div>
