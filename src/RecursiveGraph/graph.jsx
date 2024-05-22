@@ -4,8 +4,7 @@ import { getTree } from "./fib";
 import Menu from "./menu";
 import Navbar from '../Components/navbar';
 import Details from "./details";
-import SidePanel from './sidepanelg';
-import './style7.css';
+import SidePanel from '../Components/sidepanel';
 
 class Graph extends Component {
     constructor() {
