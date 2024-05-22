@@ -88,7 +88,6 @@ class BinaryTree extends Component {
   };
 
 
-  // Function to estimate the memory usage of the BST in bytes
    // Function to estimate the memory usage of the BST in bytes
   estimateSpaceComplexity = (node) => {
     if (!node) return 0;
@@ -107,9 +106,6 @@ class BinaryTree extends Component {
     const valueSize = 4;
     return objectOverhead + 2 * pointerSize + valueSize; // object overhead + left pointer + right pointer + value
   }
-
-
-
 
   traverse = () => {
     const { tree, traversalType, animationSpeed } = this.state;

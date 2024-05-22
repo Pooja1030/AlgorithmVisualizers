@@ -76,8 +76,9 @@ const LinkedListVisualizer = () => {
                 const endTime = performance.now();
                 setResultText('Inserted at beginning:');
                 setCurrVal(newData);
-                setTimeComplexity(`${endTime - startTime} milliseconds`);
-                setSpaceComplexity('O(1)');
+                setTimeComplexity(`O(1) - ${endTime - startTime} milliseconds`);
+                const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
+                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
             } else if (insertPosition === 'After Node') {
 
                 const prevNodeData = parseInt(nodeValue.trim());
@@ -92,8 +93,9 @@ const LinkedListVisualizer = () => {
                         const endTime = performance.now();
                         setResultText('Inserted after ' + prevNodeData + ': ');
                         setCurrVal(newData);
-                        setTimeComplexity(`${endTime - startTime} milliseconds`);
-                        setSpaceComplexity('O(1)');
+                        setTimeComplexity(`O(1) - ${endTime - startTime} milliseconds`);
+                        const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
+                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
                     } else {
                         animateSearch(prevNodeData);
                         setResultText('Node not found');
@@ -119,8 +121,9 @@ const LinkedListVisualizer = () => {
                         const endTime = performance.now();
                         setResultText('Inserted before ' + nextNodeData + ': ');
                         setCurrVal(newData);
-                        setTimeComplexity(`${endTime - startTime} milliseconds`);
-                        setSpaceComplexity('O(1)');
+                        setTimeComplexity(`O(1) - ${endTime - startTime} milliseconds`);
+                       const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
+                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
                     } else {
                         animateSearch(nextNodeData);
                         setResultText('Node not found');
@@ -140,8 +143,9 @@ const LinkedListVisualizer = () => {
                 const endTime = performance.now();
                 setResultText('Inserted at end:');
                 setCurrVal(newData);
-                setTimeComplexity(`${endTime - startTime} milliseconds`);
-                setSpaceComplexity('O(1)');
+                setTimeComplexity(`O(n) - ${endTime - startTime} milliseconds`);
+                const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
+                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
             }
 
             // Call animateInsertion after performing the insertion
@@ -170,8 +174,9 @@ const LinkedListVisualizer = () => {
                 if (removedData !== null) {
                     setResultText('Deleted from beginning:');
                     setCurrVal(removedData);
-                    setTimeComplexity(`${endTime - startTime} milliseconds`);
-                    setSpaceComplexity('O(1)');
+                    setTimeComplexity(`O(1) - ${endTime - startTime} milliseconds`);
+                    const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
+                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
                 } else {
                     setResultText('List is empty');
                     setCurrVal('');
@@ -186,8 +191,9 @@ const LinkedListVisualizer = () => {
                         const endTime = performance.now();
                         setResultText('Deleted node:');
                         setCurrVal(dataToDelete);
-                        setTimeComplexity(`${endTime - startTime} milliseconds`);
-                        setSpaceComplexity('O(1)');
+                        setTimeComplexity(`O(n) - ${endTime - startTime} milliseconds`);
+                        const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
+                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
                     } else {
                         animateSearch(dataToDelete);
                         setResultText('Node not found');
@@ -205,8 +211,9 @@ const LinkedListVisualizer = () => {
                 if (removedData !== null) {
                     setResultText('Deleted from end:');
                     setCurrVal(removedData);
-                    setTimeComplexity(`${endTime - startTime} milliseconds`);
-                    setSpaceComplexity('O(1)');
+                    setTimeComplexity(`O(n) - ${endTime - startTime} milliseconds`);
+                    const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
+                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
                 } else {
                     setResultText('List is empty');
                     setCurrVal('');
@@ -227,12 +234,15 @@ const LinkedListVisualizer = () => {
                 const steps = linkedlist.steps("search");
                 setAlgorithmSteps(steps);
 
+                const startTime = performance.now();
                 const foundNode = linkedlist.search(valueToSearch);
+                const endTime = performance.now();
                 if (foundNode) {
                     setResultText('Node found:');
                     setCurrVal(valueToSearch);
-                    setTimeComplexity('O(n)');
-                    setSpaceComplexity('O(1)');
+                    setTimeComplexity(`O(n) - ${endTime - startTime} ms`);
+                    const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
+                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
                 } else {
                     setResultText('Node not found');
                     setCurrVal('');
@@ -248,6 +258,21 @@ const LinkedListVisualizer = () => {
             setCurrVal('');
         }
     };
+
+    const calculateSpaceComplexity = (list) => {
+        // Calculate space complexity based on the number of nodes and their properties
+        // For simplicity, we can estimate the space complexity as the number of nodes * size_of_node_in_bytes
+        let numNodes = 0;
+        let currentNode = list.head; // Assuming head is the reference to the first node
+        while (currentNode !== null) {
+            numNodes++;
+            currentNode = currentNode.next; // Assuming the next pointer is named 'next'
+        }
+        const sizeOfNodeInBytes = 16; // Assuming each node occupies 16 bytes on average
+        const spaceComplexityBytes = numNodes * sizeOfNodeInBytes;
+        return spaceComplexityBytes;
+    };
+    
 
     const traverseList = () => {
         if (linkedlist) {
@@ -837,9 +862,9 @@ const LinkedListVisualizer = () => {
 
                 <div className="complexity-analysis">
                     <div className="analysis-title">Time Complexity:</div>
-                    <div className="analysis-result">{timeComplexity !== null ? `${timeComplexity}` : "Not measured"}</div>
+                    <div className="analysis-result">{timeComplexity !== '' ? `O(N) - ${timeComplexity}` : "Not measured"}</div>
                     <div className="analysis-title">Space Complexity:</div>
-                    <div className="analysis-result">{spaceComplexity !== null ? `${spaceComplexity}` : "Not measured"}</div>
+                    <div className="analysis-result">{spaceComplexity !== '' ? `O(N) - ${spaceComplexity}` : "Not measured"}</div>
                 </div>
             </div>
         </>

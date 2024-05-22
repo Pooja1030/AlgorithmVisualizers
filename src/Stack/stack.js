@@ -18,6 +18,10 @@ const StackVisualizer = () => {
     const [timeComplexity, setTimeComplexity] = useState("O(1)"); // Initialize with default time complexity
     const [spaceComplexity, setSpaceComplexity] = useState("O(1) bytes"); // Initialize with default space complexity
 
+
+    const defaultTimeComplexity = "O(1)";
+const defaultSpaceComplexity = "O(1 bytes)";
+
     // Function to measure the execution time of stack operations
     const measureExecutionTime = (operationFunc) => {
         const startTime = performance.now();
@@ -211,11 +215,12 @@ const StackVisualizer = () => {
 
                 {/* Display time and space complexity analysis */}
                 <div className="complexity-analysis">
-                    <div className="analysis-title">Time Complexity</div>
-                    <div className="analysis-result">Execution time: {timeComplexity}</div>
-                    <div className="analysis-title">Space Complexity</div>
-                    <div className="analysis-result">Memory usage: {spaceComplexity}</div>
-                </div>
+    <div className="analysis-title">Time Complexity</div>
+    <div className="analysis-result">{defaultTimeComplexity} {timeComplexity && `- ${timeComplexity}`}</div>
+    <div className="analysis-title">Space Complexity</div>
+    <div className="analysis-result">{defaultSpaceComplexity} {spaceComplexity && `- ${spaceComplexity}`}</div>
+</div>
+
             </div>
         </>
     );

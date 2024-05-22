@@ -23,6 +23,8 @@ class Queen extends Component {
         ],
         timeComplexity: "O(N!)", // Default time complexity for N-Queens problem
         spaceComplexity: "O(N^2)", // Default space complexity for N-Queens problem
+        realTimeComplexity: null, // State to store the real-time complexity
+        realSpaceComplexity: null, // State to store the real-space complexity
     }
 
     componentDidMount() {
@@ -31,7 +33,7 @@ class Queen extends Component {
     }
 
     render() {
-        const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
+        const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity  } = this.state;
         return (
             <div>
                 <Navbar currentPage="N-queens problem" />
@@ -56,9 +58,13 @@ class Queen extends Component {
                 </div>
                 <div className="complexity-analysis">
                     <div className="analysis-title">Time Complexity</div>
-                    <div className="analysis-result">{timeComplexity}</div>
+                    <div className="analysis-result">
+                        {timeComplexity}{realTimeComplexity ? ` - ${realTimeComplexity}` : ''}
+                    </div>
                     <div className="analysis-title">Space Complexity</div>
-                    <div className="analysis-result">{spaceComplexity}</div>
+                    <div className="analysis-result">
+                        {spaceComplexity}{realSpaceComplexity ? ` - ${realSpaceComplexity}` : ''}
+                    </div>
                 </div>
             </div>
         );
@@ -105,8 +111,8 @@ class Queen extends Component {
             board: newBoard, 
             isRunning: false, 
             sidePanelOpen: false,
-            timeComplexity: `${executionTime.toFixed(2)} ms`,
-            spaceComplexity
+            realTimeComplexity: `${executionTime.toFixed(2)} ms`,
+            realSpaceComplexity: spaceComplexity
         });
     }
     

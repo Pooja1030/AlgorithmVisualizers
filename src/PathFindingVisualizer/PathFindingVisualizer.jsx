@@ -391,7 +391,12 @@ export default class PathfindingVisualizer extends Component {
 
 
     render() {
-        const { grid, mouseIsPressed, sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
+        const { grid, mouseIsPressed, sidePanelOpen, isDrawerOpen,algorithmSteps, timeComplexity, spaceComplexity } = this.state;
+        
+         // Default time and space complexities (for initial rendering)
+    const defaultTimeComplexity = "O((V + E) * log(V))";
+    const defaultSpaceComplexity = "O(V + E)";
+        
         return (
             <>
                 <Navbar currentPage="Pathfinding Visualizer"
@@ -411,9 +416,8 @@ export default class PathfindingVisualizer extends Component {
                     →
                 </button>
 
-                {/* Render the side panel component */}
-                <SidePanel isOpen={sidePanelOpen} algorithmSteps={algorithmSteps} onClose={this.toggleSidePanel} />
-
+                 {/* Render the side panel component */}
+            <SidePanel isOpen={isDrawerOpen} algorithmSteps={algorithmSteps} onClose={this.toggleSidePanel} />
                 <div className="grid">
                     {grid.map((row, rowIdx) => {
                         return (
@@ -442,12 +446,18 @@ export default class PathfindingVisualizer extends Component {
 
                 </div>
 
-                <div className="complexity-analysis">
-                    <div className="analysis-title">Time Complexity:</div>
-                    <div className="analysis-result">{timeComplexity ? timeComplexity : "Not Measured"}</div>
-                    <div className="analysis-title">Space Complexity:</div>
-                    <div className="analysis-result">{spaceComplexity !== "" ? `${spaceComplexity}` : "Not measured"}</div>
-                </div>
+                {/* Display time and space complexity */}
+                <div className="complexity-container">
+    <div className="complexity-item">
+        <span className="complexity-label">Time Complexity:</span>
+        <span className="complexity-value">{timeComplexity ? `${defaultTimeComplexity} - ${timeComplexity}` : defaultTimeComplexity}</span>
+    </div>
+    <div className="complexity-item">
+        <span className="complexity-label">Space Complexity:</span>
+        <span className="complexity-value">{spaceComplexity ? `${defaultSpaceComplexity} - ${spaceComplexity}` : defaultSpaceComplexity}</span>
+    </div>
+</div>
+
 
             </>
         );

@@ -23,7 +23,9 @@ class ConvexHull extends Component {
             { description: 'Step 5: The set of points added forms the convex hull.' }
         ],
         timeComplexity: 'O(N log N)', // Default time complexity
-        spaceComplexity: 'O(N)' // Default space complexity
+        spaceComplexity: 'O(N)', // Default space complexity
+        realTimeComplexity: null, // State to store the real-time complexity
+        realSpaceComplexity: null // State to store the real-space complexity
     }
 
     constructor() {
@@ -47,7 +49,7 @@ class ConvexHull extends Component {
     }
 
     render() {
-        const { timeComplexity, spaceComplexity } = this.state;
+        const { timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity, isRunning } = this.state;
         return (
             <div>
                 <Navbar currentPage="Convex Hull" />
@@ -68,10 +70,14 @@ class ConvexHull extends Component {
                     onChangeValues={this.handleValueIncease}
                 />
                   <div className="complexity-analysis">
-                    <div className="analysis-title">Time Complexity:</div>
-                    <div className="analysis-result">{timeComplexity !== null ? `${timeComplexity}` : "O(1) ms"}</div>
-                    <div className="analysis-title">Space Complexity:</div>
-                    <div className="analysis-result">{spaceComplexity !== null ? `${spaceComplexity}` : "O(1) bytes"}</div>
+                    <div className="analysis-title">Time Complexity</div>
+                    <div className="analysis-result">
+                        {timeComplexity}{realTimeComplexity && isRunning ? ` - ${realTimeComplexity}` : ''}
+                    </div>
+                    <div className="analysis-title">Space Complexity</div>
+                    <div className="analysis-result">
+                        {spaceComplexity}{realSpaceComplexity && isRunning ? ` - ${realSpaceComplexity}` : ''}
+                    </div>
                 </div>
                 <Canvas
                     width={this.state.width}
@@ -96,7 +102,7 @@ class ConvexHull extends Component {
         // Calculate time complexity based on the number of dots and the current speed
         const timeComplexity = `${(dots.length * 16 * 8) / this.state.speed} milliseconds`; // Assuming each dot object operation takes 8 milliseconds
 
-        this.setState({ timeComplexity, spaceComplexity });
+        this.setState({ realTimeComplexity: timeComplexity, realSpaceComplexity: spaceComplexity });
     }
 
     handleAlgorithmStart = () => {
@@ -106,8 +112,8 @@ class ConvexHull extends Component {
     handleAlgorithmEnd = (time, space) => {
         this.setState({
             isRunning: false,
-            timeComplexity: `${time.toFixed(2)} ms`,
-            spaceComplexity: `${space} bytes`
+            realTimeComplexity: `${time.toFixed(2)} ms`,
+            realSpaceComplexity: `${space} bytes`
         });
     }
 

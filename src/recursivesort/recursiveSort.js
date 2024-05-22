@@ -20,8 +20,10 @@ class RecursiveSort extends Component {
         algo: 0,
         sidePanelOpen: false, // State variable for side panel visibility
         algorithmSteps: [],
-        timeComplexity: '',
-        spaceComplexity: '',
+        defaultTimeComplexity: '',
+        defaultSpaceComplexity: '',
+        realTimeComplexity: '',
+        realSpaceComplexity: '',
         comparisons: 0,
         swaps: 0,
         memoryUsage: 0,
@@ -37,23 +39,23 @@ class RecursiveSort extends Component {
     setAlgorithmSteps = (selectedAlgo) => {
         // Define your algorithm steps here
         let steps = [];
-        let timeComplexity = '';
-        let spaceComplexity = '';
+        let defaultTimeComplexity = '';
+        let defaultSpaceComplexity = '';
         if (selectedAlgo === 0) {
             steps = mergeSortSteps;
-            timeComplexity = 'O(n log n)';
-            spaceComplexity = 'O(n)';
+            defaultTimeComplexity = 'O(n log n)';
+            defaultSpaceComplexity = 'O(n)';
         } else if (selectedAlgo === 1) {
             steps = heapSortSteps;
-            timeComplexity = 'O(n log n)';
-            spaceComplexity = 'O(1)';
+            defaultTimeComplexity = 'O(n log n)';
+            defaultSpaceComplexity = 'O(1)';
         } else if (selectedAlgo === 2) {
             steps = quickSortSteps;
-            timeComplexity = 'O(n log n) average, O(n^2) worst';
-            spaceComplexity = 'O(log n)';
+            defaultTimeComplexity = 'O(n log n) average, O(n^2) worst';
+            defaultSpaceComplexity = 'O(log n)';
         }
 
-        this.setState({ algorithmSteps: steps, timeComplexity, spaceComplexity });
+        this.setState({ algorithmSteps: steps,  defaultTimeComplexity, defaultSpaceComplexity });
     }
 
     toggleSidePanel = () => {
@@ -61,6 +63,7 @@ class RecursiveSort extends Component {
     };
 
     render() {
+        const { defaultTimeComplexity, defaultSpaceComplexity, realTimeComplexity, realSpaceComplexity } = this.state;
         return (
             <React.Fragment>
                 <Navbar currentPage="Recursive Sort" />
@@ -91,12 +94,11 @@ class RecursiveSort extends Component {
                 </div>
 
                 {/* Time and Space Complexity */}
-                <div className="complexity-analysis">
-                    <div className="analysis-title">Time Complexity:</div>
-                    <div className="analysis-result">{this.state.timeComplexity}</div>
-                    <div className="analysis-title">Space Complexity:</div>
-                    <div className="analysis-result">{this.state.spaceComplexity}</div>
-                </div>
+                <div className='time-space-complexity'>
+    <p>Time Complexity - {defaultTimeComplexity} {realTimeComplexity && `- ${realTimeComplexity}`}</p>
+    <p>Space Complexity - {defaultSpaceComplexity} {realSpaceComplexity && `- ${realSpaceComplexity}`}</p>
+</div>
+
             </React.Fragment>
         )
     }
@@ -176,8 +178,8 @@ class RecursiveSort extends Component {
         // Update state with complexities and stop running
         this.setState({
             isRunning: false,
-            timeComplexity,
-            spaceComplexity,
+            realTimeComplexity: timeComplexity,
+            realSpaceComplexity: spaceComplexity,
             comparisons,
             swaps,
             memoryUsage

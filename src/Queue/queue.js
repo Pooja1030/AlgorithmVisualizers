@@ -18,8 +18,10 @@ const QueueVisualizer = () => {
   const [algorithmSteps, setAlgorithmSteps] = useState([]);
   const [lastOperation, setLastOperation] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
-  const [timeComplexity, setTimeComplexity] = useState("O(1)");
+  const [timeComplexity, setTimeComplexity] = useState("O(1) ms");
   const [spaceComplexity, setSpaceComplexity] = useState("O(1) bytes");
+  const [realTimeComplexity, setRealTimeComplexity] = useState(null);
+  const [realSpaceComplexity, setRealSpaceComplexity] = useState(null);
   const stepsRef = useRef([
     { code: `Working of Queue` },
     { code: `- two pointers FRONT and REAR` },
@@ -96,6 +98,11 @@ const QueueVisualizer = () => {
     setStepsAndAnimate(updatedSteps);
   };
 
+  const calculateSpaceComplexity = (queueLength) => {
+    const bytesPerElement = 4; // Assuming each element takes 4 bytes
+    return `${queueLength * bytesPerElement} bytes`;
+  };
+
   const enqueue = () => {
     // Enqueue operation logic
     const start = performance.now();
@@ -103,7 +110,7 @@ const QueueVisualizer = () => {
     if (queue.length < maxSize) {
       const newValue = Math.floor(Math.random() * 10) + 1;
       setQueue((prevQueue) => [...prevQueue, newValue]);
-      setFrontIndex(0)
+      setFrontIndex(0);
       setRearIndex(queue.length); // Update rear pointer index
       setResultText("Enqueued: ");
       setCurrVal(newValue);
@@ -114,8 +121,8 @@ const QueueVisualizer = () => {
     }
     const end = performance.now();
     const executionTime = end - start;
-    setTimeComplexity(`${executionTime.toFixed(2)} ms`);
-    setSpaceComplexity("O(1) bytes"); // Space complexity for Enqueue is O(1)
+    setRealTimeComplexity(`${executionTime.toFixed(2)} ms`);
+    setRealSpaceComplexity(calculateSpaceComplexity(queue.length + 1)); // Update space complexity
   };
 
   const dequeue = () => {
@@ -129,7 +136,7 @@ const QueueVisualizer = () => {
       setDequeuedElement(dequeuedValue);
       setRearIndex(queue.length - 2); // Update rear pointer index
       if (queue.length === 1) {
-        setFrontIndex(-1)
+        setFrontIndex(-1);
         setRearIndex(-1); // Update rear pointer index
       }
       setQueue((prevQueue) => prevQueue.slice(1));
@@ -140,8 +147,8 @@ const QueueVisualizer = () => {
     }
     const end = performance.now();
     const executionTime = end - start;
-    setTimeComplexity(`${executionTime.toFixed(2)} ms`);
-    setSpaceComplexity("O(1) bytes"); // Space complexity for Dequeue is O(1)
+    setRealTimeComplexity(`${executionTime.toFixed(2)} ms`);
+    setRealSpaceComplexity(calculateSpaceComplexity(queue.length - 1)); // Update space complexity
   };
 
   const peek = () => {
@@ -161,8 +168,8 @@ const QueueVisualizer = () => {
     }
     const end = performance.now();
     const executionTime = end - start;
-    setTimeComplexity(`${executionTime.toFixed(2)} ms`);
-    setSpaceComplexity("O(1) bytes"); // Space complexity for Peek is O(1)
+    setRealTimeComplexity(`${executionTime.toFixed(2)} ms`);
+    setRealSpaceComplexity(calculateSpaceComplexity(queue.length)); // Update space complexity
   };
 
   const isEmpty = () => {
@@ -173,8 +180,8 @@ const QueueVisualizer = () => {
     setCurrVal(queue.length === 0 ? "True" : "False");
     const end = performance.now();
     const executionTime = end - start;
-    setTimeComplexity(`${executionTime.toFixed(2)} ms`);
-    setSpaceComplexity("O(1) bytes"); // Space complexity for IsEmpty is O(1)
+    setRealTimeComplexity(`${executionTime.toFixed(2)} ms`);
+    setRealSpaceComplexity(calculateSpaceComplexity(queue.length)); // Update space complexity
   };
 
   const isFull = () => {
@@ -185,8 +192,8 @@ const QueueVisualizer = () => {
     setCurrVal(queue.length === maxSize ? "True" : "False");
     const end = performance.now();
     const executionTime = end - start;
-    setTimeComplexity(`${executionTime.toFixed(2)} ms`);
-    setSpaceComplexity("O(1) bytes"); // Space complexity for IsFull is O(1)
+    setRealTimeComplexity(`${executionTime.toFixed(2)} ms`);
+    setRealSpaceComplexity(calculateSpaceComplexity(queue.length)); // Update space complexity
   };
 
   const size = () => {
@@ -197,9 +204,8 @@ const QueueVisualizer = () => {
     setCurrVal(queue.length);
     const end = performance.now();
     const executionTime = end - start;
-    setTimeComplexity(`${executionTime.toFixed(2)} ms`);
-    setSpaceComplexity("O(1) bytes"); // Space complexity for Size is O(1)
-
+    setRealTimeComplexity(`${executionTime.toFixed(2)} ms`);
+    setRealSpaceComplexity(calculateSpaceComplexity(queue.length)); // Update space complexity
   };
 
   const toggleSidePanel = () => {
@@ -277,11 +283,15 @@ const QueueVisualizer = () => {
           </div>
           }</div>
 
-        <div className="complexity-analysis">
+          <div className="complexity-analysis">
           <div className="analysis-title">Time Complexity:</div>
-          <div className="analysis-result">{timeComplexity !== null ? `${timeComplexity}` : "O(1) ms"}</div>
+          <div className="analysis-result">
+            {`O(1) ms${realTimeComplexity ? ` - ${realTimeComplexity}` : ''}`}
+          </div>
           <div className="analysis-title">Space Complexity:</div>
-          <div className="analysis-result">{spaceComplexity !== null ? `${spaceComplexity}` : "O(1) bytes"}</div>
+          <div className="analysis-result">
+            {`O(1) bytes${realSpaceComplexity ? ` - ${realSpaceComplexity}` : ''}`}
+          </div>
         </div>
       </div>
     </>
@@ -289,3 +299,4 @@ const QueueVisualizer = () => {
 };
 
 export default QueueVisualizer;
+

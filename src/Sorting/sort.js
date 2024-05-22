@@ -19,8 +19,10 @@ class Sort extends Component {
         algo2: 0,
         sidePanelOpen: false,
         algorithmSteps: [],
-        timeComplexity: 'O(n^2)', // Default time complexity
-        spaceComplexity: 'O(1)', // Default space complexity
+        defaultTimeComplexity: 'O(n^2)', // Default time complexity
+        defaultSpaceComplexity: 'O(1)', // Default space complexity
+        realTimeComplexity: '', // Real time complexity
+        realSpaceComplexity: '', // Real space complexity
     };
 
     componentDidMount() {
@@ -66,8 +68,8 @@ class Sort extends Component {
                 </div>
                 {/* Display real-time and space complexities */}
                 <div className='complexities'>
-                    <p>Time Complexity: {this.state.timeComplexity}</p>
-                    <p>Space Complexity: {this.state.spaceComplexity}</p>
+                    <p>Time Complexity: {this.state.defaultTimeComplexity}{this.state.realTimeComplexity && ` - ${this.state.realTimeComplexity}`}</p>
+                    <p>Space Complexity: {this.state.defaultSpaceComplexity}{this.state.realSpaceComplexity && ` - ${this.state.realSpaceComplexity}`}</p>
                 </div>
             </React.Fragment>
         );
@@ -199,8 +201,8 @@ class Sort extends Component {
         // Update state with real-time and space complexity
         this.setState({
             isRunning: false,
-            timeComplexity,
-            spaceComplexity
+            realTimeComplexity: timeComplexity,
+            realSpaceComplexity: spaceComplexity
         });
     };
 

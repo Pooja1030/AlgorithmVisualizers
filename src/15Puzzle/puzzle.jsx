@@ -144,12 +144,12 @@ class Puzzle extends Component {
                         <button className={"btn btn-secondary m-2"} onClick={this.reset}>Reset</button>
                     </div>
                 </div>
-                  {/* Render time and space complexity */}
-                  {/* <div className="complexity-analysis">
+                 {/* Render time and space complexity */}
+                {/* <div className="complexity-analysis">
                     <div className="analysis-title">Time Complexity</div>
-                    <div className="analysis-result">{timeComplexity}</div>
+                    <div className="analysis-result">Default: {timeComplexity}</div>
                     <div className="analysis-title">Space Complexity</div>
-                    <div className="analysis-result">{spaceComplexity}</div>
+                    <div className="analysis-result">Default: {spaceComplexity}</div>
                 </div> */}
             </div>
         );

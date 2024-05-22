@@ -36,13 +36,17 @@ class Graph extends Component {
         callback();
         const endTime = performance.now();
         const executionTime = endTime - startTime;
-        this.setState({ timeComplexity: `${executionTime.toFixed(2)} milliseconds` });
+        this.setState(prevState => ({
+            timeComplexity: `O(n) - ${executionTime.toFixed(2)} milliseconds`
+        }));
     }
 
-    // Function to calculate space complexity
-    calculateSpaceComplexity = () => {
+     // Function to calculate space complexity
+     calculateSpaceComplexity = () => {
         const treeSize = this.state.vertices.length + this.state.edges.length;
-        this.setState({ spaceComplexity: `${treeSize} units` });
+        this.setState(prevState => ({
+            spaceComplexity: `O(n) - ${treeSize} units`
+        }));
     }
 
     setAlgo = (pos, val) => {

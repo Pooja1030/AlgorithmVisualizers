@@ -37,8 +37,10 @@ class BinarySearch extends Component {
         code: ` Step 7: If the target is not found in the array, return -1.`,
       },
     ],
-    timeComplexity: "", // State to store time complexity
-    spaceComplexity: "", // State to store space complexity
+    timeComplexity: "O(log N)", // Default time complexity
+    spaceComplexity: "O(1)", // Default space complexity
+    realTimeComplexity: null, // State to store real-time complexity
+    realSpaceComplexity: null, // State to store real-space complexity
   };
   
   componentDidMount() {
@@ -58,13 +60,18 @@ class BinarySearch extends Component {
     // The size of an empty object is platform-dependent, but we can estimate it to be around 8 bytes.
     const elementSizeInBytes = 8; // Estimated size of an empty object in bytes
     const spaceComplexityInBytes = count * elementSizeInBytes;
-    return spaceComplexityInBytes;
+    return `${spaceComplexityInBytes} bytes`;
   }
+
+ 
+
 
   render() {
 
-    const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
-
+    const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity, isRunning } = this.state;
+     // Calculate default time and space complexities
+  const defaultTimeComplexity = this.calculateTimeComplexity(this.state.count);
+  const defaultSpaceComplexity = this.calculateSpaceComplexity(this.state.count);
 
     return (
       <React.Fragment>
@@ -94,11 +101,17 @@ class BinarySearch extends Component {
           {/* Display time and space complexity */}
          {/* Display time and space complexity analysis */}
          <div className="complexity-analysis">
-                    <div className="analysis-title">Time Complexity</div>
-                    <div className="analysis-result">Execution time: {timeComplexity}</div>
-                    <div className="analysis-title">Space Complexity</div>
-                    <div className="analysis-result">Memory usage: {spaceComplexity}</div>
-                </div>
+            <div className="analysis-title">Time Complexity</div>
+            <div className="analysis-result">
+              {timeComplexity}
+              {realTimeComplexity && ` - ${realTimeComplexity}`}
+            </div>
+            <div className="analysis-title">Space Complexity</div>
+            <div className="analysis-result">
+              {spaceComplexity}
+              {realSpaceComplexity && ` - ${realSpaceComplexity}`}
+            </div>
+          </div>
           {/* <div className="row mx-auto" id="binarysearchtree-pseudocode">
               {/* Pseudocode */}
               {/* {algorithmSteps.map((step, index) => (
@@ -170,15 +183,15 @@ class BinarySearch extends Component {
       }
       const endTime = performance.now(); // Stop measuring time
       const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
-      const timeComplexity = `${executionTime} ms`; // Display execution time
+      const realTimeComplexity = `${executionTime} ms`; // Display execution time
 
       // Calculate space complexity
-      const spaceComplexity = this.calculateSpaceComplexity(rects.length);
+      const realSpaceComplexity = this.calculateSpaceComplexity(rects.length);
 
       this.animateSearch(steps);
 
       // Update time and space complexity
-      this.setState({ sidePanelOpen: true, timeComplexity, spaceComplexity });
+      this.setState({ sidePanelOpen: true, realTimeComplexity, realSpaceComplexity });
     });
   }
 

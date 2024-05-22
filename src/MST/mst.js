@@ -25,8 +25,10 @@ class MST extends Component {
 
 			sidePanelOpen: false,
 			algorithmSteps: [],
-			timeComplexity: "",
-			spaceComplexity: "",
+			defaultTimeComplexity: "O(n)",
+			defaultSpaceComplexity: "O(n)",
+			realTimeComplexity: "",
+			realSpaceComplexity: "",
 			startTime: 0,
 			endTime: 0,
 		};
@@ -41,7 +43,7 @@ class MST extends Component {
 
 	handleAlgorithmChange = (event) => {
 		const algorithm = event.target.value;
-		this.setState({ algorithm, visitedEdges: [], mstEdges: [] }); // Clear vertices and MST edges
+		this.setState({ algorithm, visitedEdges: [], mstEdges: [], realTimeComplexity: "", realSpaceComplexity: "" }); // Clear vertices and MST edges
 		this.setAlgoSteps(algorithm);
 	}
 
@@ -94,23 +96,32 @@ class MST extends Component {
 		const endTime = performance.now(); // Stop measuring time
 
 		const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
-		const timeComplexity = `${executionTime} ms`; // Display execution time
+		const realTimeComplexity = `${executionTime} ms`; // Display execution time
 
 		// Define space complexity
-		const spaceComplexity = "O(E + V)";
+		const realSpaceComplexity = "O(E + V)";
 
-		this.setState({ mstEdges, visitedEdges, timeComplexity, spaceComplexity }); // Set execution time and space complexity
+		this.setState({ mstEdges, visitedEdges, realTimeComplexity, realSpaceComplexity }); // Set execution time and space complexity
 	}
 
 	visualize() {
 		this.calculateMST()
-		this.setState({ sidePanelOpen: true });
-
+		const { algorithm } = this.state;
+		const startTime = performance.now(); // Start measuring time
+		const endTime = performance.now(); // Stop measuring time
+	
 		// Calculate and set the real-time and space complexity
-		const { algorithm, startTime, endTime } = this.state;
 		const elapsedTime = endTime - startTime;
-		const spaceComplexity = this.calculateSpaceComplexity(algorithm);
-		this.setState({ timeComplexity: `${elapsedTime} ms`, spaceComplexity });
+		const realTimeComplexity = `${elapsedTime.toFixed(2)} ms`;
+		const realSpaceComplexity = this.calculateSpaceComplexity(algorithm);
+	
+		this.setState({
+			sidePanelOpen: true,
+			startTime,
+			endTime,
+			realTimeComplexity,
+			realSpaceComplexity
+		});
 	}
 
 	setAlgoSteps = (algorithm) => {
@@ -134,6 +145,7 @@ class MST extends Component {
 			];
 		}
 		this.setState({ algorithmSteps });
+	
 	}
 
 	// Function to calculate space complexity based on the selected algorithm
@@ -169,14 +181,8 @@ class MST extends Component {
 	};
 
 	render() {
-		const { vertices, edges, visitedEdges, mstEdges, maxHeight, maxWidth, algorithm, animationSpeed, startTime, endTime } = this.state;
+		const { vertices, edges, visitedEdges, mstEdges, maxHeight, maxWidth, algorithm, animationSpeed, startTime, endTime, defaultTimeComplexity, defaultSpaceComplexity, realTimeComplexity, realSpaceComplexity } = this.state;
 		const { sidePanelOpen, algorithmSteps } = this.state;
-
-		// Calculate real-time complexity in milliseconds
-		const timeComplexity = (endTime - startTime).toFixed(2) + " ms";
-
-		// Calculate space complexity
-		const spaceComplexity = this.calculateSpaceComplexity(algorithm);
 
 		return (
 			<div>
@@ -220,12 +226,17 @@ class MST extends Component {
 				<Canvas vertices={vertices} mstEdges={mstEdges} connectingEdges={edges} visitedEdges={visitedEdges}
 					width={maxWidth} height={maxHeight} speed={animationSpeed} />
 
-				<div className="complexity-analysis">
-					<div className="analysis-title">Time Complexity:</div>
-					<div className="analysis-result">{timeComplexity}</div>
-					<div className="analysis-title">Space Complexity:</div>
-					<div className="analysis-result">{spaceComplexity !== "" ? `O(${spaceComplexity})` : "Not measured"}</div>
-				</div>
+<div className="complexity-analysis">
+    <div className="analysis-title">Time Complexity:</div>
+    <div className="analysis-result">
+        {this.state.realTimeComplexity ? `${this.state.defaultTimeComplexity} - ${this.state.realTimeComplexity}` : this.state.defaultTimeComplexity}
+    </div>
+    <div className="analysis-title">Space Complexity:</div>
+    <div className="analysis-result">
+        {this.state.realSpaceComplexity ? `${this.state.defaultSpaceComplexity} - ${this.state.realSpaceComplexity}` : this.state.defaultSpaceComplexity}
+    </div>
+</div>
+
 			</div>
 		);
 	}
