@@ -5,7 +5,7 @@ import Menu from "./menu";
 import heapSort from "../algorithms/heapSort";
 import { quickSortRecursive } from "../algorithms/quickSortRecursive";
 import mergeSort from "../algorithms/mergeSort";
-import SidePanel from "./sidepanelrs";
+import SidePanel from "../Components/sidepanel";
 import { quickSort } from "../algorithms/quickSort";
 import { mergeSortSteps } from "../algorithms/mergeSort"; // Import mergeSortSteps 
 import { heapSortSteps } from "../algorithms/heapSort"
@@ -77,8 +77,6 @@ class RecursiveSort extends Component {
                 {/* Toggle button for the side panel */}
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}> →</button>
 
-               
-
                 {/* Side Panel */}
                 <SidePanel
                     algorithmSteps={this.state.algorithmSteps}
@@ -92,10 +90,12 @@ class RecursiveSort extends Component {
                     />
                 </div>
 
-                 {/* Time and Space Complexity */}
-                 <div className='time-space-complexity'>
-                    <p>Time Complexity: {this.state.timeComplexity}</p>
-                    <p>Space Complexity: {this.state.spaceComplexity}</p>
+                {/* Time and Space Complexity */}
+                <div className="complexity-analysis">
+                    <div className="analysis-title">Time Complexity:</div>
+                    <div className="analysis-result">{this.state.timeComplexity}</div>
+                    <div className="analysis-title">Space Complexity:</div>
+                    <div className="analysis-result">{this.state.spaceComplexity}</div>
                 </div>
             </React.Fragment>
         )
@@ -136,7 +136,7 @@ class RecursiveSort extends Component {
         let comparisons = 0;
         let swaps = 0;
         let memoryUsage = 0;
-        
+
         switch (this.state.algo) {
             case 0:
                 startTime = performance.now();
@@ -167,12 +167,12 @@ class RecursiveSort extends Component {
             default:
                 break;
         }
-    
+
         // Calculate real-time and space complexity
         const executionTime = endTime - startTime;
         const timeComplexity = `${executionTime.toFixed(2)} ms`;
         const spaceComplexity = `${memoryUsage} bytes`;
-    
+
         // Update state with complexities and stop running
         this.setState({
             isRunning: false,
@@ -182,7 +182,7 @@ class RecursiveSort extends Component {
             swaps,
             memoryUsage
         });
-    
+
         // Visualize the sorting process after sorting completes
         switch (this.state.algo) {
             case 0:
@@ -198,8 +198,8 @@ class RecursiveSort extends Component {
                 break;
         }
     }
-    
-    
+
+
 
     // monitorComplexities = () => {
     //     let complexityInterval = setInterval(() => {
