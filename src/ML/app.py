@@ -10,6 +10,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import load_iris
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+
 import io
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -19,6 +21,11 @@ import os
 import matplotlib
 matplotlib.use('Agg')
 
+import tensorflow as tf
+from tensorflow.keras.datasets import cifar10
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D
+from tensorflow.keras.utils import to_categorical
 
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests
@@ -174,6 +181,7 @@ def predict():
     X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
     knn = KNeighborsClassifier(n_neighbors=3)
     knn.fit(X_train, y_train)
+
     try:
         data = request.json['data']
         data = [float(i) for i in data]
@@ -216,7 +224,7 @@ def predict_cluster():
 
 # Multi-linear Regression
 @app.route("/train", methods=["GET"])
-def train_model():
+def train_linear_model():
     X, y = load_data()
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1 / 3, random_state=0)
     regressor = LinearRegression()
@@ -232,5 +240,108 @@ def train_model():
     }
     return jsonify(response)
 
+# Load and preprocess CIFAR-10 dataset
+(x_train_cifar, y_train_cifar), (x_test_cifar, y_test_cifar) = cifar10.load_data()
+x_train_cifar, x_test_cifar = x_train_cifar / 255.0, x_test_cifar / 255.0
+y_train_cifar, y_test_cifar = to_categorical(y_train_cifar), to_categorical(y_test_cifar)
+
+# Define CNN model for CIFAR-10
+cifar10_classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+cnn_model = Sequential([
+    Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(32, 32, 3)),
+    MaxPooling2D(pool_size=(2, 2)),
+    Conv2D(64, kernel_size=(3, 3), activation='relu'),
+    MaxPooling2D(pool_size=(2, 2)),
+    Flatten(),
+    Dense(128, activation='relu'),
+    Dense(10, activation='softmax')
+])
+cnn_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+cnn_model.fit(x_train_cifar, y_train_cifar, validation_data=(x_test_cifar, y_test_cifar), epochs=10)
+
+# Load and preprocess the Iris dataset
+iris_data = pd.read_csv('https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data', header=None)
+iris_data.columns = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'class']
+X_iris = iris_data.iloc[:, :-1].values
+y_iris = iris_data.iloc[:, -1].values
+labelencoder = LabelEncoder()
+y_iris = labelencoder.fit_transform(y_iris)
+X_train_iris, X_test_iris, y_train_iris, y_test_iris = train_test_split(X_iris, y_iris, test_size=0.2, random_state=0)
+sc_iris = StandardScaler()
+X_train_iris = sc_iris.fit_transform(X_train_iris)
+X_test_iris = sc_iris.transform(X_test_iris)
+
+# Define ANN model for Iris dataset
+ann_model = Sequential([
+    Dense(units=8, activation='relu', input_dim=4),
+    Dense(units=8, activation='relu'),
+    Dense(units=3, activation='softmax')
+])
+ann_model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+ann_model.fit(X_train_iris, y_train_iris, batch_size=10, epochs=50, validation_split=0.1)
+
+# Define routes for CIFAR-10 predictions and accuracy
+@app.route('/cifar10-predict', methods=['POST'])
+def cifar10_predict():
+    try:
+        data = request.json['data']
+        print("Received data:", data)
+        image = np.array(data).reshape((32, 32, 3))
+        image = np.expand_dims(image, axis=0)
+        prediction = cnn_model.predict(image)
+        print("Prediction array:", prediction)
+        predicted_class = np.argmax(prediction)
+        print("Predicted class index:", predicted_class)
+        confidence = np.max(prediction)
+        if np.isnan(confidence):
+            confidence = 0.0
+        print("Confidence:", confidence)
+        return jsonify({'predicted_class': cifar10_classes[predicted_class], 'confidence': float(confidence)})
+    except Exception as e:
+        print("Error:", str(e))
+        return jsonify({'error': 'Prediction failed'})
+
+@app.route('/cifar10-accuracy', methods=['GET'])
+def cifar10_accuracy():
+    loss, accuracy = cnn_model.evaluate(x_test_cifar, y_test_cifar, verbose=0)
+    return jsonify({'accuracy': accuracy})
+
+# Define routes for Iris predictions, accuracy, and visualization
+@app.route('/iris-predict', methods=['POST'])
+def iris_predict():
+    try:
+        data = request.json['data']
+        print("Received data:", data)
+        data = np.array(data).reshape(1, -1)
+        print("Reshaped data:", data)
+        data = sc_iris.transform(data)
+        print("Transformed data:", data)
+        prediction = ann_model.predict(data)
+        print("Prediction array:", prediction)
+        predicted_class = np.argmax(prediction)
+        print("Predicted class index:", predicted_class)
+        return jsonify({'predicted_class': int(predicted_class), 'class': labelencoder.inverse_transform([predicted_class])[0]})
+    except Exception as e:
+        print("Error:", str(e))
+        return jsonify({'error': 'Prediction failed'})
+
+@app.route('/iris-accuracy', methods=['GET'])
+def iris_accuracy():
+    loss, accuracy = ann_model.evaluate(X_test_iris, y_test_iris, verbose=0)
+    return jsonify({'accuracy': accuracy})
+
+@app.route('/iris-visualize', methods=['GET'])
+def iris_visualize():
+    plt.figure()
+    plt.scatter(X_iris[:, 0], X_iris[:, 1], c=y_iris, cmap='viridis')
+    plt.xlabel('Sepal Length')
+    plt.ylabel('Sepal Width')
+    plt.title('Iris Data Visualization')
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    return send_file(img, mimetype='image/png')
+
 if __name__ == '__main__':
     app.run(port=5000)
+

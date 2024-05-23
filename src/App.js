@@ -23,6 +23,10 @@ import LogisticRegressionVisualization from './ML/LogisticRegression/logistic';
 import MultipleLinearRegressionVisualization from './ML/Multiplelinearregression/multiplelinear';
 import KMeansVisualization from './ML/KMeans/Kmeans';
 import KNN from './ML/KNN/KNN';
+import ANN from './ML/ANN/ANN';
+import CNN from './ML/CNN/CNN';
+// import RNN from './ML/RNN/RNN';
+
 
 function App() {
   return (
@@ -49,6 +53,9 @@ function App() {
             <Route path="multiplelinear-regression" element={<MultipleLinearRegressionVisualization />} />
             <Route path="KMeans" element={<KMeansVisualization />} />
             <Route path="KNN" element={<KNN />} />
+            <Route path="ANN" element={<ANN/>} />
+            <Route path="CNN" element={<CNN />} />
+            {/* <Route path="RNN" element={<RNN />} /> */}
             <Route path="*" element={<NoPage />} />
             <Route path="home" element={<Home />} />
           </Routes>

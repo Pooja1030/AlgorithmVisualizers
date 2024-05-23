@@ -135,6 +135,27 @@ const list = [
     "algorithms": [],
     "img": ""
   },
+  {
+    "title": "ANN",
+    "link": "ANN",
+    "description": "",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "CNN",
+    "link": "CNN",
+    "description": "",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "RNN",
+    "link": "RNN",
+    "description": "",
+    "algorithms": [],
+    "img": ""
+  },
 ];
 
 
