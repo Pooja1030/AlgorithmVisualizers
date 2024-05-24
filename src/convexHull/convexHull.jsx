@@ -16,11 +16,11 @@ class ConvexHull extends Component {
         number: 50,
         sidePanelOpen: false, // State to manage side panel visibility
         algorithmSteps: [
-            { description: 'Step 1: Choose the point with the lowest y-coordinate. If there are multiple points, choose the leftmost one.' },
-            { description: 'Step 2: Sort the remaining points by the polar angle they make with the chosen point.' },
-            { description: 'Step 3: Iterate through the sorted points and add them to the convex hull if they make a counterclockwise turn with the last two points on the hull.' },
-            { description: 'Step 4: Continue adding points until you reach the starting point again.' },
-            { description: 'Step 5: The set of points added forms the convex hull.' }
+            { code: 'Step 1: Choose the point with the lowest y-coordinate. If there are multiple points, choose the leftmost one.' },
+            { code: 'Step 2: Sort the remaining points by the polar angle they make with the chosen point.' },
+            { code: 'Step 3: Iterate through the sorted points and add them to the convex hull if they make a counterclockwise turn with the last two points on the hull.' },
+            { code: 'Step 4: Continue adding points until you reach the starting point again.' },
+            { code: 'Step 5: The set of points added forms the convex hull.' }
         ],
         timeComplexity: 'O(N log N)', // Default time complexity
         spaceComplexity: 'O(N)', // Default space complexity
@@ -132,6 +132,7 @@ class ConvexHull extends Component {
     }
 
     handleVisualize = () => {
+        console.log(this.state.algorithmSteps);
         this.setState({ isRunning: true, sidePanelOpen: true }); // Open side panel when visualizing
     }
 

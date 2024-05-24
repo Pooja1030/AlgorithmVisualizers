@@ -15,34 +15,20 @@ class BinarySearch extends Component {
     currentStep: null,
     sidePanelOpen: false, // State to manage side panel visibility
     algorithmSteps: [
-      {
-        code: ` Step 1: Initialize low and high pointers for the array.`
-      },
-      {
-        code: ` Step 2: Repeat until low pointer is less than or equal to high pointer.`,
-      },
-      {
-        code: ` Step 3: Calculate mid pointer as the average of low and high pointers.`,
-      },
-      {
-        code: ` Step 4: If the value at mid pointer equals the target, return the index of mid.`,
-      },
-      {
-        code: ` Step 5: If the value at mid pointer is less than the target, move the low pointer to mid + 1.`,
-      },
-      {
-        code: ` Step 6: If the value at mid pointer is greater than the target, move the high pointer to mid - 1.`,
-      },
-      {
-        code: ` Step 7: If the target is not found in the array, return -1.`,
-      },
+      { code: "1. Initialize low and high pointers for the array." },
+      { code: "2. Repeat until low pointer is less than or equal to high pointer.", },
+      { code: "3. Calculate mid pointer as the average of low and high pointers.", },
+      { code: "4. If the value at mid pointer equals the target, return the index of mid.", },
+      { code: "5. If the value at mid pointer is less than the target, move the low pointer to mid + 1.", },
+      { code: "6. If the value at mid pointer is greater than the target, move the high pointer to mid - 1.", },
+      { code: "7. If the target is not found in the array, return -1.", },
     ],
     timeComplexity: "O(log N)", // Default time complexity
     spaceComplexity: "O(1)", // Default space complexity
     realTimeComplexity: null, // State to store real-time complexity
     realSpaceComplexity: null, // State to store real-space complexity
   };
-  
+
   componentDidMount() {
     this.handleRandomize();
   }
@@ -63,22 +49,18 @@ class BinarySearch extends Component {
     return `${spaceComplexityInBytes} bytes`;
   }
 
- 
-
-
   render() {
-
     const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity, isRunning } = this.state;
-     // Calculate default time and space complexities
-  const defaultTimeComplexity = this.calculateTimeComplexity(this.state.count);
-  const defaultSpaceComplexity = this.calculateSpaceComplexity(this.state.count);
+    // Calculate default time and space complexities
+    const defaultTimeComplexity = this.calculateTimeComplexity(this.state.count);
+    const defaultSpaceComplexity = this.calculateSpaceComplexity(this.state.count);
 
     return (
       <React.Fragment>
         <Navbar currentPage="Binary Search Visualizer" />
         <Menu
           disable={this.state.isRunning}
-          onVisualize={this.handleSearch} 
+          onVisualize={this.handleSearch}
           onRandomize={this.handleRandomize}
           onReset={this.handleReset}
           onCountChange={this.handleCountChange}
@@ -89,7 +71,7 @@ class BinarySearch extends Component {
         <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
 
         {/* Render the side panel component */}
-        <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={algorithmSteps}  />
+        <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={algorithmSteps} />
 
         <div className='justify-content-center'>
           <Rects
@@ -99,31 +81,19 @@ class BinarySearch extends Component {
         </div>
         <div>
           {/* Display time and space complexity */}
-         {/* Display time and space complexity analysis */}
-         <div className="complexity-analysis">
+          {/* Display time and space complexity analysis */}
+          <div className="complexity-analysis">
             <div className="analysis-title">Time Complexity</div>
             <div className="analysis-result">
               {timeComplexity}
-              {realTimeComplexity && ` - ${realTimeComplexity}`}
+              {realTimeComplexity && `- ${realTimeComplexity}`}
             </div>
             <div className="analysis-title">Space Complexity</div>
             <div className="analysis-result">
               {spaceComplexity}
-              {realSpaceComplexity && ` - ${realSpaceComplexity}`}
+              {realSpaceComplexity && `- ${realSpaceComplexity}`}
             </div>
           </div>
-          {/* <div className="row mx-auto" id="binarysearchtree-pseudocode">
-              {/* Pseudocode */}
-              {/* {algorithmSteps.map((step, index) => (
-                <div className="col-sm-12 col-md-12 col-lg-4 px-0 mr-0" key={index}>
-                  <div className="ide w-100">
-                    <div className="row ml-auto mr-auto 1">
-                      <span className="comment w-100">{step.code}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div> */} 
         </div>
       </React.Fragment>
     );

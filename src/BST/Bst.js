@@ -62,7 +62,6 @@ class BinaryTree extends Component {
     this.setState({ nodeValue: event.target.value });
   }
 
-
   // Method to handle search input change
   handleSearchInputChange = (event) => {
     this.setState({ searchValue: event.target.value });
@@ -86,7 +85,6 @@ class BinaryTree extends Component {
       this.setState({ algorithmSteps: [] });
     }
   };
-
 
    // Function to estimate the memory usage of the BST in bytes
   estimateSpaceComplexity = (node) => {
@@ -141,7 +139,7 @@ class BinaryTree extends Component {
    // Calculate space complexity
    const spaceComplexity = `O(n) - ${this.estimateSpaceComplexity(tree)} bytes`;
 
-    this.setState({ algorithmSteps, timeComplexity, spaceComplexity });
+    this.setState({ algorithmSteps, timeComplexity, spaceComplexity, sidePanelOpen: true });
     // Perform traversal animation
     this.performTraversalAnimation(traversalResult, animationSpeed);
   }
