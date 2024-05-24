@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './sidepanelso.css'; // You can define your styles in this CSS file
 
-const SidePanel = ({ algorithmSteps, isOpen, onClose }) => {
-  const [currentStep, setCurrentStep] = useState(0);
+const SidePanel = ({ algorithmSteps1, algorithmSteps2, isOpen, onClose, isDouble }) => {
+  const [currentStep1, setCurrentStep1] = useState(0);
+  const [currentStep2, setCurrentStep2] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [executedSteps, setExecutedSteps] = useState([]); // State to hold executed steps
+  const [executedSteps1, setExecutedSteps1] = useState([]);
+  const [executedSteps2, setExecutedSteps2] = useState([]);
 
   useEffect(() => {
     let interval;
-    if (isPlaying && currentStep < algorithmSteps.length - 1) {
+    if (isPlaying && (currentStep1 < algorithmSteps1.length - 1 || (isDouble && currentStep2 < algorithmSteps2.length - 1))) {
       interval = setInterval(() => {
-        setCurrentStep(prevStep => prevStep + 1);
+        setCurrentStep1(prevStep => Math.min(prevStep + 1, algorithmSteps1.length - 1));
+        if (isDouble) {
+          setCurrentStep2(prevStep => Math.min(prevStep + 1, algorithmSteps2.length - 1));
+        }
       }, 1000); // Change the interval as per your requirement
     } else {
       clearInterval(interval);
@@ -18,57 +23,72 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose }) => {
     }
 
     return () => clearInterval(interval);
-  }, [isPlaying, currentStep, algorithmSteps]);
+  }, [isPlaying, currentStep1, currentStep2, algorithmSteps1, algorithmSteps2, isDouble]);
 
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
 
   const rewind = () => {
-    if (currentStep > 0) {
-      setCurrentStep(prevStep => prevStep - 1);
+    if (currentStep1 > 0) {
+      setCurrentStep1(prevStep => prevStep - 1);
+    }
+    if (isDouble && currentStep2 > 0) {
+      setCurrentStep2(prevStep => prevStep - 1);
     }
   };
 
   const forward = () => {
-    setCurrentStep(prevStep => Math.min(prevStep + 1, algorithmSteps.length - 1));
+    setCurrentStep1(prevStep => Math.min(prevStep + 1, algorithmSteps1.length - 1));
+    if (isDouble) {
+      setCurrentStep2(prevStep => Math.min(prevStep + 1, algorithmSteps2.length - 1));
+    }
   };
 
   const handleClose = () => {
     setIsPlaying(false); // Stop playback when closing
-    setCurrentStep(0); // Reset step when closing
+    setCurrentStep1(0); // Reset step when closing
+    setCurrentStep2(0); // Reset step when closing
     onClose();
   };
 
   useEffect(() => {
-    setExecutedSteps(algorithmSteps.slice(0, currentStep + 1));
-  }, [currentStep, algorithmSteps]);
+    setExecutedSteps1(algorithmSteps1.slice(0, currentStep1 + 1));
+    if (isDouble) {
+      setExecutedSteps2(algorithmSteps2.slice(0, currentStep2 + 1));
+    }
+  }, [currentStep1, currentStep2, algorithmSteps1, algorithmSteps2, isDouble]);
 
   return (
     <div className={`side-panel ${isOpen ? 'open' : ''}`}>
-      {/* Close button on top */}
       <button className="close-btn" onClick={handleClose}>
         <span>&#8592;</span>
       </button>
-      {/* Buttons in a row */}
       <div className="buttons-row">
         <button className="toggle-btn" onClick={togglePlayPause}>
           {isPlaying ? 'Pause' : 'Play'}
         </button>
-        <button className="rewind-btn" onClick={rewind} disabled={currentStep === 0}>
+        <button className="rewind-btn" onClick={rewind} disabled={currentStep1 === 0 && (!isDouble || currentStep2 === 0)}>
           Rewind
         </button>
-        <button className="forward-btn" onClick={forward} disabled={currentStep === algorithmSteps.length - 1}>
+        <button className="forward-btn" onClick={forward} disabled={currentStep1 === algorithmSteps1.length - 1 && (!isDouble || currentStep2 === algorithmSteps2.length - 1)}>
           Forward
         </button>
       </div>
-      {/* Panel content */}
       {isOpen && (
         <div className="panel-content">
-          {/* Render the code related to current step */}
-          {executedSteps.map((step, index) => (
-            <p key={index}>{step.code}</p>
-          ))}
+          <div className={`panel-section ${isDouble ? 'half-width' : ''}`}>
+            {executedSteps1.map((step, index) => (
+              <p key={index}>{step.code}</p>
+            ))}
+          </div>
+          {isDouble && (
+            <div className="panel-section half-width">
+              {executedSteps2.map((step, index) => (
+                <p key={index}>{step.code}</p>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
