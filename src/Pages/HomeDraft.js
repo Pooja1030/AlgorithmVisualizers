@@ -149,13 +149,13 @@ const list = [
     "algorithms": [],
     "img": ""
   },
-  {
-    "title": "RNN",
-    "link": "RNN",
-    "description": "",
-    "algorithms": [],
-    "img": ""
-  },
+  // {
+  //   "title": "RNN",
+  //   "link": "RNN",
+  //   "description": "",
+  //   "algorithms": [],
+  //   "img": ""
+  // },
 ];
 
 
