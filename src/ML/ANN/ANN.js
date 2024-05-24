@@ -15,6 +15,7 @@ function ANN() {
     });
   };
 
+  
   const handlePredict = () => {
     const data = [
       parseFloat(inputData.sepal_length),
