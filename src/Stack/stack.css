@@ -54,3 +54,28 @@
 .controls {
     margin-top: 20px;
 }
+
+@keyframes slideIn-push {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        background-color: rgb(87, 47, 197);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut-pop {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-100px);
+        background-color: darkblue;
+    }
+}
