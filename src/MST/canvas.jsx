@@ -80,6 +80,9 @@ class Canvas extends Component {
             text.setAttribute('x', midX);
             text.setAttribute('y', midY - 5);
             text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('stroke', 'white');
+            text.setAttribute('stroke-width', 5);
+            text.setAttribute('paint-order', "stroke");
             text.textContent = parseInt(edge.weight / 10).toString();
             svg.appendChild(text);
         });
