@@ -155,6 +155,7 @@ const LinkedListVisualizer = () => {
             setResultText('Select a linked list type first!');
             setCurrVal('');
         }
+        toggleSidePanel(); // Slide in the side panel after insertion
     };
 
     const deleteNode = async () => {
@@ -224,6 +225,8 @@ const LinkedListVisualizer = () => {
             setResultText('Select a linked list type first!');
             setCurrVal('');
         }
+        toggleSidePanel(); // Slide in the side panel after deletion
+
     };
 
     const searchNode = () => {
@@ -257,6 +260,7 @@ const LinkedListVisualizer = () => {
             setResultText('Select a linked list type first!');
             setCurrVal('');
         }
+        toggleSidePanel(); // Slide in the side panel after insertion
     };
 
     const calculateSpaceComplexity = (list) => {
@@ -280,6 +284,7 @@ const LinkedListVisualizer = () => {
             // console.log(traversalResult); // Output the traversal result to console
             return traversalResult;
         }
+        toggleSidePanel(); // Slide in the side panel after insertion
     };
 
     const animateHead = (timeline) => {
@@ -346,6 +351,8 @@ const LinkedListVisualizer = () => {
         const traversalResult = linkedlist.displayList();
         setResultText("Linked list: ");
         setCurrVal(traversalResult);
+        toggleSidePanel(); // Slide in the side panel after insertion
+
     };
 
     const animateInsertion = async (insertPosition, newData) => {

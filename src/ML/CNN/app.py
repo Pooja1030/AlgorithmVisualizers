@@ -1,20 +1,21 @@
+# Import necessary libraries
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.datasets import cifar10
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D
 from tensorflow.keras.utils import to_categorical
 
+# Initialize Flask app
 app = Flask(__name__)
 CORS(app)
 
 # CIFAR-10 classes
 cifar10_classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-# Load and preprocess CIFAR-10 dataset
-(x_train, y_train), (x_test, y_test) = cifar10.load_data()
+# Load and preprocess the smaller dataset
+(x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
 x_train, x_test = x_train / 255.0, x_test / 255.0
 y_train, y_test = to_categorical(y_train), to_categorical(y_test)
 
@@ -31,27 +32,26 @@ model = Sequential([
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-# Train the model
+# Train the model on the smaller dataset
 model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=10)
 
+# Define endpoint for prediction
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.json['data']
-    image = np.array(data).reshape((32, 32, 3))
+    image = np.array(data).reshape((32, 32, 3))  # Assuming input data is already preprocessed
     image = np.expand_dims(image, axis=0)
     prediction = model.predict(image)
-    
-    # Logging for debugging
-    print(f"Prediction: {prediction}")
-    
+
     predicted_class = np.argmax(prediction)
     confidence = np.max(prediction)
-    
+
     if np.isnan(confidence):
         confidence = 0.0
-    
+
     return jsonify({'prediction': cifar10_classes[predicted_class], 'confidence': float(confidence)})
 
+# Define endpoint for accuracy
 @app.route('/accuracy', methods=['GET'])
 def accuracy():
     loss, acc = model.evaluate(x_test, y_test, verbose=0)
