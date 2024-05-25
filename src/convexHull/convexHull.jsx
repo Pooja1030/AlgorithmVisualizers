@@ -87,8 +87,6 @@ class ConvexHull extends Component {
                     onGoing={this.state.isRunning}
                     speed={this.state.speed}
                 />
-
-              
             </div>
         );
     }
