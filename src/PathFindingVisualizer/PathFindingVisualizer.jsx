@@ -350,6 +350,7 @@ export default class PathfindingVisualizer extends Component {
         this.toggleSidePanel();
     }
 
+    // resetgrid
     resetGrid() {
         if (this.state.animating) return;
 
@@ -372,6 +373,8 @@ export default class PathfindingVisualizer extends Component {
 
 
     }
+    // togglesidepanel
+
 
     toggleSidePanel = () => {
         this.setState((prevState) => ({ sidePanelOpen: !prevState.sidePanelOpen }));
