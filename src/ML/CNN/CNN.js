@@ -27,7 +27,7 @@ function CNN() {
             .div(tf.scalar(255.0))
             .expandDims();
           const inputData = tensor.arraySync();
-          axios.post('http://localhost:5000/predict', { data: inputData })
+          axios.post('http://localhost:5000/predict-cifar', { data: inputData })
             .then(response => {
               setPrediction(`Predicted Class: ${response.data.prediction}`);
               setConfidence(`Confidence: ${(response.data.confidence * 100).toFixed(2)}%`);
@@ -40,7 +40,7 @@ function CNN() {
   };
 
   const handleGetAccuracy = () => {
-    axios.get('http://localhost:5000/accuracy')
+    axios.get('http://localhost:5000/accuracy-cifar')
       .then(response => setAccuracy(`Model Accuracy: ${(response.data.accuracy * 100).toFixed(2)}%`))
       .catch(error => console.error('Error getting accuracy:', error));
   };
