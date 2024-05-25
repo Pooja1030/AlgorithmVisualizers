@@ -156,6 +156,13 @@ class Sort extends Component {
                 break;
         }
 
+        // Update state with real-time and space complexity
+        this.setState({
+            algorithmSteps1,
+            realTimeComplexity: timeComplexity1,
+            realSpaceComplexity: spaceComplexity1,
+        });
+
         if (this.state.doubles) {
             switch (this.state.algo2) {
                 case 0:
@@ -199,119 +206,88 @@ class Sort extends Component {
                     break;
             }
 
-            const maxSteps = Math.max(steps1.length, steps2.length);
-
-            for (let i = 0; i < maxSteps; i++) {
-                if (i < steps1.length) {
-                    const step1 = steps1[i];
-                    const prevRects1 = [...this.state.rects];
-                    const { xx: xx1, yy: yy1, changed: changed1 } = step1;
-
-                    prevRects1[xx1] = { ...prevRects1[xx1], isSorting: true };
-                    prevRects1[yy1] = { ...prevRects1[yy1], isSorting: true };
-                    this.setState({ rects: prevRects1 });
-
-                    if (algorithmSteps1[i] && algorithmSteps1[i].code) {
-                        this.setState(prevState => ({ algorithmSteps1: [...prevState.algorithmSteps1, algorithmSteps1[i]] }));
-                    }
-
-                    await new Promise(resolve => setTimeout(resolve, this.state.speed));
-
-                    if (changed1) {
-                        const temp = prevRects1[xx1];
-                        prevRects1[xx1] = prevRects1[yy1];
-                        prevRects1[yy1] = temp;
-                        this.setState({ rects: prevRects1 });
-                    }
-
-                    prevRects1[xx1] = { ...prevRects1[xx1], isSorting: false };
-                    prevRects1[yy1] = { ...prevRects1[yy1], isSorting: false };
-                    this.setState({ rects: prevRects1 });
-
-                    await new Promise(resolve => setTimeout(resolve, this.state.speed));
-                }
-
-                if (i < steps2.length) {
-                    const step2 = steps2[i];
-                    const prevRects2 = [...this.state.rects2];
-                    const { xx: xx2, yy: yy2, changed: changed2 } = step2;
-
-                    prevRects2[xx2] = { ...prevRects2[xx2], isSorting: true };
-                    prevRects2[yy2] = { ...prevRects2[yy2], isSorting: true };
-                    this.setState({ rects2: prevRects2 });
-
-                    if (algorithmSteps2[i] && algorithmSteps2[i].code) {
-                        this.setState(prevState => ({ algorithmSteps2: [...prevState.algorithmSteps2, algorithmSteps2[i]] }));
-                    }
-
-                    await new Promise(resolve => setTimeout(resolve, this.state.speed));
-
-                    if (changed2) {
-                        const temp = prevRects2[xx2];
-                        prevRects2[xx2] = prevRects2[yy2];
-                        prevRects2[yy2] = temp;
-                        this.setState({ rects2: prevRects2 });
-                    }
-
-                    prevRects2[xx2] = { ...prevRects2[xx2], isSorting: false };
-                    prevRects2[yy2] = { ...prevRects2[yy2], isSorting: false };
-                    this.setState({ rects2: prevRects2 });
-
-                    await new Promise(resolve => setTimeout(resolve, this.state.speed));
-                }
-            }
-        } else {
-            // Execute the sorting algorithm steps one by one with visualization for the first algorithm
-            for (let i = 0; i < steps1.length; i++) {
-                const step = steps1[i];
-                const prevRects = [...this.state.rects];
-                const { xx, yy, changed } = step;
-
-                // Highlight the elements being compared or swapped
-                prevRects[xx] = { ...prevRects[xx], isSorting: true };
-                prevRects[yy] = { ...prevRects[yy], isSorting: true };
-                this.setState({ rects: prevRects });
-
-                // Highlight the current algorithm step in the side panel
-                if (algorithmSteps1[i] && algorithmSteps1[i].code) {
-                    this.setState(prevState => ({ algorithmSteps1: [...prevState.algorithmSteps1, algorithmSteps1[i]] }));
-                }
-
-                // Wait for a short duration to visualize the step
-                await new Promise(resolve => setTimeout(resolve, this.state.speed));
-
-                // If elements are swapped, update the state with the swapped elements
-                if (changed) {
-                    const temp = prevRects[xx];
-                    prevRects[xx] = prevRects[yy];
-                    prevRects[yy] = temp;
-                    this.setState({ rects: prevRects });
-                }
-
-                // Unhighlight the elements after comparison or swap
-                prevRects[xx] = { ...prevRects[xx], isSorting: false };
-                prevRects[yy] = { ...prevRects[yy], isSorting: false };
-                this.setState({ rects: prevRects });
-
-                // Wait for a short duration before proceeding to the next step
-                await new Promise(resolve => setTimeout(resolve, this.state.speed));
-            }
-        }
-
-        // Update state with real-time and space complexity
-        this.setState({
-            isRunning: false,
-            realTimeComplexity: timeComplexity1,
-            realSpaceComplexity: spaceComplexity1,
-        });
-
-        if (this.state.doubles) {
             this.setState({
+                algorithmSteps2,
                 realTimeComplexity: `${timeComplexity1}, ${timeComplexity2}`,
                 realSpaceComplexity: `${spaceComplexity1}, ${spaceComplexity2}`,
             });
         }
+
+        this.handleFirst(steps1);
+        if (this.state.doubles) this.handleSecond(steps2);
+
+        this.setState({
+            isRunning: false
+        });
     };
+
+    handleFirst = async (steps) => {
+        this.setState({ isRunning1: true });
+        const prevRect = this.state.rects;
+        for (let i = 0; i < steps.length; i++) {
+            //   setTimeout(()=>{
+            if (i !== 0) {
+                prevRect[steps[i - 1].xx] = { ...prevRect[steps[i - 1].xx], isSorting: false };
+                prevRect[steps[i - 1].yy] = { ...prevRect[steps[i - 1].yy], isSorting: false };
+            }
+            if (steps[i].xx === steps[i].yy) {
+                prevRect[steps[i].xx] = { ...prevRect[steps[i].xx], isSorted: true, isSorting: false };
+            } else if (steps[i].changed) {
+                const recti = { ...prevRect[steps[i].xx], isSorting: true };
+                const rectj = { ...prevRect[steps[i].yy], isSorting: true };
+                prevRect[steps[i].yy] = recti;
+                prevRect[steps[i].xx] = rectj;
+            } else {
+                prevRect[steps[i].xx] = { ...prevRect[steps[i].xx], isSorting: true };
+                prevRect[steps[i].yy] = { ...prevRect[steps[i].yy], isSorting: true };
+            }
+            if (i === steps.length - 1) {
+                this.setState({ isRunning1: false });
+                if (this.state.isRunning2 === false) {
+                    this.setState({ isRunning: false });
+                }
+            }
+            this.setState({ rects: prevRect });
+            await this.sleep(this.state.speed);
+        }
+    }
+
+    handleSecond = async (steps) => {
+        this.setState({ isRunning2: true });
+        const prevRect = this.state.rects2;
+        for (let i = 0; i < steps.length; i++) {
+            //   setTimeout(()=>{
+            if (i !== 0) {
+                prevRect[steps[i - 1].xx] = { ...prevRect[steps[i - 1].xx], isSorting: false };
+                prevRect[steps[i - 1].yy] = { ...prevRect[steps[i - 1].yy], isSorting: false };
+            }
+            if (steps[i].xx === steps[i].yy) {
+                prevRect[steps[i].xx] = { ...prevRect[steps[i].xx], isSorted: true, isSorting: false };
+            } else if (steps[i].changed) {
+                const recti = { ...prevRect[steps[i].xx], isSorting: true };
+                const rectj = { ...prevRect[steps[i].yy], isSorting: true };
+                prevRect[steps[i].yy] = recti;
+                prevRect[steps[i].xx] = rectj;
+            } else {
+                prevRect[steps[i].xx] = { ...prevRect[steps[i].xx], isSorting: true };
+                prevRect[steps[i].yy] = { ...prevRect[steps[i].yy], isSorting: true };
+            }
+            if (i === steps.length - 1) {
+                this.setState({ isRunning2: false });
+                if (this.state.isRunning1 === false) {
+                    this.setState({ isRunning: false });
+                }
+            }
+
+            this.setState({ rects2: prevRect });
+            await this.sleep(this.state.speed);
+
+        }
+    }
+
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     getInitialRects = (tot) => {
         const rects = [];

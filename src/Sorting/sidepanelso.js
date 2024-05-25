@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './sidepanelso.css'; // You can define your styles in this CSS file
+import { CloseRounded } from '@material-ui/icons';
 
 const SidePanel = ({ algorithmSteps1, algorithmSteps2, isOpen, onClose, isDouble }) => {
   const [currentStep1, setCurrentStep1] = useState(0);
@@ -61,9 +62,11 @@ const SidePanel = ({ algorithmSteps1, algorithmSteps2, isOpen, onClose, isDouble
 
   return (
     <div className={`side-panel ${isOpen ? 'open' : ''}`}>
-      <button className="close-btn" onClick={handleClose}>
-        <span>&#8592;</span>
-      </button>
+      {isOpen &&
+        <button className="close-btn" onClick={handleClose}>
+          <CloseRounded />
+        </button>
+      }
       <div className="buttons-row">
         <button className="toggle-btn" onClick={togglePlayPause}>
           {isPlaying ? 'Pause' : 'Play'}
@@ -83,10 +86,13 @@ const SidePanel = ({ algorithmSteps1, algorithmSteps2, isOpen, onClose, isDouble
             ))}
           </div>
           {isDouble && (
-            <div className="panel-section half-width">
-              {executedSteps2.map((step, index) => (
-                <p key={index}>{step.code}</p>
-              ))}
+            <div>
+              <hr />
+              <div className="panel-section half-width">
+                {executedSteps2.map((step, index) => (
+                  <p key={index}>{step.code}</p>
+                ))}
+              </div>
             </div>
           )}
         </div>

@@ -61,7 +61,7 @@ class Menu extends Component {
                         disabled={this.props.isDisabled}
                         style={this.isClickable()}
                     >
-                        Visualize
+                        Sort
                     </button>
                     <button
                         className='reset-btn btn-secondary m-2'
