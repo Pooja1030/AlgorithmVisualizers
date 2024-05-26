@@ -3,6 +3,7 @@ import Cells from "./cells";
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import SidePanel from '../Components/sidepanel';
+import { ListRounded } from '@material-ui/icons';
 import './style.css';
 
 class Queen extends Component {
@@ -45,7 +46,9 @@ class Queen extends Component {
                     onClear={this.handleClear}
                     onStop={this.handleStop}
                 />
-                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
+                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
+          View steps
+       </button>
                 <SidePanel
                     isOpen={sidePanelOpen}
                     onClose={this.closeSidePanel}

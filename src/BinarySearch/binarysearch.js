@@ -4,7 +4,7 @@ import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import Rects from './rects';
 import SidePanel from '../Components/sidepanel'; // Import the SidePanel component
-
+import { ListRounded } from '@material-ui/icons';
 
 class BinarySearch extends Component {
   state = {
@@ -68,7 +68,10 @@ class BinarySearch extends Component {
         />
 
         {/* Side panel toggle button */}
-        <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
+        <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
+          <ListRounded className='sidepanel-icon' />
+          View steps
+        </button>
 
         {/* Render the side panel component */}
         <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={algorithmSteps} />

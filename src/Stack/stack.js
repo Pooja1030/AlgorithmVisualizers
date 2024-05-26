@@ -5,6 +5,7 @@ import SidePanel from '../Components/sidepanel'; // Import the SidePanel compone
 import './stack.css';
 import { gsap } from 'gsap';
 import { ArrowBackRounded } from '@mui/icons-material';
+import { ListRounded } from '@material-ui/icons';
 
 const StackVisualizer = () => {
     const [stack, setStack] = useState([]);
@@ -18,9 +19,8 @@ const StackVisualizer = () => {
     const [timeComplexity, setTimeComplexity] = useState("O(1)"); // Initialize with default time complexity
     const [spaceComplexity, setSpaceComplexity] = useState("O(1) bytes"); // Initialize with default space complexity
 
-
     const defaultTimeComplexity = "O(1)";
-const defaultSpaceComplexity = "O(1 bytes)";
+    const defaultSpaceComplexity = "O(1 bytes)";
 
     // Function to measure the execution time of stack operations
     const measureExecutionTime = (operationFunc) => {
@@ -170,7 +170,9 @@ const defaultSpaceComplexity = "O(1 bytes)";
         <>
             <Navbar currentPage="Stack" />
             {/* Side panel toggle button */}
-            <button className="side-panel-toggle" onClick={toggleSidePanel}>→</button>
+            <button className="side-panel-toggle" onClick={toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
+                View steps
+            </button>
             {/* Render the side panel component */}
             <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} />
             <div className="stack-visualizer">
@@ -215,11 +217,11 @@ const defaultSpaceComplexity = "O(1 bytes)";
 
                 {/* Display time and space complexity analysis */}
                 <div className="complexity-analysis">
-    <div className="analysis-title">Time Complexity</div>
-    <div className="analysis-result">{defaultTimeComplexity} {timeComplexity && `- ${timeComplexity}`}</div>
-    <div className="analysis-title">Space Complexity</div>
-    <div className="analysis-result">{defaultSpaceComplexity} {spaceComplexity && `- ${spaceComplexity}`}</div>
-</div>
+                    <div className="analysis-title">Time Complexity</div>
+                    <div className="analysis-result">{defaultTimeComplexity} {timeComplexity && `- ${timeComplexity}`}</div>
+                    <div className="analysis-title">Space Complexity</div>
+                    <div className="analysis-result">{defaultSpaceComplexity} {spaceComplexity && `- ${spaceComplexity}`}</div>
+                </div>
 
             </div>
         </>

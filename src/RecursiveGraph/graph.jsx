@@ -5,6 +5,7 @@ import Menu from "./menu";
 import Navbar from '../Components/navbar';
 import Details from "./details";
 import SidePanel from '../Components/sidepanel';
+import { ListRounded } from '@material-ui/icons';
 
 class Graph extends Component {
     constructor() {
@@ -192,7 +193,9 @@ class Graph extends Component {
                 />
                 <Details algo={this.state.algo} />
                 {/* Side panel toggle button */}
-                <button className="side-panel-toggle" onClick={this.toggleSidePanel}> →</button>
+                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>   <ListRounded className='sidepanel-icon' />
+          View steps
+       </button>
                 {/* Side Panel */}
                 <SidePanel algorithmSteps={this.state.algorithmSteps} isOpen={this.state.sidePanelOpen} onClose={this.toggleSidePanel} />
                 <CanvasSvg

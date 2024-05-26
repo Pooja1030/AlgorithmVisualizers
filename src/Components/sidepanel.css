@@ -2,78 +2,95 @@
   position: fixed;
   right: 60px;
   top: 10px;
-  width:fit-content  !important;
-  margin: 10px;
-  padding: 15px 25px;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  border: 1px solid #dee2e6;
-  border-radius: 5px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  background-color: #2196f3;
-  color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: box-shadow 0.3s ease;
+  padding-left: 20px;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  color: #191919;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .side-panel-toggle:hover {
-  background-color: #0d8bff;
+  /* background: #f0f0f0; */
+  box-shadow: 0 1px 4px rgba(25, 25, 25, .1);
+}
+
+.sidepanel-icon {
+  color: #464646;
 }
 
 .side-panel {
   position: fixed;
-  top: 0;
-  right: 0;
-  width: 0;
-  height: 100vh;
-  background-color: #f0f0f0;
-  transition: width 0.3s ease-in-out;
-  overflow: hidden;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  top: 5px;
+  right: 10px;
+  width: 30%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(25, 25, 25, .16);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
   z-index: 1000;
-  /* Ensure the panel stays above other content */
 }
 
 .side-panel.open {
-  width: 30%;
+  transform: translateX(0);
+  height: 95vh;
+  padding: 10px;
+}
+
+.side-panel-header {
+  border-bottom: 1px solid #ededed;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 20px 5px 15px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 100%;
 }
 
 .close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 10px;
-  background: none;
+  right: 0;
+  top: 0;
+  display: block;
+  background: transparent;
   border: none;
+  height: 11px;
+  min-width: 11px;
+  margin: 20px 15px 0 0;
+  padding: 0;
   cursor: pointer;
+  fill: #191919;
+  opacity: .5;
 }
 
-.buttons-container {
-  margin-top: 80px;
-  /* Adjust the space from the top */
+.close-btn:hover {
+  opacity: 1;
 }
 
 .buttons-row {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 80px;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 10px 0;
+  flex: 1;
+  margin: auto;
+  margin-top: 50px;
+  width: 100%;
+  z-index: 5;
 }
 
-.toggle-btn,
-.play-pause-btn,
-.rewind-btn,
-.forward-btn {
+.buttons-row button {
   display: inline-block;
-  /* Change to block to stack buttons vertically */
-  width: 10%;
-  /* Take up full width */
-  margin-bottom: 50px;
-  /* Adjust spacing between buttons */
-  padding: 10px;
+  /* margin-bottom: 50px; */
+  width: 100%;
   border: none;
   background-color: #2196f3;
   color: #fff;
@@ -81,36 +98,23 @@
   transition: background-color 0.3s ease;
 }
 
-.toggle-btn:hover,
-.play-pause-btn:hover,
-.rewind-btn:hover,
-.forward-btn:hover {
+.buttons-row button:hover {
   background-color: #0d8bff;
 }
 
 .panel-content {
-  padding: 20px;
-  margin-top: -45px;
-}
-
-/* .panel-content p {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 10px;
-    overflow-x: auto;
-    height: 450px;
-  } */
-
-.side-panel-content {
   display: flex;
-  flex-wrap: wrap;
-  /* Allow content to wrap onto the next line */
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: auto;
+  color: #555;
+  /* margin-top: -30px; */
 }
 
-.algorithm-step {
+.panel-content .step {
   width: 100%;
-  /* Set the width to 100% so that each step takes up the full width of the container */
-  /* Add other styling properties as needed */
+  margin: 0;
+  padding: 10px 0;
 }
 
 

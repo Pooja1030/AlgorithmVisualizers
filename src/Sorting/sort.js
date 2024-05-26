@@ -3,6 +3,7 @@ import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import Rects from './rects';
 import SidePanel from './sidepanelso';
+import { ListRounded } from '@material-ui/icons';
 import { bubbleSort, selectionSort, insertionSort } from "../algorithms/sortingalgorithms";
 import { bubbleSortSteps, selectionSortSteps, insertionSortSteps } from "../algorithms/sortingalgorithms";
 import { quickSort, quickSortSteps } from '../algorithms/quickSort';
@@ -39,7 +40,9 @@ class Sort extends Component {
             <React.Fragment>
                 <Navbar currentPage="Sorting Visualizer" />
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
-                    →
+                      <ListRounded className='sidepanel-icon' />
+          View steps
+       
                 </button>
                 <SidePanel
                     isOpen={this.state.sidePanelOpen}
@@ -101,7 +104,7 @@ class Sort extends Component {
 
     handleAlgoChanged = (pos, val) => {
         // Reset algorithmSteps when a new algorithm is selected
-        this.setState({ algorithmSteps1: [], algorithmSteps2: [] });
+        this.setState({ algorithmSteps1: [], algorithmSteps2: [], sidePanelOpen:false });
         if (pos === 0) {
             this.setState({ algo1: val });
         } else {

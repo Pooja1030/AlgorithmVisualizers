@@ -4,9 +4,8 @@
   justify-content: space-between;
 }
 
-.half-width {
-  /* min-height: 300px; */
+.half-height {
   height: 35vh;
-  padding: 10px 0;
-  overflow-y:scroll;
+  /* padding: 10px 0; */
+  overflow-y: auto;
 }

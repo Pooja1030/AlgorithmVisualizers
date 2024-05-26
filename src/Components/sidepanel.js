@@ -1,102 +1,120 @@
-import React, { useState, useEffect } from 'react';
-import './sidepanel.css'; // You can define your styles in this CSS file
+import React, { useState, useEffect, useRef } from 'react';
+import './sidepanel.css';
+import { CloseRounded } from '@material-ui/icons';
+import { gsap } from 'gsap';
 
 const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [executedSteps, setExecutedSteps] = useState([]); // State to hold executed steps
-  const [prevAlgorithmSteps, setPrevAlgorithmSteps] = useState([]); // State to track previous algorithm steps
+  const stepRefs = useRef([]);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    if (!isOpen) {
-      // Reset steps when the panel is closed
+    if (isOpen) {
       setCurrentStep(0);
-      setExecutedSteps([]);
-    } else if (algorithmSteps !== prevAlgorithmSteps) {
-      // Reset steps when algorithm steps change
+      setIsPlaying(true);
+      startPlayback();
+    } else {
       setCurrentStep(0);
-      setExecutedSteps([]);
-      setPrevAlgorithmSteps(algorithmSteps);
+      setIsPlaying(false);
+      clearInterval(intervalRef.current);
     }
-  }, [isOpen, algorithmSteps, prevAlgorithmSteps]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, algorithmSteps]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (isPlaying && currentStep < algorithmSteps.length - 1) {
-        setCurrentStep(prevStep => prevStep + 1);
-      } else {
-        setIsPlaying(false); // Pause when all steps are played
-      }
-    }, 1000); // Change the interval as per your requirement
+    if (isOpen && stepRefs.current.length > 0) {
+      stepRefs.current[currentStep]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      gsap.to(stepRefs.current, {
+        color: (i) => (i === currentStep ? '#000' : '#555'),
+        fontWeight: (i) => (i === currentStep ? 'bold' : 'normal'),
+        duration: 1,
+        overwrite: 'auto'
+      });
 
-    return () => clearInterval(interval);
-  }, [isPlaying, currentStep, algorithmSteps]);
-
-  const togglePlayPause = () => {
-    if (executedSteps.length === algorithmSteps.length) {
-      // If all steps are executed, reset and start again
-      setCurrentStep(0);
-      setExecutedSteps([]);
     }
-    setIsPlaying(!isPlaying);
-  };
+  }, [currentStep, isOpen]);
 
-  const rewind = () => {
-    if (currentStep > 0) {
-      setCurrentStep(prevStep => prevStep - 1);
-      setExecutedSteps(prevSteps => prevSteps.slice(0, currentStep - 1));
-    }
-  };
-
-  const forward = () => {
-    setCurrentStep(prevStep => Math.min(prevStep + 1, algorithmSteps.length - 1));
+  const startPlayback = () => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setCurrentStep((prevStep) => {
+        const nextStep = prevStep + 1;
+        if (nextStep >= algorithmSteps.length) {
+          clearInterval(intervalRef.current);
+          setIsPlaying(false);
+          return prevStep;
+        }
+        return nextStep;
+      });
+    }, 1000);
   };
 
   const handleClose = () => {
-    setIsPlaying(false); // Stop playback when closing
-    setCurrentStep(0); // Reset step when closing
+    setIsPlaying(false);
+    clearInterval(intervalRef.current);
+    setCurrentStep(0);
     onClose();
   };
 
-  const handleAlgoChange = (pos, val) => {
-    setCurrentStep(0); // Reset step when algorithm changes
-    setExecutedSteps([]);
-    setPrevAlgorithmSteps([]); // Reset previous algorithm steps
-    onAlgoChange(pos, val);
+  const togglePlayPause = () => {
+    if (!isPlaying) {
+      if (currentStep === algorithmSteps.length - 1) {
+        setCurrentStep(0); // Restart from the beginning if at the end
+      }
+      setIsPlaying(true);
+      startPlayback();
+    } else {
+      setIsPlaying(false);
+      clearInterval(intervalRef.current);
+    }
   };
 
-  useEffect(() => {
-    if (isPlaying) {
-      setExecutedSteps(prevSteps => [...prevSteps, algorithmSteps[currentStep]]);
-    }
-  }, [currentStep, isPlaying, algorithmSteps]);
+  const rewind = () => {
+    setIsPlaying(false);
+    clearInterval(intervalRef.current);
+    setCurrentStep((prevStep) => Math.max(prevStep - 1, 0));
+  };
+
+  const forward = () => {
+    setIsPlaying(false);
+    clearInterval(intervalRef.current);
+    setCurrentStep((prevStep) => Math.min(prevStep + 1, algorithmSteps.length - 1));
+  };
 
   return (
     <div className={`side-panel ${isOpen ? 'open' : ''}`}>
-      {/* Close button on top */}
-      <button className="close-btn" onClick={handleClose}>
-        <span>&#8592;</span>
-      </button>
-      {/* Buttons in a row */}
-      <div className="buttons-row">
-        <button className="toggle-btn" onClick={togglePlayPause}>
-          {isPlaying ? 'Pause' : 'Play'}
-        </button>
-        <button className="rewind-btn" onClick={rewind}>
-          Rewind
-        </button>
-        <button className="forward-btn" onClick={forward}>
-          Forward
-        </button>
-      </div>
-      {/* Panel content */}
       {isOpen && (
-        <div className="panel-content">
-          {/* Render the code related to current step */}
-          {executedSteps.map((step, index) => (
-            <p key={index}>{step.code}</p>
-          ))}
-        </div>
+        <>
+          <div className="side-panel-header">
+            <span>Algorithm Steps</span>
+            <button className="close-btn" onClick={handleClose}>
+              <CloseRounded />
+            </button>
+          </div>
+          <div className="buttons-row">
+            <button className="toggle-btn" onClick={togglePlayPause}>
+              {isPlaying ? 'Pause' : 'Play'}
+            </button>
+            <button className="rewind-btn" onClick={rewind}>
+              Rewind
+            </button>
+            <button className="forward-btn" onClick={forward}>
+              Forward
+            </button>
+          </div>
+          <div className="panel-content">
+            {algorithmSteps.map((step, index) => (
+              <p
+                key={index}
+                ref={(el) => (stepRefs.current[index] = el)}
+                className="step"
+              >
+                {step.code}
+              </p>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

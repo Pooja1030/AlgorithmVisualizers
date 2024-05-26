@@ -3,6 +3,7 @@ import Canvas from "./canvas";
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import SidePanel from '../Components/sidepanel'; // Import SidePanel component
+import { ListRounded } from '@material-ui/icons';
 
 class ConvexHull extends Component {
     state = {
@@ -57,7 +58,9 @@ class ConvexHull extends Component {
                 {/* Rest of the component */}
                 {/* Side panel toggle button */}
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
-                    →
+                      <ListRounded className='sidepanel-icon' />
+          View steps
+       
                 </button>
 
                 {/* Render the side panel component */}

@@ -4,7 +4,7 @@ import DiscreteSlider from "../Components/slider";
 import SidePanel from '../Components/sidepanel';
 import "./queue.css";
 import { gsap } from 'gsap';
-import { ArrowUpwardRounded, ArrowDownwardRounded } from "@material-ui/icons";
+import { ArrowUpwardRounded, ArrowDownwardRounded, ListRounded } from "@material-ui/icons";
 
 const QueueVisualizer = () => {
   const [queue, setQueue] = useState([]);
@@ -232,7 +232,9 @@ const QueueVisualizer = () => {
   return (
     <>
       <Navbar currentPage="Queue" />
-      <button className="side-panel-toggle" onClick={toggleSidePanel}>→</button>
+      <button className="side-panel-toggle" onClick={toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
+          View steps
+       </button>
       <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} rewind={rewind} forward={forward} />
       <div className="queue-visualizer">
         <div>
@@ -283,7 +285,7 @@ const QueueVisualizer = () => {
           </div>
           }</div>
 
-          <div className="complexity-analysis">
+        <div className="complexity-analysis">
           <div className="analysis-title">Time Complexity:</div>
           <div className="analysis-result">
             {`O(1) ms${realTimeComplexity ? ` - ${realTimeComplexity}` : ''}`}

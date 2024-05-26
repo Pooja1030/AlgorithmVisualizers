@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './style.css';
 import { convex_hull } from "../algorithms/grahamScan";
 import SidePanel from '../Components/sidepanel'; // Import the SidePanel component
-
+import { ListRounded } from '@material-ui/icons';
 
 class Canvas extends Component {
     state = {
@@ -52,7 +52,9 @@ class Canvas extends Component {
         return (
             <>
                 {/* Render the toggle button for the side panel */}
-                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
+                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
+          View steps
+       </button>
 
                 {/* Render the SidePanel component */}
                 <SidePanel isOpen={sidePanelOpen} onClose={this.closeSidePanel} algorithmSteps={algorithmSteps} />

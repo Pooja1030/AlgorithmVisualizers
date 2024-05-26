@@ -5,6 +5,7 @@ import './helpers/array_helpers';
 import './style.css';
 import FlipMove from 'react-flip-move';
 import { times } from 'lodash';
+import { ListRounded } from '@material-ui/icons';
 
 const FLIP_DURATION = 750;
 
@@ -123,7 +124,9 @@ class Puzzle extends Component {
                 <Navbar currentPage="15 Puzzle" />
 
                 {/* Side panel toggle button */}
-                {/* <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button> */}
+                {/* <button className="side-panel-toggle" onClick={this.toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
+          View steps
+       </button> */}
 
                 {/* Render the side panel component */}
                 {/* <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={algorithmSteps} /> */}

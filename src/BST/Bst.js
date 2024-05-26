@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from "../Components/navbar";
 import SidePanel from "../Components/sidepanel";
+import { ListRounded } from '@material-ui/icons';
 import DiscreteSlider from '../Components/slider';
 import Canvas from './canvas'; // Updated name
 import {
@@ -419,7 +420,9 @@ class BinaryTree extends Component {
     return (
       <div>
         <Navbar currentPage="Binary Search Tree" />
-        <button className="side-panel-toggle" onClick={this.toggleSidePanel}>→</button>
+        <button className="side-panel-toggle" onClick={this.toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
+          View steps
+       </button>
         <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} /> {/* Render the side panel component */}
         <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
         <div className='menu'>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../Components/navbar';
 import SidePanel from '../Components/sidepanel'; // Import the SidePanel component
+import { ListRounded } from '@material-ui/icons';
 import './linkedlist.css';
 import SinglyLinkedList from './SinglyLinkedList'; // Import SinglyLinkedList
 import DoublyLinkedList from './DoublyLinkedList'; // Import DoublyLinkedList
@@ -800,7 +801,9 @@ const LinkedListVisualizer = () => {
     return (
         <>
             <Navbar currentPage="Linked List" />
-            <button className="side-panel-toggle" onClick={toggleSidePanel}>→</button>
+            <button className="side-panel-toggle" onClick={toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
+          View steps
+       </button>
             <SidePanel isOpen={sidePanelOpen} onClose={toggleSidePanel} /> {/* Render the side panel component */}
             <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} />
 

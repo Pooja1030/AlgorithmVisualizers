@@ -6,6 +6,7 @@ import heapSort from "../algorithms/heapSort";
 import { quickSortRecursive } from "../algorithms/quickSortRecursive";
 import mergeSort from "../algorithms/mergeSort";
 import SidePanel from "../Components/sidepanel";
+import { ListRounded } from '@material-ui/icons';
 import { quickSort } from "../algorithms/quickSort";
 import { mergeSortSteps } from "../algorithms/mergeSort"; // Import mergeSortSteps 
 import { heapSortSteps } from "../algorithms/heapSort"
@@ -78,7 +79,9 @@ class RecursiveSort extends Component {
                 />
 
                 {/* Toggle button for the side panel */}
-                <button className="side-panel-toggle" onClick={this.toggleSidePanel}> →</button>
+                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>   <ListRounded className='sidepanel-icon' />
+          View steps
+       </button>
 
                 {/* Side Panel */}
                 <SidePanel
