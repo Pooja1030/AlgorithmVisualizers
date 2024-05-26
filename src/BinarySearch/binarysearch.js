@@ -5,6 +5,7 @@ import Menu from "./menu";
 import Rects from './rects';
 import SidePanel from '../Components/sidepanel'; // Import the SidePanel component
 import { ListRounded } from '@material-ui/icons';
+import ComplexityAnalysis from "../Components/ComplexityAnalysis";
 
 class BinarySearch extends Component {
   state = {
@@ -84,19 +85,12 @@ class BinarySearch extends Component {
         </div>
         <div>
           {/* Display time and space complexity */}
-          {/* Display time and space complexity analysis */}
-          <div className="complexity-analysis">
-            <div className="analysis-title">Time Complexity</div>
-            <div className="analysis-result">
-              {timeComplexity}
-              {realTimeComplexity && `- ${realTimeComplexity}`}
-            </div>
-            <div className="analysis-title">Space Complexity</div>
-            <div className="analysis-result">
-              {spaceComplexity}
-              {realSpaceComplexity && `- ${realSpaceComplexity}`}
-            </div>
-          </div>
+          <ComplexityAnalysis
+            timeComplexity={timeComplexity}
+            realTimeComplexity={realTimeComplexity}
+            spaceComplexity={spaceComplexity}
+            realSpaceComplexity={realSpaceComplexity}
+          />
         </div>
       </React.Fragment>
     );

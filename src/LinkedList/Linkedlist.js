@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '../Components/navbar';
+import ComplexityAnalysis from "../Components/ComplexityAnalysis";
 import SidePanel from '../Components/sidepanel'; // Import the SidePanel component
 import { ListRounded } from '@material-ui/icons';
 import './linkedlist.css';
@@ -96,7 +97,7 @@ const LinkedListVisualizer = () => {
                         setCurrVal(newData);
                         setTimeComplexity(`O(1) - ${endTime - startTime} milliseconds`);
                         const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                        setSpaceComplexity(`${spaceComplexityBytes} bytes`);
                     } else {
                         animateSearch(prevNodeData);
                         setResultText('Node not found');
@@ -123,8 +124,8 @@ const LinkedListVisualizer = () => {
                         setResultText('Inserted before ' + nextNodeData + ': ');
                         setCurrVal(newData);
                         setTimeComplexity(`O(1) - ${endTime - startTime} milliseconds`);
-                       const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                        const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
+                        setSpaceComplexity(`${spaceComplexityBytes} bytes`);
                     } else {
                         animateSearch(nextNodeData);
                         setResultText('Node not found');
@@ -178,7 +179,7 @@ const LinkedListVisualizer = () => {
                     setCurrVal(removedData);
                     setTimeComplexity(`O(1) - ${endTime - startTime} milliseconds`);
                     const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                    setSpaceComplexity(`${spaceComplexityBytes} bytes`);
                 } else {
                     setResultText('List is empty');
                     setCurrVal('');
@@ -195,7 +196,7 @@ const LinkedListVisualizer = () => {
                         setCurrVal(dataToDelete);
                         setTimeComplexity(`O(n) - ${endTime - startTime} milliseconds`);
                         const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                        setSpaceComplexity(`${spaceComplexityBytes} bytes`);
                     } else {
                         animateSearch(dataToDelete);
                         setResultText('Node not found');
@@ -215,7 +216,7 @@ const LinkedListVisualizer = () => {
                     setCurrVal(removedData);
                     setTimeComplexity(`O(n) - ${endTime - startTime} milliseconds`);
                     const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                    setSpaceComplexity(`${spaceComplexityBytes} bytes`);
                 } else {
                     setResultText('List is empty');
                     setCurrVal('');
@@ -246,7 +247,7 @@ const LinkedListVisualizer = () => {
                     setCurrVal(valueToSearch);
                     setTimeComplexity(`O(n) - ${endTime - startTime} ms`);
                     const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                    setSpaceComplexity(`${spaceComplexityBytes} bytes`);
                 } else {
                     setResultText('Node not found');
                     setCurrVal('');
@@ -277,7 +278,7 @@ const LinkedListVisualizer = () => {
         const spaceComplexityBytes = numNodes * sizeOfNodeInBytes;
         return spaceComplexityBytes;
     };
-    
+
 
     const traverseList = () => {
         if (linkedlist) {
@@ -802,8 +803,8 @@ const LinkedListVisualizer = () => {
         <>
             <Navbar currentPage="Linked List" />
             <button className="side-panel-toggle" onClick={toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
-          View steps
-       </button>
+                View steps
+            </button>
             <SidePanel isOpen={sidePanelOpen} onClose={toggleSidePanel} /> {/* Render the side panel component */}
             <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} />
 
@@ -870,12 +871,10 @@ const LinkedListVisualizer = () => {
                     </div>
                 </div>
 
-                <div className="complexity-analysis">
-                    <div className="analysis-title">Time Complexity:</div>
-                    <div className="analysis-result">{timeComplexity !== '' ? `O(N) - ${timeComplexity}` : "Not measured"}</div>
-                    <div className="analysis-title">Space Complexity:</div>
-                    <div className="analysis-result">{spaceComplexity !== '' ? `O(N) - ${spaceComplexity}` : "Not measured"}</div>
-                </div>
+                <ComplexityAnalysis
+                    timeComplexity={timeComplexity}
+                    spaceComplexity={spaceComplexity}
+                />
             </div>
         </>
     );

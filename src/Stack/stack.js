@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../Components/navbar';
 import DiscreteSlider from '../Components/slider';
+import ComplexityAnalysis from "../Components/ComplexityAnalysis";
 import SidePanel from '../Components/sidepanel'; // Import the SidePanel component
 import './stack.css';
 import { gsap } from 'gsap';
@@ -16,11 +17,10 @@ const StackVisualizer = () => {
     const [topIndex, setTopIndex] = useState(-1); // State variable for the index of the peeked element
     const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
     const [algorithmSteps, setAlgorithmSteps] = useState([]); // Define state for algorithm steps
-    const [timeComplexity, setTimeComplexity] = useState("O(1)"); // Initialize with default time complexity
-    const [spaceComplexity, setSpaceComplexity] = useState("O(1) bytes"); // Initialize with default space complexity
-
+    const [timeComplexity, setTimeComplexity] = useState(""); // Initialize with default time complexity
+    const [spaceComplexity, setSpaceComplexity] = useState("O"); // Initialize with default space complexity
     const defaultTimeComplexity = "O(1)";
-    const defaultSpaceComplexity = "O(1 bytes)";
+    const defaultSpaceComplexity = "O(1) bytes";
 
     // Function to measure the execution time of stack operations
     const measureExecutionTime = (operationFunc) => {
@@ -216,12 +216,12 @@ const StackVisualizer = () => {
                 </div>
 
                 {/* Display time and space complexity analysis */}
-                <div className="complexity-analysis">
-                    <div className="analysis-title">Time Complexity</div>
-                    <div className="analysis-result">{defaultTimeComplexity} {timeComplexity && `- ${timeComplexity}`}</div>
-                    <div className="analysis-title">Space Complexity</div>
-                    <div className="analysis-result">{defaultSpaceComplexity} {spaceComplexity && `- ${spaceComplexity}`}</div>
-                </div>
+                <ComplexityAnalysis
+                    timeComplexity={defaultTimeComplexity}
+                    realTimeComplexity={timeComplexity}
+                    spaceComplexity={defaultSpaceComplexity}
+                    realSpaceComplexity={spaceComplexity}
+                />
 
             </div>
         </>

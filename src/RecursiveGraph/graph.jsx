@@ -6,6 +6,7 @@ import Navbar from '../Components/navbar';
 import Details from "./details";
 import SidePanel from '../Components/sidepanel';
 import { ListRounded } from '@material-ui/icons';
+import ComplexityAnalysis from "../Components/ComplexityAnalysis";
 
 class Graph extends Component {
     constructor() {
@@ -27,7 +28,9 @@ class Graph extends Component {
                 { code: " Step 4: Update vertices and edges state to trigger re-rendering." }
             ],
             timeComplexity: 'O(n)', // Default time complexity
-            spaceComplexity: 'O(n)' // Default space complexity
+            spaceComplexity: 'O(n)', // Default space complexity
+            realSpaceComplexity:"",
+            realTimeComplexity:"",
         }
     }
 
@@ -38,15 +41,15 @@ class Graph extends Component {
         const endTime = performance.now();
         const executionTime = endTime - startTime;
         this.setState(prevState => ({
-            timeComplexity: `O(n) - ${executionTime.toFixed(2)} milliseconds`
+            realTimeComplexity: `${executionTime.toFixed(2)} milliseconds`
         }));
     }
 
-     // Function to calculate space complexity
-     calculateSpaceComplexity = () => {
+    // Function to calculate space complexity
+    calculateSpaceComplexity = () => {
         const treeSize = this.state.vertices.length + this.state.edges.length;
         this.setState(prevState => ({
-            spaceComplexity: `O(n) - ${treeSize} units`
+            realSpaceComplexity: `${treeSize} units`
         }));
     }
 
@@ -179,6 +182,7 @@ class Graph extends Component {
     }
 
     render() {
+        const { timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity } = this.state;
         return (
             <div>
                 <Navbar currentPage="Recursion Tree" />
@@ -194,8 +198,8 @@ class Graph extends Component {
                 <Details algo={this.state.algo} />
                 {/* Side panel toggle button */}
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}>   <ListRounded className='sidepanel-icon' />
-          View steps
-       </button>
+                    View steps
+                </button>
                 {/* Side Panel */}
                 <SidePanel algorithmSteps={this.state.algorithmSteps} isOpen={this.state.sidePanelOpen} onClose={this.toggleSidePanel} />
                 <CanvasSvg
@@ -206,11 +210,12 @@ class Graph extends Component {
                 />
 
                 {/* Display time and space complexity */}
-                <div className="complexity-analysis">
-                    <div className="analysis-title">Complexity Analysis</div>
-                    <div className="analysis-result">Time Complexity: {this.state.timeComplexity}</div>
-                    <div className="analysis-result">Space Complexity: {this.state.spaceComplexity}</div>
-                </div>
+                <ComplexityAnalysis
+                    timeComplexity={timeComplexity}
+                    realTimeComplexity={realTimeComplexity}
+                    spaceComplexity={spaceComplexity}
+                    realSpaceComplexity={realSpaceComplexity}
+                />
             </div>
         );
     }

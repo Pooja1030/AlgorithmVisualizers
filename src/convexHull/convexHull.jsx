@@ -4,6 +4,7 @@ import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import SidePanel from '../Components/sidepanel'; // Import SidePanel component
 import { ListRounded } from '@material-ui/icons';
+import ComplexityAnalysis from "../Components/ComplexityAnalysis";
 
 class ConvexHull extends Component {
     state = {
@@ -58,9 +59,9 @@ class ConvexHull extends Component {
                 {/* Rest of the component */}
                 {/* Side panel toggle button */}
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
-                      <ListRounded className='sidepanel-icon' />
-          View steps
-       
+                    <ListRounded className='sidepanel-icon' />
+                    View steps
+
                 </button>
 
                 {/* Render the side panel component */}
@@ -72,16 +73,13 @@ class ConvexHull extends Component {
                     onChangeSpeed={this.changeSpeed}
                     onChangeValues={this.handleValueIncease}
                 />
-                  <div className="complexity-analysis">
-                    <div className="analysis-title">Time Complexity</div>
-                    <div className="analysis-result">
-                        {timeComplexity}{realTimeComplexity && isRunning ? ` - ${realTimeComplexity}` : ''}
-                    </div>
-                    <div className="analysis-title">Space Complexity</div>
-                    <div className="analysis-result">
-                        {spaceComplexity}{realSpaceComplexity && isRunning ? ` - ${realSpaceComplexity}` : ''}
-                    </div>
-                </div>
+                <ComplexityAnalysis
+                    timeComplexity={timeComplexity}
+                    realTimeComplexity={realTimeComplexity}
+                    spaceComplexity={spaceComplexity}
+                    realSpaceComplexity={realSpaceComplexity}
+                />
+
                 <Canvas
                     width={this.state.width}
                     height={this.state.height}

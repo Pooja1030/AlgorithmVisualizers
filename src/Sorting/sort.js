@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
 import Rects from './rects';
+import ComplexityAnalysis from "../Components/ComplexityAnalysis";
 import SidePanel from './sidepanelso';
 import { ListRounded } from '@material-ui/icons';
 import { bubbleSort, selectionSort, insertionSort } from "../algorithms/sortingalgorithms";
@@ -21,8 +22,8 @@ class Sort extends Component {
         sidePanelOpen: false,
         algorithmSteps1: [],
         algorithmSteps2: [],
-        defaultTimeComplexity: 'O(n^2)', // Default time complexity
-        defaultSpaceComplexity: 'O(1)', // Default space complexity
+        timeComplexity: 'O(n^2)', // Default time complexity
+        spaceComplexity: 'O(1)', // Default space complexity
         realTimeComplexity: '', // Real time complexity
         realSpaceComplexity: '', // Real space complexity
     };
@@ -40,9 +41,9 @@ class Sort extends Component {
             <React.Fragment>
                 <Navbar currentPage="Sorting Visualizer" />
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
-                      <ListRounded className='sidepanel-icon' />
-          View steps
-       
+                    <ListRounded className='sidepanel-icon' />
+                    View steps
+
                 </button>
                 <SidePanel
                     isOpen={this.state.sidePanelOpen}
@@ -73,10 +74,13 @@ class Sort extends Component {
                         />}
                 </div>
                 {/* Display real-time and space complexities */}
-                <div className='complexities'>
-                    <p>Time Complexity: {this.state.defaultTimeComplexity}{this.state.realTimeComplexity && ` - ${this.state.realTimeComplexity}`}</p>
-                    <p>Space Complexity: {this.state.defaultSpaceComplexity}{this.state.realSpaceComplexity && ` - ${this.state.realSpaceComplexity}`}</p>
-                </div>
+                <ComplexityAnalysis
+                    timeComplexity={this.state.timeComplexity}
+                    realTimeComplexity={this.state.realTimeComplexity}
+                    spaceComplexity={this.state.spaceComplexity}
+                    realSpaceComplexity={this.state.realSpaceComplexity}
+                />
+
             </React.Fragment>
         );
     }
@@ -104,7 +108,7 @@ class Sort extends Component {
 
     handleAlgoChanged = (pos, val) => {
         // Reset algorithmSteps when a new algorithm is selected
-        this.setState({ algorithmSteps1: [], algorithmSteps2: [], sidePanelOpen:false });
+        this.setState({ algorithmSteps1: [], algorithmSteps2: [], sidePanelOpen: false });
         if (pos === 0) {
             this.setState({ algo1: val });
         } else {
@@ -211,8 +215,8 @@ class Sort extends Component {
 
             this.setState({
                 algorithmSteps2,
-                realTimeComplexity: `${timeComplexity1}, ${timeComplexity2}`,
-                realSpaceComplexity: `${spaceComplexity1}, ${spaceComplexity2}`,
+                realTimeComplexity: `${timeComplexity1} / ${timeComplexity2}`,
+                realSpaceComplexity: `${spaceComplexity1} / ${spaceComplexity2}`,
             });
         }
 

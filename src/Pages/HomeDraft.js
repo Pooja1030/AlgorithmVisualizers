@@ -94,7 +94,7 @@ const list = [
     "img": ""
   },
   {
-    "title": "Binary Tree",
+    "title": "Binary Search Tree",
     "link": "binarytree",
     "description": "A binary tree is a data structure in which each node has at most two children, referred to as the left child and the right child.",
     "algorithms": ["Preorder", "Inorder", "Postorder"],

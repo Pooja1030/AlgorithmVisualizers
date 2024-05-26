@@ -488,7 +488,7 @@ li .li-wrapper {
   transition: 0.5s;
 }
 
-.algo-card:hover{
+.algo-card:hover {
   scale: 1.025;
 }
 
@@ -578,6 +578,7 @@ li .li-wrapper {
   /* padding-bottom: 60px; */
   /* padding-bottom: 30px; */
 }
+
 .home22-intro:before {
   content: '';
   position: absolute;
@@ -593,6 +594,7 @@ li .li-wrapper {
   transform: translate(-80%, -80%);
   opacity: .2;
 }
+
 .home22-intro:after {
   content: '';
   position: absolute;
@@ -751,73 +753,51 @@ li .li-wrapper {
 
 
 
-/* Styles for the time and space complexity analysis */
 .complexity-analysis {
-  margin-top: 20px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  width: 80%;
+  position: fixed;
+  bottom: 30px;
+  right: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 99;
+}
+
+.complexity-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 3px 6px rgba(25, 25, 25, 0.16);
+  width: 140px; 
+  height: 80px; 
 }
 
 .analysis-title {
-  font-size: 24px;
+  color: #333;
   font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 16px; 
+  margin-bottom: 5px;
 }
 
 .analysis-result {
-  font-size: 18px;
-}
-
-
-
-
-
-/* App.css */
-/* .app {
-  display: flex;
-}
-
-
-.hamburger {
-  cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 20px;
+  text-align: center;
 }
 
-.line {
-  width: 25px;
-  height: 3px;
-  background-color: black;
+.complexity {
+  font-size: 22px; 
+  font-weight: bold;
+  color: #7d47e9; 
 }
 
-.sidebar {
-  width: 250px;
-  height: 100vh;
-  background-color: #fff;
-  transition: transform 0.3s ease;
-  transform: translateX(-100%);
-  border-right: #0f0f0f 1px solid;
+.real-complexity {
+  margin-top: 2px;
+  font-size: 14px;
+  color: #777; 
 }
-
-.sidebar.open {
-  transform: translateX(0);
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-li:hover {
-  background-color: #444;
-} */

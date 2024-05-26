@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Navbar from "../Components/navbar";
 import DiscreteSlider from '../Components/slider';
+import ComplexityAnalysis from "../Components/ComplexityAnalysis";
 import SidePanel from '../Components/sidepanel';
 import { ListRounded } from '@material-ui/icons';
 import Canvas from './canvas'; // Assuming you have a Canvas component for drawing
@@ -23,11 +24,10 @@ class MST extends Component {
 			maxVertices: 5,
 			animationSpeed: 50,
 			isAnimating: false, // Flag to track animation state
-
 			sidePanelOpen: false,
 			algorithmSteps: [],
-			defaultTimeComplexity: "O(n)",
-			defaultSpaceComplexity: "O(n)",
+			timeComplexity: "O(n)",
+			spaceComplexity: "O(n)",
 			realTimeComplexity: "",
 			realSpaceComplexity: "",
 			startTime: 0,
@@ -110,12 +110,12 @@ class MST extends Component {
 		const { algorithm } = this.state;
 		const startTime = performance.now(); // Start measuring time
 		const endTime = performance.now(); // Stop measuring time
-	
+
 		// Calculate and set the real-time and space complexity
 		const elapsedTime = endTime - startTime;
 		const realTimeComplexity = `${elapsedTime.toFixed(2)} ms`;
 		const realSpaceComplexity = this.calculateSpaceComplexity(algorithm);
-	
+
 		this.setState({
 			sidePanelOpen: true,
 			startTime,
@@ -146,7 +146,7 @@ class MST extends Component {
 			];
 		}
 		this.setState({ algorithmSteps });
-	
+
 	}
 
 	// Function to calculate space complexity based on the selected algorithm
@@ -182,7 +182,7 @@ class MST extends Component {
 	};
 
 	render() {
-		const { vertices, edges, visitedEdges, mstEdges, maxHeight, maxWidth, algorithm, animationSpeed, startTime, endTime, defaultTimeComplexity, defaultSpaceComplexity, realTimeComplexity, realSpaceComplexity } = this.state;
+		const { vertices, edges, visitedEdges, mstEdges, maxHeight, maxWidth, algorithm, animationSpeed, startTime, endTime, timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity } = this.state;
 		const { sidePanelOpen, algorithmSteps } = this.state;
 
 		return (
@@ -218,9 +218,9 @@ class MST extends Component {
 				</div>
 
 				<button className="side-panel-toggle" onClick={this.toggleSidePanel}>
-					  <ListRounded className='sidepanel-icon' />
-          View steps
-       
+					<ListRounded className='sidepanel-icon' />
+					View steps
+
 				</button>
 
 				<SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
@@ -229,17 +229,12 @@ class MST extends Component {
 				<Canvas vertices={vertices} mstEdges={mstEdges} connectingEdges={edges} visitedEdges={visitedEdges}
 					width={maxWidth} height={maxHeight} speed={animationSpeed} />
 
-<div className="complexity-analysis">
-    <div className="analysis-title">Time Complexity:</div>
-    <div className="analysis-result">
-        {this.state.realTimeComplexity ? `${this.state.defaultTimeComplexity} - ${this.state.realTimeComplexity}` : this.state.defaultTimeComplexity}
-    </div>
-    <div className="analysis-title">Space Complexity:</div>
-    <div className="analysis-result">
-        {this.state.realSpaceComplexity ? `${this.state.defaultSpaceComplexity} - ${this.state.realSpaceComplexity}` : this.state.defaultSpaceComplexity}
-    </div>
-</div>
-
+				<ComplexityAnalysis
+					timeComplexity={timeComplexity}
+					realTimeComplexity={realTimeComplexity}
+					spaceComplexity={spaceComplexity}
+					realSpaceComplexity={realSpaceComplexity}
+				/>
 			</div>
 		);
 	}

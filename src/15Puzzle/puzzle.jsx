@@ -1,4 +1,4 @@
-import React, { useState,Component } from 'react';
+import React, { useState, Component } from 'react';
 import Navbar from '../Components/navbar';
 import SidePanel from '../Components/sidepanel';
 import './helpers/array_helpers';
@@ -6,6 +6,7 @@ import './style.css';
 import FlipMove from 'react-flip-move';
 import { times } from 'lodash';
 import { ListRounded } from '@material-ui/icons';
+import ComplexityAnalysis from "../Components/ComplexityAnalysis";
 
 const FLIP_DURATION = 750;
 
@@ -38,11 +39,11 @@ class Puzzle extends Component {
             intervalId: null,
             sidePanelOpen: false, // State to manage side panel visibility
             algorithmSteps: [
-                {code: ' Step 1: Shuffle the puzzle tiles randomly to create a solvable configuration.',},
-                {code: ' Step 2: Implement an algorithm to solve the puzzle.',},
-                {code: ' Step 3: Execute the algorithm to solve the puzzle.',},
-                {code: ' Step 4: Check if the puzzle is solved.',},
-                {code: ' Step 5: Display the solution steps (optional).',}],
+                { code: ' Step 1: Shuffle the puzzle tiles randomly to create a solvable configuration.', },
+                { code: ' Step 2: Implement an algorithm to solve the puzzle.', },
+                { code: ' Step 3: Execute the algorithm to solve the puzzle.', },
+                { code: ' Step 4: Check if the puzzle is solved.', },
+                { code: ' Step 5: Display the solution steps (optional).', }],
             timeComplexity: "O(n)", // State to store time complexity
             spaceComplexity: "O(1)", // State to store space complexity
         };
@@ -147,13 +148,13 @@ class Puzzle extends Component {
                         <button className={"btn btn-secondary m-2"} onClick={this.reset}>Reset</button>
                     </div>
                 </div>
-                 {/* Render time and space complexity */}
-                {/* <div className="complexity-analysis">
-                    <div className="analysis-title">Time Complexity</div>
-                    <div className="analysis-result">Default: {timeComplexity}</div>
-                    <div className="analysis-title">Space Complexity</div>
-                    <div className="analysis-result">Default: {spaceComplexity}</div>
-                </div> */}
+                {/* Render time and space complexity */}
+
+                {/* <ComplexityAnalysis
+                    timeComplexity={timeComplexity}
+                    spaceComplexity={spaceComplexity}
+                /> */}
+
             </div>
         );
     }

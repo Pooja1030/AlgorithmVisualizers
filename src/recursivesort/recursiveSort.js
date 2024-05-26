@@ -11,6 +11,7 @@ import { quickSort } from "../algorithms/quickSort";
 import { mergeSortSteps } from "../algorithms/mergeSort"; // Import mergeSortSteps 
 import { heapSortSteps } from "../algorithms/heapSort"
 import { quickSortSteps } from "../algorithms/quickSortRecursive"
+import ComplexityAnalysis from "../Components/ComplexityAnalysis";
 
 class RecursiveSort extends Component {
     state = {
@@ -21,8 +22,8 @@ class RecursiveSort extends Component {
         algo: 0,
         sidePanelOpen: false, // State variable for side panel visibility
         algorithmSteps: [],
-        defaultTimeComplexity: '',
-        defaultSpaceComplexity: '',
+        timeComplexity: '',
+        spaceComplexity: '',
         realTimeComplexity: '',
         realSpaceComplexity: '',
         comparisons: 0,
@@ -40,23 +41,23 @@ class RecursiveSort extends Component {
     setAlgorithmSteps = (selectedAlgo) => {
         // Define your algorithm steps here
         let steps = [];
-        let defaultTimeComplexity = '';
-        let defaultSpaceComplexity = '';
+        let timeComplexity = '';
+        let spaceComplexity = '';
         if (selectedAlgo === 0) {
             steps = mergeSortSteps;
-            defaultTimeComplexity = 'O(n log n)';
-            defaultSpaceComplexity = 'O(n)';
+            timeComplexity = 'O(n log n)';
+            spaceComplexity = 'O(n)';
         } else if (selectedAlgo === 1) {
             steps = heapSortSteps;
-            defaultTimeComplexity = 'O(n log n)';
-            defaultSpaceComplexity = 'O(1)';
+            timeComplexity = 'O(n log n)';
+            spaceComplexity = 'O(1)';
         } else if (selectedAlgo === 2) {
             steps = quickSortSteps;
-            defaultTimeComplexity = 'O(n log n) average, O(n^2) worst';
-            defaultSpaceComplexity = 'O(log n)';
+            timeComplexity = 'O(n log n) average, O(n^2) worst';
+            spaceComplexity = 'O(log n)';
         }
 
-        this.setState({ algorithmSteps: steps,  defaultTimeComplexity, defaultSpaceComplexity });
+        this.setState({ algorithmSteps: steps, timeComplexity, spaceComplexity });
     }
 
     toggleSidePanel = () => {
@@ -64,7 +65,7 @@ class RecursiveSort extends Component {
     };
 
     render() {
-        const { defaultTimeComplexity, defaultSpaceComplexity, realTimeComplexity, realSpaceComplexity } = this.state;
+        const { timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity } = this.state;
         return (
             <React.Fragment>
                 <Navbar currentPage="Recursive Sort" />
@@ -80,8 +81,8 @@ class RecursiveSort extends Component {
 
                 {/* Toggle button for the side panel */}
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}>   <ListRounded className='sidepanel-icon' />
-          View steps
-       </button>
+                    View steps
+                </button>
 
                 {/* Side Panel */}
                 <SidePanel
@@ -97,10 +98,12 @@ class RecursiveSort extends Component {
                 </div>
 
                 {/* Time and Space Complexity */}
-                <div className='time-space-complexity'>
-    <p>Time Complexity - {defaultTimeComplexity} {realTimeComplexity && `- ${realTimeComplexity}`}</p>
-    <p>Space Complexity - {defaultSpaceComplexity} {realSpaceComplexity && `- ${realSpaceComplexity}`}</p>
-</div>
+                <ComplexityAnalysis
+                    timeComplexity={timeComplexity}
+                    realTimeComplexity={realTimeComplexity}
+                    spaceComplexity={spaceComplexity}
+                    realSpaceComplexity={realSpaceComplexity}
+                />
 
             </React.Fragment>
         )

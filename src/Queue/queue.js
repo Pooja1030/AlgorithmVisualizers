@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../Components/navbar";
 import DiscreteSlider from "../Components/slider";
+import ComplexityAnalysis from "../Components/ComplexityAnalysis";
 import SidePanel from '../Components/sidepanel';
 import "./queue.css";
 import { gsap } from 'gsap';
@@ -233,8 +234,8 @@ const QueueVisualizer = () => {
     <>
       <Navbar currentPage="Queue" />
       <button className="side-panel-toggle" onClick={toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
-          View steps
-       </button>
+        View steps
+      </button>
       <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} rewind={rewind} forward={forward} />
       <div className="queue-visualizer">
         <div>
@@ -254,6 +255,12 @@ const QueueVisualizer = () => {
             <button onClick={size}>Size</button>
           </div>
           <div className="result">{currVal !== null && `${resultText} ${currVal}`}</div>
+          <ComplexityAnalysis
+            timeComplexity="O(1)"
+            realTimeComplexity={realTimeComplexity}
+            spaceComplexity="O(1)"
+            realSpaceComplexity={realSpaceComplexity}
+          />
         </div>
 
         <div className="queue">
@@ -285,16 +292,7 @@ const QueueVisualizer = () => {
           </div>
           }</div>
 
-        <div className="complexity-analysis">
-          <div className="analysis-title">Time Complexity:</div>
-          <div className="analysis-result">
-            {`O(1) ms${realTimeComplexity ? ` - ${realTimeComplexity}` : ''}`}
-          </div>
-          <div className="analysis-title">Space Complexity:</div>
-          <div className="analysis-result">
-            {`O(1) bytes${realSpaceComplexity ? ` - ${realSpaceComplexity}` : ''}`}
-          </div>
-        </div>
+
       </div>
     </>
   );

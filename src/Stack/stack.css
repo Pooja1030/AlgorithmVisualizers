@@ -21,6 +21,7 @@
 
 .pointer.top {
     flex-direction: row;
+    align-items: flex-start;
     margin-top: auto;
     margin-bottom: -35px;
     margin-left: 160px;

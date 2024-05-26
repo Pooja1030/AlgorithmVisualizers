@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Cells from "./cells";
 import Navbar from '../Components/navbar';
 import Menu from "./menu";
+import ComplexityAnalysis from "../Components/ComplexityAnalysis";
 import SidePanel from '../Components/sidepanel';
 import { ListRounded } from '@material-ui/icons';
 import './style.css';
@@ -14,13 +15,13 @@ class Queen extends Component {
         isRunning: false,
         sidePanelOpen: false, // State variable for managing side panel visibility
         algorithmSteps: [
-            {code: 'Step 1: Start with an empty chessboard.'},
-            {code: 'Step 2: Place the first queen in the first column of the first row.'},
-            {code: 'Step 3: Check if the current queen is safe from attack by other queens on the board.'},
-            {code: 'Step 4: If the queen is safe, move to the next column and place the next queen.'},
-            {code: 'Step 5: If all queens are placed and no conflicts occur, a solution is found.'},
-            {code: 'Step 6: If a conflict occurs, backtrack to the previous queen and try a different position.'},
-            {code: 'Step 7: Repeat steps 3-6 until all possible configurations are explored.'},
+            { code: 'Step 1: Start with an empty chessboard.' },
+            { code: 'Step 2: Place the first queen in the first column of the first row.' },
+            { code: 'Step 3: Check if the current queen is safe from attack by other queens on the board.' },
+            { code: 'Step 4: If the queen is safe, move to the next column and place the next queen.' },
+            { code: 'Step 5: If all queens are placed and no conflicts occur, a solution is found.' },
+            { code: 'Step 6: If a conflict occurs, backtrack to the previous queen and try a different position.' },
+            { code: 'Step 7: Repeat steps 3-6 until all possible configurations are explored.' },
         ],
         timeComplexity: "O(N!)", // Default time complexity for N-Queens problem
         spaceComplexity: "O(N^2)", // Default space complexity for N-Queens problem
@@ -34,7 +35,7 @@ class Queen extends Component {
     }
 
     render() {
-        const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity  } = this.state;
+        const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity } = this.state;
         return (
             <div>
                 <Navbar currentPage="N-queens problem" />
@@ -47,8 +48,8 @@ class Queen extends Component {
                     onStop={this.handleStop}
                 />
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
-          View steps
-       </button>
+                    View steps
+                </button>
                 <SidePanel
                     isOpen={sidePanelOpen}
                     onClose={this.closeSidePanel}
@@ -59,16 +60,13 @@ class Queen extends Component {
                 <div style={{ textAlign: "Center" }}>
                     <Cells board={this.state.board} />
                 </div>
-                <div className="complexity-analysis">
-                    <div className="analysis-title">Time Complexity</div>
-                    <div className="analysis-result">
-                        {timeComplexity}{realTimeComplexity ? ` - ${realTimeComplexity}` : ''}
-                    </div>
-                    <div className="analysis-title">Space Complexity</div>
-                    <div className="analysis-result">
-                        {spaceComplexity}{realSpaceComplexity ? ` - ${realSpaceComplexity}` : ''}
-                    </div>
-                </div>
+                <ComplexityAnalysis
+                    timeComplexity={timeComplexity}
+                    realTimeComplexity={realTimeComplexity}
+                    spaceComplexity={spaceComplexity}
+                    realSpaceComplexity={realSpaceComplexity}
+                />
+
             </div>
         );
     }
@@ -95,30 +93,30 @@ class Queen extends Component {
 
     startAlgo = async () => {
         this.setState({ isRunning: true, sidePanelOpen: true });
-        
+
         // Measure start time for time complexity
         const startTime = performance.now();
-    
+
         const newBoard = this.state.board.slice();
         await this.queensAlgo(newBoard, 0);
-    
+
         // Measure end time for time complexity
         const endTime = performance.now();
         const executionTime = endTime - startTime;
-    
+
         // Estimate space complexity
         const spaceComplexity = `${Math.pow(this.state.number, 2) * 8} bytes`; // Assuming each cell occupies 8 bytes
-    
+
         // Update state with time and space complexity
-        this.setState({ 
-            board: newBoard, 
-            isRunning: false, 
+        this.setState({
+            board: newBoard,
+            isRunning: false,
             sidePanelOpen: false,
             realTimeComplexity: `${executionTime.toFixed(2)} ms`,
             realSpaceComplexity: spaceComplexity
         });
     }
-    
+
     queensAlgo = async (board, col) => {
         if (col >= this.state.number) {
             return true;
@@ -226,7 +224,7 @@ const getChecked = (board, row, col, N) => {
             newBoard[i][j] = { ...newBoard[i][j], isChecked: true };
         }
     }
-    for (let i = row, j = col; i >=    0 && j < N; i--, j++) {
+    for (let i = row, j = col; i >= 0 && j < N; i--, j++) {
         if (newBoard[i][j].isPresent) {
             newBoard[i][j] = { ...newBoard[i][j], isAttacked: true };
             pos = false;
