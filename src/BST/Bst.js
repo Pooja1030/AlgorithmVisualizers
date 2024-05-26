@@ -36,6 +36,8 @@ class BinaryTree extends Component {
       algorithmSteps: steps("inorderTraversal"),
       timeComplexity: "O(n)", // Default time complexity
       spaceComplexity: "O(n)", // Default space complexity
+      realTimeComplexity: "",
+      realSpaceComplexity: ""
     };
     this.animationTimeline = gsap.timeline({ paused: true }); // Initialize GSAP timeline
   }
@@ -137,11 +139,11 @@ class BinaryTree extends Component {
     }
     const endTime = performance.now(); // Stop measuring time
     const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
-    const timeComplexity = `O(n) - ${executionTime} ms`;; // Display execution time
+    const realTimeComplexity = `${executionTime} ms`;; // Display execution time
     // Calculate space complexity
-    const spaceComplexity = `O(n) - ${this.estimateSpaceComplexity(tree)} bytes`;
+    const realSpaceComplexity = `${this.estimateSpaceComplexity(tree)} bytes`;
 
-    this.setState({ algorithmSteps, timeComplexity, spaceComplexity, sidePanelOpen: true });
+    this.setState({ algorithmSteps, realTimeComplexity, realSpaceComplexity, sidePanelOpen: true });
     // Perform traversal animation
     this.performTraversalAnimation(traversalResult, animationSpeed);
   }
@@ -198,13 +200,13 @@ class BinaryTree extends Component {
       const endTime = performance.now(); // Stop measuring time
 
       const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
-      const timeComplexity = `O(n) - ${executionTime} ms`; // Display execution time
+      const realTimeComplexity = `${executionTime} ms`; // Display execution time
 
       // Calculate space complexity
-      const spaceComplexity = `O(n) - ${this.estimateSpaceComplexity(updatedTree)} bytes`;
+      const realSpaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
 
 
-      this.setState({ tree: updatedTree, nodeValue: '', timeComplexity, spaceComplexity, sidePanelOpen: true });
+      this.setState({ tree: updatedTree, nodeValue: '', realTimeComplexity, realSpaceComplexity, sidePanelOpen: true });
 
       new Promise(resolve => setTimeout(resolve, 500));
 
@@ -257,10 +259,16 @@ class BinaryTree extends Component {
     const value = parseInt(searchValue, 10);
     if (!isNaN(value)) {
       const algorithmSteps = steps("searchBST");
-      const timeComplexity = ""; // Display execution time
+      const startTime = performance.now(); // Start measuring time
+      const search = findNode(tree, value);
+      const endTime = performance.now(); // Stop measuring time
+
+      const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
+      const realTimeComplexity = `${executionTime} ms`; // Display execution time
+
       // Calculate space complexity
-      const spaceComplexity = `o(n) - ${this.estimateSpaceComplexity(tree)} bytes`;
-      this.setState({ resultText: [], algorithmSteps, timeComplexity, spaceComplexity, sidePanelOpen: true }); // Clear previous search results
+      const realSpaceComplexity = `${this.estimateSpaceComplexity(tree)} bytes`;
+      this.setState({ resultText: [], algorithmSteps, realTimeComplexity, realSpaceComplexity, sidePanelOpen: true }); // Clear previous search results
 
       const found = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
       if (!found) {
@@ -327,11 +335,11 @@ class BinaryTree extends Component {
                   const endTime = performance.now(); // Stop measuring time
 
                   const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
-                  const timeComplexity = `O(n) - ${executionTime} ms`; // Display execution time
+                  const realTimeComplexity = `${executionTime} ms`; // Display execution time
                   // Calculate space complexity
-                  const spaceComplexity = `O(n) - ${this.estimateSpaceComplexity(updatedTree)} bytes`;
+                  const realSpaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
 
-                  this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', timeComplexity, spaceComplexity });
+                  this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', realTimeComplexity, realSpaceComplexity });
                 }
               });
             }
@@ -354,12 +362,12 @@ class BinaryTree extends Component {
             const endTime = performance.now(); // Stop measuring time
 
             const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
-            const timeComplexity = `O(n) - ${executionTime} ms`; // Display execution time
+            const realTimeComplexity = `${executionTime} ms`; // Display execution time
             // Calculate space complexity
-            const spaceComplexity = `O(n) - ${this.estimateSpaceComplexity(updatedTree)} bytes`;
+            const realSpaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
 
-            this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', timeComplexity, spaceComplexity });
-          }
+            this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', realTimeComplexity, realSpaceComplexity });
+         }
         } else {
           // If the node has two children, find the successor
           const successor = findMinValue(nodeToDelete.right);
@@ -381,12 +389,12 @@ class BinaryTree extends Component {
                 const endTime = performance.now(); // Stop measuring time
 
                 const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
-                const timeComplexity = `${executionTime} ms`; // Display execution time
-                // Calculate space complexity
-                const spaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
+                const realTimeComplexity = `${executionTime} ms`; // Display execution time
+                  // Calculate space complexity
+                  const realSpaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
 
-                this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', timeComplexity, spaceComplexity });
-              }
+                  this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', realTimeComplexity, realSpaceComplexity });
+                  }
             });
           } else {
             await new Promise(resolve => setTimeout(resolve, 3000));
@@ -395,11 +403,11 @@ class BinaryTree extends Component {
             const endTime = performance.now(); // Stop measuring time
 
             const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
-            const timeComplexity = `${executionTime} ms`; // Display execution time
+            const realTimeComplexity = `${executionTime} ms`; // Display execution time
             // Calculate space complexity
-            const spaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
+            const realSpaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
 
-            this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', timeComplexity, spaceComplexity });
+            this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', realTimeComplexity, realSpaceComplexity });
           }
         }
       }
@@ -416,7 +424,7 @@ class BinaryTree extends Component {
 
   render() {
     const { tree, nodeValue, searchValue, deleteValue, traversalType, resultText } = this.state;
-    const { algorithmSteps, sidePanelOpen, animationSpeed, timeComplexity, spaceComplexity } = this.state;
+    const { algorithmSteps, sidePanelOpen, animationSpeed, timeComplexity, spaceComplexity, realSpaceComplexity, realTimeComplexity } = this.state;
 
     return (
       <div>
@@ -424,7 +432,6 @@ class BinaryTree extends Component {
         <button className="side-panel-toggle" onClick={this.toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
           View steps
         </button>
-        <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} /> {/* Render the side panel component */}
         <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
         <div className='menu'>
           <DiscreteSlider
@@ -480,6 +487,8 @@ class BinaryTree extends Component {
 
         <ComplexityAnalysis
           timeComplexity={timeComplexity}
+          realTimeComplexity={realTimeComplexity}
+          realSpaceComplexity={realSpaceComplexity}
           spaceComplexity={spaceComplexity}
         />
 

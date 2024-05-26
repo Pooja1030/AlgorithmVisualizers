@@ -23,7 +23,9 @@ const LinkedListVisualizer = () => {
     const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
     const [algorithmSteps, setAlgorithmSteps] = useState([]);
     const [timeComplexity, setTimeComplexity] = useState('');
-    const [spaceComplexity, setSpaceComplexity] = useState('');
+    const [spaceComplexity, setSpaceComplexity] = useState('O(1)');
+    const [realTimeComplexity, setRealTimeComplexity] = useState('');
+    const [realSpaceComplexity, setRealSpaceComplexity] = useState('');
 
 
     const handleListTypeChange = (event) => {
@@ -78,11 +80,11 @@ const LinkedListVisualizer = () => {
                 const endTime = performance.now();
                 setResultText('Inserted at beginning:');
                 setCurrVal(newData);
-                setTimeComplexity(`O(1) - ${endTime - startTime} milliseconds`);
+                setTimeComplexity(`O(1)`);
+                setRealTimeComplexity(`${(endTime - startTime).toFixed(2)} ms`);
                 const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                setRealSpaceComplexity(`${spaceComplexityBytes} bytes`);
             } else if (insertPosition === 'After Node') {
-
                 const prevNodeData = parseInt(nodeValue.trim());
                 if (prevNodeData) {
                     const steps = linkedlist.steps("insertAfterNode");
@@ -95,9 +97,10 @@ const LinkedListVisualizer = () => {
                         const endTime = performance.now();
                         setResultText('Inserted after ' + prevNodeData + ': ');
                         setCurrVal(newData);
-                        setTimeComplexity(`O(1) - ${endTime - startTime} milliseconds`);
+                        setTimeComplexity(`O(n)`);
+                        setRealTimeComplexity(`${(endTime - startTime).toFixed(2)} ms`);
                         const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                        setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                        setRealSpaceComplexity(`${spaceComplexityBytes} bytes`);
                     } else {
                         animateSearch(prevNodeData);
                         setResultText('Node not found');
@@ -123,9 +126,10 @@ const LinkedListVisualizer = () => {
                         const endTime = performance.now();
                         setResultText('Inserted before ' + nextNodeData + ': ');
                         setCurrVal(newData);
-                        setTimeComplexity(`O(1) - ${endTime - startTime} milliseconds`);
+                        setTimeComplexity(`O(n)`);
+                        setRealTimeComplexity(`${(endTime - startTime).toFixed(2)} ms`);
                         const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                        setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                        setRealSpaceComplexity(`${spaceComplexityBytes} bytes`);
                     } else {
                         animateSearch(nextNodeData);
                         setResultText('Node not found');
@@ -145,9 +149,10 @@ const LinkedListVisualizer = () => {
                 const endTime = performance.now();
                 setResultText('Inserted at end:');
                 setCurrVal(newData);
-                setTimeComplexity(`O(n) - ${endTime - startTime} milliseconds`);
+                setTimeComplexity(`O(n)`);
+                setRealTimeComplexity(`${(endTime - startTime).toFixed(2)} ms`);
                 const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                setRealSpaceComplexity(`${spaceComplexityBytes} bytes`);
             }
 
             // Call animateInsertion after performing the insertion
@@ -162,6 +167,7 @@ const LinkedListVisualizer = () => {
 
     const deleteNode = async () => {
         if (linkedlist) {
+            toggleSidePanel();
             const animationPromise = new Promise(resolve => {
                 // Call animateDeletion with the appropriate parameters
                 animateDeletion(deletePosition, parseInt(nodeValue.trim()), resolve);
@@ -177,9 +183,11 @@ const LinkedListVisualizer = () => {
                 if (removedData !== null) {
                     setResultText('Deleted from beginning:');
                     setCurrVal(removedData);
-                    setTimeComplexity(`O(1) - ${endTime - startTime} milliseconds`);
+                    setTimeComplexity(`O(1)`);
+                    setRealTimeComplexity(`${(endTime - startTime).toFixed(2)} ms`);
                     const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                    setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                    setRealSpaceComplexity(`${spaceComplexityBytes} bytes`);
+
                 } else {
                     setResultText('List is empty');
                     setCurrVal('');
@@ -194,9 +202,11 @@ const LinkedListVisualizer = () => {
                         const endTime = performance.now();
                         setResultText('Deleted node:');
                         setCurrVal(dataToDelete);
-                        setTimeComplexity(`O(n) - ${endTime - startTime} milliseconds`);
+                        setTimeComplexity(`O(n)`);
+                        setRealTimeComplexity(`${(endTime - startTime).toFixed(2)} ms`);
                         const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                        setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                        setRealSpaceComplexity(`${spaceComplexityBytes} bytes`);
+
                     } else {
                         animateSearch(dataToDelete);
                         setResultText('Node not found');
@@ -214,9 +224,11 @@ const LinkedListVisualizer = () => {
                 if (removedData !== null) {
                     setResultText('Deleted from end:');
                     setCurrVal(removedData);
-                    setTimeComplexity(`O(n) - ${endTime - startTime} milliseconds`);
+                    setTimeComplexity(`O(n)`);
+                    setRealTimeComplexity(`${(endTime - startTime).toFixed(2)} ms`);
                     const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                    setSpaceComplexity(`${spaceComplexityBytes} bytes`);
+                    setRealSpaceComplexity(`${spaceComplexityBytes} bytes`);
+
                 } else {
                     setResultText('List is empty');
                     setCurrVal('');
@@ -227,8 +239,6 @@ const LinkedListVisualizer = () => {
             setResultText('Select a linked list type first!');
             setCurrVal('');
         }
-        toggleSidePanel(); // Slide in the side panel after deletion
-
     };
 
     const searchNode = () => {
@@ -245,10 +255,11 @@ const LinkedListVisualizer = () => {
                 if (foundNode) {
                     setResultText('Node found:');
                     setCurrVal(valueToSearch);
-                    setTimeComplexity(`O(n) - ${endTime - startTime} ms`);
+                    setTimeComplexity(`O(n)`);
+                    setRealTimeComplexity(`${(endTime - startTime).toFixed(2)} ms`);
                     const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
-                    setSpaceComplexity(`${spaceComplexityBytes} bytes`);
-                } else {
+                    setRealSpaceComplexity(`${spaceComplexityBytes} bytes`);
+               } else {
                     setResultText('Node not found');
                     setCurrVal('');
                 }
@@ -805,7 +816,6 @@ const LinkedListVisualizer = () => {
             <button className="side-panel-toggle" onClick={toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
                 View steps
             </button>
-            <SidePanel isOpen={sidePanelOpen} onClose={toggleSidePanel} /> {/* Render the side panel component */}
             <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} />
 
             <div className="linkedlist-visualizer">
@@ -874,6 +884,8 @@ const LinkedListVisualizer = () => {
                 <ComplexityAnalysis
                     timeComplexity={timeComplexity}
                     spaceComplexity={spaceComplexity}
+                    realSpaceComplexity={realSpaceComplexity}
+                    realTimeComplexity={realTimeComplexity}
                 />
             </div>
         </>

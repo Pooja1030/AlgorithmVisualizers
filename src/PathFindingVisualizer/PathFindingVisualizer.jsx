@@ -6,6 +6,7 @@ import { aStar } from './algorithms/astar';
 import Navbar from '../Components/navbar';
 import Menu from './menu';
 import './PathFindingVisualizer.css';
+import ComplexityAnalysis from '../Components/ComplexityAnalysis';
 import SidePanel from '../Components/sidepanel';
 import { ListRounded } from '@material-ui/icons';
 
@@ -28,14 +29,30 @@ const algorithms = [
     {
         name: "Depth-first Search",
         function: dfs,
-        steps: dfs.steps,
+        steps: [
+            { code: " Step 1: Initialize the stack with the start node." },
+            { code: " Step 2: Loop until the stack is empty." },
+            { code: " Step 3: Pop a node from the stack." },
+            { code: " Step 4: If the popped node is the finish node, reconstruct the path." },
+            { code: " Step 5: Generate the neighbors of the popped node." },
+            { code: " Step 6: Push unvisited neighbors onto the stack and mark them as visited." },
+            { code: " Step 7: Repeat the loop." }
+        ],
         timeComplexity: "O(V + E)",
         spaceComplexity: "O(V)"
     },
     {
         name: "Breadth-first search",
         function: bfs,
-        steps: bfs.steps,
+        steps: [
+            { code: " Step 1: Initialize the queue with the start node." },
+            { code: " Step 2: Loop until the queue is empty." },
+            { code: " Step 3: Dequeue a node from the queue." },
+            { code: " Step 4: If the dequeued node is the finish node, reconstruct the path." },
+            { code: " Step 5: Generate the neighbors of the dequeued node." },
+            { code: " Step 6: Enqueue unvisited neighbors and mark them as visited." },
+            { code: " Step 7: Repeat the loop." }
+        ],
         timeComplexity: "O(V + E)",
         spaceComplexity: "O(V)"
     }
@@ -57,7 +74,7 @@ export default class PathfindingVisualizer extends Component {
             animationSpeed: 100,
             animating: false,
             sidePanelOpen: false,
-            algorithmSteps: [], // Define state for algorithm steps
+            algorithmSteps: [{ code: "" }], // Define state for algorithm steps
             timeComplexity: "", // Define state for time complexity
             spaceComplexity: "", // Define state for space complexity
         }
@@ -305,7 +322,7 @@ export default class PathfindingVisualizer extends Component {
         if (pos === 0) {
             this.setState({
                 algorithm: algorithms[val].name,
-                algorithmSteps: [] // Reset algorithm steps when algorithm changes
+                algorithmSteps: [{ code: "" }] // Reset algorithm steps when algorithm changes
             }, () => {
                 // Close side panel if open
                 if (this.state.sidePanelOpen) {
@@ -371,11 +388,7 @@ export default class PathfindingVisualizer extends Component {
             })
         );
         this.setState({ grid: newGrid });
-
-
     }
-    // togglesidepanel
-
 
     toggleSidePanel = () => {
         this.setState((prevState) => ({ sidePanelOpen: !prevState.sidePanelOpen }));
@@ -385,8 +398,8 @@ export default class PathfindingVisualizer extends Component {
         const { grid, mouseIsPressed, sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
 
         // Default time and space complexities (for initial rendering)
-        const defaultTimeComplexity = "O((V + E) * log(V))";
-        const defaultSpaceComplexity = "O(V + E)";
+        const defaultTimeComplexity = "O((V+E) * log(V))";
+        const defaultSpaceComplexity = "O(V+E)";
 
         return (
             <>
@@ -404,13 +417,13 @@ export default class PathfindingVisualizer extends Component {
 
                 {/* Side panel toggle button */}
                 <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
-                      <ListRounded className='sidepanel-icon' />
-          View steps
-       
+                    <ListRounded className='sidepanel-icon' />
+                    View steps
                 </button>
 
                 {/* Render the side panel component */}
-                <SidePanel isOpen={sidePanelOpen} algorithmSteps={algorithmSteps} onClose={this.toggleSidePanel} />
+                <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
+
                 <div className="grid">
                     {grid.map((row, rowIdx) => {
                         return (
@@ -440,16 +453,13 @@ export default class PathfindingVisualizer extends Component {
                 </div>
 
                 {/* Display time and space complexity */}
-                <div className="complexity-container">
-                    <div className="complexity-item">
-                        <span className="complexity-label">Time Complexity:</span>
-                        <span className="complexity-value">{timeComplexity ? `${defaultTimeComplexity} - ${timeComplexity}` : defaultTimeComplexity}</span>
-                    </div>
-                    <div className="complexity-item">
-                        <span className="complexity-label">Space Complexity:</span>
-                        <span className="complexity-value">{spaceComplexity ? `${defaultSpaceComplexity} - ${spaceComplexity}` : defaultSpaceComplexity}</span>
-                    </div>
-                </div>
+                <ComplexityAnalysis
+                    timeComplexity={defaultTimeComplexity}
+                    realTimeComplexity={timeComplexity}
+                    spaceComplexity={defaultSpaceComplexity}
+                    realSpaceComplexity={spaceComplexity}
+
+                />
             </>
         );
     }

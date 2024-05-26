@@ -21,17 +21,6 @@ export function bfs(grid, startNode, endNode) {
     list.push(startNode);
     startNode.isVisited = true;
 
-    // Steps for Breadth-first Search (BFS)
-    bfs.steps = [
-        { code: " Step 1: Initialize the queue with the start node." },
-        { code: " Step 2: Loop until the queue is empty." },
-        { code: " Step 3: Dequeue a node from the queue." },
-        { code: " Step 4: If the dequeued node is the finish node, reconstruct the path." },
-        { code: " Step 5: Generate the neighbors of the dequeued node." },
-        { code: " Step 6: Enqueue unvisited neighbors and mark them as visited." },
-        { code: " Step 7: Repeat the loop." }
-    ];
-
     while (list.length > 0) {
         const currentNode = list.shift();
         nodesInOrder.push(currentNode);
@@ -56,17 +45,6 @@ export function dfs(grid, startNode, endNode) {
     nodesInOrder.push(startNode);
     list.push(startNode);
     startNode.isVisited = true;
-
-    // Steps for Depth-first Search (DFS)
-    dfs.steps = [
-        { code: " Step 1: Initialize the stack with the start node." },
-        { code: " Step 2: Loop until the stack is empty." },
-        { code: " Step 3: Pop a node from the stack." },
-        { code: " Step 4: If the popped node is the finish node, reconstruct the path." },
-        { code: " Step 5: Generate the neighbors of the popped node." },
-        { code: " Step 6: Push unvisited neighbors onto the stack and mark them as visited." },
-        { code: " Step 7: Repeat the loop." }
-    ];
 
     while (!!list.length) {
         const currentNode = list.pop();
