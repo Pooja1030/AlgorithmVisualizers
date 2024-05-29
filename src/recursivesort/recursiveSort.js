@@ -20,6 +20,7 @@ class RecursiveSort extends Component {
         speed: 50,
         isRunning: false,
         algo: 0,
+        animateToggle: false,
         sidePanelOpen: false, // State variable for side panel visibility
         algorithmSteps: [],
         timeComplexity: '',
@@ -60,6 +61,13 @@ class RecursiveSort extends Component {
         this.setState({ algorithmSteps: steps, timeComplexity, spaceComplexity });
     }
 
+    triggerToggleAnimation = () => {
+        this.setState({ animateToggle: true });
+        setTimeout(() => {
+            this.setState({ animateToggle: false });
+        }, 3000);
+    };
+
     toggleSidePanel = () => {
         this.setState(prevState => ({ sidePanelOpen: !prevState.sidePanelOpen }));
     };
@@ -80,7 +88,9 @@ class RecursiveSort extends Component {
                 />
 
                 {/* Toggle button for the side panel */}
-                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>   <ListRounded className='sidepanel-icon' />
+
+                <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
+                    <ListRounded className='sidepanel-icon' />
                     View steps
                 </button>
 
@@ -137,7 +147,9 @@ class RecursiveSort extends Component {
     }
 
     handleSort = async () => {
-        this.setState({ isRunning: true, sidePanelOpen: true });
+        this.setState({ isRunning: true });
+        this.triggerToggleAnimation();
+
         let steps;
         let rects2;
         let startTime, endTime;

@@ -4,6 +4,8 @@ import './style.css';
 class Rect extends Component {
     render() {
         return (
+            <div>
+            {this.props.rect.width}
             <div
                 className='rect'
                 style={
@@ -15,6 +17,7 @@ class Rect extends Component {
                         'verticalAlign': 'middle'
                     }}
             >
+            </div>
             </div>
         );
     }

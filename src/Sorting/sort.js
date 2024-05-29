@@ -19,6 +19,7 @@ class Sort extends Component {
         isRunning: false,
         algo1: 0,
         algo2: 0,
+        animateToggle: false,
         sidePanelOpen: false,
         algorithmSteps1: [],
         algorithmSteps2: [],
@@ -32,6 +33,13 @@ class Sort extends Component {
         this.handleRandomize();
     }
 
+    triggerToggleAnimation = () => {
+        this.setState({ animateToggle: true });
+        setTimeout(() => {
+            this.setState({ animateToggle: false });
+        }, 3000);
+    };
+
     toggleSidePanel = () => {
         this.setState((prevState) => ({ sidePanelOpen: !prevState.sidePanelOpen }));
     };
@@ -40,10 +48,9 @@ class Sort extends Component {
         return (
             <React.Fragment>
                 <Navbar currentPage="Sorting Visualizer" />
-                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
+                <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
                     <ListRounded className='sidepanel-icon' />
                     View steps
-
                 </button>
                 <SidePanel
                     isOpen={this.state.sidePanelOpen}
@@ -122,7 +129,7 @@ class Sort extends Component {
     };
 
     handleSort = async () => {
-        this.setState({ isRunning: true, sidePanelOpen: true, algorithmSteps1: [], algorithmSteps2: [] });
+        this.setState({ isRunning: true, algorithmSteps1: [], algorithmSteps2: [] });
         let steps1, steps2;
         let algorithmSteps1, algorithmSteps2;
         let startTime1, endTime1, startTime2, endTime2;
@@ -219,6 +226,8 @@ class Sort extends Component {
                 realSpaceComplexity: `${spaceComplexity1} / ${spaceComplexity2}`,
             });
         }
+
+        this.triggerToggleAnimation();
 
         this.handleFirst(steps1);
         if (this.state.doubles) this.handleSecond(steps2);

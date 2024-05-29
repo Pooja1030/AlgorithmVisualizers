@@ -11,9 +11,9 @@ class Menu extends Component {
         return (
             <nav className="nav menu alert-dark">
 
-                <RangeSlider
+                {/* <RangeSlider
                     isDisabled={this.props.isDisabled}
-                />
+                /> */}
                 <DiscreteSlider
                     default={20}
                     min={10}
@@ -27,7 +27,7 @@ class Menu extends Component {
                     default={50}
                     min={10}
                     max={100}
-                    step={1}
+                    step={5}
                     title="Speed"
                     onCountChange={this.props.onSpeedChange}
                     isDisabled={false}

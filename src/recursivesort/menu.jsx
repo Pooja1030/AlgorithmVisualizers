@@ -10,9 +10,9 @@ class Menu extends Component {
             <nav className="nav menu alert-dark">
                 <div className='controls'>
 
-                <RangeSlider
+                {/* <RangeSlider
                     isDisabled={this.props.isDisabled}
-                />
+                /> */}
                 <DiscreteSlider
                     default={20}
                     min={10}
