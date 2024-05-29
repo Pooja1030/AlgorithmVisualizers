@@ -24,6 +24,7 @@ class MST extends Component {
 			maxVertices: 5,
 			animationSpeed: 50,
 			isAnimating: false, // Flag to track animation state
+			animateToggle: false,
 			sidePanelOpen: false,
 			algorithmSteps: [],
 			timeComplexity: "O(n)",
@@ -102,27 +103,8 @@ class MST extends Component {
 		// Define space complexity
 		const realSpaceComplexity = "O(E + V)";
 
+		this.triggerToggleAnimation();
 		this.setState({ mstEdges, visitedEdges, realTimeComplexity, realSpaceComplexity }); // Set execution time and space complexity
-	}
-
-	visualize() {
-		this.calculateMST()
-		const { algorithm } = this.state;
-		const startTime = performance.now(); // Start measuring time
-		const endTime = performance.now(); // Stop measuring time
-
-		// Calculate and set the real-time and space complexity
-		const elapsedTime = endTime - startTime;
-		const realTimeComplexity = `${elapsedTime.toFixed(2)} ms`;
-		const realSpaceComplexity = this.calculateSpaceComplexity(algorithm);
-
-		this.setState({
-			sidePanelOpen: true,
-			startTime,
-			endTime,
-			realTimeComplexity,
-			realSpaceComplexity
-		});
 	}
 
 	setAlgoSteps = (algorithm) => {
@@ -177,6 +159,13 @@ class MST extends Component {
 		return spaceComplexity;
 	}
 
+	triggerToggleAnimation = () => {
+		this.setState({ animateToggle: true });
+		setTimeout(() => {
+			this.setState({ animateToggle: false });
+		}, 3000);
+	};
+
 	toggleSidePanel = () => {
 		this.setState((prevState) => ({ sidePanelOpen: !prevState.sidePanelOpen }));
 	};
@@ -212,15 +201,14 @@ class MST extends Component {
 					/>
 
 					<div>
-						<button className='visualize-btn' onClick={() => this.visualize()}>Visualize</button>
+						<button className='visualize-btn' onClick={() => this.calculateMST()}>Visualize</button>
 						<button className='reset-btn' onClick={() => this.generateVertices()}>Reset</button>
 					</div>
 				</div>
 
-				<button className="side-panel-toggle" onClick={this.toggleSidePanel}>
+				<button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
 					<ListRounded className='sidepanel-icon' />
 					View steps
-
 				</button>
 
 				<SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />

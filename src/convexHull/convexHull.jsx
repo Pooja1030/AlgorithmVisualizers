@@ -16,6 +16,7 @@ class ConvexHull extends Component {
         isRunning: false,
         speed: 100,
         number: 50,
+        animateToggle: false,
         sidePanelOpen: false, // State to manage side panel visibility
         algorithmSteps: [
             { code: 'Step 1: Choose the point with the lowest y-coordinate. If there are multiple points, choose the leftmost one.' },
@@ -58,11 +59,11 @@ class ConvexHull extends Component {
 
                 {/* Rest of the component */}
                 {/* Side panel toggle button */}
-                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
+                <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
                     <ListRounded className='sidepanel-icon' />
                     View steps
-
                 </button>
+
 
                 {/* Render the side panel component */}
                 <SidePanel isOpen={this.state.sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={this.state.algorithmSteps} />
@@ -130,9 +131,18 @@ class ConvexHull extends Component {
         this.setState(prevState => ({ sidePanelOpen: !prevState.sidePanelOpen }));
     }
 
+    triggerToggleAnimation = () => {
+        this.setState({ animateToggle: true });
+        setTimeout(() => {
+            this.setState({ animateToggle: false });
+        }, 3000);
+    };
+
+
     handleVisualize = () => {
         console.log(this.state.algorithmSteps);
-        this.setState({ isRunning: true, sidePanelOpen: true }); // Open side panel when visualizing
+        this.setState({ isRunning: true }); // Open side panel when visualizing
+        this.triggerToggleAnimation();
     }
 
     handleTurnOff = () => {

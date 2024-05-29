@@ -37,6 +37,7 @@ class Puzzle extends Component {
             moves: generateMoveSequence(),
             isPlaying: false,
             intervalId: null,
+            animateToggle:false,
             sidePanelOpen: false, // State to manage side panel visibility
             algorithmSteps: [
                 { code: ' Step 1: Shuffle the puzzle tiles randomly to create a solvable configuration.', },
@@ -110,12 +111,19 @@ class Puzzle extends Component {
         });
     };
 
+    // triggerToggleAnimation = () => {
+    //     this.setState({animateToggle:true});
+    //     setTimeout(() => {
+    //         this.setState({animateToggle:false});
+    //     }, 2000); 
+    // };
+
     // Function to toggle side panel
-    toggleSidePanel = () => {
-        this.setState(prevState => ({
-            sidePanelOpen: !prevState.sidePanelOpen,
-        }));
-    };
+    // toggleSidePanel = () => {
+    //     this.setState(prevState => ({
+    //         sidePanelOpen: !prevState.sidePanelOpen,
+    //     }));
+    // };
 
     render() {
         // const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
@@ -125,9 +133,10 @@ class Puzzle extends Component {
                 <Navbar currentPage="15 Puzzle" />
 
                 {/* Side panel toggle button */}
-                {/* <button className="side-panel-toggle" onClick={this.toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
-          View steps
-       </button> */}
+                {/* <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
+                    <ListRounded className='sidepanel-icon' />
+                    View steps
+                </button> */}
 
                 {/* Render the side panel component */}
                 {/* <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={algorithmSteps} /> */}

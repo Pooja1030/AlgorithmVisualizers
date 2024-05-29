@@ -13,6 +13,7 @@ class Queen extends Component {
         number: 4,
         speed: 490,
         isRunning: false,
+        animateToggle: false,
         sidePanelOpen: false, // State variable for managing side panel visibility
         algorithmSteps: [
             { code: 'Step 1: Start with an empty chessboard.' },
@@ -47,9 +48,11 @@ class Queen extends Component {
                     onClear={this.handleClear}
                     onStop={this.handleStop}
                 />
-                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
+                <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
+                    <ListRounded className='sidepanel-icon' />
                     View steps
                 </button>
+
                 <SidePanel
                     isOpen={sidePanelOpen}
                     onClose={this.closeSidePanel}
@@ -92,7 +95,8 @@ class Queen extends Component {
     }
 
     startAlgo = async () => {
-        this.setState({ isRunning: true, sidePanelOpen: true });
+        this.setState({ isRunning: true });
+        this.triggerToggleAnimation();
 
         // Measure start time for time complexity
         const startTime = performance.now();
@@ -148,6 +152,13 @@ class Queen extends Component {
         }
         return false;
     }
+
+    triggerToggleAnimation = () => {
+        this.setState({ animateToggle: true });
+        setTimeout(() => {
+            this.setState({ animateToggle: false });
+        }, 3000);
+    };
 
     toggleSidePanel = () => {
         const { sidePanelOpen } = this.state;

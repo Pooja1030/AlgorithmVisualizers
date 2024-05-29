@@ -19,6 +19,7 @@ class Graph extends Component {
             n: 0,
             r: 2,
             algo: 0,
+            animateToggle: false,
             offset: 0,
             sidePanelOpen: false, // State variable for side panel visibility
             algorithmSteps: [
@@ -29,8 +30,8 @@ class Graph extends Component {
             ],
             timeComplexity: 'O(n)', // Default time complexity
             spaceComplexity: 'O(n)', // Default space complexity
-            realSpaceComplexity:"",
-            realTimeComplexity:"",
+            realSpaceComplexity: "",
+            realTimeComplexity: "",
         }
     }
 
@@ -80,6 +81,13 @@ class Graph extends Component {
         }));
     };
 
+    triggerToggleAnimation = () => {
+        this.setState({ animateToggle: true });
+        setTimeout(() => {
+            this.setState({ animateToggle: false });
+        }, 3000);
+    };
+
     getSelectedAlgorithm() {
         switch (this.state.algo) {
             case 0:
@@ -109,8 +117,8 @@ class Graph extends Component {
             // Calculate space complexity
             this.calculateSpaceComplexity();
 
-            // Trigger the side panel and generate algorithm steps
-            this.toggleSidePanel();
+            this.triggerToggleAnimation();
+
         });
     }
 
@@ -197,7 +205,9 @@ class Graph extends Component {
                 />
                 <Details algo={this.state.algo} />
                 {/* Side panel toggle button */}
-                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>   <ListRounded className='sidepanel-icon' />
+
+                <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
+                    <ListRounded className='sidepanel-icon' />
                     View steps
                 </button>
                 {/* Side Panel */}

@@ -73,6 +73,7 @@ export default class PathfindingVisualizer extends Component {
             finishNodeCol: null,
             animationSpeed: 100,
             animating: false,
+            animateToggle: false,
             sidePanelOpen: false,
             algorithmSteps: [{ code: "" }], // Define state for algorithm steps
             timeComplexity: "", // Define state for time complexity
@@ -364,8 +365,7 @@ export default class PathfindingVisualizer extends Component {
         // Animate visited nodes and shortest path nodes
         this.animateVisitedNodes(visitedNodesInOrder, getNodesInShortestPathOrder(finishNode));
 
-        // Open side panel
-        this.toggleSidePanel();
+        this.triggerToggleAnimation();
     }
 
     // resetgrid
@@ -389,6 +389,14 @@ export default class PathfindingVisualizer extends Component {
         );
         this.setState({ grid: newGrid });
     }
+
+
+    triggerToggleAnimation = () => {
+        this.setState({ animateToggle: true });
+        setTimeout(() => {
+            this.setState({ animateToggle: false });
+        }, 3000);
+    };
 
     toggleSidePanel = () => {
         this.setState((prevState) => ({ sidePanelOpen: !prevState.sidePanelOpen }));
@@ -416,11 +424,10 @@ export default class PathfindingVisualizer extends Component {
                 />
 
                 {/* Side panel toggle button */}
-                <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
+                <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
                     <ListRounded className='sidepanel-icon' />
                     View steps
                 </button>
-
                 {/* Render the side panel component */}
                 <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
 

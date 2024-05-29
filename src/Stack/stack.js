@@ -15,12 +15,20 @@ const StackVisualizer = () => {
     const [resultText, setResultText] = useState(null);
     const [currVal, setCurrVal] = useState(null);
     const [topIndex, setTopIndex] = useState(-1); // State variable for the index of the peeked element
+    const [animateToggle, setAnimateToggle] = useState(false);
     const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
     const [algorithmSteps, setAlgorithmSteps] = useState([]); // Define state for algorithm steps
     const [timeComplexity, setTimeComplexity] = useState(""); // Initialize with default time complexity
     const [spaceComplexity, setSpaceComplexity] = useState("O"); // Initialize with default space complexity
     const defaultTimeComplexity = "O(1)";
     const defaultSpaceComplexity = "O(1) bytes";
+
+    const triggerToggleAnimation = () => {
+        setAnimateToggle(true);
+        setTimeout(() => {
+            setAnimateToggle(false);
+        }, 2000); // Stop animation after 3 seconds
+    };
 
     // Function to measure the execution time of stack operations
     const measureExecutionTime = (operationFunc) => {
@@ -55,7 +63,7 @@ const StackVisualizer = () => {
                 setStack(prevStack => [...prevStack, newValue]);
                 setResultText('Pushed: ');
                 setCurrVal(newValue);
-                triggerSidePanel('Push');
+                setSteps('Push');
             } else {
                 setResultText("");
                 setCurrVal('Stack is full');
@@ -74,7 +82,7 @@ const StackVisualizer = () => {
                 setTimeout(() => {
                     setPoppedDie(null); // Clear the popped die after the animation duration
                 }, 500); // Adjust animation duration as needed
-                triggerSidePanel('Pop');
+                setSteps('Pop');
             } else {
                 setResultText("");
                 setCurrVal('Stack is empty');
@@ -115,8 +123,7 @@ const StackVisualizer = () => {
         setSidePanelOpen(!sidePanelOpen);
     };
 
-    const triggerSidePanel = (operation) => {
-        setSidePanelOpen(true);
+    const setSteps = (operation) => {
         switch (operation) {
             case 'Push':
                 setAlgorithmSteps([
@@ -164,15 +171,19 @@ const StackVisualizer = () => {
             default:
                 break;
         }
+        triggerToggleAnimation();
     };
 
     return (
         <>
             <Navbar currentPage="Stack" />
+            
             {/* Side panel toggle button */}
-            <button className="side-panel-toggle" onClick={toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
+            <button className={`side-panel-toggle ${animateToggle ? 'animate' : ''}`} onClick={toggleSidePanel}>
+                <ListRounded className='sidepanel-icon' />
                 View steps
             </button>
+
             {/* Render the side panel component */}
             <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} />
             <div className="stack-visualizer">

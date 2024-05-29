@@ -20,6 +20,7 @@ const LinkedListVisualizer = () => {
     const [newValue, setNewValue] = useState('');
     const [nodeValue, setNodeValue] = useState('');
     const [searchValue, setSearchValue] = useState('');
+    const [animateToggle, setAnimateToggle] = useState(false);
     const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
     const [algorithmSteps, setAlgorithmSteps] = useState([]);
     const [timeComplexity, setTimeComplexity] = useState('');
@@ -162,12 +163,12 @@ const LinkedListVisualizer = () => {
             setResultText('Select a linked list type first!');
             setCurrVal('');
         }
-        toggleSidePanel(); // Slide in the side panel after insertion
+        triggerToggleAnimation();
     };
 
     const deleteNode = async () => {
         if (linkedlist) {
-            toggleSidePanel();
+            triggerToggleAnimation();
             const animationPromise = new Promise(resolve => {
                 // Call animateDeletion with the appropriate parameters
                 animateDeletion(deletePosition, parseInt(nodeValue.trim()), resolve);
@@ -259,7 +260,7 @@ const LinkedListVisualizer = () => {
                     setRealTimeComplexity(`${(endTime - startTime).toFixed(2)} ms`);
                     const spaceComplexityBytes = calculateSpaceComplexity(linkedlist);
                     setRealSpaceComplexity(`${spaceComplexityBytes} bytes`);
-               } else {
+                } else {
                     setResultText('Node not found');
                     setCurrVal('');
                 }
@@ -273,7 +274,7 @@ const LinkedListVisualizer = () => {
             setResultText('Select a linked list type first!');
             setCurrVal('');
         }
-        toggleSidePanel(); // Slide in the side panel after insertion
+        triggerToggleAnimation();
     };
 
     const calculateSpaceComplexity = (list) => {
@@ -297,7 +298,6 @@ const LinkedListVisualizer = () => {
             // console.log(traversalResult); // Output the traversal result to console
             return traversalResult;
         }
-        toggleSidePanel(); // Slide in the side panel after insertion
     };
 
     const animateHead = (timeline) => {
@@ -364,8 +364,7 @@ const LinkedListVisualizer = () => {
         const traversalResult = linkedlist.displayList();
         setResultText("Linked list: ");
         setCurrVal(traversalResult);
-        toggleSidePanel(); // Slide in the side panel after insertion
-
+        triggerToggleAnimation();
     };
 
     const animateInsertion = async (insertPosition, newData) => {
@@ -810,10 +809,18 @@ const LinkedListVisualizer = () => {
         setSidePanelOpen(!sidePanelOpen);
     };
 
+    const triggerToggleAnimation = () => {
+        setAnimateToggle(true);
+        setTimeout(() => {
+            setAnimateToggle(false);
+        }, 3000); // Stop animation after 3 seconds
+    };
+
     return (
         <>
             <Navbar currentPage="Linked List" />
-            <button className="side-panel-toggle" onClick={toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
+            <button className={`side-panel-toggle ${animateToggle ? 'animate' : ''}`} onClick={toggleSidePanel}>
+                <ListRounded className='sidepanel-icon' />
                 View steps
             </button>
             <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} />

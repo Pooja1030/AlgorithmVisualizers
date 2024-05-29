@@ -32,6 +32,7 @@ class BinaryTree extends Component {
       animationSpeed: 50,
       resultText: '',
       isAnimating: false, // Flag to track animation state,
+      animateToggle: false,
       sidePanelOpen: false, // State variable to manage side panel visibility
       algorithmSteps: steps("inorderTraversal"),
       timeComplexity: "O(n)", // Default time complexity
@@ -143,7 +144,8 @@ class BinaryTree extends Component {
     // Calculate space complexity
     const realSpaceComplexity = `${this.estimateSpaceComplexity(tree)} bytes`;
 
-    this.setState({ algorithmSteps, realTimeComplexity, realSpaceComplexity, sidePanelOpen: true });
+    this.setState({ algorithmSteps, realTimeComplexity, realSpaceComplexity });
+    this.triggerToggleAnimation();
     // Perform traversal animation
     this.performTraversalAnimation(traversalResult, animationSpeed);
   }
@@ -191,7 +193,8 @@ class BinaryTree extends Component {
 
     if (!isNaN(value)) {
       const algorithmSteps = steps("addNodeToBST");
-      this.setState({ algorithmSteps, sidePanelOpen: true });
+      this.setState({ algorithmSteps });
+      this.triggerToggleAnimation();
 
       const findPosition = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
 
@@ -206,7 +209,9 @@ class BinaryTree extends Component {
       const realSpaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
 
 
-      this.setState({ tree: updatedTree, nodeValue: '', realTimeComplexity, realSpaceComplexity, sidePanelOpen: true });
+      this.setState({ tree: updatedTree, nodeValue: '', realTimeComplexity, realSpaceComplexity });
+      this.triggerToggleAnimation();
+
 
       new Promise(resolve => setTimeout(resolve, 500));
 
@@ -268,7 +273,8 @@ class BinaryTree extends Component {
 
       // Calculate space complexity
       const realSpaceComplexity = `${this.estimateSpaceComplexity(tree)} bytes`;
-      this.setState({ resultText: [], algorithmSteps, realTimeComplexity, realSpaceComplexity, sidePanelOpen: true }); // Clear previous search results
+      this.setState({ resultText: [], algorithmSteps, realTimeComplexity, realSpaceComplexity }); // Clear previous search results
+      this.triggerToggleAnimation();
 
       const found = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
       if (!found) {
@@ -284,7 +290,8 @@ class BinaryTree extends Component {
 
     if (!isNaN(value)) {
       const algorithmSteps = steps("deleteNodeFromBST");
-      this.setState({ algorithmSteps, sidePanelOpen: true });
+      this.setState({ algorithmSteps });
+      this.triggerToggleAnimation();
 
       const found = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
       if (!found) {
@@ -367,7 +374,7 @@ class BinaryTree extends Component {
             const realSpaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
 
             this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', realTimeComplexity, realSpaceComplexity });
-         }
+          }
         } else {
           // If the node has two children, find the successor
           const successor = findMinValue(nodeToDelete.right);
@@ -390,11 +397,11 @@ class BinaryTree extends Component {
 
                 const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
                 const realTimeComplexity = `${executionTime} ms`; // Display execution time
-                  // Calculate space complexity
-                  const realSpaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
+                // Calculate space complexity
+                const realSpaceComplexity = `${this.estimateSpaceComplexity(updatedTree)} bytes`;
 
-                  this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', realTimeComplexity, realSpaceComplexity });
-                  }
+                this.setState({ tree: updatedTree, resultText: `Node ${value} deleted!`, deleteValue: '', realTimeComplexity, realSpaceComplexity });
+              }
             });
           } else {
             await new Promise(resolve => setTimeout(resolve, 3000));
@@ -414,6 +421,13 @@ class BinaryTree extends Component {
     }
   }
 
+  triggerToggleAnimation = () => {
+    this.setState({ animateToggle: true });
+    setTimeout(() => {
+      this.setState({ animateToggle: false });
+    }, 3000);
+  };
+
   toggleSidePanel = () => {
     // Reset algorithm steps when closing the side panel
     if (!this.state.sidePanelOpen) {
@@ -429,9 +443,11 @@ class BinaryTree extends Component {
     return (
       <div>
         <Navbar currentPage="Binary Search Tree" />
-        <button className="side-panel-toggle" onClick={this.toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
+        <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
+          <ListRounded className='sidepanel-icon' />
           View steps
         </button>
+
         <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={this.toggleSidePanel} />
         <div className='menu'>
           <DiscreteSlider

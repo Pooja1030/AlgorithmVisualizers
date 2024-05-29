@@ -15,10 +15,9 @@ const QueueVisualizer = () => {
   const [currVal, setCurrVal] = useState(null);
   const [frontIndex, setFrontIndex] = useState(-1); // State variable for the index of the front pointer
   const [rearIndex, setRearIndex] = useState(-1); // State variable for the index of the rear pointer
+  const [animateToggle, setAnimateToggle] = useState(false);
   const [sidePanelOpen, setSidePanelOpen] = useState(false);
   const [algorithmSteps, setAlgorithmSteps] = useState([]);
-  const [lastOperation, setLastOperation] = useState(null);
-  const [currentStep, setCurrentStep] = useState(0);
   const [timeComplexity, setTimeComplexity] = useState("O(1) ms");
   const [spaceComplexity, setSpaceComplexity] = useState("O(1) bytes");
   const [realTimeComplexity, setRealTimeComplexity] = useState(null);
@@ -35,68 +34,53 @@ const QueueVisualizer = () => {
     setAlgorithmSteps(stepsRef.current);
   }, []);
 
-  const setStepsAndAnimate = (steps) => {
-    setAlgorithmSteps(steps);
-    startAnimationSteps();
+  const triggerToggleAnimation = () => {
+    setAnimateToggle(true);
+    setTimeout(() => {
+      setAnimateToggle(false);
+    }, 2000); // Stop animation after 3 seconds
   };
 
-  const startAnimationSteps = () => {
-    const timeline = gsap.timeline();
-    algorithmSteps.forEach((step, index) => {
-      timeline.to(`#step-${index}`, { opacity: 1, duration: 0.5 });
-      timeline.to(`#step-${index}`, { opacity: 0, duration: 0.5, delay: 1 });
-    });
-  };
-
-  const updateOperation = (operation, newValue = null, dequeuedValue = null) => {
-    if (lastOperation !== operation) {
-      setSidePanelOpen(true);
-      setLastOperation(operation);
-      setCurrentStep(0);
-    }
-
-    let updatedSteps = [];
-
+  const setSteps = (operation, newValue = null, dequeuedValue = null) => {
     switch (operation) {
       case 'Enqueue':
-        updatedSteps = [
+        setAlgorithmSteps([
           { code: 'Step 1: Check if the queue is full.' },
           { code: 'Step 2: If the queue is full, Overflow error.' },
           { code: 'Step 3: If the queue is not full, increment the rear pointer to point to the next available empty space.' },
           { code: 'Step 4: Add the data element to the queue location where the rear is pointing.' },
           { code: `Step 5: Here, you have successfully added ${newValue}.` },
-        ];
+        ]);
         break;
       case 'Dequeue':
-        updatedSteps = [
+        setAlgorithmSteps([
           { code: 'Step 1: Check if the queue is empty.' },
           { code: 'Step 2: If the queue is empty, Underflow error.' },
           { code: 'Step 3: If the queue is not empty, access the data where the front pointer is pointing.' },
           { code: 'Step 4: Increment front pointer to point to the next available data element.' },
           { code: `Step 5: Here, you have removed ${dequeuedValue} from the queue data structure.` },
-        ];
+        ]);
         break;
       case 'Peek':
-        updatedSteps = [
+        setAlgorithmSteps([
           { code: 'Step 1: Check if the queue is empty.' },
           { code: 'Step 2: If the queue is empty, return “Queue is Empty.”' },
           { code: 'Step 3: If the queue is not empty, access the data where the front pointer is pointing.' },
           { code: 'Step 4: Return data.' },
-        ];
+        ]);
         break;
       case 'IsFull':
-        updatedSteps = [
+        setAlgorithmSteps([
           { code: 'Step 1: Check if rear == MAXSIZE - 1.' },
           { code: 'Step 2: If they are equal, return “Queue is Full.”' },
           { code: 'Step 3: If they are not equal, return “Queue is not Full.”' },
-        ];
+        ]);
         break;
       // Add more cases for other operations if needed
       default:
         break;
     }
-
-    setStepsAndAnimate(updatedSteps);
+    triggerToggleAnimation();
   };
 
   const calculateSpaceComplexity = (queueLength) => {
@@ -115,7 +99,7 @@ const QueueVisualizer = () => {
       setRearIndex(queue.length); // Update rear pointer index
       setResultText("Enqueued: ");
       setCurrVal(newValue);
-      updateOperation('Enqueue', newValue);
+      setSteps('Enqueue', newValue);
     } else {
       setResultText("");
       setCurrVal("Queue is full");
@@ -141,7 +125,7 @@ const QueueVisualizer = () => {
         setRearIndex(-1); // Update rear pointer index
       }
       setQueue((prevQueue) => prevQueue.slice(1));
-      updateOperation('Dequeue', null, dequeuedValue);
+      setSteps('Dequeue', null, dequeuedValue);
     } else {
       setResultText("");
       setCurrVal("Queue is empty");
@@ -162,7 +146,7 @@ const QueueVisualizer = () => {
       const timeline = gsap.timeline();
       timeline.to(".top", { background: "#992155", duration: 0.5 });
       timeline.to(".top", { background: "#fb21d3", duration: 0.5, delay: 1 });
-      updateOperation('Peek');
+      setSteps('Peek');
     } else {
       setResultText("");
       setCurrVal("Queue is empty");
@@ -210,33 +194,17 @@ const QueueVisualizer = () => {
   };
 
   const toggleSidePanel = () => {
-    if (!sidePanelOpen) {
-      if (lastOperation) {
-        setAlgorithmSteps(stepsRef.current); // Reset algorithm steps to const steps if last operation exists
-        setCurrentStep(0);
-      }
-    }
     setSidePanelOpen(!sidePanelOpen);
-  };
-
-  const rewind = () => {
-    if (!sidePanelOpen) {
-      setAlgorithmSteps(stepsRef.current); // Reset algorithm steps to const steps
-      setCurrentStep(0);
-    }
-  };
-
-  const forward = () => {
-    // Forward logic if needed
   };
 
   return (
     <>
       <Navbar currentPage="Queue" />
-      <button className="side-panel-toggle" onClick={toggleSidePanel}>  <ListRounded className='sidepanel-icon' />
+      <button className={`side-panel-toggle ${animateToggle ? 'animate' : ''}`} onClick={toggleSidePanel}>
+        <ListRounded className='sidepanel-icon' />
         View steps
       </button>
-      <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} rewind={rewind} forward={forward} />
+      <SidePanel algorithmSteps={algorithmSteps} isOpen={sidePanelOpen} onClose={toggleSidePanel} />
       <div className="queue-visualizer">
         <div>
           <div className="menu">
@@ -256,9 +224,9 @@ const QueueVisualizer = () => {
           </div>
           <div className="result">{currVal !== null && `${resultText} ${currVal}`}</div>
           <ComplexityAnalysis
-            timeComplexity="O(1)"
+            timeComplexity={timeComplexity}
             realTimeComplexity={realTimeComplexity}
-            spaceComplexity="O(1)"
+            spaceComplexity={spaceComplexity}
             realSpaceComplexity={realSpaceComplexity}
           />
         </div>

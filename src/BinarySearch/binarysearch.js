@@ -14,6 +14,7 @@ class BinarySearch extends Component {
     rects: [],
     isRunning: false,
     currentStep: null,
+    animateToggle: false,
     sidePanelOpen: false, // State to manage side panel visibility
     algorithmSteps: [
       { code: "1. Initialize low and high pointers for the array." },
@@ -69,10 +70,11 @@ class BinarySearch extends Component {
         />
 
         {/* Side panel toggle button */}
-        <button className="side-panel-toggle" onClick={this.toggleSidePanel}>
-          <ListRounded className='sidepanel-icon' />
-          View steps
-        </button>
+        <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
+    <ListRounded className='sidepanel-icon' />
+    View steps
+</button>
+
 
         {/* Render the side panel component */}
         <SidePanel isOpen={sidePanelOpen} onClose={this.toggleSidePanel} algorithmSteps={algorithmSteps} />
@@ -155,10 +157,12 @@ class BinarySearch extends Component {
       // Calculate space complexity
       const realSpaceComplexity = this.calculateSpaceComplexity(rects.length);
 
+      this.triggerToggleAnimation();
+
       this.animateSearch(steps);
 
       // Update time and space complexity
-      this.setState({ sidePanelOpen: true, realTimeComplexity, realSpaceComplexity });
+      this.setState({ realTimeComplexity, realSpaceComplexity });
     });
   }
 
@@ -189,6 +193,13 @@ class BinarySearch extends Component {
     };
     animateStep(0);
   }
+
+  triggerToggleAnimation = () => {
+    this.setState({ animateToggle: true });
+    setTimeout(() => {
+      this.setState({ animateToggle: false });
+    }, 3000);
+  };
 
   // Function to toggle side panel
   toggleSidePanel = () => {
