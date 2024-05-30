@@ -5,21 +5,7 @@ import SimpleSelect from "../Components/simpleSelect";
 class Menu extends Component {
     render() {
         return (
-            //     <Drawer
-            //     anchor="left"
-            //     open={this.props.open}
-            //     onClose={this.props.toggleDrawer}
-            // >
-                <nav className="nav menu alert-dark">
-
-                    <SimpleSelect
-                        label={"Algorithm"}
-                        pos={0}
-                        onValueChanged={this.props.onAlgoChanged}
-                        items={["Dijkstra's Algorithm",
-                            "A* Algorithm",
-                            "Depth-first Search",
-                            "Breadth-first search"]} />
+                  <div className="menu alert-dark">
 
                     <DiscreteSlider
                         default={50}
@@ -30,6 +16,15 @@ class Menu extends Component {
                         onCountChange={this.props.onSpeedChange}
                         isDisabled={false}
                     />
+
+                    <SimpleSelect
+                        label={"Algorithm"}
+                        pos={0}
+                        onValueChanged={this.props.onAlgoChanged}
+                        items={["Dijkstra's Algorithm",
+                            "A* Algorithm",
+                            "Depth-first Search",
+                            "Breadth-first search"]} />
                     <div>
                         <button
                             className='visualize-btn btn-warning btn-lg '
@@ -37,7 +32,7 @@ class Menu extends Component {
                             disabled={this.props.isDisabled}
                         // style={this.isClickable()}
                         >
-                            Visualize
+                            Find path
                         </button>
                         <button
                             className='reset-btn btn-secondary m-2'
@@ -58,8 +53,7 @@ class Menu extends Component {
                             <p>Finish Node</p>
                         </div>
                     </div>
-                </nav>
-            // </Drawer>
+                </div>
         );
     }
     isClickable = () => {

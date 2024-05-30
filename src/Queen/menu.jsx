@@ -6,7 +6,7 @@ import DiscreteSlider from '../Components/slider'
 class Menu extends Component {
     render() {
         return (
-            <nav className="nav menu alert-dark">
+            <div className="menu alert-dark">
                 <div className='controls'>
                     <DiscreteSlider
                         default={4}
@@ -44,7 +44,7 @@ class Menu extends Component {
                         Clear Board
                     </button>
                 </div>
-            </nav>
+            </div>
         );
     }
     isClickable = () => {

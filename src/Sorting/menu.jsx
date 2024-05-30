@@ -9,7 +9,7 @@ import SwitchLabels from "../Components/formControlLabel";
 class Menu extends Component {
     render() {
         return (
-            <nav className="nav menu alert-dark">
+            <div className="menu alert-dark">
 
                 {/* <RangeSlider
                     isDisabled={this.props.isDisabled}
@@ -72,7 +72,7 @@ class Menu extends Component {
                         Randomize
                     </button>
                 </div>
-            </nav>
+            </div>
         );
     }
     isClickable = () => {

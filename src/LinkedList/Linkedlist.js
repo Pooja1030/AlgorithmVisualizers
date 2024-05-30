@@ -834,51 +834,52 @@ const LinkedListVisualizer = () => {
                             <option value="doubly">Doubly Linked List</option>
                             {/* <option disabled value="circular">Circular Linked List</option> */}
                         </select>
-
                         {/* insert */}
-                        <select value={insertPosition} onChange={handleInsertPositionChange}>
-                            <option value="Beginning">Beginning</option>
-                            <option value="After Node">After Node</option>
-                            {listType === 'doubly' && <option value="Before Node">Before Node</option>}
-                            <option value="End">End</option>
-                        </select>
-                        {
-                            (insertPosition === 'After Node' || insertPosition === 'Before Node') &&
-                            <input
-                                type="text"
-                                placeholder={insertPosition === 'After Node' ? "Prev node" : "Next node"}
-                                value={nodeValue}
-                                onChange={handleNodeValueChange}
-                            />
-                        }
-
-                        <input type="text" value={newValue} onChange={handleInputChange} placeholder="New value" />
-                        <button className='visualize-btn' onClick={insertNode}>Insert</button>
-
+                        <div>
+                            <select value={insertPosition} onChange={handleInsertPositionChange}>
+                                <option value="Beginning">Beginning</option>
+                                <option value="After Node">After Node</option>
+                                {listType === 'doubly' && <option value="Before Node">Before Node</option>}
+                                <option value="End">End</option>
+                            </select>
+                            {
+                                (insertPosition === 'After Node' || insertPosition === 'Before Node') &&
+                                <input
+                                    type="text"
+                                    placeholder={insertPosition === 'After Node' ? "Prev node" : "Next node"}
+                                    value={nodeValue}
+                                    onChange={handleNodeValueChange}
+                                />
+                            }
+                            <input type="text" value={newValue} onChange={handleInputChange} placeholder="New value" />
+                            <button className='visualize-btn' onClick={insertNode}>Insert</button>
+                        </div>
                         {/* delete */}
-                        <select value={deletePosition} onChange={handleDeletePositionChange}>
-                            <option value="Beginning">Beginning</option>
-                            <option value="Middle">Middle</option>
-                            <option value="End">End</option>
-                        </select>
-                        {
-                            deletePosition === 'Middle' &&
-                            <input
-                                type="text"
-                                placeholder="Enter node value"
-                                value={nodeValue}
-                                onChange={handleNodeValueChange}
-                            />
-                        }
-                        <button className='reset-btn' onClick={deleteNode}>Delete</button>
+                        <div>
+                            <select value={deletePosition} onChange={handleDeletePositionChange}>
+                                <option value="Beginning">Beginning</option>
+                                <option value="Middle">Middle</option>
+                                <option value="End">End</option>
+                            </select>
+                            {
+                                deletePosition === 'Middle' &&
+                                <input
+                                    type="text"
+                                    placeholder="Delete node"
+                                    value={nodeValue}
+                                    onChange={handleNodeValueChange}
+                                />
+                            }
+                            <button className='reset-btn' onClick={deleteNode}>Delete</button>
+                        </div>
+                        {/* search */}
+                        <div>
+                            <input type="text" value={searchValue} onChange={handleSearchInputChange} placeholder="Search Node" />
+                            <button className='visualize-btn' onClick={searchNode}>Search</button>
+                        </div>
+                        <button className='' onClick={animateTraversal}>Traverse</button>
+                        <button className='reset-btn' onClick={resetLinkedList}>Reset</button>
                     </div>
-
-                    {/* search */}
-                    <input type="text" value={searchValue} onChange={handleSearchInputChange} placeholder="Search Node" />
-                    <button className='visualize-btn' onClick={searchNode}>Search Node</button>
-
-                    <button className='' onClick={animateTraversal}>Traverse</button>
-                    <button className='reset-btn' onClick={resetLinkedList}>Reset</button>
                     <div className="result">{resultText && `${resultText} ${currVal}`}</div>
                 </div>
 

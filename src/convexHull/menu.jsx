@@ -4,9 +4,8 @@ import DiscreteSlider from '../Components/slider';
 class Menu extends Component {
     render() {
         return (
-            <nav className="nav menu alert-dark">
+            <div className="menu alert-dark">
                 <div className='controls'>
-
                     <DiscreteSlider
                         onCountChange={this.props.onChangeSpeed}
                         title="speed"
@@ -40,7 +39,7 @@ class Menu extends Component {
                     <button className="reset-btn btn-primary btn-lg m-2" onClick={this.props.onRefresh} disabled={this.props.isDisabled} style={this.isClickable()}>Refresh</button>
                 </div>
 
-            </nav>
+            </div>
         );
     }
     isClickable = () => {

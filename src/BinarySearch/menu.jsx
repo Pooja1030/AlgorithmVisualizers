@@ -23,7 +23,7 @@ class Menu extends Component {
 
     render() {
         return (
-            <nav className="nav menu alert-dark">
+            <div className="menu alert-dark">
                 {/* Existing code for sliders */}
                 <DiscreteSlider
                     default={10}
@@ -69,7 +69,7 @@ class Menu extends Component {
                 >
                     Reset
                 </button>
-            </nav>
+            </div>
         );
     }
 

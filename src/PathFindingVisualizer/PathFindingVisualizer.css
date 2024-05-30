@@ -2,16 +2,6 @@
   margin: 10px;
 }
 
-.visualize-btn{    
-background-color: #5a43c3;
-color: #fff;
-}
-
-.reset-btn{
-  background-color: #c34343;
-  color: #fff;
-}
-
 .node-type{
   display: flex;
   width: fit-content;
@@ -31,9 +21,4 @@ color: #fff;
 .node-type p{
   padding: 0 10px;
   margin: 0;
-}
-
-.menu{
-  justify-content: space-between;
-  /* padding: 10px 60px; */
 }

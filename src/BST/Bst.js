@@ -474,29 +474,29 @@ class BinaryTree extends Component {
             <button className='generate-random-btn' onClick={this.generateRandomTree}>Generate Random Tree</button>
             <button className='reset-btn' onClick={this.resetTree}>Reset</button>
           </div>
-        </div>
-        <div>
-          <input
-            type='number'
-            value={nodeValue}
-            onChange={this.handleInputChange}
-            placeholder='Node value'
-          />
-          <button className='add-node-btn' onClick={this.addNode}>Insert</button>
-          <input
-            type='number'
-            value={searchValue}
-            onChange={this.handleSearchInputChange}
-            placeholder='Search node'
-          />
-          <button className='search-node-btn' onClick={this.searchNode}>Search</button>
-          <input
-            type='number'
-            value={deleteValue}
-            onChange={this.handleDeleteInputChange}
-            placeholder='Delete node'
-          />
-          <button className='delete-node-btn' onClick={this.deleteNode}>Delete</button>
+          <div>
+            <input
+              type='number'
+              value={nodeValue}
+              onChange={this.handleInputChange}
+              placeholder='Node value'
+            />
+            <button className='add-node-btn' onClick={this.addNode}>Insert</button>
+            <input
+              type='number'
+              value={deleteValue}
+              onChange={this.handleDeleteInputChange}
+              placeholder='Delete node'
+            />
+            <button className='delete-node-btn' onClick={this.deleteNode}>Delete</button>
+            <input
+              type='number'
+              value={searchValue}
+              onChange={this.handleSearchInputChange}
+              placeholder='Search node'
+            />
+            <button className='search-node-btn' onClick={this.searchNode}>Search</button>
+          </div>
         </div>
         <div className="result">{`${resultText}`}</div>
         <Canvas tree={tree} animationSpeed={animationSpeed} />
@@ -507,7 +507,6 @@ class BinaryTree extends Component {
           realSpaceComplexity={realSpaceComplexity}
           spaceComplexity={spaceComplexity}
         />
-
       </div>
     );
   }

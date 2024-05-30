@@ -7,7 +7,7 @@ import RangeSlider from '../Components/douleSlider';
 class Menu extends Component {
     render() {
         return (
-            <nav className="nav menu alert-dark">
+            <div className="menu alert-dark">
                 <div className='controls'>
 
                 {/* <RangeSlider
@@ -45,7 +45,7 @@ class Menu extends Component {
                         disabled={this.props.isDisabled}
                         style={this.isClickable()}
                     >
-                        Visualize
+                        Sort
                     </button>
                     <button
                         className='reset-btn btn-secondary m-2'
@@ -56,7 +56,7 @@ class Menu extends Component {
                         Randomize
                     </button>
                 </div>
-            </nav>
+            </div>
         );
     }
     isClickable = () => {

@@ -5,9 +5,7 @@ import SimpleSelect from "../Components/simpleSelect";
 class Menu extends Component {
     render() {
         return (
-            <nav className="nav alert-dark">
-
-
+            <div className="menu">
                 {/*<DiscreteSlider*/}
                 {/*    default={50}*/}
                 {/*    min={10}*/}
@@ -46,7 +44,7 @@ class Menu extends Component {
                     onClick={this.props.onReset}
                     disabled={this.props.isDisabled}
                 >Reset</button>
-            </nav>
+            </div>
         );
     }
     isClickable = () => {

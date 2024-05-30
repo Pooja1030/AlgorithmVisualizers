@@ -1,13 +1,15 @@
 .side-panel-toggle {
   position: fixed;
   right: 60px;
-  top: 10px;
+  top: 0px;
   cursor: pointer;
   transition: box-shadow 0.3s ease;
   padding-left: 20px;
   background: #fff;
-  border: 1px solid #e8e8e8;
-  color: #191919;
+  border: 1px solid #0d8bff;
+  color: #2196f3;
+  font-size: 14px;
+  font-weight: bold;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -19,7 +21,7 @@
 }
 
 .sidepanel-icon {
-  color: #464646;
+  color: #2196f3;
 }
 
 .side-panel-toggle.animate {
@@ -27,12 +29,15 @@
 }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
   }
+
   50% {
-    transform: translateY(-10px);
-    box-shadow: 0 0 5px rgba(190, 136, 221, 0.6), 0 0 10px rgba(229, 147, 244, 0.4), 0 0 15px rgba(233, 105, 245, 0.2);
+    transform: translateY(-5px) scale(1.005);
+    box-shadow: 0 0 5px rgba(136, 169, 221, 0.6), 0 0 15px rgba(105, 121, 245, 0.2);
   }
 }
 
