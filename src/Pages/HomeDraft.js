@@ -6,7 +6,10 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import InfoIcon from '@mui/icons-material/Info';
-
+import { useState } from "react";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
 
 const list = [
   {
@@ -61,7 +64,7 @@ const list = [
   {
     "title": "N-queens Problem",
     "link": "queen",
-    "description": "The objective of queens problem is to place eight chess queens on an 8×8 chessboard so that no two queens threaten each other.",
+    "description": "The N-Queens Problem is a classical problem in which the goal is to place N queens on an N×N chessboard so that no two queens threaten each other.",
     "algorithms": ["Backtracking"],
     "img": ""
   },
@@ -96,21 +99,21 @@ const list = [
   {
     "title": "Binary Search Tree",
     "link": "binarytree",
-    "description": "A binary tree is a data structure in which each node has at most two children, referred to as the left child and the right child.",
+    "description": "BST is a node-based binary tree data structure which has the following properties: left subtree of a node contains only nodes with keys lesser than the node’s key.",
     "algorithms": ["Preorder", "Inorder", "Postorder"],
     "img": ""
   },
   {
     "title": "Linear Regression",
     "link": "linear-regression",
-    "description": "",
+    "description": "Linear Regression is a basic and commonly used type of predictive analysis.",
     "algorithms": [],
     "img": ""
   },
   {
     "title": "Logistic Regression",
     "link": "logistic-regression",
-    "description": "",
+    "description": "Logistic Regression is a statistical method for analyzing a dataset in which there are one or more independent variables that determine an outcome.",
     "algorithms": [],
     "img": ""
   },
@@ -122,30 +125,30 @@ const list = [
     "img": ""
   },
   {
-    "title": "KMeans",
+    "title": "K-Means Clustering",
     "link": "KMeans",
-    "description": "",
+    "description": "K-Means Clustering is an unsupervised learning algorithm that is used for clustering.",
     "algorithms": [],
     "img": ""
   },
   {
-    "title": "KNN",
+    "title": "K-Nearest Neighbors",
     "link": "KNN",
-    "description": "",
+    "description": "K-Nearest Neighbors is a simple, easy-to-implement supervised machine learning algorithm that can be used to solve both classification and regression problems.",
     "algorithms": [],
     "img": ""
   },
   {
-    "title": "ANN",
-    "link": "ANN",
-    "description": "",
+    "title": "Artificial Neural Networks",
+    "link": "ann",
+    "description": "Artificial Neural Networks (ANN) are computational models inspired by human neural networks, and they are used to approximate functions that can depend on a large number of inputs.",
     "algorithms": [],
     "img": ""
   },
   {
-    "title": "CNN",
-    "link": "CNN",
-    "description": "",
+    "title": "Convolutional Neural Networks",
+    "link": "cnn",
+    "description": "Convolutional Neural Networks (CNN) are a class of deep neural networks, most commonly applied to analyzing visual imagery.",
     "algorithms": [],
     "img": ""
   },
@@ -158,107 +161,173 @@ const list = [
   // },
 ];
 
-
-const search_tags = ["linked list", "array", "graph", "stack", "queue"];
+const categories = {
+  "Data structures": ["Linked List", "Stack", "Queue", "Binary Search Tree"],
+  "Array": ["Sorting Algorithms", "Binary Search", "Recursive Sort"],
+  "Graph": ["Pathfinding Algorithms", "Minimum Spanning Tree"],
+  "Backtracking": ["N-queens Problem"],
+  // "Geometry": ["Convex Hull"],
+  "Machine Learning": ["Linear Regression", "Logistic Regression", "Multiple Linear Regression", "K-Means Clustering", "K-Nearest Neighbors"],
+  "Deep Learning": ["Artificial Neural Networks", "Convolutional Neural Networks"],
+  // "Recursion": ["Recursion Tree"],
+};
 
 const HtmlTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />))(({ theme }) => (
-    {
-      [`& .${tooltipClasses.tooltip}`]: {
-        backgroundColor: '#f5f5f9',
-        color: 'rgba(0, 0, 0, 0.87)',
-        maxWidth: 250,
-        fontSize: theme.typography.pxToRem(12),
-        border: '1px solid #dadde9',
-      },
-    }));
-
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#f5f5f9',
+    color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: '1px solid #dadde9',
+  },
+}));
 
 export default function HomeDraft() {
+  const [query, setQuery] = useState('');
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
+
+  const handleSearchInputChange = (event) => {
+    setQuery(event.target.value);
+  };
+
+  const getAllItems = () => {
+    const uncategorizedItems = list
+      .filter(item => !Object.values(categories).flat().includes(item.title))
+      .map(item => item.title);
+    return [
+      ...Object.keys(categories).flatMap(category => categories[category]),
+      ...uncategorizedItems
+    ];
+  };
+
+  const filterItems = (items, query) => {
+    return items.filter(item => {
+      const lowerCaseItem = item.toLowerCase();
+      const lowerCaseQuery = query.toLowerCase();
+      if (lowerCaseItem.includes(lowerCaseQuery)) {
+        return true;
+      }
+      const listItem = list.find(l => l.title.toLowerCase() === lowerCaseItem);
+      if (listItem && listItem.algorithms.some(algo => algo.toLowerCase().includes(lowerCaseQuery))) {
+        return true;
+      }
+      return false;
+    });
+  };
+
+  const displayedItems = query.trim() === ''
+    ? (selectedTab === 0 ? getAllItems() : categories[Object.keys(categories)[selectedTab - 1]])
+    : filterItems(getAllItems(), query);
+
   return (
     <>
-
       <div className="hero-container home22-intro">
         <div className="nav-logo">
           <h3 className="logo-text">Algorithm Visualizer</h3>
         </div>
-
         <section className="hero-section">
-
           <div className="hero-text-content">
             <h1 className="hero-text-content-h1">Algorithm Visualizer</h1>
             <h2 className="hero-text-content-h2">
-              Explore & Understand Algorithms through Interactive Visualization</h2>
-            {/* <h1 className="hero-text-content-h1">Explore Algorithms:<br></br> Learn, Visualize, and Master</h1>
-
-            <h2 className="hero-text-content-h2">
-              Algorithm Visualizer is your interactive gateway to understanding and mastering essential algorithms used in computer science.
-            </h2> */}
-
+              Explore & Understand Algorithms through Interactive Visualization
+            </h2>
           </div>
 
-
-          {/* <div className="search-input-hero search-input-with-dropdown">
+          <div className="search-input-hero search-input-with-dropdown">
             <SearchIcon className="search-icon"></SearchIcon>
-
-            <form action="/search" className="search-input-form" method="get">
-              <label for="search" className="accessibility-text">Search</label>
-              <input id="search" type="search" name="q" placeholder="Search keywords..." value="" className="search-input">
-              </input>
+            <form className="search-input-form" onSubmit={e => e.preventDefault()}>
+              <label htmlFor="search" className="accessibility-text">Search</label>
+              <input
+                id="search"
+                type="search"
+                name="q"
+                placeholder="Search..."
+                value={query}
+                onChange={handleSearchInputChange}
+                className="search-input"
+              />
             </form>
           </div>
-
-          <ul className="search-suggestions-hero search-results-suggestions">
-            <li className="search-results-suggestion search-results-suggestion-heading">Trending searches</li>
-
-            {search_tags.map((item, itemId) =>
-              <li className="search-results-suggestion">
-                <a href="/search/landing%20page">{item}</a>
-              </li>
-            )}
-          </ul> */}
-
         </section>
       </div>
 
       <div className="container">
 
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: 3.5 }}>
+          <Tabs
+            value={selectedTab}
+            onChange={handleTabChange}
+            variant="scrollable"
+            scrollButtons="auto"
+            sx={{
+              '& .MuiTab-root': {
+                minWidth: 100,
+                padding: '12px 24px',
+                fontSize: '1rem',
+                textTransform: 'none',
+                color: "gray",
+              },
+              '& .MuiTabs-flexContainer': {
+                justifyContent: 'center',
+              },
+              '& .Mui-selected': {
+                color: "#5a43c3",
+              },
+              '& .MuiTabs-indicator': {
+                backgroundColor: "#5a43c3",
+              },        
+            }}
+          >
+            <Tab label="All" />
+            {Object.keys(categories).map((category, index) => (
+              <Tab key={index} label={category} />
+            ))}
+          </Tabs>
+        </Box>
+
         <section className="dashboard-section">
-          {/* <div className="dashboard-section-header">
-            <h2 className="dashboard-section-title">Explore all algorithms</h2>
-          </div> */}
           <div className="cards-grid">
-
-            {list.map((item, itemId) =>
-
-              <Link to={item.link} className="algo-card" key={itemId}>
-                <div className="card-content">
-                  <h3 className="card-title">{item.title}</h3>
-                  <HtmlTooltip
-                    title={
-                      <React.Fragment>
-                        <Typography color="inherit">{item.description}</Typography>
-                      </React.Fragment>
-                    }>
-                    <Button><InfoIcon color="action"></InfoIcon></Button>
-                  </HtmlTooltip>
-                </div>
-
-                <ul className="card-tags">
-                  {item.algorithms.map((algo) => <li className="card-tag">{algo}</li>)}
-                </ul>
-
-                <img className="card-logo" src={item.img || "https://hrcdn.net/s3_pub/hr-assets/dashboard/ProblemSolving.svg"} alt="{item.title}"></img>
-              </Link>
-            )}
-
+            {displayedItems.map((item, itemId) => {
+              const listItem = list.find(l => l.title === item);
+              return (
+                <Link to={listItem?.link || '#'} className="algo-card" key={itemId}>
+                  <div className="card-content">
+                    <h3 className="card-title">{item}</h3>
+                    <HtmlTooltip
+                      title={
+                        <React.Fragment>
+                          <Typography color="inherit">
+                            {listItem?.description || ''}
+                          </Typography>
+                        </React.Fragment>
+                      }
+                    >
+                      <Button><InfoIcon color="action"></InfoIcon></Button>
+                    </HtmlTooltip>
+                  </div>
+                  <ul className="card-tags">
+                    {(listItem?.algorithms || []).map((algo, algoId) => (
+                      <li className="card-tag" key={algoId}>{algo}</li>
+                    ))}
+                  </ul>
+                  <img
+                    className="card-logo"
+                    src={listItem?.img || "https://hrcdn.net/s3_pub/hr-assets/dashboard/ProblemSolving.svg"}
+                    alt={item}
+                  />
+                </Link>
+              );
+            })}
           </div>
         </section>
-
       </div>
       <Outlet />
     </>
   );
-};
-
-// export default HomeDraft;
+}
