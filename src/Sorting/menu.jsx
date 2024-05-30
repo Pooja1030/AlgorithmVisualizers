@@ -16,9 +16,9 @@ class Menu extends Component {
                 /> */}
                 <DiscreteSlider
                     default={20}
-                    min={10}
-                    max={100}
-                    step={10}
+                    min={5}
+                    max={20}
+                    step={1}
                     title="Numbers"
                     onCountChange={this.props.onCountChange}
                     isDisabled={this.props.isDisabled}
