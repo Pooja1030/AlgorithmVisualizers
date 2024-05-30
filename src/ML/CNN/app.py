@@ -1,4 +1,3 @@
-# Import necessary libraries
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import numpy as np
@@ -16,8 +15,15 @@ cifar10_classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog
 
 # Load and preprocess the smaller dataset
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
-x_train, x_test = x_train / 255.0, x_test / 255.0
-y_train, y_test = to_categorical(y_train), to_categorical(y_test)
+
+# Create a smaller dataset
+num_samples = 1000  # Define the number of samples for the smaller dataset
+x_train_small, y_train_small = x_train[:num_samples], y_train[:num_samples]
+x_test_small, y_test_small = x_test[:num_samples], y_test[:num_samples]
+
+# Normalize the pixel values
+x_train_small, x_test_small = x_train_small / 255.0, x_test_small / 255.0
+y_train_small, y_test_small = to_categorical(y_train_small), to_categorical(y_test_small)
 
 # Define CNN model
 model = Sequential([
@@ -33,7 +39,7 @@ model = Sequential([
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Train the model on the smaller dataset
-model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=10)
+model.fit(x_train_small, y_train_small, validation_data=(x_test_small, y_test_small), epochs=10)
 
 # Define endpoint for prediction
 @app.route('/predict', methods=['POST'])
@@ -54,7 +60,7 @@ def predict():
 # Define endpoint for accuracy
 @app.route('/accuracy', methods=['GET'])
 def accuracy():
-    loss, acc = model.evaluate(x_test, y_test, verbose=0)
+    loss, acc = model.evaluate(x_test_small, y_test_small, verbose=0)
     return jsonify({'accuracy': acc})
 
 if __name__ == '__main__':
