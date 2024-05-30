@@ -16,7 +16,6 @@ h2 {
   font-size: 15px;
 }
 
-
 ul,
 li {
   padding: 0px;
@@ -30,230 +29,26 @@ li {
   margin: 0 10%;
   clear: both;
   display: flex;
-  grid-auto-columns: auto;
-  flex-wrap: wrap;
   justify-items: center;
-
 }
 
-
-
-.list li {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  /* float: left; */
-  width: 100%;
+a {
+  text-decoration: none;
+  color: black;
 }
 
-.list li .li-wrapper {
-  background: #FFDFDF;
-  padding-top: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
-  margin-left: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0px 0px 3px #ddd1d1;
-}
-
-.list li .li-wrapper:hover {
-  box-shadow: 0px 0px 3px #aeaaaa;
-}
-
-.list li a.thumbnail {
-  display: block;
-  position: relative;
-  margin: 0px 0px 10px 10px;
-  cursor: pointer;
-}
-
-.list li a.thumbnail .overlay {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  text-align: center;
-}
-
-.list li a.thumbnail img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-}
-
-.list li a.thumbnail img.static {
-  width: 100%;
-  position: absolute;
-  top: 0px;
-}
-
-.list li a.thumbnail div {
-  width: 100%;
-}
-
-.list li a.thumbnail div.static {
-  width: 100%;
-  position: absolute;
-  top: 0px;
-}
-
-.list li .info {
-  margin: 0px 0px 0px 10px;
-}
-
-.list li .info h3 {
-  font-size: 13px;
-  font-weight: bold;
-  color: #000000;
-  margin-bottom: 8px;
-}
-
-.list li .info h3:hover {
-  color: #999999;
-}
-
-.list li .info .indv-viz-filters {
-  margin-left: -8px;
-  height: 23px;
-  float: none;
-  overflow: hidden;
-}
-
-#noexist {
-  display: block;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 20px;
-}
-
-#topleft {
-  border: 1px solid grey;
-  border-radius: 5px;
-  margin: 10px;
-  padding: 2px;
-  max-height: 200px;
-}
-
-#topright {
-  position: absolute;
-  top: 60px;
-  left: 1000px;
-  width: 90px;
-  height: 175px;
-  display: none;
-}
-
-
-@media (min-width: 320px) {
-
-  /* 320-540px */
-  #topleft {
-    top: 20px;
-    /* width: 100%-; /* the - is to take into account the potential vertical scroll bar?, commented on 4 Jan 2022 as it is a CSS error... */
-    position: relative;
-  }
+p {
+  text-align: left;
 }
 
 @media (min-width: 540px) {
-
   /* 540-768px */
   h1 {
     font-size: 50px;
   }
-
-  .line {
-    margin: 0px 50px;
-  }
-
-  #filters {
-    padding: 20px 60px 12px 42px;
-  }
-
-  .list li {
-    width: 50%;
-  }
 }
 
-@media (min-width: 768px) {
-
-  /* 768-1024px */
-  .line {
-    margin: 0px 60px;
-  }
-
-  #filters {
-    padding: 20px 60px 12px 52px;
-  }
-
-  .list li {
-    width: 33.33%;
-  }
-}
-
-@media (min-width: 1024px) {
-
-  /* more than 1024px */
-  .list li {
-    width: 25%;
-  }
-
-  #topleft {
-    top: 40px;
-    width: 25%;
-    position: absolute;
-  }
-}
-
-@media (min-width: 1400px) {
-
-  /* more than 1400px */
-  .list li {
-    width: 25%;
-  }
-}
-
-.static {
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  display: inline-block;
-  height: 100%;
-  width: 300px;
-  opacity: 1;
-  backface-visibility: hidden;
-}
-
-/* 
-.node {
-  fill: #ccc;
-  stroke: #fff;
-  stroke-width: 2px;
-} */
-
-.link {
-  stroke: #777;
-  stroke-width: 2px;
-}
-
-.middle {
-  transition: .5s ease;
-  opacity: 0;
-  position: absolute;
-  top: 7%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%)
-}
-
-.li-wrapper:hover .static {
-  opacity: 0.3;
-}
-
-.li-wrapper:hover .middle {
-  opacity: 1;
-}
+/* basic components */
 
 button,
 select,
@@ -293,11 +88,6 @@ select {
   background-repeat: no-repeat;
 }
 
-a {
-  text-decoration: none;
-  color: black;
-}
-
 .visualize-btn {
   background-color: #5a43c3;
   color: #fff;
@@ -308,6 +98,7 @@ a {
   color: #fff;
 }
 
+/* menu styles */
 .menu {
   display: flex;
   padding: 10px 60px;
@@ -324,47 +115,7 @@ a {
   gap: 10px;
 }
 
-
-.algo-tags {
-  display: flex;
-  flex-direction: row;
-  flex-flow: wrap;
-  height: fit-content;
-  margin-top: 10px;
-}
-
-.algo-tag {
-  display: inline-block;
-  padding: 4px 12px;
-  width: fit-content !important;
-  background-color: #f35d99;
-  margin: 2px;
-  color: #fff;
-  border-radius: 4px;
-  font-size: 14px;
-  line-height: 1.5em;
-}
-
-p {
-  text-align: left;
-}
-
-
-.info .accordion {
-  margin: 4px 0;
-  background-color: #FFF9F9;
-}
-
-
-li .li-wrapper {
-  border-radius: 8px;
-}
-
-.info .title:hover {
-  font-weight: bold;
-  font-size: 0.9em;
-}
-
+/* nabar styles */
 .navbar {
   display: flex;
   flex-direction: row;
@@ -422,8 +173,7 @@ li .li-wrapper {
   text-shadow: #61dafba2 1px 1px 2px;
 }
 
-
-
+/* home styles */
 .container {
   box-sizing: border-box;
   margin: 0 auto;
@@ -439,6 +189,7 @@ li .li-wrapper {
   align-items: baseline;
 }
 
+/* Home cards */
 .cards-grid {
   display: grid;
   gap: var(--dashboard-column-gap, 30px);
@@ -489,7 +240,6 @@ li .li-wrapper {
   overflow: hidden;
 }
 
-
 .card-tag {
   display: inline-block;
   padding: 4px 12px;
@@ -512,22 +262,11 @@ li .li-wrapper {
   text-align: left;
   padding-right: 5px;
   line-height: 1.5em;
-
 }
 
-/* 
-.algo-card h3 button{
-  min-width: 0px !important; 
-  padding: 2px 2px !important;
-  
-} */
-
-
 @media (max-width: 1024px) {
-
   .cards-grid {
     grid-template-columns: repeat(2, 1fr);
-
   }
 
   .algo-card {
@@ -536,17 +275,13 @@ li .li-wrapper {
 }
 
 @media (max-width: 768px) {
-
   .cards-grid {
     grid-template-columns: repeat(1, 1fr);
-
   }
 
   .algo-card {
     min-height: 183px;
   }
-
-
 }
 
 .hero-container {
@@ -588,6 +323,7 @@ li .li-wrapper {
   opacity: .2;
 }
 
+/* Home nav */
 .nav-logo {
   /* padding: 24px 0; */
   display: flex;
@@ -643,6 +379,8 @@ li .li-wrapper {
   line-height: 32px;
 }
 
+/* Search box */
+
 .search-input-hero {
   position: relative;
   z-index: 2;
@@ -686,6 +424,7 @@ li .li-wrapper {
   color: #58505f;
 }
 
+/* Complexity analysis */
 
 .complexity-analysis {
   position: fixed;

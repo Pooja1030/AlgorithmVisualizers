@@ -1,333 +1,333 @@
 import { Outlet, Link } from "react-router-dom";
-
-
-import pathfinder from "../Images/pathfinder.gif"
-import sorting from "../Images/sorting.gif"
-import convexHull from "../Images/convexHull.gif"
-import recursiveSort from "../Images/recursiveSort.gif"
-import recursionTree from "../Images/recursionTree.gif"
-import queen from "../Images/queen.gif"
-import puzzle from "../Images/15puzzle.png"
-
-
-
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import React from 'react';
+import SearchIcon from '@mui/icons-material/Search';
+import InfoIcon from '@mui/icons-material/Info';
+import { useState } from "react";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
 
+const list = [
+  {
+    "title": "Sorting Algorithms",
+    "link": "sort",
+    "description": "Sorting is a technique to rearrange the elements of an array or a list in a specific order.",
+    "algorithms": ["Bubble", "Insertion", "Selection", "Quick"],
+    "img": ""
+  },
+  {
+    "title": "Binary Search",
+    "link": "binarysearch",
+    "description": "Binary Search is defined as a searching algorithm used in a sorted array by repeatedly dividing the search interval in half.",
+    "algorithms": ["Binary Search"],
+    "img": ""
+  },
+  {
+    "title": "Recursive Sort",
+    "link": "recursiveSort",
+    "description": "Recursive sort refers to a sorting algorithm that uses the concept of recursion to sort a list of elements.",
+    "algorithms": ["Merge", "Heap", "Quick"],
+    "img": ""
+  },
+  {
+    "title": "Pathfinding Algorithms",
+    "link": "pathfinder",
+    "description": "Pathfinding algorithms are methods of finding the shortest path between two points in a graph, such as a map, a maze, or a network.",
+    "algorithms": ["Dijkstra's ", "A*", "Breadth-first", "Depth-first"],
+    "img": ""
+  },
+  {
+    "title": "Stack",
+    "link": "stack",
+    "description": "A stack is a Linear data structure. It follows Last in First Out(LIFO). Elements are inserted and deleted from the top of a stack.",
+    "algorithms": ["push", "pop", "peek", "isEmpty", "size"],
+    "img": ""
+  },
+  {
+    "title": "Queue",
+    "link": "queue",
+    "description": "A Queue is a Linear data structure. It follows First in First Out(FIFO). Elements are inserted at the end of the Queue and deleted from the beginning of a queue.",
+    "algorithms": ["enqueue", "dequeue", "peek", "isEmpty", "size"],
+    "img": ""
+  },
+  {
+    "title": "Linked List",
+    "link": "linkedlist",
+    "description": "A linked list is a linear data structure that consists of a series of nodes where each node contains data and a reference (link) to the next node in the sequence. ",
+    "algorithms": ["Singly", "Doubly", "Circular"],
+    "img": ""
+  },
+  {
+    "title": "N-queens Problem",
+    "link": "queen",
+    "description": "The N-Queens Problem is a classical problem in which the goal is to place N queens on an N×N chessboard so that no two queens threaten each other.",
+    "algorithms": ["Backtracking"],
+    "img": ""
+  },
+  {
+    "title": "Convex Hull",
+    "link": "convexHull",
+    "description": "The convex hull of a set of points in a plane is the smallest convex polygon that contains all the points within it.",
+    "algorithms": ["Graham Scan"],
+    "img": ""
+  },
+  {
+    "title": "Minimum Spanning Tree",
+    "link": "MinimumSpanningTree",
+    "description": "An MST has the minimum possible total edge weight. It connects all the vertices of the graph without forming any cycles.",
+    "algorithms": ["Prim's", "Kruskal's"],
+    "img": ""
+  },
+  {
+    "title": "Recursion Tree",
+    "link": "graph",
+    "description": "A recursion tree is useful for visualizing the tree of recursive calls and the amount of work done at each call.",
+    "algorithms": ["Fibonacci", "Binomial Coefficient", "Derangement", "Bigmod"],
+    "img": ""
+  },
+  {
+    "title": "15 Puzzle",
+    "link": "puzzle",
+    "description": "The 15 puzzle is a sliding puzzle that consists of a frame of numbered square tiles in random order with one tile missing. The objective is to arrange the tiles in ascending order by making sliding moves that use the empty space.",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "Binary Search Tree",
+    "link": "binarytree",
+    "description": "BST is a node-based binary tree data structure which has the following properties: left subtree of a node contains only nodes with keys lesser than the node’s key.",
+    "algorithms": ["Preorder", "Inorder", "Postorder"],
+    "img": ""
+  },
+  {
+    "title": "Linear Regression",
+    "link": "linear-regression",
+    "description": "Linear Regression is a basic and commonly used type of predictive analysis.",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "Logistic Regression",
+    "link": "logistic-regression",
+    "description": "Logistic Regression is a statistical method for analyzing a dataset in which there are one or more independent variables that determine an outcome.",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "Multiple Linear Regression",
+    "link": "multiplelinear-regression",
+    "description": "",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "K-Means Clustering",
+    "link": "KMeans",
+    "description": "K-Means Clustering is an unsupervised learning algorithm that is used for clustering.",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "K-Nearest Neighbors",
+    "link": "KNN",
+    "description": "K-Nearest Neighbors is a simple, easy-to-implement supervised machine learning algorithm that can be used to solve both classification and regression problems.",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "Artificial Neural Networks",
+    "link": "ann",
+    "description": "Artificial Neural Networks (ANN) are computational models inspired by human neural networks, and they are used to approximate functions that can depend on a large number of inputs.",
+    "algorithms": [],
+    "img": ""
+  },
+  {
+    "title": "Convolutional Neural Networks",
+    "link": "cnn",
+    "description": "Convolutional Neural Networks (CNN) are a class of deep neural networks, most commonly applied to analyzing visual imagery.",
+    "algorithms": [],
+    "img": ""
+  },
+  // {
+  //   "title": "RNN",
+  //   "link": "RNN",
+  //   "description": "",
+  //   "algorithms": [],
+  //   "img": ""
+  // },
+];
 
-const algorithms = {
-    "sorting": ["Bubble", "Insertion", "Selection", "Quick"],
-    "pathfinding": ["Dijkstra's ", "A*", "Breadth-first", "Depth-first"],
-    "recursiveSort": ["Merge", "Heap", "Quick"],
-    "convexHull": ["Graham Scan"],
-    "recursionTree": ["Fibonacci", "Binomial Coefficient", "Derangement", "Bigmod"],
-    "queen":["Backtracking"],
-    "stack":["Push", "Pop", "Peek", "isEmpty", "Size"],
-    "queue":["Enqueue", "Dequeue", "Peek", "isEmpty", "Size"],
-    "linkedlist":["SinglyLinkedList", "DoublyLinkedList", "CircularLinkedList"],
-    "binarytree":["Preorder","Inorder","Postorder"],
-    "binarysearch":["Search"],
-    "minimumspanningtree":["Prim's","Kruskal"],
+const categories = {
+  "Data structures": ["Linked List", "Stack", "Queue", "Binary Search Tree"],
+  "Array": ["Sorting Algorithms", "Binary Search", "Recursive Sort"],
+  "Graph": ["Pathfinding Algorithms", "Minimum Spanning Tree"],
+  "Backtracking": ["N-queens Problem"],
+  // "Geometry": ["Convex Hull"],
+  "Machine Learning": ["Linear Regression", "Logistic Regression", "Multiple Linear Regression", "K-Means Clustering", "K-Nearest Neighbors"],
+  "Deep Learning": ["Artificial Neural Networks", "Convolutional Neural Networks"],
+  // "Recursion": ["Recursion Tree"],
 };
 
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#f5f5f9',
+    color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: '1px solid #dadde9',
+  },
+}));
 
-const getAlgoList = (title) => {
-    return algorithms[title].map((item) => <li className="algo-tag">{item}</li>)
-};
+export default function Home() {
+  const [query, setQuery] = useState('');
+  const [selectedTab, setSelectedTab] = useState(0);
 
-const VizItem = ({ id, title, description, link, algorithm, img }) => (
-    <li id={id} className="viz">
-        <div className="li-wrapper">
-            {/* <Link to={link} className="thumbnail" href={link} data-anim={id}>
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
 
-                <img src={img} alt={title} height={"200px"} /> */}
+  const handleSearchInputChange = (event) => {
+    setQuery(event.target.value);
+  };
 
-            {/* <div className="static" style={{ backgroundImage: 'url(../images/sorting.png)' }}></div> */}
-            {/* <div className="static" style={{ background-image: 'url()' }}></div> */}
+  const getAllItems = () => {
+    const uncategorizedItems = list
+      .filter(item => !Object.values(categories).flat().includes(item.title))
+      .map(item => item.title);
+    return [
+      ...Object.keys(categories).flatMap(category => categories[category]),
+      ...uncategorizedItems
+    ];
+  };
 
-            {/* </Link> */}
+  const filterItems = (items, query) => {
+    return items.filter(item => {
+      const lowerCaseItem = item.toLowerCase();
+      const lowerCaseQuery = query.toLowerCase();
+      if (lowerCaseItem.includes(lowerCaseQuery)) {
+        return true;
+      }
+      const listItem = list.find(l => l.title.toLowerCase() === lowerCaseItem);
+      if (listItem && listItem.algorithms.some(algo => algo.toLowerCase().includes(lowerCaseQuery))) {
+        return true;
+      }
+      return false;
+    });
+  };
 
-            <Link to={link} className="thumbnail" href={link} data-anim={id}>
-                <img src={img} alt={title} height={"200px"} />
-            </Link>
+  const displayedItems = query.trim() === ''
+    ? (selectedTab === 0 ? getAllItems() : categories[Object.keys(categories)[selectedTab - 1]])
+    : filterItems(getAllItems(), query);
 
-            <div className="info">
-                <Accordion className="accordion">
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                    >
-                        <Typography className="title"><Link to={link}>{title}</Link></Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>{description}</Typography>
-                    </AccordionDetails>
-                </Accordion>
-
-                <ul className="algo-tags">{algorithm}</ul>
-
-            </div>
+  return (
+    <>
+      <div className="hero-container home22-intro">
+        <div className="nav-logo">
+          <h3 className="logo-text">Algorithm Visualizer</h3>
         </div>
-    </li>
-);
+        <section className="hero-section">
+          <div className="hero-text-content">
+            <h1 className="hero-text-content-h1">Algorithm Visualizer</h1>
+            <h2 className="hero-text-content-h2">
+              Explore & Understand Algorithms through Interactive Visualization
+            </h2>
+          </div>
 
+          <div className="search-input-hero search-input-with-dropdown">
+            <SearchIcon className="search-icon"></SearchIcon>
+            <form className="search-input-form" onSubmit={e => e.preventDefault()}>
+              <label htmlFor="search" className="accessibility-text">Search</label>
+              <input
+                id="search"
+                type="search"
+                name="q"
+                placeholder="Search..."
+                value={query}
+                onChange={handleSearchInputChange}
+                className="search-input"
+              />
+            </form>
+          </div>
+        </section>
+      </div>
 
-const Home = () => {
-    return (
-        <>
-        
-             <div className="title-logo">
-                Algorithm Visualizer
-            </div>
-            <div id="main">
+      <div className="container">
 
-                <ul className="list">
-                    <VizItem
-                        id="Sorting"
-                        title="Sorting"
-                        description="Sorting is a technique to rearrange the elements of an array or a list in a specific order."
-                        link="sort"
-                        algorithm={getAlgoList("sorting")}
-                        img={sorting}
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: 3.5 }}>
+          <Tabs
+            value={selectedTab}
+            onChange={handleTabChange}
+            variant="scrollable"
+            scrollButtons="auto"
+            sx={{
+              '& .MuiTab-root': {
+                minWidth: 100,
+                padding: '12px 24px',
+                fontSize: '1rem',
+                textTransform: 'none',
+                color: "gray",
+              },
+              '& .MuiTabs-flexContainer': {
+                justifyContent: 'center',
+              },
+              '& .Mui-selected': {
+                color: "#5a43c3",
+              },
+              '& .MuiTabs-indicator': {
+                backgroundColor: "#5a43c3",
+              },        
+            }}
+          >
+            <Tab label="All" />
+            {Object.keys(categories).map((category, index) => (
+              <Tab key={index} label={category} />
+            ))}
+          </Tabs>
+        </Box>
 
-
-                    />
-                    <VizItem
-                        id="Pathfinding"
-                        title="Pathfinding"
-                        description="Pathfinding algorithms are methods of finding the shortest path between two points in a graph, such as a map, a maze, or a network."
-                        link="pathfinder"
-                        algorithm={getAlgoList("pathfinding")}
-                        img={pathfinder}
-                    />
-                    <VizItem
-                        id="RecursiveSort"
-                        title="Recursive Sort"
-                        description="Recursive sort refers to a sorting algorithm that uses the concept of recursion to sort a list of elements."
-                        link="recursiveSort"
-                        algorithm={getAlgoList("recursiveSort")}
-                        img={recursiveSort}
-
-
-                    />
-                    <VizItem
-                        id="convexHull"
-                        title="Convex Hull"
-                        description="The convex hull of a set of points in a plane is the smallest convex polygon that contains all the points within it."
-                        link="convexHull"
-                        algorithm={getAlgoList("convexHull")}
-                        img={convexHull}
-
-                    />
-                    <VizItem
-                        id="recursionTree"
-                        title="Recursion Tree"
-                        description="A recursion tree is useful for visualizing the tree of recursive calls and the amount of work done at each call."
-                        link="graph"
-                        algorithm={getAlgoList("recursionTree")}
-                        img={recursionTree}
-
-                    />
-                    <VizItem
-                        id="Queen"
-                        title="N-queens Problem"
-                        description="In the queen problem, the objective is to place eight chess queens on an 8×8 chessboard so that no two queens threaten each other."
-                        link="queen"
-                        algorithm={getAlgoList("queen")}
-                        img={queen}
-                    />
-
-                    <VizItem
-                        id="15Puzzle"
-                        title="15 Puzzle"
-                        description="The 15 puzzle is a sliding puzzle that consists of a frame of numbered square tiles in random order with one tile missing. The objective is to arrange the tiles in ascending order by making sliding moves that use the empty space."
-                        link="puzzle"
-                        img={puzzle}
-                    />
-                    <VizItem
-                        id="Binary tree"
-                        title="BinaryTree"
-                        description="A binary tree is a data structure in which each node has at most two children, referred to as the left child and the right child."
-                        algorithm={getAlgoList("binarytree")}
-                        link="BinaryTree"
-                    />
-                    <VizItem
-                        id="Stack"
-                        title="Stack"
-                        link="Stack"
-                        algorithm={getAlgoList("stack")}
-                        description="A stack is a Linear data structure. It follows Last in First Out(LIFO). Elements are inserted and deleted from the top of a stack."
-
-                    />
-                    <VizItem
-                        id="Queue"
-                        title="Queue"
-                        link="Queue"
-                        algorithm={getAlgoList("queue")}
-                        description="A Queue is a Linear data structure. It follows First in First Out(FIFO). Elements are inserted at the end of the Queue and deleted from the beginning of a queue."
-
-                    />
-                    <VizItem
-                        id="Binary Search"
-                        title="Binary Search"
-                        description="Binary Search is defined as a searching algorithm used in a sorted array by repeatedly dividing the search interval in half. The idea of binary search is to use the information that the array is sorted and reduce the time complexity to O(log N)."
-                        algorithm={getAlgoList("binarysearch")}
-                        link="Binarysearch"
-                    />
-                    <VizItem
-                        id="LinkedList"
-                        title="Linked List"
-                        description="Linked List is a data structure consisting of a group of vertices (nodes) which together represent a sequence. Under the simplest form, each vertex is composed of a data and a reference (link) to the next vertex in the sequence"
-                        algorithm={getAlgoList("linkedlist")}
-                        link="LinkedList"
-                    />
-                    <VizItem
-                        id="MinimumSpanningTree"
-                        title="MinimumSpanningTree"
-                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
-                        algorithm={getAlgoList("minimumspanningtree")}
-                        link="MinimumSpanningTree"
-                    />
-                    <VizItem
-                        id="LinearRegression"
-                        title="LinearRegression"
-                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
-                        // algorithm={getAlgoList("mini")}
-                        link="LinearRegressionVisualization"
-                    />
-                    <VizItem
-                        id="LogisticRegression"
-                        title="LogisticRegression"
-                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
-                        // algorithm={getAlgoList("mini")}
-                        link="LogisticRegressionVisualization"
-                    />
-                    <VizItem
-                        id="MultipleLinearRegression"
-                        title="MultipleLinearRegression"
-                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
-                        // algorithm={getAlgoList("mini")}
-                        link="MultipleLinearRegressionVisualization"
-                    />
-                    <VizItem
-                        id="KMeans"
-                        title="KMeans"
-                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
-                        // algorithm={getAlgoList("mini")}
-                        link="KMeans"
-                    />
-                    <VizItem
-                        id="KNN"
-                        title="KNN"
-                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
-                        // algorithm={getAlgoList("mini")}
-                        link="KNN"
-                    />
-                    <VizItem
-                        id="ANN"
-                        title="ANN"
-                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
-                        // algorithm={getAlgoList("mini")}
-                        link="ANN"
-                    />
-                    <VizItem
-                        id="CNN"
-                        title="CNN"
-                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
-                        // algorithm={getAlgoList("mini")}
-                        link="CNN"
-                    />
-                    {/* <VizItem
-                        id="RNN"
-                        title="RNN"
-                        description="A minimum spanning tree (MST) is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together without any cycles and with the minimum possible total edge weight. It is a way of finding the most economical way to connect a set of vertices."
-                        // algorithm={getAlgoList("mini")}
-                        link="RNN"
-                    /> */}
-                   
-        
-                    
-                    {/* <VizItem
-                        id="Union-Find DS"
-                        title="Union-Find DS"
-                        description="The Union-Find Disjoint Sets (UFDS) data structure is used to model a collection of disjoint sets, which is able to efficiently (i.e., in nearly constant time) determine which set an item belongs to, test if two items belong to the same set, and union two disjoint sets into one when needed. It can be used to find connected components in an undirected graph, and can hence be used as part of Kruskal's algorithm for the Minimum Spanning Tree (MST) problem."
-                        link=""
-                    /> */}
-                    {/* <VizItem
-                        id="Hash Table"
-                        title="Hash Table"
-                        description="Hash Table is a data structure to map key to values (also called Table or Map Abstract Data Type/ADT). It uses a hash function to map large or even non-Integer keys into a small range of Integer indices (typically [0..hash_Table_size-1])."
-                        link=""
-                    /> */}
-                    {/* <VizItem
-                        id="Binary Search Tree"
-                        title="Binary Search Tree"
-                        description="A Binary Search Tree (BST) is a specialized type of binary tree in which each vertex can have up to two children. This structure adheres to the BST property, stipulating that every vertex in the left subtree of a given vertex must carry a value smaller than that of the given vertex, and every vertex in the right subtree must carry a value larger. This visualization implements 'multiset' property: Although all keys remain distinct integers, information of duplicated integers are stored as a frequency attribute."
-                        link=""
-                    />
-                    <VizItem
-                        id="Graph Structure"
-                        title="Graph Structure"
-                        description="A graph is made up of vertices/nodes and edges/lines that connect those vertices.A graph may be undirected (meaning that there is no distinction between the two vertices associated with each bidirectional edge) or a graph may be directed (meaning that its edges are directed from one vertex to another but not necessarily in the other direction).
-                    A graph may be weighted (by assigning a weight to each edge, which represent numerical values associated with that connection) or a graph may be unweighted (either all edges have unit weight 1 or all edges have the same constant weight)."
-                        link=""
-                    /> */}
-                    {/* <VizItem
-                        id="Fenwich Tree"
-                        title="Fenwich Tree"
-                        description="A Binary Indexed (Fenwick) Tree is a data structure that provides efficient methods for implementing dynamic cumulative frequency Tables.This Fenwick Tree data structure uses many bit manipulation techniques. In this visualization, we will refer to this data structure using the term Fenwick Tree (usually abbreviated as 'FT') as the abbreviation 'BIT' of Binary Indexed Tree is usually associated with the usual bit manipulation."
-                        link=""
-                    />
-                    <VizItem
-                        id="Segment Tree"
-                        title="Segment Tree"
-                        description="A Segment Tree (ST) is a binary tree that is build on top of an (usually integer) array so that we can solve the Range Min/Max/Sum Query as well as any Range Update Query of this array in O(log N) time instead of the naive O(N) time. Given an array A of N (usually integer) elements, we can build the corresponding RMinQ/RMaxQ/RSumQ Segment Tree in O(N) time."
-                        link=""
-                    /> */}
-                    {/* <VizItem
-                        id="Graph Traversal"
-                        title="Graph Traversal"
-                        description="In computer science, graph traversal (also known as graph search) refers to the process of visiting (checking and/or updating) each vertex in a graph. Such traversals are classified by the order in which the vertices are visited. Tree traversal is a special case of graph traversal."
-                        link=""
-                    /> */}
-                    {/* <VizItem
-                        id="Recursion Tree"
-                        title="Recursion Tree"
-                        description="A recursion tree is useful for visualizing what happens when a recurrence is iterated. It diagrams the tree of recursive calls and the amount of work done at each call."
-                        link=""
-                    /> */}
-                    {/* <VizItem 
-                        id="Cycle Finding"
-                        title="Cycle Finding"
-                        description="Floyd's cycle-finding algorithm is a pointer algorithm that uses only two pointers, which move through the sequence at different speeds. It is also called the tortoise and the hare algorithm"
-                        link=""
-                    />
-                    <VizItem
-                        id="Suffix Tree"
-                        title="Suffix Tree"
-                        description="A Suffix Tree is a compressed tree containing all the suffixes of the given (usually long) text string T of length n characters (n can be in order of hundred thousands characters).
-                    The positions of each suffix in the text string T are recorded as integer indices at the leaves of the Suffix Tree whereas the path labels (concatenation of edge labels starting from the root) of the leaves describe the suffixes.
-                    Suffix Tree provides a particularly fast implementation for many important (long) string operations."
-                        link=""
-                    />
-                    <VizItem
-                        id="Suffix Array"
-                        title="Suffix Array"
-                        description="Suffix Array is a sorted array of all suffixes of a given (usually long) text string T of length n characters (n can be in order of hundred thousands characters).
-                    Suffix Array is a simple, yet powerful data structure which is used, among others, in full text indices, data compression algorithms, and within the field of bioinformatics."
-                        link=""
-                    />} */
+        <section className="dashboard-section">
+          <div className="cards-grid">
+            {displayedItems.map((item, itemId) => {
+              const listItem = list.find(l => l.title === item);
+              return (
+                <Link to={listItem?.link || '#'} className="algo-card" key={itemId}>
+                  <div className="card-content">
+                    <h3 className="card-title">{item}</h3>
+                    <HtmlTooltip
+                      title={
+                        <React.Fragment>
+                          <Typography color="inherit">
+                            {listItem?.description || ''}
+                          </Typography>
+                        </React.Fragment>
+                      }
+                    >
+                      <Button><InfoIcon color="action"></InfoIcon></Button>
+                    </HtmlTooltip>
+                  </div>
+                  <ul className="card-tags">
+                    {(listItem?.algorithms || []).map((algo, algoId) => (
+                      <li className="card-tag" key={algoId}>{algo}</li>
+                    ))}
+                  </ul>
+                  <img
+                    className="card-logo"
+                    src={listItem?.img || "https://hrcdn.net/s3_pub/hr-assets/dashboard/ProblemSolving.svg"}
+                    alt={item}
+                  />
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      </div>
+      <Outlet />
+    </>
+  );
 }
-                </ul>
-            </div>
-            <Outlet />
-        </>
-
-    );
-};
-
-export default Home;

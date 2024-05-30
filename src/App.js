@@ -17,7 +17,6 @@ import Queue from './Queue/queue';
 import Stack from './Stack/stack';
 import Mst from './MST/mst';
 import BST from "./BST/Bst"
-import HomeDraft from "./Pages/HomeDraft";
 import LinearRegressionVisualization from './ML/LinearRegression/linear';
 import LogisticRegressionVisualization from './ML/LogisticRegression/logistic';
 import MultipleLinearRegressionVisualization from './ML/Multiplelinearregression/multiplelinear';
@@ -34,7 +33,7 @@ function App() {
       <React.StrictMode>
         <BrowserRouter>
           <Routes>
-            <Route index element={<HomeDraft />} />
+            <Route index element={<Home />} />
             <Route path="Sort" element={<Sort />} />
             <Route path="pathfinder" element={<PathfindingVisualizer />} />
             <Route path="recursiveSort" element={<RecursiveSort />} />
@@ -57,7 +56,6 @@ function App() {
             <Route path="CNN" element={<CNN />} />
             {/* <Route path="RNN" element={<RNN />} /> */}
             <Route path="*" element={<NoPage />} />
-            <Route path="home" element={<Home />} />
           </Routes>
         </BrowserRouter>
       </React.StrictMode>
