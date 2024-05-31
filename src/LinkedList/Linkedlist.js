@@ -23,7 +23,7 @@ const LinkedListVisualizer = () => {
     const [animateToggle, setAnimateToggle] = useState(false);
     const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
     const [algorithmSteps, setAlgorithmSteps] = useState([]);
-    const [timeComplexity, setTimeComplexity] = useState('');
+    const [timeComplexity, setTimeComplexity] = useState('O(1)');
     const [spaceComplexity, setSpaceComplexity] = useState('O(1)');
     const [realTimeComplexity, setRealTimeComplexity] = useState('');
     const [realSpaceComplexity, setRealSpaceComplexity] = useState('');

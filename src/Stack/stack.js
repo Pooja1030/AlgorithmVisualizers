@@ -19,7 +19,7 @@ const StackVisualizer = () => {
     const [sidePanelOpen, setSidePanelOpen] = useState(false); // State to manage side panel visibility
     const [algorithmSteps, setAlgorithmSteps] = useState([]); // Define state for algorithm steps
     const [timeComplexity, setTimeComplexity] = useState(""); // Initialize with default time complexity
-    const [spaceComplexity, setSpaceComplexity] = useState("O"); // Initialize with default space complexity
+    const [spaceComplexity, setSpaceComplexity] = useState(""); // Initialize with default space complexity
     const defaultTimeComplexity = "O(1)";
     const defaultSpaceComplexity = "O(1) bytes";
 
