@@ -37,23 +37,25 @@ class Menu extends Component {
                     label={"Algorithm"}
                     onValueChanged={this.props.onAlgoChanged}
                     items={["Bubble Sort",
-                    "Selection Sort",
-                    "Insertion Sort",
-                    "Quick Sort"]}
+                        "Selection Sort",
+                        "Insertion Sort",
+                        "Quick Sort"]}
                 />
                 <SwitchLabels
                     isDisabled={this.props.isDisabled}
                     onDoubleChange={this.props.onDoubleChange}
                 />
-                <SimpleSelect
-                    pos={1}
-                    label={"Algorithm"}
-                    onValueChanged={this.props.onAlgoChanged}
-                    items={["Bubble Sort",
-                        "Selection Sort",
-                        "Insertion Sort",
-                        "Quick Sort"]}
-                />
+                {this.props.isDouble &&
+                    <SimpleSelect
+                        pos={1}
+                        label={"Algorithm"}
+                        onValueChanged={this.props.onAlgoChanged}
+                        items={["Bubble Sort",
+                            "Selection Sort",
+                            "Insertion Sort",
+                            "Quick Sort"]}
+                    />
+                }
                 <div>
                     <button
                         className='visualize-btn btn-warning btn-lg '

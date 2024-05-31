@@ -44,20 +44,26 @@ class RecursiveSort extends Component {
         let steps = [];
         let timeComplexity = '';
         let spaceComplexity = '';
-        if (selectedAlgo === 0) {
-            steps = mergeSortSteps;
-            timeComplexity = 'O(n log n)';
-            spaceComplexity = 'O(n)';
-        } else if (selectedAlgo === 1) {
-            steps = heapSortSteps;
-            timeComplexity = 'O(n log n)';
-            spaceComplexity = 'O(1)';
-        } else if (selectedAlgo === 2) {
-            steps = quickSortSteps;
-            timeComplexity = 'O(n log n) average, O(n^2) worst';
-            spaceComplexity = 'O(log n)';
-        }
+        switch (parseInt(selectedAlgo)) {
+            case 0:
+                steps = mergeSortSteps;
+                timeComplexity = 'O(n log n)';
+                spaceComplexity = 'O(n)';
+                break;
 
+            case 1:
+                steps = heapSortSteps;
+                timeComplexity = 'O(n log n)';
+                spaceComplexity = 'O(1)';
+                break;
+            case 2:
+                steps = quickSortSteps;
+                timeComplexity = 'O(n log n) average, O(n^2) worst';
+                spaceComplexity = 'O(log n)';
+                break;
+            default:
+                break
+        }
         this.setState({ algorithmSteps: steps, timeComplexity, spaceComplexity });
     }
 
@@ -104,6 +110,7 @@ class RecursiveSort extends Component {
                 <div className='justify-content-center'>
                     <Rects
                         rects={this.state.rects}
+                        speed={this.state.speed}
                     />
                 </div>
 
@@ -142,9 +149,10 @@ class RecursiveSort extends Component {
     }
 
     handleSpeedChanged = (val) => {
-        const speed = (110 - val);
+        const speed = (760 - val * 7.5);
         this.setState({ speed });
-    }
+    };
+
 
     handleSort = async () => {
         this.setState({ isRunning: true });
@@ -157,7 +165,7 @@ class RecursiveSort extends Component {
         let swaps = 0;
         let memoryUsage = 0;
 
-        switch (this.state.algo) {
+        switch (parseInt(this.state.algo)) {
             case 0:
                 startTime = performance.now();
                 steps = mergeSort(this.state.rects);
@@ -204,7 +212,7 @@ class RecursiveSort extends Component {
         });
 
         // Visualize the sorting process after sorting completes
-        switch (this.state.algo) {
+        switch (parseInt(this.state.algo)) {
             case 0:
                 await this.handleMerge(steps);
                 break;

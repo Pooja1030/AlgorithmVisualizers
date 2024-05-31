@@ -26,6 +26,12 @@ class Rect extends Component {
             return "#5a43c3";
         } else if (this.props.rect.isSorting) {
             return "#FE7BE5";
+        } else if (this.props.rect.isRight) {
+            return "#FF6000";
+        } else if (this.props.rect.isLeft) {
+            return "#05BFDB";
+        } else if (this.props.rect.isRange) {
+            return "#B31312";
         } else {
             return "#313866"
         }

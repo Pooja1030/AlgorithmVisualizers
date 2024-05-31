@@ -61,6 +61,7 @@ class Sort extends Component {
                 />
                 <Menu
                     isDisabled={this.state.isRunning}
+                    isDouble={this.state.doubles}
                     onDoubleChange={this.handleDouble}
                     onVisualize={this.handleSort}
                     onRandomize={this.handleRandomize}
@@ -137,7 +138,7 @@ class Sort extends Component {
         let spaceComplexity1 = '', spaceComplexity2 = '';
         let spaceUsage1 = 0, spaceUsage2 = 0;
 
-        switch (this.state.algo1) {
+        switch (parseInt(this.state.algo1)) {
             case 0:
                 startTime1 = performance.now();
                 steps1 = bubbleSort(this.state.rects); // Call bubbleSort to get steps
@@ -165,6 +166,15 @@ class Sort extends Component {
                 spaceUsage1 = this.state.rects.length * 4; // Assuming each rect object takes 4 bytes
                 spaceComplexity1 = `${spaceUsage1} bytes`; // Update space complexity
                 break;
+            case 3:
+                startTime1 = performance.now();
+                steps1 = quickSort(this.state.rects); // Call insertionSort to get steps
+                endTime1 = performance.now();
+                algorithmSteps1 = insertionSortSteps; // Set algorithmSteps to insertionSortSteps
+                timeComplexity1 = `${(endTime1 - startTime1).toFixed(2)} ms`; // Update time complexity
+                spaceUsage1 = this.state.rects.length * 4; // Assuming each rect object takes 4 bytes
+                spaceComplexity1 = `${spaceUsage1} bytes`; // Update space complexity
+                break;
             default:
                 console.error("Invalid algorithm selected or steps not defined for the algorithm.");
                 break;
@@ -178,7 +188,7 @@ class Sort extends Component {
         });
 
         if (this.state.doubles) {
-            switch (this.state.algo2) {
+            switch (parseInt(this.state.algo2)) {
                 case 0:
                     startTime2 = performance.now();
                     steps2 = bubbleSort(this.state.rects2); // Call bubbleSort to get steps
@@ -227,7 +237,7 @@ class Sort extends Component {
             });
         }
 
-        this.triggerToggleAnimation();
+        // this.triggerToggleAnimation();
 
         this.handleFirst(steps1);
         if (this.state.doubles) this.handleSecond(steps2);
