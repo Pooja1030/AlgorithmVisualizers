@@ -103,7 +103,7 @@ class MST extends Component {
 		// Define space complexity
 		const realSpaceComplexity = "O(E + V)";
 
-		this.triggerToggleAnimation();
+		// this.triggerToggleAnimation();
 		this.setState({ mstEdges, visitedEdges, realTimeComplexity, realSpaceComplexity }); // Set execution time and space complexity
 	}
 

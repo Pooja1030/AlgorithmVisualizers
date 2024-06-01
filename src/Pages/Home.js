@@ -58,7 +58,7 @@ const list = [
     "title": "Linked List",
     "link": "linkedlist",
     "description": "A linked list is a linear data structure that consists of a series of nodes where each node contains data and a reference (link) to the next node in the sequence. ",
-    "algorithms": ["Singly", "Doubly", "Circular"],
+    "algorithms": ["Insert", "Delete", "Search", "Traverse"],
     "img": ""
   },
   {
@@ -100,7 +100,7 @@ const list = [
     "title": "Binary Search Tree",
     "link": "binarytree",
     "description": "BST is a node-based binary tree data structure which has the following properties: left subtree of a node contains only nodes with keys lesser than the node’s key.",
-    "algorithms": ["Preorder", "Inorder", "Postorder"],
+    "algorithms": ["Insert", "Delete", "Search", "Traverse"],
     "img": ""
   },
   {
@@ -280,6 +280,7 @@ export default function Home() {
                 color: "#5a43c3",
               },
               '& .MuiTabs-indicator': {
+                color: "#5a43c3",
                 backgroundColor: "#5a43c3",
               },        
             }}
