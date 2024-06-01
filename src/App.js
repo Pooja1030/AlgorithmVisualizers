@@ -26,6 +26,7 @@ import ANN from './ML/ANN/ANN';
 import CNN from './ML/CNN/CNN';
 // import RNN from './ML/RNN/RNN';
 
+import SortingComparison from './AlgoInfo/sortInfo'
 
 function App() {
   return (
@@ -56,6 +57,10 @@ function App() {
             <Route path="CNN" element={<CNN />} />
             {/* <Route path="RNN" element={<RNN />} /> */}
             <Route path="*" element={<NoPage />} />
+            
+            <Route path="sort_info" element={<SortingComparison />} />
+
+
           </Routes>
         </BrowserRouter>
       </React.StrictMode>

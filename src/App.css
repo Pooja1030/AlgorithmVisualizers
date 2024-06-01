@@ -42,6 +42,7 @@ p {
 }
 
 @media (min-width: 540px) {
+
   /* 540-768px */
   h1 {
     font-size: 50px;
@@ -473,4 +474,87 @@ select {
   margin-top: 2px;
   font-size: 14px;
   color: #777;
+}
+
+
+
+
+
+
+
+
+
+.chart-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comparison-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.comparison-container .card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  width: 370px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.comparison-container .card:hover {
+  transform: translateY(-10px);
+}
+
+.comparison-container .card h3 {
+  margin: 0 0 10px;
+  font-size: 1.5em;
+}
+
+.comparison-container .card p {
+  text-align: center;
+  margin: 0;
+  font-size: 1.2em;
+  color: #555;
+}
+
+/* src/components/ComplexityTable.css */
+
+.table-container {
+  margin: 20px auto;
+  max-width: 800px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table-container h3 {
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f4f4f4;
 }

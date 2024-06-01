@@ -47,7 +47,8 @@ class Sort extends Component {
     render() {
         return (
             <React.Fragment>
-                <Navbar currentPage="Sorting Visualizer" />
+                <Navbar currentPage="Sorting Algorithms" 
+                info="sort_info"/>
                 <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
                     <ListRounded className='sidepanel-icon' />
                     View steps
