@@ -26,7 +26,8 @@ import ANN from './ML/ANN/ANN';
 import CNN from './ML/CNN/CNN';
 // import RNN from './ML/RNN/RNN';
 
-import SortingComparison from './Pages/InfoPages/sortInfo'
+import SortingInfo from './Pages/InfoPages/sortInfo'
+import MSTInfo from './Pages/InfoPages/mstInfo.js';
 
 function App() {
   return (
@@ -58,7 +59,8 @@ function App() {
             {/* <Route path="RNN" element={<RNN />} /> */}
             <Route path="*" element={<NoPage />} />
             
-            <Route path="sort/info" element={<SortingComparison />} />
+            <Route path="sort/info" element={<SortingInfo />} />
+            <Route path="MinimumSpanningTree/info" element={<MSTInfo />} />
 
           </Routes>
         </BrowserRouter>

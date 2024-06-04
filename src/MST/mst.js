@@ -176,7 +176,8 @@ class MST extends Component {
 
 		return (
 			<div>
-				<Navbar currentPage="Minimum Spanning Tree" />
+				<Navbar currentPage="Minimum Spanning Tree"
+				info="MinimumSpanningTree/info" />
 				<div className='menu'>
 					{/* <label>Select Algorithm:</label> */}
 					<select value={algorithm} onChange={this.handleAlgorithmChange}>
