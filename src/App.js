@@ -26,7 +26,7 @@ import ANN from './ML/ANN/ANN';
 import CNN from './ML/CNN/CNN';
 // import RNN from './ML/RNN/RNN';
 
-import SortingComparison from './AlgoInfo/sortInfo'
+import SortingComparison from './Pages/InfoPages/sortInfo'
 
 function App() {
   return (
@@ -58,8 +58,7 @@ function App() {
             {/* <Route path="RNN" element={<RNN />} /> */}
             <Route path="*" element={<NoPage />} />
             
-            <Route path="sort_info" element={<SortingComparison />} />
-
+            <Route path="sort/info" element={<SortingComparison />} />
 
           </Routes>
         </BrowserRouter>

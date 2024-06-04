@@ -42,6 +42,7 @@ class Menu extends Component {
                         "Quick Sort"]}
                 />
                 <SwitchLabels
+                    label="Duo"
                     isDisabled={this.props.isDisabled}
                     onDoubleChange={this.props.onDoubleChange}
                 />

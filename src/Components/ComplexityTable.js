@@ -16,7 +16,7 @@ const ComplexityTable = ({ title, data }) => {
         <tbody>
           {data.map((algorithm, index) => (
             <tr key={index}>
-              <td>{algorithm.name}</td>
+              <td>{algorithm.algorithm}</td>
               <td>{algorithm.best}</td>
               <td>{algorithm.average}</td>
               <td>{algorithm.worst}</td>

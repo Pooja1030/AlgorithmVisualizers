@@ -494,7 +494,7 @@ select {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.comparison-container {
+.info-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -502,7 +502,7 @@ select {
   padding: 20px;
 }
 
-.comparison-container .card {
+.info-container .card {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 10px;
@@ -512,17 +512,16 @@ select {
   transition: transform 0.3s ease;
 }
 
-.comparison-container .card:hover {
+.info-container .card:hover {
   transform: translateY(-10px);
 }
 
-.comparison-container .card h3 {
+.info-container .card h3 {
   margin: 0 0 10px;
   font-size: 1.5em;
 }
 
-.comparison-container .card p {
-  text-align: center;
+.info-container .card p {
   margin: 0;
   font-size: 1.2em;
   color: #555;

@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-
-const handleLinkClick = (link) => {
-    window.open(link, '_blank');
-};
 
 class Navbar extends Component {
     render() {
