@@ -3,9 +3,9 @@ const AlgorithmCard = ({ title, description, link }) => {
         <div className="card">
             <h3>{title}</h3>
             <p>{description}</p>
-            <button>
+            {link && <button>
                 <a href={link} target="_blank" rel="noopener noreferrer">Read More</a>
-            </button>
+            </button>}
         </div>
     );
 };

@@ -176,7 +176,8 @@ const StackVisualizer = () => {
 
     return (
         <>
-            <Navbar currentPage="Stack" />
+            <Navbar currentPage="Stack"
+            info="stack/info" />
             
             {/* Side panel toggle button */}
             <button className={`side-panel-toggle ${animateToggle ? 'animate' : ''}`} onClick={toggleSidePanel}>
