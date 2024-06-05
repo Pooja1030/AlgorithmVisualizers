@@ -412,7 +412,7 @@ export default class PathfindingVisualizer extends Component {
         return (
             <>
                 <Navbar currentPage="Pathfinding Visualizer"
-                // toggleDrawer={this.toggleDrawer}
+                    info="pathfinder/info"
                 />
                 <Menu
                     open={this.state.sidePanelOpen}
