@@ -39,7 +39,8 @@ class Queen extends Component {
         const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity } = this.state;
         return (
             <div>
-                <Navbar currentPage="N-queens problem" />
+                <Navbar currentPage="N-Queens Problem" 
+                info="queen/info"/>
                 <Menu
                     onSpeedChange={this.handleSpeedChange}
                     onCountChange={this.handleQueenChange}

@@ -30,7 +30,7 @@ import SortingInfo from './Pages/InfoPages/sortInfo'
 import MSTInfo from './Pages/InfoPages/mstInfo.js';
 import PathfinderInfo from './Pages/InfoPages/pathFinder.js';
 import BinarySearchInfo from './Pages/InfoPages/binarySearchInfo.js';
-
+import NQueensInfo from './Pages/InfoPages/queensInfo.js';
 
 
 function App() {
@@ -67,6 +67,7 @@ function App() {
             <Route path="MinimumSpanningTree/info" element={<MSTInfo />} />
             <Route path="pathfinder/info" element={<PathfinderInfo />} />
             <Route path="BinarySearch/info" element={<BinarySearchInfo />} />
+            <Route path="queen/info" element={<NQueensInfo />} />
 
           </Routes>
         </BrowserRouter>
