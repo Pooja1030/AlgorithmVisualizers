@@ -818,7 +818,8 @@ const LinkedListVisualizer = () => {
 
     return (
         <>
-            <Navbar currentPage="Linked List" />
+            <Navbar currentPage="Linked List"
+                info="LinkedList/info" />
             <button className={`side-panel-toggle ${animateToggle ? 'animate' : ''}`} onClick={toggleSidePanel}>
                 <ListRounded className='sidepanel-icon' />
                 View steps

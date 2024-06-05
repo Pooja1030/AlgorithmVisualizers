@@ -34,7 +34,7 @@ import NQueensInfo from './Pages/InfoPages/queensInfo.js';
 import StackInfo from './Pages/InfoPages/stackInfo.js';
 import QueueInfo from './Pages/InfoPages/queueInfo.js';
 import BSTInfo from './Pages/InfoPages/bstInfo.js';
-
+import LinkedListInfo from './Pages/InfoPages/listInfo.js';
 
 function App() {
   return (
@@ -74,6 +74,7 @@ function App() {
             <Route path="stack/info" element={<StackInfo />} />
             <Route path="queue/info" element={<QueueInfo />} />
             <Route path="BinarySearchTree/info" element={<BSTInfo />} />
+            <Route path="LinkedList/info" element={<LinkedListInfo />} />
 
           </Routes>
         </BrowserRouter>
