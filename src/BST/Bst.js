@@ -442,7 +442,8 @@ class BinaryTree extends Component {
 
     return (
       <div>
-        <Navbar currentPage="Binary Search Tree" />
+        <Navbar currentPage="Binary Search Tree"
+        info="BinarySearchTree/info" />
         <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
           <ListRounded className='sidepanel-icon' />
           View steps

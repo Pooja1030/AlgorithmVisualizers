@@ -33,7 +33,7 @@ import BinarySearchInfo from './Pages/InfoPages/binarySearchInfo.js';
 import NQueensInfo from './Pages/InfoPages/queensInfo.js';
 import StackInfo from './Pages/InfoPages/stackInfo.js';
 import QueueInfo from './Pages/InfoPages/queueInfo.js';
-
+import BSTInfo from './Pages/InfoPages/bstInfo.js';
 
 
 function App() {
@@ -50,7 +50,7 @@ function App() {
             <Route path="graph" element={<Graph />} />
             <Route path="puzzle" element={<Puzzle />} />
             <Route path="queen" element={<Queen />} />
-            <Route path="BinaryTree" element={<BST />} />
+            <Route path="BinarySearchTree" element={<BST />} />
             <Route path="BinarySearch" element={<BinarySearch />} />
             <Route path="MinimumSpanningTree" element={<Mst />} />
             <Route path="stack" element={<Stack />} />
@@ -73,6 +73,7 @@ function App() {
             <Route path="queen/info" element={<NQueensInfo />} />
             <Route path="stack/info" element={<StackInfo />} />
             <Route path="queue/info" element={<QueueInfo />} />
+            <Route path="BinarySearchTree/info" element={<BSTInfo />} />
 
           </Routes>
         </BrowserRouter>

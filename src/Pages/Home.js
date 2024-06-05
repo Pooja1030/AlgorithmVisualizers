@@ -98,7 +98,7 @@ const list = [
   },
   {
     "title": "Binary Search Tree",
-    "link": "binarytree",
+    "link": "binarysearchtree",
     "description": "BST is a node-based binary tree data structure which has the following properties: left subtree of a node contains only nodes with keys lesser than the node’s key.",
     "algorithms": ["Insert", "Delete", "Search", "Traverse"],
     "img": ""
