@@ -61,7 +61,7 @@ const MSTInfo = () => {
     return (
         <>
             <Navbar
-                currentPage="Minimum Spanning Trees"
+                currentPage="Minimum Spanning Tree"
                 visualizer="MinimumSpanningTree"
             />
             <div className="info-container">

@@ -82,7 +82,8 @@ class RecursiveSort extends Component {
         const { timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity } = this.state;
         return (
             <React.Fragment>
-                <Navbar currentPage="Recursive Sort" />
+                <Navbar currentPage="Recursive Sort" 
+                info="sort/info"/>
                 <Menu className="menu"
                     isDisabled={this.state.isRunning}
                     onVisualize={this.handleSort}
