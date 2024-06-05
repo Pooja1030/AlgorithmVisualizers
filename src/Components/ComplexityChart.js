@@ -115,14 +115,14 @@ const ComplexityChart = ({ data, title }) => {
 
   return (
     <div className="chart-container">
-      <div style={{ marginBottom: '10px' }}>
+      {(labels.length > 1) && <div style={{ marginBottom: '10px' }}>
         <button onClick={() => setChartType('bar')} className={chartType === 'bar'}>
           Bars
         </button>
         <button onClick={() => setChartType('line')} disabled={chartType === 'line'}>
           Lines
         </button>
-      </div>
+      </div>}
       {chartType === 'bar' ? (
         <Bar data={chartData} options={options} />
       ) : (

@@ -59,7 +59,8 @@ class BinarySearch extends Component {
 
     return (
       <React.Fragment>
-        <Navbar currentPage="Binary Search Visualizer" />
+        <Navbar currentPage="Binary Search"
+          info="BinarySearch/info" />
         <Menu
           disable={this.state.isRunning}
           onVisualize={this.handleSearch}
@@ -71,9 +72,9 @@ class BinarySearch extends Component {
 
         {/* Side panel toggle button */}
         <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
-    <ListRounded className='sidepanel-icon' />
-    View steps
-</button>
+          <ListRounded className='sidepanel-icon' />
+          View steps
+        </button>
 
 
         {/* Render the side panel component */}

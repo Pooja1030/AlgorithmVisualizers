@@ -1,0 +1,106 @@
+import React, { useState } from 'react';
+import LineGraph from '../../Components/LineGraph';
+import ComplexityTable from '../../Components/ComplexityTable';
+import ComplexityChart from '../../Components/ComplexityChart';
+import Navbar from '../../Components/navbar';
+import AlgorithmCard from '../../Components/AlgorithmCard';
+
+const algorithmInfo = [
+    {
+        title: "Binary Search",
+        description: "Binary Search is an efficient algorithm for finding an item from a sorted list of items. It works by repeatedly dividing in half the portion of the list that could contain the item, until you've narrowed down the possible locations to just one.",
+        link: 'https://en.wikipedia.org/wiki/Binary_search_algorithm'
+    },
+];
+
+const algorithmComplexities = [
+    { algorithm: "Binary Search", best: 'O(1)', average: 'O(log n)', worst: 'O(log n)' },
+];
+
+const graphData = {
+    labels: Array.from({ length: 100 }, (_, i) => i + 1),
+    datasets: [
+        {
+            label: "Best",
+            data: Array.from({ length: 100 }, (_, i) => (1)),
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            fill: false,
+            pointRadius: 0,
+            pointHoverRadius: 7,
+            hitRadius: 10,
+            tension: 0.4,
+        },
+        {
+            label: "Average",
+            data: Array.from({ length: 100 }, (_, i) => Math.log2(i + 1)),
+            backgroundColor: 'rgba(255, 206, 86, 0.5)',
+            borderColor: 'rgba(255, 206, 86, 1)',
+            fill: false,
+            pointRadius: 0,
+            pointHoverRadius: 7,
+            hitRadius: 10,
+            tension: 0.4,
+        },
+        {
+            label: "Worst",
+            data: Array.from({ length: 100 }, (_, i) => Math.log2(i + 1)),
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            fill: false,
+            pointRadius: 0,
+            pointHoverRadius: 7,
+            hitRadius: 10,
+            tension: 0.4,
+        },
+    ],
+};
+
+const BinarySearchInfo = () => {
+    const [showLineGraph, setShowLineGraph] = useState(true);
+
+    const toggleGraph = () => {
+        setShowLineGraph(!showLineGraph);
+    };
+
+    return (
+        <>
+            <Navbar
+                currentPage="Binary Search"
+                visualizer="binarysearch"
+            />
+            <div className="info-container">
+                {algorithmInfo.map((algo) => (
+                    <AlgorithmCard
+                        key={algo.title}
+                        title={algo.title}
+                        link={algo.link}
+                        description={algo.description}
+                    />
+                ))}
+            </div>
+
+            {
+                showLineGraph ?
+                    <LineGraph
+                        data={graphData}
+                        title="Binary Search - Time Complexity Graph" />
+                    :
+                    <ComplexityChart
+                        data={algorithmComplexities}
+                        title="Binary Search - Relative Complexity Graph"
+                    />
+            }
+            <button onClick={toggleGraph}>
+                {showLineGraph ? 'Show Relative Complexity Graph' : 'Show Time Complexity Graph'}
+            </button>
+
+            <ComplexityTable
+                title="Binary Search - Time Complexity"
+                data={algorithmComplexities} />
+        </>
+
+    );
+};
+
+export default BinarySearchInfo;

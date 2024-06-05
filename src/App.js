@@ -29,6 +29,9 @@ import CNN from './ML/CNN/CNN';
 import SortingInfo from './Pages/InfoPages/sortInfo'
 import MSTInfo from './Pages/InfoPages/mstInfo.js';
 import PathfinderInfo from './Pages/InfoPages/pathFinder.js';
+import BinarySearchInfo from './Pages/InfoPages/binarySearchInfo.js';
+
+
 
 function App() {
   return (
@@ -63,6 +66,7 @@ function App() {
             <Route path="sort/info" element={<SortingInfo />} />
             <Route path="MinimumSpanningTree/info" element={<MSTInfo />} />
             <Route path="pathfinder/info" element={<PathfinderInfo />} />
+            <Route path="BinarySearch/info" element={<BinarySearchInfo />} />
 
           </Routes>
         </BrowserRouter>
