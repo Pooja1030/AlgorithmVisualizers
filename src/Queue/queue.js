@@ -18,8 +18,8 @@ const QueueVisualizer = () => {
   const [animateToggle, setAnimateToggle] = useState(false);
   const [sidePanelOpen, setSidePanelOpen] = useState(false);
   const [algorithmSteps, setAlgorithmSteps] = useState([]);
-  const [timeComplexity, setTimeComplexity] = useState("O(1) ms");
-  const [spaceComplexity, setSpaceComplexity] = useState("O(1) bytes");
+  const [timeComplexity, setTimeComplexity] = useState("O(1)");
+  const [spaceComplexity, setSpaceComplexity] = useState("O(1)");
   const [realTimeComplexity, setRealTimeComplexity] = useState(null);
   const [realSpaceComplexity, setRealSpaceComplexity] = useState(null);
   const stepsRef = useRef([
@@ -199,7 +199,8 @@ const QueueVisualizer = () => {
 
   return (
     <>
-      <Navbar currentPage="Queue" />
+      <Navbar currentPage="Queue"
+      info="queue/info" />
       <button className={`side-panel-toggle ${animateToggle ? 'animate' : ''}`} onClick={toggleSidePanel}>
         <ListRounded className='sidepanel-icon' />
         View steps

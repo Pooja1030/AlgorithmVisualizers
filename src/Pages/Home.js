@@ -51,7 +51,7 @@ const list = [
     "title": "Queue",
     "link": "queue",
     "description": "A Queue is a Linear data structure. It follows First in First Out(FIFO). Elements are inserted at the end of the Queue and deleted from the beginning of a queue.",
-    "algorithms": ["enqueue", "dequeue", "peek", "isEmpty", "size"],
+    "algorithms": ["enqueue", "dequeue", "peek", "isEmpty", "isFull", "size"],
     "img": ""
   },
   {

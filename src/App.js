@@ -32,6 +32,9 @@ import PathfinderInfo from './Pages/InfoPages/pathFinder.js';
 import BinarySearchInfo from './Pages/InfoPages/binarySearchInfo.js';
 import NQueensInfo from './Pages/InfoPages/queensInfo.js';
 import StackInfo from './Pages/InfoPages/stackInfo.js';
+import QueueInfo from './Pages/InfoPages/queueInfo.js';
+
+
 
 function App() {
   return (
@@ -69,6 +72,7 @@ function App() {
             <Route path="BinarySearch/info" element={<BinarySearchInfo />} />
             <Route path="queen/info" element={<NQueensInfo />} />
             <Route path="stack/info" element={<StackInfo />} />
+            <Route path="queue/info" element={<QueueInfo />} />
 
           </Routes>
         </BrowserRouter>
