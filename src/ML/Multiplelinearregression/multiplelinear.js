@@ -119,6 +119,7 @@ function MultipleLinearRegressionVisualization() {
       {!data && <div>Loading data...</div>}
       <div>
         {data && data.coefficients.map((coeff, index) => (
+          index < 5 && // Limiting the number of input boxes to 5
           <input
             key={index}
             type="number"
