@@ -411,7 +411,7 @@ export default class PathfindingVisualizer extends Component {
 
         return (
             <>
-                <Navbar currentPage="Pathfinding Visualizer"
+                <Navbar currentPage="Pathfinding Algorithms"
                     info="pathfinder/info"
                 />
                 <Menu

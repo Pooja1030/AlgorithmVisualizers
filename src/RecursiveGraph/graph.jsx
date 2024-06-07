@@ -54,9 +54,24 @@ class Graph extends Component {
         }));
     }
 
+    reset = () => {
+        this.setState({
+            root: undefined,
+            vertices: [],
+            edges: [],
+            current: -1,
+        });
+    }
+
     setAlgo = (pos, val) => {
         if (pos === 0) {
-            this.setState({ algo: parseInt(val) });
+            this.setState({
+                algo: parseInt(val),
+                root: undefined,
+                vertices: [],
+                edges: [],
+                current: -1,
+            });
         }
     }
 
@@ -201,7 +216,7 @@ class Graph extends Component {
                     onStart={() => {
                         this.addNumber();
                     }}
-                    algorithmSteps={this.state.algorithmSteps} // Pass algorithm steps to the Menu component
+                    onReset={this.reset}
                 />
                 <Details algo={this.state.algo} />
                 {/* Side panel toggle button */}
