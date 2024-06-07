@@ -56,19 +56,19 @@ class Graph extends Component {
 
     setAlgo = (pos, val) => {
         if (pos === 0) {
-            this.setState({ algo: val });
+            this.setState({ algo: parseInt(val) });
         }
     }
 
     setN = (pos, val) => {
         if (pos === 0) {
-            this.setState({ n: val });
+            this.setState({ n: parseInt(val) });
         }
     }
 
     setR = (pos, val) => {
         if (pos === 0) {
-            this.setState({ r: val });
+            this.setState({ r: parseInt(val) });
         }
     }
 
