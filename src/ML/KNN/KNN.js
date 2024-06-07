@@ -1,4 +1,3 @@
-// KNN.js
 import React, { useState, useEffect, useRef } from 'react';
 import Navbar from "../../Components/navbar";
 import axios from 'axios';
@@ -44,15 +43,17 @@ function KNN() {
     const newPointScaled = { x: x(newPoint[0]), y: y(newPoint[1]) };
 
     // Highlight the new point
-    svg.append('circle')
+    const newPointCircle = svg.append('circle')
       .attr('cx', newPointScaled.x)
       .attr('cy', newPointScaled.y)
       .attr('r', 0)
-      .attr('fill', 'red')
-      .attr('class', 'new-point')
-      .transition()
-      .duration(500)
-      .attr('r', 5);
+      .attr('fill', 'red');
+
+    gsap.to(newPointCircle.node(), {
+      duration: 0.5,
+      attr: { r: 5 },
+      ease: 'power2.out'
+    });
 
     // Animate neighbors
     neighbors.forEach((neighbor, index) => {
@@ -100,16 +101,21 @@ function KNN() {
 
       const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-      svg.selectAll('*').remove();
-
-      svg.selectAll('circle')
+      const circles = svg.selectAll('circle')
         .data(data)
         .enter()
         .append('circle')
         .attr('cx', d => x(d.x))
         .attr('cy', d => y(d.y))
-        .attr('r', 5)
-        .attr('fill', d => color(d.label));
+        .attr('r', 0)
+        .attr('fill', d => color(d.label))
+        .attr('class', 'new-point');
+
+      gsap.to(circles.nodes(), {
+        duration: 1,
+        attr: { r: 5 },
+        ease: 'power2.out'
+      });
 
       svg.append('text')
         .attr('x', width / 2)
@@ -158,3 +164,4 @@ function KNN() {
 }
 
 export default KNN;
+
