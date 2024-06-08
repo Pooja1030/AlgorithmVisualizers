@@ -4,11 +4,6 @@ import AlgorithmCard from '../../Components/AlgorithmCard';
 
 const stackInfo = [
     {
-        title: "Stack",
-        description: "A stack is a linear data structure which follows a particular order in which the operations are performed. The order may be LIFO (Last In First Out) or FILO (First In Last Out).",
-        link: 'https://en.wikipedia.org/wiki/Stack_(abstract_data_type)'
-    },
-    {
         title: "Push Operation",
         description: "Push adds an item to the top of the stack. If the stack is full, then it is said to be an Overflow condition.",
     },
@@ -67,6 +62,24 @@ const StackInfo = () => {
     return (
         <>
             <Navbar currentPage="Stack" visualizer="stack" />
+
+            <div className="info-container-2">
+                <div className="info-section">
+                    <h2>Stack</h2>
+                    <p>
+                        A stack is a linear data structure that follows the Last-In-First-Out (LIFO) principle.
+                        It behaves like a stack of plates, where the last plate added is the first one to be removed.
+                        Stacks have one end for both insertion and deletion of elements.
+                        Common operations on a stack include push (adding an element) and pop (removing an element).
+                        Examples of stacks in real life include the call stack in programming and the undo feature in applications.
+                    </p>
+                    <button title='Learn more'>
+                        <a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)" target="_blank" rel="noopener noreferrer">
+                            Learn more</a>
+                    </button>
+                </div>
+            </div>
+
             <div className="info-container">
                 {stackInfo.map((info) => (
                     <AlgorithmCard

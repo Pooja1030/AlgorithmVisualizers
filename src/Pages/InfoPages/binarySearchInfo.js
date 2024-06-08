@@ -3,15 +3,6 @@ import LineGraph from '../../Components/LineGraph';
 import ComplexityTable from '../../Components/ComplexityTable';
 import ComplexityChart from '../../Components/ComplexityChart';
 import Navbar from '../../Components/navbar';
-import AlgorithmCard from '../../Components/AlgorithmCard';
-
-const algorithmInfo = [
-    {
-        title: "Binary Search",
-        description: "Binary Search is an efficient algorithm for finding an item from a sorted list of items. It works by repeatedly dividing in half the portion of the list that could contain the item, until you've narrowed down the possible locations to just one.",
-        link: 'https://en.wikipedia.org/wiki/Binary_search_algorithm'
-    },
-];
 
 const algorithmComplexities = [
     { algorithm: "Binary Search", best: 'O(1)', average: 'O(log n)', worst: 'O(log n)' },
@@ -69,15 +60,21 @@ const BinarySearchInfo = () => {
                 currentPage="Binary Search"
                 visualizer="binarysearch"
             />
-            <div className="info-container">
-                {algorithmInfo.map((algo) => (
-                    <AlgorithmCard
-                        key={algo.title}
-                        title={algo.title}
-                        link={algo.link}
-                        description={algo.description}
-                    />
-                ))}
+
+            <div className="info-container-2">
+                <div className="info-section">
+                    <h2>Binary Search</h2>
+                    <p>
+                        A binary search is a search algorithm used to find the position of a target value within a sorted array.
+                        It works by repeatedly dividing in half the portion of the list that could contain the item, until you've 
+                        narrowed down the possible locations to just one.
+
+                    </p>
+                    <button title='Learn more'>
+                        <a href="https://en.wikipedia.org/wiki/Binary_search_algorithm" target="_blank" rel="noopener noreferrer">
+                            Learn more</a>
+                    </button>
+                </div>
             </div>
 
             {

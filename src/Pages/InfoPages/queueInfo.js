@@ -4,11 +4,6 @@ import AlgorithmCard from '../../Components/AlgorithmCard';
 
 const queueInfo = [
     {
-        title: "Queue",
-        description: "A queue is a linear data structure that follows a particular order in which the operations are performed. The order is FIFO (First In First Out).",
-        link: 'https://en.wikipedia.org/wiki/Queue_(abstract_data_type)'
-    },
-    {
         title: "Enqueue Operation",
         description: "Enqueue adds an item to the rear end of the queue. If the queue is full, then it is said to be an Overflow condition.",
     },
@@ -71,6 +66,24 @@ const QueueInfo = () => {
     return (
         <>
             <Navbar currentPage="Queue" visualizer="queue" />
+
+            <div className="info-container-2">
+                <div className="info-section">
+                    <h2>Queue</h2>
+                    <p>
+                        A queue is a linear data structure that follows the First-In-First-Out (FIFO) principle.
+                        It is open at both ends, with elements being added at the rear and removed from the front.
+                        Common operations on a queue include enqueue (adding an element) and dequeue (removing an element).
+                        Queues are used in scenarios like task scheduling, print spooling, and breadth-first search algorithms.
+                        Examples of queues in real life include waiting lines at a ticket counter or a fast-food restaurant.
+                    </p>
+                    <button title='Learn more'>
+                        <a href="https://en.wikipedia.org/wiki/Queue_(abstract_data_type)" target="_blank" rel="noopener noreferrer">
+                            Learn more</a>
+                    </button>
+                </div>
+            </div>
+
             <div className="info-container">
                 {queueInfo.map((info) => (
                     <AlgorithmCard

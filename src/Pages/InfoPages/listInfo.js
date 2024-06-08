@@ -4,16 +4,6 @@ import AlgorithmCard from '../../Components/AlgorithmCard';
 
 const linkedListInfo = [
     {
-        title: "Singly Linked List",
-        description: "A singly linked list is a collection of nodes where each node contains a data value and a reference (link) to the next node in the sequence.",
-        link: 'https://en.wikipedia.org/wiki/Linked_list'
-    },
-    {
-        title: "Doubly Linked List",
-        description: "A doubly linked list is a linked list in which each node keeps an explicit reference to the node before it and a reference to the node after it.",
-        link: 'https://en.wikipedia.org/wiki/Doubly_linked_list'
-    },
-    {
         title: "Insertion Operations",
         description: "Insertion operations add new nodes to the linked list.",
     },
@@ -70,6 +60,31 @@ const LinkedListInfo = () => {
     return (
         <>
             <Navbar currentPage="Linked List" visualizer="linkedlist" />
+            <div className="info-container-2">
+                <div className="info-section">
+                    <h2>Singly Linked List</h2>
+                    <p>
+                    In a singly linked list, each node contains a data element and a reference (pointer) to the next node in the 
+                    sequence. Traversal is only possible in one direction, from the head (first node) to the tail (last node).    </p>
+                    <button title='Learn more'>
+                        <a href="https://en.wikipedia.org/wiki/Linked_list" target="_blank" rel="noopener noreferrer">
+                            Learn more</a>
+                    </button>
+                </div>
+                <div className="info-section">
+                    <h2>Doubly Linked List</h2>
+                    <p>
+                    A doubly linked list extends the singly linked list by having each node point to both the next and previous nodes.
+                     This allows for traversal in both directions, enhancing operations like insertion and deletion.
+                    </p>
+                     <button title='Learn more'>
+                        <a href="https://en.wikipedia.org/wiki/Doubly_linked_list" target="_blank" rel="noopener noreferrer">
+                            Learn more</a>
+                    </button>
+                </div>
+            </div>
+
+
             <div className="info-container">
                 {linkedListInfo.map((info) => (
                     <AlgorithmCard

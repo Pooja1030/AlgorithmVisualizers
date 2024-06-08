@@ -5,11 +5,6 @@ import LineGraph from '../../Components/LineGraph';
 
 const recursionTreeInfo = [
     {
-        title: "Recursion Tree",
-        description: "A recursion tree is a tree that represents the recursive calls made by a recursive algorithm. It helps visualize and analyze the time complexity of recursive algorithms.",
-        link: 'https://en.wikipedia.org/wiki/Recursion_(computer_science)'
-    },
-    {
         title: "Fibonacci Sequence",
         description: "The Fibonacci sequence is a series of numbers in which each number is the sum of the two preceding ones, usually starting with 0 and 1.",
         link: 'https://en.wikipedia.org/wiki/Fibonacci_number'
@@ -73,7 +68,7 @@ const graphData = {
     datasets: [
         {
             label: "Fibonacci",
-            data: Array.from({ length: 100 }, (_, i) => Math.pow(2, i+1)),
+            data: Array.from({ length: 100 }, (_, i) => Math.pow(2, i + 1)),
             borderColor: 'rgba(255, 99, 132, 1)',
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             fill: false,
@@ -139,6 +134,26 @@ const RecursionTreeInfo = () => {
     return (
         <>
             <Navbar currentPage="Recursion Tree" visualizer="recursiontree" />
+
+            <div className="info-container-2">
+                <div className="info-section">
+                    <h2>Recursion Tree</h2>
+                    <p>
+                        A recursion tree is a graphical representation that illustrates the execution flow of a recursive function.
+                        It provides a visual breakdown of recursive calls, helping to understand the recursive process better.
+
+                        Each node in the tree represents the cost of a single subproblem within the set of recursive function invocations.
+                        The tree helps in generating a close estimate of the actual complexity, which can be further verified using methods like the substitution method.
+                        The Recursion Tree Method is a way of solving recurrence relations by converting them into recursive trees.
+                        It is mainly used to analyze the time complexity of recursive algorithms.
+                    </p>
+                    <button title='Learn more'>
+                        <a href="https://en.wikipedia.org/wiki/Recursion_(computer_science)" target="_blank" rel="noopener noreferrer">
+                            Learn more</a>
+                    </button>
+                </div>
+            </div>
+
             <div className="info-container">
                 {recursionTreeInfo.map((info) => (
                     <AlgorithmCard

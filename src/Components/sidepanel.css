@@ -16,8 +16,9 @@
 }
 
 .side-panel-toggle:hover {
-  /* background: #f0f0f0; */
-  box-shadow: 0 1px 4px rgba(25, 25, 25, .1);
+  color: #2196f3;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(25, 25, 25, .1);
 }
 
 .sidepanel-icon {
@@ -89,6 +90,7 @@
 }
 
 .close-btn:hover {
+  background: transparent;
   opacity: 1;
 }
 
