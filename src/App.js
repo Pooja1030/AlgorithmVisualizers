@@ -17,9 +17,10 @@ import Queue from './Queue/queue';
 import Stack from './Stack/stack';
 import Mst from './MST/mst';
 import BST from "./BST/Bst"
-import LinearRegressionVisualization from './ML/LinearRegression/linear';
+import LinearRegression from './ML/LinearRegression/linear';
+import MultiLinearRegression from './ML/Multiplelinearregression/multiplelinear';
 import LogisticRegressionVisualization from './ML/LogisticRegression/logistic';
-import MultipleLinearRegressionVisualization from './ML/Multiplelinearregression/multiplelinear';
+// import MultipleLinearRegressionVisualization from './ML/Multiplelinearregression/multiplelinear';
 import KMeansVisualization from './ML/KMeans/Kmeans';
 import KNN from './ML/KNN/KNN';
 import ANN from './ML/ANN/ANN';
@@ -35,6 +36,7 @@ import StackInfo from './Pages/InfoPages/stackInfo.js';
 import QueueInfo from './Pages/InfoPages/queueInfo.js';
 import BSTInfo from './Pages/InfoPages/bstInfo.js';
 import LinkedListInfo from './Pages/InfoPages/listInfo.js';
+import RecursionTreeInfo from './Pages/InfoPages/recursionTreeInfo.js';
 
 function App() {
   return (
@@ -47,7 +49,7 @@ function App() {
             <Route path="pathfinder" element={<PathfindingVisualizer />} />
             <Route path="recursiveSort" element={<RecursiveSort />} />
             <Route path="convexHull" element={<ConvexHull />} />
-            <Route path="graph" element={<Graph />} />
+            <Route path="recursiontree" element={<Graph />} />
             <Route path="puzzle" element={<Puzzle />} />
             <Route path="queen" element={<Queen />} />
             <Route path="BinarySearchTree" element={<BST />} />
@@ -56,9 +58,10 @@ function App() {
             <Route path="stack" element={<Stack />} />
             <Route path="queue" element={<Queue />} />
             <Route path="LinkedList" element={<LinkedList />} />
-            <Route path="linear-regression" element={<LinearRegressionVisualization />} />
+            <Route path="linear-regression" element={<LinearRegression />} />
+            <Route path="multilinear-regression" element={<MultiLinearRegression />} />
             <Route path="logistic-regression" element={<LogisticRegressionVisualization />} />
-            <Route path="multiplelinear-regression" element={<MultipleLinearRegressionVisualization />} />
+            {/* <Route path="multiplelinear-regression" element={<MultipleLinearRegressionVisualization />} /> */}
             <Route path="KMeans" element={<KMeansVisualization />} />
             <Route path="KNN" element={<KNN />} />
             <Route path="ANN" element={<ANN/>} />
@@ -75,6 +78,7 @@ function App() {
             <Route path="queue/info" element={<QueueInfo />} />
             <Route path="BinarySearchTree/info" element={<BSTInfo />} />
             <Route path="LinkedList/info" element={<LinkedListInfo />} />
+            <Route path="recursiontree/info" element={<RecursionTreeInfo />} />
 
           </Routes>
         </BrowserRouter>

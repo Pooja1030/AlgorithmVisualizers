@@ -208,7 +208,8 @@ class Graph extends Component {
         const { timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity } = this.state;
         return (
             <div>
-                <Navbar currentPage="Recursion Tree" />
+                <Navbar currentPage="Recursion Tree" 
+                info="RecursionTree/Info"/>
                 <Menu
                     setN={this.setN}
                     setR={this.setR}

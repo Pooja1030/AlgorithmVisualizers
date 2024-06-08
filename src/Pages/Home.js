@@ -84,7 +84,7 @@ const list = [
   },
   {
     "title": "Recursion Tree",
-    "link": "graph",
+    "link": "RecursionTree",
     "description": "A recursion tree is useful for visualizing the tree of recursive calls and the amount of work done at each call.",
     "algorithms": ["Fibonacci", "Binomial Coefficient", "Derangement", "Bigmod"],
     "img": ""
