@@ -168,7 +168,7 @@ class BinaryTree extends Component {
         });
         animationTimeline.to(nodeElement, {
           duration: 0.5,
-          fill: 'blue',
+          fill: '0077ff',
           onComplete: () => {
             this.setState(prevState => ({
               resultText: [...prevState.resultText, " " + node.value.toString(),]
@@ -227,13 +227,13 @@ class BinaryTree extends Component {
         if (nodeElement) {
           gsap.to(nodeElement, {
             duration: 1,
-            fill: 'maroon',
-            r: 20,
+            fill: '#00008f',
+            r: 25,
           });
           gsap.to(nodeElement, {
             duration: 1,
-            fill: 'blue',
-            r: 15,
+            fill: '0077ff',
+            r: 20,
             delay: 1
           });
         }
@@ -245,7 +245,7 @@ class BinaryTree extends Component {
           });
           gsap.to(edgeElement, {
             duration: 1,
-            stroke: 'maroon',
+            stroke: '#00008f',
             delay: 1
           });
           gsap.to(edgeElement, {
@@ -473,7 +473,7 @@ class BinaryTree extends Component {
 
           <div>
             <button className='generate-random-btn' onClick={this.generateRandomTree}>Generate Random Tree</button>
-            <button className='reset-btn' onClick={this.resetTree}>Reset</button>
+            <button className='reset-btn-2' onClick={this.resetTree}>Reset</button>
           </div>
           <div>
             <input
@@ -482,21 +482,21 @@ class BinaryTree extends Component {
               onChange={this.handleInputChange}
               placeholder='Node value'
             />
-            <button className='add-node-btn' onClick={this.addNode}>Insert</button>
+            <button className='visualize-btn' onClick={this.addNode}>Insert</button>
             <input
               type='number'
               value={deleteValue}
               onChange={this.handleDeleteInputChange}
               placeholder='Delete node'
             />
-            <button className='delete-node-btn' onClick={this.deleteNode}>Delete</button>
+            <button className='reset-btn' onClick={this.deleteNode}>Delete</button>
             <input
               type='number'
               value={searchValue}
               onChange={this.handleSearchInputChange}
               placeholder='Search node'
             />
-            <button className='search-node-btn' onClick={this.searchNode}>Search</button>
+            <button className='visualize-btn' onClick={this.searchNode}>Search</button>
           </div>
         </div>
         <div className="result">{`${resultText}`}</div>

@@ -27,8 +27,8 @@ class MST extends Component {
 			animateToggle: false,
 			sidePanelOpen: false,
 			algorithmSteps: [],
-			timeComplexity: "O(n)",
-			spaceComplexity: "O(n)",
+			timeComplexity: "",
+			spaceComplexity: "",
 			realTimeComplexity: "",
 			realSpaceComplexity: "",
 			startTime: 0,
@@ -109,6 +109,7 @@ class MST extends Component {
 
 	setAlgoSteps = (algorithm) => {
 		let algorithmSteps = [];
+		let timeComplexity ="";
 		if (algorithm === "kruskal") {
 			algorithmSteps = [
 				{ code: " Step 1: Sort all the edges by weight (non-decreasing)." },
@@ -116,6 +117,7 @@ class MST extends Component {
 				{ code: " Step 3: Check if adding that edge to the MST forms a cycle. If it doesn't, add it." },
 				{ code: " Step 4: Repeat steps 2 and 3 until the MST has a length of (number of Vertices - 1)." }
 			];
+			timeComplexity = " O(E log E)";
 		} else if (algorithm === "prim") {
 			algorithmSteps = [
 				{ code: " Step 1: Initialize the start node and the open set." },
@@ -126,8 +128,9 @@ class MST extends Component {
 				{ code: " Step 6: For each neighbor, calculate tentative g score and add it to the open set." },
 				{ code: " Step 7: Repeat the loop." }
 			];
+			timeComplexity = " O(E + V log V)";
 		}
-		this.setState({ algorithmSteps });
+		this.setState({ algorithmSteps, timeComplexity });
 
 	}
 

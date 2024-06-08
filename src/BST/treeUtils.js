@@ -62,14 +62,14 @@ export function searchBST(tree, value, setResultText, animationSpeed) {
         animationTimeline.to(nodeElement, {
           duration: animationDuration,
           delay: delay,
-          fill: 'maroon',
+          fill: '#00008f',
           onComplete: () => {
             resolve();
           }
         });
         animationTimeline.to(nodeElement, {
           duration: 1,
-          fill: 'blue'
+          fill: '0077ff'
         });
       })(current);
     });
@@ -83,7 +83,7 @@ export function searchBST(tree, value, setResultText, animationSpeed) {
           duration: animationDuration,
           // delay: delay,
           fill: 'green',
-          r: 20
+          r: 25
         });
         resolve(true);
         return;

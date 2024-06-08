@@ -876,10 +876,10 @@ const LinkedListVisualizer = () => {
                         {/* search */}
                         <div>
                             <input type="text" value={searchValue} onChange={handleSearchInputChange} placeholder="Search Node" />
-                            <button className='visualize-btn' onClick={searchNode}>Search</button>
+                            <button className='' onClick={searchNode}>Search</button>
                         </div>
                         <button className='' onClick={animateTraversal}>Traverse</button>
-                        <button className='reset-btn' onClick={resetLinkedList}>Reset</button>
+                        <button className='reset-btn-2' onClick={resetLinkedList}>Reset</button>
                     </div>
                     <div className="result">{resultText && `${resultText} ${currVal}`}</div>
                 </div>

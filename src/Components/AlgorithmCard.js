@@ -3,8 +3,8 @@ const AlgorithmCard = ({ title, description, link }) => {
         <div className="card">
             <h3>{title}</h3>
             <p>{description}</p>
-            {link && <button>
-                <a href={link} target="_blank" rel="noopener noreferrer">Read More</a>
+            {link && <button title="Read more">
+                <a href={link} target="_blank" rel="noopener noreferrer">Read more</a>
             </button>}
         </div>
     );

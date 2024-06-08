@@ -60,8 +60,8 @@ class Canvas extends Component {
         circle.setAttribute('id', `node-${node.id}`);
         circle.setAttribute('cx', x);
         circle.setAttribute('cy', y);
-        circle.setAttribute('r', 15);
-        circle.setAttribute('fill', "blue");
+        circle.setAttribute('r', 20);
+        circle.setAttribute('fill', "#0077ff");
         svg.appendChild(circle);
 
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');

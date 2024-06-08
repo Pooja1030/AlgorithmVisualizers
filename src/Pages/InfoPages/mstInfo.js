@@ -19,8 +19,8 @@ const algorithmInfo = [
 ];
 
 const algorithmComplexities = [
-    { algorithm: "Prim's Algorithm", best: 'O(E log V)', average: 'O(E log V)', worst: 'O(E log V)' },
-    { algorithm: "Kruskal's Algorithm", best: 'O(E log V)', average: 'O(E log V)', worst: 'O(E log V)' },
+    { algorithm: "Prim's Algorithm", best: 'O(E V log V)', average: 'O(E log V)', worst: 'O(E log V)' },
+    { algorithm: "Kruskal's Algorithm", best: 'O(E log E)', average: 'O(E log V)', worst: 'O(E log V)' },
 ];
 
 const graphData = {

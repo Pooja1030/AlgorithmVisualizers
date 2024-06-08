@@ -11,7 +11,6 @@ h1 {
 
 h2 {
   text-align: center;
-  font-style: italic;
   margin-bottom: 30px;
   font-size: 15px;
 }
@@ -66,9 +65,15 @@ input {
 }
 
 button {
+  color: #333;
+  background-color: #f0edff;
+  border: 1px solid #d5d0e0;
+}
+
+button:hover {
   cursor: pointer;
-  /* background-color: #e0ddeb;
-  color: #5a43c3; */
+  background-color: #eae5ff;
+  color: #222;
 }
 
 select {
@@ -77,7 +82,7 @@ select {
   background-image:
     linear-gradient(45deg, transparent 50%, #5a43c3 50%),
     linear-gradient(135deg, #5a43c3 50%, transparent 50%),
-    linear-gradient(to right, #e0ddeb, #e0ddeb);
+    linear-gradient(to right, #f0edff, #f0edff);
   background-position:
     calc(100% - 1.5em) calc(1.3em + 2px),
     calc(100% - 1.2em) calc(1.3em + 2px),
@@ -87,6 +92,7 @@ select {
     5px 5px,
     3em 4em;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .visualize-btn {
@@ -94,9 +100,32 @@ select {
   color: #fff;
 }
 
+.visualize-btn:hover {
+  background-color: #493db8; 
+  color: #fff;
+
+}
+
 .reset-btn {
   background-color: #c34343;
   color: #fff;
+}
+
+.reset-btn:hover {
+  background-color: #b83d3d; 
+  color: #fff;
+}
+
+.reset-btn-2 {
+  color: #ac2222;
+  background-color: #fff7f7;
+  border: 1px solid #e4d0d0;
+}
+
+.reset-btn-2:hover {
+  color: #8d1010;
+  background-color: #fffafa;
+  border: 1px solid #e77373;
 }
 
 /* menu styles */
@@ -477,13 +506,7 @@ select {
 }
 
 
-
-
-
-
-
-
-
+/* Info page */
 .chart-container {
   max-width: 800px;
   margin: 40px auto;
@@ -527,7 +550,56 @@ select {
   color: #555;
 }
 
-/* src/components/ComplexityTable.css */
+
+.info-container-2 {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.info-section {
+  margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info-section h2 {
+  margin: 0 0 10px;
+  font-size: 1.5em;
+}
+
+.info-section p {
+  line-height: 1.5;
+}
+
+.info-section ul {
+  list-style-type: disc;
+  color: #666;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-left: 20px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.info-section .formula {
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.info-section .formula p{
+  background-color: #f7f5ff;
+  padding:20px 40px;
+  margin: auto;
+}
+
+/* src/components/ComplexityTable */
 
 .table-container {
   margin: 20px auto;
