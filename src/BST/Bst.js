@@ -278,9 +278,9 @@ class BinaryTree extends Component {
 
       const found = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
       if (!found) {
-        this.setState({ resultText: ['Node not found'] });
+        this.setState({ resultText: 'Node not found' });
       }
-      // this.setState({ resultText: ['Node found'] });
+      // this.setState({ resultText: 'Node found' });
     }
   }
 
@@ -295,7 +295,7 @@ class BinaryTree extends Component {
 
       const found = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
       if (!found) {
-        this.setState({ resultText: ['Node not found'] });
+        this.setState({ resultText: 'Node not found' });
         return;
       }
 
@@ -443,7 +443,7 @@ class BinaryTree extends Component {
     return (
       <div>
         <Navbar currentPage="Binary Search Tree"
-        info="BinarySearchTree/info" />
+          info="BinarySearchTree/info" />
         <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
           <ListRounded className='sidepanel-icon' />
           View steps
@@ -499,7 +499,7 @@ class BinaryTree extends Component {
             <button className='visualize-btn' onClick={this.searchNode}>Search</button>
           </div>
         </div>
-        <div className="result">{`${resultText}`}</div>
+        {resultText && <div className="result">{resultText}</div>}
         <Canvas tree={tree} animationSpeed={animationSpeed} />
 
         <ComplexityAnalysis

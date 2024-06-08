@@ -9,7 +9,7 @@
 /* Styles for the queue stack */
 .queue {
     display: flex;
-    padding: 10px 10px;
+    padding: 10px 15px 10px 10px;
     margin: 20px auto 20px auto;
     border: #690f58 solid 1px;
     border-radius: 10px;

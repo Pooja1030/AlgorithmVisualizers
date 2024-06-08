@@ -100,7 +100,7 @@ const LinearRegression = () => {
   return (
     <div>
       <Navbar currentPage="Linear Regression"
-      info="linear-regression/info" />
+        info="linear-regression/info" />
       <div className='menu'>
         <input
           placeholder="Enter x value"
@@ -112,7 +112,7 @@ const LinearRegression = () => {
       </div>
       {predictedY !== null && (
         <Typography variant="body1" align="center" gutterBottom>
-          <div className="result">Predicted y = {predictedY}</div>
+          {predictedY && <div className="result">Predicted y = <strong>{predictedY}</strong></div>}
         </Typography>
       )}
       <div className='regression'>
@@ -146,7 +146,7 @@ const LinearRegression = () => {
             ))}
           </svg>
 
-          <Typography variant="body2" align="center" marginTop={"20px"} color={"gray"}>
+          <Typography variant="body2" align="center" marginTop={"10px"} color={"gray"}>
             Click inside the box to add points.
             <br />The red line represents the best-fit line calculated using linear regression.
           </Typography>

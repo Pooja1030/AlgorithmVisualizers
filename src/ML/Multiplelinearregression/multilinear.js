@@ -189,43 +189,43 @@ const MultiLinearRegression = () => {
       </div>
       {predictedY !== null && (
         <Typography variant="body1" align="center" gutterBottom>
-          <div className="result">Predicted Y = {predictedY}</div>
+          {predictedY && <div className="result">Predicted y = <strong>{predictedY}</strong></div>}
         </Typography>
       )}
       <div className='regression'>
 
         <div className="graph-container">
-        <Typography variant="body1" align="center" gutterBottom color={"gray"}>
-        Add points by clicking the 'Add Point' button.
-      </Typography>
+          <Typography variant="body1" align="center" gutterBottom color={"gray"}>
+            Add points by clicking the 'Add Point' button.
+          </Typography>
           <div className="chart">
             <h3>
               X1 vs Y
             </h3>
-            <Scatter data={scatterData('x1', 'y')} options={scatterOptions('X1', 'Y')} className='graph' style={{padding:"20px 20px 10px 10px"}} />
+            <Scatter data={scatterData('x1', 'y')} options={scatterOptions('X1', 'Y')} className='graph' style={{ padding: "20px 20px 10px 10px" }} />
           </div>
           <div className="chart">
             <h3>
               X2 vs Y
             </h3>
-            <Scatter data={scatterData('x2', 'y')} options={scatterOptions('X2', 'Y')} className='graph' style={{padding:"20px 20px 10px 10px"}}/>
+            <Scatter data={scatterData('x2', 'y')} options={scatterOptions('X2', 'Y')} className='graph' style={{ padding: "20px 20px 10px 10px" }} />
           </div>
           <div className="chart">
             <h3>
               X1 vs X2
             </h3>
-            <Scatter data={scatterData('x1', 'x2')} options={scatterOptions('X1', 'X2')} className='graph' style={{padding:"20px 20px 10px 10px"}}/>
+            <Scatter data={scatterData('x1', 'x2')} options={scatterOptions('X1', 'X2')} className='graph' style={{ padding: "20px 20px 10px 10px" }} />
           </div>
         </div>
 
         <div className='calculations'>
           <p >
-            Plane Equation: 
+            Plane Equation:
           </p>
           <p>
             y = {coefficients[0].toFixed(2)} + {coefficients[1].toFixed(2)}*x1 + {coefficients[2].toFixed(2)}*x2
           </p>
-          <p style={{paddingTop:"10px"}}>
+          <p style={{ paddingTop: "10px" }}>
             Mean Squared Error: {error.toFixed(2)}
           </p>
           {steps.length > 0 &&

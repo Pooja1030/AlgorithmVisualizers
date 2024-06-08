@@ -177,8 +177,8 @@ const StackVisualizer = () => {
     return (
         <>
             <Navbar currentPage="Stack"
-            info="stack/info" />
-            
+                info="stack/info" />
+
             {/* Side panel toggle button */}
             <button className={`side-panel-toggle ${animateToggle ? 'animate' : ''}`} onClick={toggleSidePanel}>
                 <ListRounded className='sidepanel-icon' />
@@ -203,7 +203,8 @@ const StackVisualizer = () => {
                         <button onClick={isEmpty}>IsEmpty</button>
                         <button onClick={size}>Size</button>
                     </div>
-                    <div className="result">{currVal !== null && `${resultText} ${currVal}`}</div>
+                    {(resultText || currVal) &&
+                        <div className="result">{resultText} <strong>{currVal}</strong></div>}
                 </div>
 
                 <div className="stack">

@@ -200,7 +200,7 @@ const QueueVisualizer = () => {
   return (
     <>
       <Navbar currentPage="Queue"
-      info="queue/info" />
+        info="queue/info" />
       <button className={`side-panel-toggle ${animateToggle ? 'animate' : ''}`} onClick={toggleSidePanel}>
         <ListRounded className='sidepanel-icon' />
         View steps
@@ -223,7 +223,8 @@ const QueueVisualizer = () => {
             <button onClick={isFull}>IsFull</button>
             <button onClick={size}>Size</button>
           </div>
-          <div className="result">{currVal !== null && `${resultText} ${currVal}`}</div>
+          {(resultText || currVal) &&
+            <div className="result">{resultText} <strong>{currVal}</strong></div>}
           <ComplexityAnalysis
             timeComplexity={timeComplexity}
             realTimeComplexity={realTimeComplexity}
