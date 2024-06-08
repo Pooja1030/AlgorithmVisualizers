@@ -99,7 +99,8 @@ const LinearRegression = () => {
 
   return (
     <div>
-      <Navbar currentPage="Linear Regression" />
+      <Navbar currentPage="Linear Regression"
+      info="linear-regression/info" />
       <div className='menu'>
         <input
           placeholder="Enter x value"

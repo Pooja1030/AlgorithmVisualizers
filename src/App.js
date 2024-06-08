@@ -37,6 +37,7 @@ import QueueInfo from './Pages/InfoPages/queueInfo.js';
 import BSTInfo from './Pages/InfoPages/bstInfo.js';
 import LinkedListInfo from './Pages/InfoPages/listInfo.js';
 import RecursionTreeInfo from './Pages/InfoPages/recursionTreeInfo.js';
+import LinearRegressionInfo from './Pages/InfoPages/LinearRegressionInfo.js';
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
             <Route path="BinarySearchTree/info" element={<BSTInfo />} />
             <Route path="LinkedList/info" element={<LinkedListInfo />} />
             <Route path="recursiontree/info" element={<RecursionTreeInfo />} />
+            <Route path="linear-regression/info" element={<LinearRegressionInfo />} />
 
           </Routes>
         </BrowserRouter>
