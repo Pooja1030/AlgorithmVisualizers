@@ -13,6 +13,7 @@ class BinarySearch extends Component {
     target: null,
     rects: [],
     isRunning: false,
+    resultText: '',
     currentStep: null,
     animateToggle: false,
     sidePanelOpen: false, // State to manage side panel visibility
@@ -52,7 +53,7 @@ class BinarySearch extends Component {
   }
 
   render() {
-    const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity, isRunning } = this.state;
+    const { sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity, isRunning, resultText } = this.state;
     // Calculate default time and space complexities
     const defaultTimeComplexity = this.calculateTimeComplexity(this.state.count);
     const defaultSpaceComplexity = this.calculateSpaceComplexity(this.state.count);
@@ -69,6 +70,7 @@ class BinarySearch extends Component {
           onCountChange={this.handleCountChange}
           onTargetChange={this.handleTargetChange}
         />
+        {resultText && <div className="result">{resultText}</div>}
 
         {/* Side panel toggle button */}
         <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
@@ -101,13 +103,18 @@ class BinarySearch extends Component {
 
   // Function to handle randomization of array
   handleRandomize = () => {
-    const target = Math.floor(Math.random() * this.state.count);
-    const rects = Array.from({ length: this.state.count }, (_, index) => ({
-      value: index,
+    let randomArray = Array.from({ length: this.state.count }, () => Math.floor(Math.random() * 100)); // Generate random numbers between 0 and 100
+
+    // Sort the array in ascending order
+    randomArray.sort((a, b) => a - b);
+
+    const rects = randomArray.map((value, index) => ({
+      value: value,
       isTarget: false,
       isHighlight: false,
     }));
-    this.setState({ target, rects });
+
+    this.setState({ rects, resultText:"" });
   }
 
   // Function to handle reset
@@ -136,12 +143,16 @@ class BinarySearch extends Component {
       let low = 0;
       let high = rects.length - 1;
       let steps = [];
+      let resultText = ""
+      let found = false;
       const startTime = performance.now(); // Start measuring time
       while (low <= high) {
         let mid = Math.floor((low + high) / 2);
         steps.push({ low, high, mid });
         if (rects[mid].value === target) {
           steps.push({ found: true, index: mid });
+          found = true;
+          resultText = 'Found ' + searchValue;
           break;
         } else if (rects[mid].value < target) {
           steps.push({ mid, direction: 'right' });
@@ -151,6 +162,9 @@ class BinarySearch extends Component {
           high = mid - 1;
         }
       }
+      if (!found)
+        resultText = searchValue + " not found!";
+
       const endTime = performance.now(); // Stop measuring time
       const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
       const realTimeComplexity = `${executionTime} ms`; // Display execution time
@@ -163,7 +177,7 @@ class BinarySearch extends Component {
       this.animateSearch(steps);
 
       // Update time and space complexity
-      this.setState({ realTimeComplexity, realSpaceComplexity });
+      this.setState({ realTimeComplexity, realSpaceComplexity, resultText });
     });
   }
 
