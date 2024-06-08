@@ -55,7 +55,8 @@ class ConvexHull extends Component {
         const { timeComplexity, spaceComplexity, realTimeComplexity, realSpaceComplexity, isRunning } = this.state;
         return (
             <div>
-                <Navbar currentPage="Convex Hull" />
+                <Navbar currentPage="Convex Hull" 
+                info="convexhull/info"/>
 
                 {/* Rest of the component */}
                 {/* Side panel toggle button */}

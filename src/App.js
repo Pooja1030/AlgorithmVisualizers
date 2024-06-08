@@ -38,6 +38,7 @@ import BSTInfo from './Pages/InfoPages/bstInfo.js';
 import LinkedListInfo from './Pages/InfoPages/listInfo.js';
 import RecursionTreeInfo from './Pages/InfoPages/recursionTreeInfo.js';
 import LinearRegressionInfo from './Pages/InfoPages/LinearRegressionInfo.js';
+import ConvexHullInfo from './Pages/InfoPages/ConvexHullInfo.js';
 
 function App() {
   return (
@@ -81,6 +82,7 @@ function App() {
             <Route path="LinkedList/info" element={<LinkedListInfo />} />
             <Route path="recursiontree/info" element={<RecursionTreeInfo />} />
             <Route path="linear-regression/info" element={<LinearRegressionInfo />} />
+            <Route path="convexHull/info" element={<ConvexHullInfo />} />
 
           </Routes>
         </BrowserRouter>
