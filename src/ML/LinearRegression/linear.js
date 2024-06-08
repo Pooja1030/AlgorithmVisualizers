@@ -1,161 +1,177 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import * as d3 from 'd3';
+import React, { useState, useEffect, useRef } from 'react';
+import { Typography } from '@mui/material';
 import { gsap } from 'gsap';
-import { Tooltip } from '@mui/material';
 import Navbar from '../../Components/navbar';
+import './LinearRegression.css';
 
-function LinearRegressionVisualization() {
-  const [data, setData] = useState(null);
-  const [inputValue, setInputValue] = useState('');
-  const [predictedOutput, setPredictedOutput] = useState('');
+const LinearRegression = () => {
+  const [points, setPoints] = useState([]);
+  const [slope, setSlope] = useState(0);
+  const [intercept, setIntercept] = useState(0);
+  const [error, setError] = useState(0);
+  const [steps, setSteps] = useState([]);
+  const [inputX, setInputX] = useState('');
+  const [predictedY, setPredictedY] = useState(null);
+  const svgRef = useRef();
 
-  // Fetch data from Flask server
   useEffect(() => {
-    console.log('Fetching data from Flask server...');
-    axios.get('http://localhost:5000/linear-regression-data')
-      .then(response => {
-        console.log('Data fetched successfully:', response.data);  // Log the response data
-        setData(response.data);
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
-// Predict output based on user input
-const predictOutput = () => {
-  console.log('Data:', data);
-  console.log('Input value:', inputValue);
-  
-  if (data && !isNaN(parseFloat(inputValue)) && !isNaN(data.intercept) && !isNaN(data.coefficient)) {
-    const input = parseFloat(inputValue);
-    console.log('Input:', input);
-    console.log('Intercept:', data.intercept);
-    console.log('Coefficient:', data.coefficient);
-    
-    if (isNaN(data.intercept) || isNaN(data.coefficient) || isNaN(input)) {
-      console.log('One of the values is NaN.');
-      setPredictedOutput('Invalid input! Please enter a valid number.');
-      return;
+    if (points.length > 1) {
+      calculateLinearRegression();
     }
-    
-    const predicted = data.intercept + data.coefficient * input;
-    console.log('Predicted:', predicted);
-    
-    setPredictedOutput(predicted.toFixed(2));
-  } else {
-    setPredictedOutput('Invalid input! Please enter a valid number.');
-  }
-};
+  }, [points]);
 
-
-
-  // Render chart using D3.js
-  // Render chart using D3.js
-useEffect(() => {
-  if (data) {
-    console.log('Data received:', data);  // Log the data to verify it is set correctly
-    const svg = d3.select('#chart')
-      .attr('width', 800)
-      .attr('height', 400);
-
-    const margin = { top: 20, right: 30, bottom: 60, left: 40 };
-    const width = +svg.attr('width') - margin.left - margin.right;
-    const height = +svg.attr('height') - margin.top - margin.bottom;
-
-    const x = d3.scaleLinear()
-      .domain(d3.extent(data.x_test))
-      .range([margin.left, width - margin.right]);
-
-    const y = d3.scaleLinear()
-      .domain([0, d3.max([...data.y_test, ...data.y_predicted])]).nice()
-      .range([height - margin.bottom, margin.top]);
-
-    svg.selectAll('*').remove(); // Clear previous elements if any
-
-    svg.append('g')
-      .attr('transform', `translate(0,${height - margin.bottom})`)
-      .call(d3.axisBottom(x));
-
-    svg.append('g')
-      .attr('transform', `translate(${margin.left},0)`)
-      .call(d3.axisLeft(y));
-
-    // Animate scatter plot points
-    svg.selectAll('circle')
-      .data(data.x_test.map((d, i) => ({ x: d, y: data.y_test[i] })))
-      .enter()
-      .append('circle')
-      .attr('cx', d => margin.left)
-      .attr('cy', d => height - margin.bottom)
-      .attr('r', 5)
-      .style('fill', 'blue')
-      .style('opacity', 0)
-      .transition()
-      .duration(1000)
-      .attr('cx', d => x(d.x))
-      .attr('cy', d => y(d.y))
-      .style('opacity', 1);
-
-    // Render line representing predicted values
-    const line = svg.append('path')
-      .datum(data.x_test.map((d, i) => ({ x: d, y: data.y_predicted[i] })))
-      .attr('fill', 'none')
-      .attr('stroke', 'red')
-      .attr('stroke-width', 1.5)
-      .attr('d', d3.line()
-        .x(d => margin.left)
-        .y(d => height - margin.bottom)
-      );
-
-    const length = line.node().getTotalLength();
-    line.attr('stroke-dasharray', length)
-      .attr('stroke-dashoffset', length)
-      .transition()
-      .duration(2000)
-      .attr('d', d3.line()
-        .x(d => x(d.x))
-        .y(d => y(d.y))
-      )
-      .attr('stroke-dashoffset', 0);
-
-    console.log('Chart rendered successfully');
-  }
-}, [data]);
-
-
-  // Handle input value change
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const addPoint = (e) => {
+    const rect = svgRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const scaledX = ((x - 50) / 500) * 100; // Map X to range [0, 100]
+    const scaledY = 100 - ((y - 50) / 400) * 100; // Map Y to range [0, 100]
+    setPoints([...points, { x: scaledX, y: scaledY }]);
   };
 
-  useEffect(() => {
-    console.log('Data:', data);
-    console.log('Input value:', inputValue);
-    console.log('Intercept:', data?.intercept);
-    console.log('Coefficient:', data?.coefficient);
-  }, [data, inputValue]);
+  const calculateLinearRegression = () => {
+    const n = points.length;
+    const sumX = points.reduce((acc, point) => acc + point.x, 0);
+    const sumY = points.reduce((acc, point) => acc + point.y, 0);
+    const sumXY = points.reduce((acc, point) => acc + point.x * point.y, 0);
+    const sumXX = points.reduce((acc, point) => acc + point.x * point.x, 0);
 
+    const calculatedSlope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+    const calculatedIntercept = (sumY - calculatedSlope * sumX) / n;
+
+    setSlope(calculatedSlope);
+    setIntercept(calculatedIntercept);
+    drawLine(calculatedSlope, calculatedIntercept);
+    calculateError(calculatedSlope, calculatedIntercept);
+    setSteps([
+      `n = ${n}`,
+      `sumX = ${sumX.toFixed(2)}`,
+      `sumY = ${sumY.toFixed(2)}`,
+      `sumXY = ${sumXY.toFixed(2)}`,
+      `sumXX = ${sumXX.toFixed(2)}`,
+      `Slope (m) = ${calculatedSlope.toFixed(2)}`,
+      `Intercept (b) = ${calculatedIntercept.toFixed(2)}`,
+    ]);
+  };
+
+  const calculateError = (slope, intercept) => {
+    const error = points.reduce((acc, point) => {
+      const predictedY = slope * point.x + intercept;
+      return acc + Math.pow(point.y - predictedY, 2);
+    }, 0) / points.length;
+    setError(error);
+  };
+
+  const drawLine = (slope, intercept) => {
+    const svg = svgRef.current;
+    const line = svg.querySelector('line#bestFitLine');
+    const scaledInterceptY = 450 - (intercept / 100) * 400;
+    const scaledY2 = 450 - ((slope * 100 + intercept) / 100) * 400;
+
+    gsap.to(line, {
+      attr: {
+        x1: 50,
+        y1: scaledInterceptY,
+        x2: 550,
+        y2: scaledY2,
+      },
+      duration: 1,
+    });
+  };
+
+  const handlePredict = () => {
+    if (!isNaN(inputX)) {
+      const x = parseFloat(inputX);
+      const y = slope * x + intercept;
+      setPredictedY(y.toFixed(2));
+    }
+  };
+
+  const resetPoints = () => {
+    setPoints([]);
+    setSlope(0);
+    setIntercept(0);
+    setError(0);
+    setSteps([]);
+    setPredictedY(null);
+    drawLine(0, 0);
+  };
 
   return (
     <div>
-      <Navbar currentPage="Linear Regression" /> 
-      <p>Data visualization should appear below:</p>
-      {/* <div>Data: {JSON.stringify(data)}</div> Display raw data for debugging */}
-      <svg id="chart"></svg>
-      {data && <div>Mean Squared Error: {data.mse}</div>}
-      <div>
+      <Navbar currentPage="Linear Regression" />
+      <div className='menu'>
         <input
-          type="number"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="Enter input value"
+          placeholder="Enter x value"
+          value={inputX}
+          onChange={(e) => setInputX(e.target.value)}
         />
-        <button onClick={predictOutput}>Predict Output</button>
-        <div>Predicted Output: {predictedOutput}</div>
+        <button className='visualize-btn' onClick={handlePredict}>Predict y</button>
+        <button className='reset-btn' onClick={resetPoints}>Reset</button>
       </div>
-      {!data && <div>Loading data...</div>}
+      {predictedY !== null && (
+        <Typography variant="body1" align="center" gutterBottom>
+          <div className="result">Predicted y = {predictedY}</div>
+        </Typography>
+      )}
+      <div className='regression'>
+        <div className="graph-container">
+          <svg
+            ref={svgRef}
+            onClick={addPoint}
+            className="graph"
+          >
+            {/* Axes */}
+            <line x1="50" y1="450" x2="550" y2="450" stroke="black" strokeWidth="1" />
+            <line x1="50" y1="50" x2="50" y2="450" stroke="black" strokeWidth="1" />
+
+            {/* Axes labels */}
+            <text x="555" y="440" fontSize="12">X</text>
+            <text x="40" y="40" fontSize="12">Y</text>
+
+            {/* Scale markers */}
+            {[...Array(11)].map((_, i) => (
+              <React.Fragment key={i}>
+                <line x1={50 + 50 * i} y1="445" x2={50 + 50 * i} y2="455" stroke="black" strokeWidth="1" />
+                <text x={50 * i + 40} y="470" fontSize="10">{10 * i}</text>
+                <line x1="50" y1={450 - 40 * i} x2="55" y2={450 - 40 * i} stroke="black" strokeWidth="1" />
+                <text x="20" y={450 - 40 * i + 5} fontSize="10">{10 * i}</text>
+              </React.Fragment>
+            ))}
+
+            <line id="bestFitLine" x1="50" y1="450" x2="550" y2="450" stroke="red" strokeWidth="2" />
+            {points.map((point, index) => (
+              <circle key={index} cx={50 + (point.x / 100) * 500} cy={450 - (point.y / 100) * 400} r="5" fill="blue" />
+            ))}
+          </svg>
+
+          <Typography variant="body2" align="center" marginTop={"20px"} color={"gray"}>
+            Click inside the box to add points.
+            <br />The red line represents the best-fit line calculated using linear regression.
+          </Typography>
+        </div>
+
+        <div className='calculations'>
+          <p>
+            Line Equation: y = {slope.toFixed(2)}x + {intercept.toFixed(2)}
+          </p>
+          <p>
+            Mean Squared Error: {error.toFixed(2)}
+          </p>
+          {steps.length > 0 &&
+            <>
+              <h4>Step-by-Step Calculation</h4>
+              <ul className="steps-list">
+                {steps.map((step, index) => (
+                  <li key={index}>{step}</li>
+                ))}
+              </ul>
+            </>
+          }
+        </div>
+      </div>
     </div>
   );
-}
+};
 
-export default LinearRegressionVisualization;
+export default LinearRegression;
