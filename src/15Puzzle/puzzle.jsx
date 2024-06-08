@@ -130,7 +130,8 @@ class Puzzle extends Component {
 
         return (
             <div style={{ backgroundColor: "#57407c" }} className={'full-height'}>
-                <Navbar currentPage="15 Puzzle" />
+                <Navbar currentPage="15 Puzzle" 
+                info="puzzle/info"/>
 
                 {/* Side panel toggle button */}
                 {/* <button className={`side-panel-toggle ${this.state.animateToggle ? 'animate' : ''}`} onClick={this.toggleSidePanel}>
