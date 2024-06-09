@@ -68,6 +68,7 @@ function App() {
             <Route path="queue" element={<Queue />} />
             <Route path="LinkedList" element={<LinkedList />} />
             <Route path="linear-regression" element={<LinearRegression />} />
+            
             <Route path="multilinear-regression" element={<MultiLinearRegression />} />
             <Route path="logistic-regression" element={<LogisticRegressionVisualization />} />
             <Route path="multiplelinear-regression" element={<MultipleLinearRegressionVisualization />} />
