@@ -119,7 +119,7 @@ const list = [
   },
   {
     "title": "Multiple Linear Regression",
-    "link": "multiplelinear-regression",
+    "link": "multilinear-regression",
     "description": "",
     "algorithms": [],
     "img": ""
