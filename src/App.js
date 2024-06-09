@@ -18,9 +18,9 @@ import Stack from './Stack/stack';
 import Mst from './MST/mst';
 import BST from "./BST/Bst"
 import LinearRegression from './ML/LinearRegression/linear';
-// import MultiLinearRegression from './ML/Multiplelinearregression/multilinear';
+import MultiLinearRegression from './ML/Multiplelinearregression/multilinear';
 import LogisticRegressionVisualization from './ML/LogisticRegression/logistic';
-import MultipleLinearRegressionVisualization from './ML/Multiplelinearregression/multiplelinear';
+// import MultipleLinearRegressionVisualization from './ML/Multiplelinearregression/multiplelinear';
 import KMeansVisualization from './ML/KMeans/Kmeans';
 import KNN from './ML/KNN/KNN';
 import ANN from './ML/ANN/ANN';
@@ -62,9 +62,9 @@ function App() {
             <Route path="queue" element={<Queue />} />
             <Route path="LinkedList" element={<LinkedList />} />
             <Route path="linear-regression" element={<LinearRegression />} />
-            {/* <Route path="multilinear-regression" element={<MultiLinearRegression />} /> */}
+            <Route path="multilinear-regression" element={<MultiLinearRegression />} />
             <Route path="logistic-regression" element={<LogisticRegressionVisualization />} />
-            <Route path="multiplelinear-regression" element={<MultipleLinearRegressionVisualization />} />
+            {/* <Route path="multiplelinear-regression" element={<MultipleLinearRegressionVisualization />} /> */}
             <Route path="KMeans" element={<KMeansVisualization />} />
             <Route path="KNN" element={<KNN />} />
             <Route path="ANN" element={<ANN/>} />
