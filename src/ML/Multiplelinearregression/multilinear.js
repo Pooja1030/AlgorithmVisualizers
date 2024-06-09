@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Typography, TextField } from '@mui/material';
-import { Scatter } from 'react-chartjs-2';
+import { Typography } from '@mui/material';
+import { Scatter, Chart } from 'react-chartjs-2';
 import Navbar from '../../Components/navbar';
 import {
   Chart as ChartJS,
@@ -30,10 +30,14 @@ const MultiLinearRegression = () => {
   const [inputY, setInputY] = useState('');
   const [predictedY, setPredictedY] = useState(null);
   const [steps, setSteps] = useState([]);
+  const [hyperplaneData, setHyperplaneData] = useState([]);
 
   useEffect(() => {
     if (points.length > 2) {
       calculateMultiLinearRegression();
+      // Generate hyperplane data
+      // const hyperplaneData = generateHyperplaneData(coefficients);
+      // setHyperplaneData(hyperplaneData);
     }
   }, [points]);
 
@@ -107,7 +111,6 @@ const MultiLinearRegression = () => {
     ]);
   };
 
-
   const calculateError = (b0, b1, b2) => {
     const error = points.reduce((acc, point) => {
       const predictedY = b0 + b1 * point.x1 + b2 * point.x2;
@@ -131,16 +134,17 @@ const MultiLinearRegression = () => {
     setError(0);
     setSteps([]);
     setPredictedY(null);
+    setHyperplaneData([]);
   };
 
-  const scatterData = (xKey, yKey) => ({
-    datasets: [
-      {
-        label: `${xKey} vs ${yKey}`,
-        data: points.map(point => ({ x: point[xKey], y: point[yKey] })),
-        backgroundColor: 'blue',
-      },
-    ],
+  const scatterData = (xField, yField) => ({
+    datasets: [{
+      label: 'Data Points',
+      data: points.map(point => ({ x: point[xField], y: point[yField] })),
+      showLine: false,
+      backgroundColor: 'rgba(75, 192, 192, 0.6)',
+      pointRadius: 5,
+    }],
   });
 
   const scatterOptions = (xLabel, yLabel) => ({
@@ -163,10 +167,32 @@ const MultiLinearRegression = () => {
     },
   });
 
+  // const generateHyperplaneData = (coefficients) => {
+  //   const hyperplaneData = [];
+  //   for (let x = -10; x <= 10; x++) {
+  //     for (let y = -10; y <= 10; y++) {
+  //       const z = coefficients[0] + coefficients[1] * x + coefficients[2] * y;
+  //       hyperplaneData.push({ x, y, z });
+  //     }
+  //   }
+  //   return hyperplaneData;
+  // };
+
+  // const surfaceData = {
+  //   datasets: [{
+  //     label: 'Hyperplane',
+  //     data: hyperplaneData,
+  //     fill: true,
+  //     borderColor: 'rgba(75, 192, 192, 1)',
+  //     backgroundColor: 'rgba(75, 192, 192, 0.3)',
+  //     borderWidth: 1,
+  //     showLine: true,
+  //   }],
+  // };
 
   return (
     <div>
-      <Navbar currentPage="Multi Linear Regression" info="multi-linear-regression/info" />
+      <Navbar currentPage="Multi Linear Regression" info="multiplelinear-regression/info" />
       <div className='menu'>
         <input
           placeholder="Enter X1 value"
@@ -193,35 +219,39 @@ const MultiLinearRegression = () => {
         </Typography>
       )}
       <div className='regression'>
-
         <div className="graph-container">
           <Typography variant="body1" align="center" gutterBottom color={"gray"}>
             Add points by clicking the 'Add Point' button.
           </Typography>
-          <div className="chart">
+          <div className='graph' style={{ padding: "10px 30px 30px 10px", height: "360px" }}>
             <h3>
               X1 vs Y
             </h3>
-            <Scatter data={scatterData('x1', 'y')} options={scatterOptions('X1', 'Y')} className='graph' style={{ padding: "20px 20px 10px 10px" }} />
+            <Scatter data={scatterData('x1', 'y')} options={scatterOptions('X1', 'Y')} />
           </div>
-          <div className="chart">
+          <div className='graph' style={{ padding: "10px 30px 30px 10px", height: "360px" }}>
             <h3>
               X2 vs Y
             </h3>
-            <Scatter data={scatterData('x2', 'y')} options={scatterOptions('X2', 'Y')} className='graph' style={{ padding: "20px 20px 10px 10px" }} />
+            <Scatter data={scatterData('x2', 'y')} options={scatterOptions('X2', 'Y')} />
           </div>
-          <div className="chart">
+          <div className='graph' style={{ padding: "10px 30px 30px 10px", height: "360px" }}>
             <h3>
               X1 vs X2
             </h3>
-            <Scatter data={scatterData('x1', 'x2')} options={scatterOptions('X1', 'X2')} className='graph' style={{ padding: "20px 20px 10px 10px" }} />
+            <Scatter data={scatterData('x1', 'x2')} options={scatterOptions('X1', 'X2')} />
           </div>
+
+          {/* <div className="graph">
+            <Typography variant="h6" align="center" gutterBottom>
+              Hyperplane Visualization
+            </Typography>
+            <Chart type='scatter' data={surfaceData} options={{ maintainAspectRatio: true }} />
+          </div> */}
         </div>
 
         <div className='calculations'>
-          <p >
-            Plane Equation:
-          </p>
+          <p >Plane Equation:</p>
           <p>
             y = {coefficients[0].toFixed(2)} + {coefficients[1].toFixed(2)}*x1 + {coefficients[2].toFixed(2)}*x2
           </p>
@@ -236,8 +266,7 @@ const MultiLinearRegression = () => {
                   <li key={index}>{step}</li>
                 ))}
               </ul>
-            </>
-          }
+            </>}
         </div>
       </div>
     </div>

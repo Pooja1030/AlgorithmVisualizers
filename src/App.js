@@ -40,6 +40,13 @@ import RecursionTreeInfo from './Pages/InfoPages/recursionTreeInfo.js';
 import LinearRegressionInfo from './Pages/InfoPages/LinearRegressionInfo.js';
 import ConvexHullInfo from './Pages/InfoPages/ConvexHullInfo.js';
 import PuzzleInfo from './Pages/InfoPages/puzzleInfo.js';
+import LogisticRegressionInfo from './Pages/InfoPages/logisticInfo.js';
+import MultipleLinearRegressionInfo from './Pages/InfoPages/multilinearInfo.js';
+
+
+
+
+
 
 function App() {
   return (
@@ -85,6 +92,8 @@ function App() {
             <Route path="linear-regression/info" element={<LinearRegressionInfo />} />
             <Route path="convexHull/info" element={<ConvexHullInfo />} />
             <Route path="puzzle/info" element={<PuzzleInfo />} />
+            <Route path="logistic-regression/info" element={<LogisticRegressionInfo />} />
+            <Route path="multiplelinear-regression/info" element={<MultipleLinearRegressionInfo />} />
 
           </Routes>
         </BrowserRouter>

@@ -586,17 +586,20 @@ select {
 }
 
 .info-section .formula {
-  font-size: 20px;
   color: #333;
+  background-color: #f7f5ff;
   text-align: center;
   display: flex;
   justify-content: center;
 }
 
-.info-section .formula p{
-  background-color: #f7f5ff;
-  padding:20px 40px;
-  margin: auto;
+.info-section h3{
+  margin-top: 30px;
+  text-align: left;
+}
+
+strong{
+  color:#333;
 }
 
 pre {

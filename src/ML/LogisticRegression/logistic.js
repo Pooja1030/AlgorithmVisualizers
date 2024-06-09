@@ -21,7 +21,8 @@ function LogisticRegressionVisualization() {
 
   return (
     <div>
-      <Navbar currentPage="Logistic Regression" /> 
+      <Navbar currentPage="Logistic Regression" 
+      info="logistic-regression/info"/> 
 
       {results ? (
         <div>

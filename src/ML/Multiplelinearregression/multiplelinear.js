@@ -92,7 +92,7 @@ function MultipleLinearRegressionVisualization() {
     }
   }, [data]);
 
-  
+
   const handleInputChange = (index, value) => {
     const newInputValues = [...inputValues];
     newInputValues[index] = value;
@@ -113,11 +113,10 @@ function MultipleLinearRegressionVisualization() {
 
   return (
     <div>
-      <Navbar currentPage="Multiple Linear Regression" /> 
-      <svg id="chart"></svg>
-      {data && <div>Mean Squared Error: {data.mse}</div>}
-      {!data && <div>Loading data...</div>}
-      <div>
+      <Navbar currentPage="Multiple Linear Regression"
+        info="multiplelinear-regression/info" />
+      <div className='menu'>
+
         {data && data.coefficients.map((coeff, index) => (
           index < 5 && // Limiting the number of input boxes to 5
           <input
@@ -129,8 +128,12 @@ function MultipleLinearRegressionVisualization() {
           />
         ))}
         <button onClick={predictOutput}>Predict Output</button>
-        {predictedOutput && <div>Predicted Output: {predictedOutput}</div>}
       </div>
+      {predictedOutput && <div className='result'>Predicted Output: {predictedOutput}</div>}
+
+      {data && <div>Mean Squared Error: {data.mse}</div>}
+      {!data && <div>Loading data...</div>}
+      <svg id="chart"></svg>
     </div>
   );
 }
