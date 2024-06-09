@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Container, TextField, Button, Typography } from '@mui/material';
+import Navbar from '../../Components/navbar';
 
 function ANN() {
   const [inputs, setInputs] = useState({
@@ -35,17 +35,21 @@ function ANN() {
   };
 
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>Iris ANN Classifier</Typography>
-      <TextField label="Sepal Length" name="sepal_length" value={inputs.sepal_length} onChange={handleChange} />
-      <TextField label="Sepal Width" name="sepal_width" value={inputs.sepal_width} onChange={handleChange} />
-      <TextField label="Petal Length" name="petal_length" value={inputs.petal_length} onChange={handleChange} />
-      <TextField label="Petal Width" name="petal_width" value={inputs.petal_width} onChange={handleChange} />
-      <Button variant="contained" color="primary" onClick={handlePredict}>Predict</Button>
-      <Typography variant="h6">{prediction}</Typography>
-      <Button variant="contained" color="secondary" onClick={handleGetAccuracy}>Get Accuracy</Button>
-      <Typography variant="h6">{accuracy}</Typography>
-    </Container>
+    <div>
+      <Navbar currentPage="Artificial Neural Networks" info="ann/info" />
+      <h2 gutterBottom>Iris ANN Classifier</h2>
+      <div className='menu'>
+        <input label="Sepal Length" name="sepal_length" value={inputs.sepal_length} onChange={handleChange} />
+        <input label="Sepal Width" name="sepal_width" value={inputs.sepal_width} onChange={handleChange} />
+        <input label="Petal Length" name="petal_length" value={inputs.petal_length} onChange={handleChange} />
+        <input label="Petal Width" name="petal_width" value={inputs.petal_width} onChange={handleChange} />
+
+        <button className='visualize-btn' onClick={handlePredict}>Predict</button>
+        <button className='visualize-btn' onClick={handleGetAccuracy}>Get Accuracy</button>
+      </div>
+      {prediction && <div className='result'>Prediction: {prediction}</div>}
+      {accuracy && <div className='result'>Accuracy: {accuracy}</div>}
+    </div>
   );
 }
 

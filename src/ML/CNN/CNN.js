@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Container, Typography } from '@mui/material';
 import { DropzoneArea } from 'material-ui-dropzone';
 import * as tf from '@tensorflow/tfjs';
+import Navbar from '../../Components/navbar';
 
 function CNN() {
   const [image, setImage] = useState(null);
@@ -46,20 +46,21 @@ function CNN() {
   };
 
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>CIFAR-10 CNN Classifier</Typography>
+    <div>
+      <Navbar currentPage="Convolutional Neural Networks" info="cnn/info" />
+      <h2>CIFAR-10 CNN Classifier</h2>
+      <button className='visualize-btn' onClick={handlePredict} disabled={!image}>Predict</button>
+      <button className='visualize-btn' onClick={handleGetAccuracy}>Get Accuracy</button>
       <DropzoneArea
         acceptedFiles={['image/*']}
         dropzoneText={"Drag and drop an image here or click"}
         onChange={handleImageChange}
         filesLimit={1}
       />
-      <Button variant="contained" color="primary" onClick={handlePredict} disabled={!image}>Predict</Button>
-      <Typography variant="h6">{prediction}</Typography>
-      <Typography variant="h6">{confidence}</Typography>
-      <Button variant="contained" color="secondary" onClick={handleGetAccuracy}>Get Accuracy</Button>
-      <Typography variant="h6">{accuracy}</Typography>
-    </Container>
+      {prediction && <div className='result'>Prediction: {prediction}</div>}
+      {confidence && <div className='result'>Confidence: {confidence}</div>}
+      {accuracy && <div className='result'>Accuracy: {accuracy}</div>}
+    </div>
   );
 }
 

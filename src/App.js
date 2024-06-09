@@ -21,7 +21,7 @@ import LinearRegression from './ML/LinearRegression/linear';
 import MultiLinearRegression from './ML/Multiplelinearregression/multilinear';
 import LogisticRegressionVisualization from './ML/LogisticRegression/logistic';
 import MultipleLinearRegressionVisualization from './ML/Multiplelinearregression/multiplelinear';
-import KMeansVisualization from './ML/KMeans/Kmeans';
+import KMeans from './ML/KMeans/Kmeans';
 import KNN from './ML/KNN/KNN';
 import ANN from './ML/ANN/ANN';
 import CNN from './ML/CNN/CNN';
@@ -42,11 +42,10 @@ import ConvexHullInfo from './Pages/InfoPages/ConvexHullInfo.js';
 import PuzzleInfo from './Pages/InfoPages/puzzleInfo.js';
 import LogisticRegressionInfo from './Pages/InfoPages/logisticInfo.js';
 import MultipleLinearRegressionInfo from './Pages/InfoPages/multilinearInfo.js';
-
-
-
-
-
+import KNNInfo from './Pages/InfoPages/KNNInfo.js';
+import KMeansInfo from './Pages/InfoPages/kmeansInfo.js';
+import ANNInfo from './Pages/InfoPages/annInfo.js';
+import CNNInfo from './Pages/InfoPages/cnnInfo.js';
 
 function App() {
   return (
@@ -72,7 +71,7 @@ function App() {
             <Route path="multilinear-regression" element={<MultiLinearRegression />} />
             <Route path="logistic-regression" element={<LogisticRegressionVisualization />} />
             <Route path="multiplelinear-regression" element={<MultipleLinearRegressionVisualization />} />
-            <Route path="KMeans" element={<KMeansVisualization />} />
+            <Route path="KMeans" element={<KMeans />} />
             <Route path="KNN" element={<KNN />} />
             <Route path="ANN" element={<ANN/>} />
             <Route path="CNN" element={<CNN />} />
@@ -94,6 +93,10 @@ function App() {
             <Route path="puzzle/info" element={<PuzzleInfo />} />
             <Route path="logistic-regression/info" element={<LogisticRegressionInfo />} />
             <Route path="multiplelinear-regression/info" element={<MultipleLinearRegressionInfo />} />
+            <Route path="KNN/info" element={<KNNInfo />} />
+            <Route path="KMeans/info" element={<KMeansInfo />} />
+            <Route path="ANN/info" element={<ANNInfo/>} />
+            <Route path="CNN/info" element={<CNNInfo />} />
 
           </Routes>
         </BrowserRouter>

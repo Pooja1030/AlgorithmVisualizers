@@ -143,8 +143,9 @@ function KNN() {
 
   return (
     <div>
-      <Navbar currentPage="K-Nearest Neighbours" /> 
-      <div>
+      <Navbar currentPage="K-Nearest Neighbours"
+        info="knn/info" />
+      <div className='menu'>
         {input.map((val, index) => (
           <div key={index}>
             <label>Feature {index + 1}:</label>
@@ -155,9 +156,10 @@ function KNN() {
             />
           </div>
         ))}
+        <button onClick={handlePredict}>Predict</button>
       </div>
-      <button onClick={handlePredict}>Predict</button>
-      {prediction && <div>Prediction: {prediction}</div>}
+      {prediction && <div className='result'>Prediction: {prediction}</div>}
+
       <svg ref={svgRef} id="chart"></svg>
     </div>
   );

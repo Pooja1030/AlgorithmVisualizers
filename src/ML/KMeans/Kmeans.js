@@ -1,11 +1,11 @@
-// KMeansVisualization.js
+// KMeans.js
 import React, { useEffect, useState } from 'react';
 import Navbar from "../../Components/navbar";
 import axios from 'axios';
 import * as d3 from 'd3';
 import { gsap } from 'gsap';
 
-function KMeansVisualization() {
+function KMeans() {
   const [data, setData] = useState(null);
   const [numClusters, setNumClusters] = useState(3);
   const [inputValues, setInputValues] = useState([]);
@@ -127,37 +127,40 @@ function KMeansVisualization() {
 
   return (
     <div>
-      <Navbar currentPage="K-means Clustering" /> 
+      <Navbar currentPage="K-means Clustering"
+        info="kmeans/info" />
 
-      <label htmlFor="numClusters">Number of clusters:</label>
-      <input
-        type="number"
-        id="numClusters"
-        value={numClusters}
-        onChange={handleNumClustersChange}
-        min="1"
-      />
-      <svg id="chart"></svg>
-      <div>
-        {data && data.feature_names.map((name, index) => (
-          <div key={index}>
-            <label>{name}:</label>
-            <input
-              type="number"
-              value={inputValues[index] || ''}
-              onChange={(e) => handleInputChange(index, e.target.value)}
-            />
-          </div>
-        ))}
-        <button onClick={handlePredict}>Predict Cluster</button>
+      <div className='menu'>
+        <label htmlFor="numClusters">Number of clusters:</label>
+        <input
+          type="number"
+          id="numClusters"
+          value={numClusters}
+          onChange={handleNumClustersChange}
+          min="1"
+        />
+        <div>
+          {data && data.feature_names.map((name, index) => (
+            <div key={index}>
+              <label>{name}:</label>
+              <input
+                type="number"
+                value={inputValues[index] || ''}
+                onChange={(e) => handleInputChange(index, e.target.value)}
+              />
+            </div>
+          ))}
+          <button className='visualize-btn' onClick={handlePredict}>Predict Cluster</button>
+        </div>
         {predictedCluster !== null && (
-          <div>
+          <div className='result'>
             Predicted Cluster: {predictedCluster}
           </div>
         )}
+        <svg id="chart"></svg>
       </div>
     </div>
   );
 }
 
-export default KMeansVisualization;
+export default KMeans;
