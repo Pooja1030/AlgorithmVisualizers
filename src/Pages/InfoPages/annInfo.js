@@ -25,13 +25,13 @@ const ANNInfo = () => {
                     <p>
                         ANNs typically consist of three types of layers:
                     </p>
-                    <ol>
+                    <ul>
                         <li><strong>Input Layer:</strong> Receives input data and passes it to the hidden layers.</li>
                         <li><strong>Hidden Layers:</strong> Intermediate layers that perform computations on the 
                         input data using weighted connections and activation functions.</li>
                         <li><strong>Output Layer:</strong> Produces the final output of the network based on the 
                         computations performed in the hidden layers.</li>
-                    </ol>
+                    </ul>
                     <h3>Training Artificial Neural Networks</h3>
                     <p>
                         Training an ANN involves adjusting the weights of the connections between neurons to

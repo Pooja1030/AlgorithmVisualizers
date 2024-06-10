@@ -37,12 +37,12 @@ function ANN() {
   return (
     <div>
       <Navbar currentPage="Artificial Neural Networks" info="ann/info" />
-      <h2 gutterBottom>Iris ANN Classifier</h2>
+      <h2>Iris ANN Classifier</h2>
       <div className='menu'>
-        <input label="Sepal Length" name="sepal_length" value={inputs.sepal_length} onChange={handleChange} />
-        <input label="Sepal Width" name="sepal_width" value={inputs.sepal_width} onChange={handleChange} />
-        <input label="Petal Length" name="petal_length" value={inputs.petal_length} onChange={handleChange} />
-        <input label="Petal Width" name="petal_width" value={inputs.petal_width} onChange={handleChange} />
+        <input placeholder="Sepal Length" name="sepal_length" value={inputs.sepal_length} onChange={handleChange} />
+        <input placeholder="Sepal Width" name="sepal_width" value={inputs.sepal_width} onChange={handleChange} />
+        <input placeholder="Petal Length" name="petal_length" value={inputs.petal_length} onChange={handleChange} />
+        <input placeholder="Petal Width" name="petal_width" value={inputs.petal_width} onChange={handleChange} />
 
         <button className='visualize-btn' onClick={handlePredict}>Predict</button>
         <button className='visualize-btn' onClick={handleGetAccuracy}>Get Accuracy</button>

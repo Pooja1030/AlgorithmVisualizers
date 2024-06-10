@@ -46,20 +46,27 @@ function CNN() {
   };
 
   return (
-    <div>
+    <div >
       <Navbar currentPage="Convolutional Neural Networks" info="cnn/info" />
-      <h2>CIFAR-10 CNN Classifier</h2>
-      <button className='visualize-btn' onClick={handlePredict} disabled={!image}>Predict</button>
-      <button className='visualize-btn' onClick={handleGetAccuracy}>Get Accuracy</button>
-      <DropzoneArea
-        acceptedFiles={['image/*']}
-        dropzoneText={"Drag and drop an image here or click"}
-        onChange={handleImageChange}
-        filesLimit={1}
-      />
-      {prediction && <div className='result'>Prediction: {prediction}</div>}
-      {confidence && <div className='result'>Confidence: {confidence}</div>}
-      {accuracy && <div className='result'>Accuracy: {accuracy}</div>}
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <h2>CIFAR-10 CNN Classifier</h2>
+        <div style={{ width: "400px" }}>
+          <DropzoneArea
+            acceptedFiles={['image/*']}
+            dropzoneText={"Drag and drop an image here or click"}
+            onChange={handleImageChange}
+            filesLimit={1}
+          />
+        </div>
+
+        <div className='menu'>
+          <button className='visualize-btn' onClick={handlePredict} disabled={!image}>Predict</button>
+          <button className='visualize-btn' onClick={handleGetAccuracy}>Get Accuracy</button>
+        </div>
+        {prediction && <div className='result'>Prediction: {prediction}</div>}
+        {confidence && <div className='result'>Confidence: {confidence}</div>}
+        {accuracy && <div className='result'>Accuracy: {accuracy}</div>}
+      </div>
     </div>
   );
 }

@@ -85,11 +85,11 @@ def get_logistic_regression_results():
     rmse = np.sqrt(metrics.mean_squared_error(y_test, y_pred))
     results = {
         "confusion_matrix": confusion.tolist(),
-        "accuracy_score": accuracy,
+        "accuracy_score": round(accuracy, 4),
         "classification_report": classification,
-        "mean_absolute_error": mae,
-        "mean_squared_error": mse,
-        "root_mean_squared_error": rmse
+        "mean_absolute_error": round(mae, 4),
+        "mean_squared_error": round(mse, 4),
+        "root_mean_squared_error": round(rmse, 4),
     }
     return jsonify(results)
 
@@ -101,14 +101,15 @@ def get_count_plot():
     # Load and preprocess the dataset
     data = pd.read_csv(csv_path)
     plt.figure()
-    sns.countplot(x='Outcome', data=data)
-    plt.xlabel('Outcome')
-    plt.ylabel('Count')
+    sns.countplot(x="Outcome", data=data)
+    plt.xlabel("Outcome")
+    plt.ylabel("Count")
+    plt.title("Count Plot")
     img = io.BytesIO()
-    plt.savefig(img, format='png')
+    plt.savefig(img, format="png")
     img.seek(0)
-    plt.close()
-    return send_file(img, mimetype='image/png')
+    plt.close()  # Ensure the plot is closed after saving
+    return send_file(img, mimetype="image/png")
 
 # Line Plot
 @app.route('/line-plot', methods=['GET'])
@@ -118,14 +119,16 @@ def get_line_plot():
     # Load and preprocess the dataset
     data = pd.read_csv(csv_path)
     plt.figure()
-    data['Outcome'].plot()
-    plt.xlabel('Index')
-    plt.ylabel('Outcome')
+    data["Outcome"].plot()
+    plt.xlabel("Index")
+    plt.ylabel("Outcome")
+    plt.title("Line Plot")
     img = io.BytesIO()
-    plt.savefig(img, format='png')
+    plt.savefig(img, format="png")
     img.seek(0)
-    plt.close()
-    return send_file(img, mimetype='image/png')
+    plt.close()  # Ensure the plot is closed after saving
+    return send_file(img, mimetype="image/png")
+
 
 # Multiple linear regression
  

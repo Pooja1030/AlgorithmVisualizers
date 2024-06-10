@@ -6,7 +6,7 @@ import { InlineMath, BlockMath } from 'react-katex';
 const KNNInfo = () => {
     return (
         <>
-            <Navbar currentPage="k-Nearest Neighbors" visualizer="knn" />
+            <Navbar currentPage="K-Nearest Neighbors" visualizer="knn" />
             <div className="info-container-2">
                 <div className="info-section">
                     <h2>k-Nearest Neighbors (k-NN)</h2>
@@ -22,16 +22,15 @@ const KNNInfo = () => {
                     </p>
 
                     <h3>Algorithm</h3>
-                    <ol>
-                        <li>Choose the number of neighbors, k.</li>
-                        <li>Calculate the distance between the new data point and all the training data points.
+                    <ul>
+                        <li>- Choose the number of neighbors, k.</li>
+                        <li>- Calculate the distance between the new data point and all the training data points.
                             Common distance metrics include Euclidean distance, Manhattan distance, and Minkowski distance.</li>
-                        <li>Sort the distances in ascending order and select the k-nearest neighbors.</li>
-                        <li>
-                            For classification, assign the class that is most common among the k-nearest neighbors.
+                        <li>- Sort the distances in ascending order and select the k-nearest neighbors.</li>
+                        <li>- For classification, assign the class that is most common among the k-nearest neighbors.
                             For regression, calculate the average of the values of the k-nearest neighbors.
                         </li>
-                    </ol>
+                    </ul>
                     <p>
                         The Euclidean distance between two points <InlineMath math="(x_1, y_1)" /> and
                         <InlineMath math="(x_2, y_2)" /> in a 2-dimensional space is given by:

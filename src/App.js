@@ -68,7 +68,6 @@ function App() {
             <Route path="queue" element={<Queue />} />
             <Route path="LinkedList" element={<LinkedList />} />
             <Route path="linear-regression" element={<LinearRegression />} />
-            
             <Route path="multilinear-regression" element={<MultiLinearRegression />} />
             <Route path="logistic-regression" element={<LogisticRegressionVisualization />} />
             <Route path="multiplelinear-regression" element={<MultipleLinearRegressionVisualization />} />
@@ -77,7 +76,6 @@ function App() {
             <Route path="ANN" element={<ANN/>} />
             <Route path="CNN" element={<CNN />} />
             {/* <Route path="RNN" element={<RNN />} /> */}
-            <Route path="*" element={<NoPage />} />
             
             <Route path="sort/info" element={<SortingInfo />} />
             <Route path="MinimumSpanningTree/info" element={<MSTInfo />} />
@@ -99,6 +97,7 @@ function App() {
             <Route path="ANN/info" element={<ANNInfo/>} />
             <Route path="CNN/info" element={<CNNInfo />} />
 
+            <Route path="*" element={<NoPage />} />
           </Routes>
         </BrowserRouter>
       </React.StrictMode>

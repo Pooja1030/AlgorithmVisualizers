@@ -2,7 +2,6 @@ from flask import Flask, jsonify, send_file
 from flask_cors import CORS
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -11,10 +10,13 @@ from sklearn.metrics import confusion_matrix, accuracy_score, classification_rep
 from sklearn import metrics
 import io
 import os
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests
-
 
 # Get the directory of the current file
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -52,11 +54,11 @@ def get_logistic_regression_results():
 
     results = {
         "confusion_matrix": confusion.tolist(),
-        "accuracy_score": accuracy,
+        "accuracy_score": round(accuracy, 4),
         "classification_report": classification,
-        "mean_absolute_error": mae,
-        "mean_squared_error": mse,
-        "root_mean_squared_error": rmse,
+        "mean_absolute_error": round(mae, 4),
+        "mean_squared_error": round(mse, 4),
+        "root_mean_squared_error": round(rmse, 4),
     }
 
     return jsonify(results)
@@ -69,10 +71,11 @@ def get_count_plot():
     sns.countplot(x="Outcome", data=data)
     plt.xlabel("Outcome")
     plt.ylabel("Count")
+    plt.title("Count Plot of Outcomes")
     img = io.BytesIO()
     plt.savefig(img, format="png")
     img.seek(0)
-    plt.close()
+    plt.close()  # Ensure the plot is closed after saving
     return send_file(img, mimetype="image/png")
 
 
@@ -83,10 +86,11 @@ def get_line_plot():
     data["Outcome"].plot()
     plt.xlabel("Index")
     plt.ylabel("Outcome")
+    plt.title("Line Plot of Outcomes")
     img = io.BytesIO()
     plt.savefig(img, format="png")
     img.seek(0)
-    plt.close()
+    plt.close()  # Ensure the plot is closed after saving
     return send_file(img, mimetype="image/png")
 
 

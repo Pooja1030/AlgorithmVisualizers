@@ -22,14 +22,14 @@ const KMeansInfo = () => {
                     </p>
 
                     <h3>Algorithm</h3>
-                    <ol>
-                        <li>Choose the number of clusters, k.</li>
-                        <li>Initialize the cluster centroids by randomly selecting k data points from the dataset.</li>
-                        <li>Assign each data point to the nearest cluster centroid.</li>
-                        <li>Recalculate the centroids of the clusters based on the current assignment of data points.</li>
-                        <li>Repeat steps 3 and 4 until the cluster assignments do not change or a maximum
+                    <ul>
+                        <li>- Choose the number of clusters, k.</li>
+                        <li>- Initialize the cluster centroids by randomly selecting k data points from the dataset.</li>
+                        <li>- Assign each data point to the nearest cluster centroid.</li>
+                        <li>- Recalculate the centroids of the clusters based on the current assignment of data points.</li>
+                        <li>- Repeat steps 3 and 4 until the cluster assignments do not change or a maximum
                             number of iterations is reached.</li>
-                    </ol>
+                    </ul>
                     <p>
                         The Euclidean distance between two points <InlineMath math="(x_1, y_1)" /> and <InlineMath math="(x_2, y_2)" /> in a 2-dimensional space is given by:
                     </p>
@@ -52,8 +52,8 @@ const KMeansInfo = () => {
                     </p>
                     <ul>
                         <li><strong>Customer Segmentation:</strong> Grouping customers based on purchasing behavior.</li>
-                        <li><strong>Image Compression:</strong> Reducing the number of colors in an image by
-                            clustering similar colors.</li>
+                        <li><strong>Image Compression:</strong> Reducing the number of culors in an image by
+                            clustering similar culors.</li>
                         <li><strong>Document Clustering:</strong> Organizing documents into topics based on
                             content similarity.</li>
                         <li><strong>Market Research:</strong> Identifying distinct groups within a market for
