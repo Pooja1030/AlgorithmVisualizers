@@ -205,7 +205,7 @@ class MST extends Component {
 					/>
 
 					<div>
-						<button className='visualize-btn' onClick={() => this.calculateMST()}>Visualize</button>
+						<button className='visualize-btn' onClick={() => this.calculateMST()}>Get MST</button>
 						<button className='reset-btn' onClick={() => this.generateVertices()}>Reset</button>
 					</div>
 				</div>

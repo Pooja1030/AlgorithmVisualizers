@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './sidepanelso.css'; // Make sure to define your styles in this CSS file
 import { CloseRounded } from '@material-ui/icons';
 import { gsap } from 'gsap';
+import { PlayArrow, PauseSharp, SkipPrevious, SkipNext } from '@mui/icons-material';
 
 const SidePanel = ({ algorithmSteps1, algorithmSteps2, isOpen, onClose, isDouble }) => {
   const [currentStep1, setCurrentStep1] = useState(0);
@@ -23,7 +24,7 @@ const SidePanel = ({ algorithmSteps1, algorithmSteps2, isOpen, onClose, isDouble
       setIsPlaying(false);
       clearInterval(intervalRef.current);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, algorithmSteps1, algorithmSteps2, isDouble]);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const SidePanel = ({ algorithmSteps1, algorithmSteps2, isOpen, onClose, isDouble
         color: (i) => (i === currentStep1 ? '#000' : '#555'),
         fontWeight: (i) => (i === currentStep1 ? 'bold' : 'normal'),
         duration: 1,
-            overwrite: 'auto'
+        overwrite: 'auto'
       });
 
       if (isDouble) {
@@ -42,9 +43,9 @@ const SidePanel = ({ algorithmSteps1, algorithmSteps2, isOpen, onClose, isDouble
           color: (i) => (i === currentStep2 ? '#000' : '#555'),
           fontWeight: (i) => (i === currentStep2 ? 'bold' : 'normal'),
           duration: 1,
-           overwrite: 'auto'
+          overwrite: 'auto'
         });
- 
+
       }
     }
   }, [currentStep1, currentStep2, isOpen, isDouble]);
@@ -118,14 +119,14 @@ const SidePanel = ({ algorithmSteps1, algorithmSteps2, isOpen, onClose, isDouble
             </button>
           </div>
           <div className="buttons-row">
-            <button className="toggle-btn" onClick={togglePlayPause}>
-              {isPlaying ? 'Pause' : 'Play'}
-            </button>
             <button className="rewind-btn" onClick={rewind}>
-              Rewind
+              <SkipPrevious />
+            </button>
+            <button className="toggle-btn" onClick={togglePlayPause}>
+              {isPlaying ? <PauseSharp /> : <PlayArrow />}
             </button>
             <button className="forward-btn" onClick={forward}>
-              Forward
+              <SkipNext />
             </button>
           </div>
           <div className="panel-content">

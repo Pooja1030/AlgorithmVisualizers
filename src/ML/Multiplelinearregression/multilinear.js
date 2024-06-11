@@ -192,7 +192,7 @@ const MultiLinearRegression = () => {
 
   return (
     <div>
-      <Navbar currentPage="Multi Linear Regression" info="multiplelinear-regression/info" />
+      <Navbar currentPage="Multiple Linear Regression" info="multiplelinear-regression/info" />
       <div className='menu'>
         <input
           placeholder="Enter X1 value"
