@@ -109,14 +109,15 @@
 }
 
 .buttons-row button {
-  display: inline-block;
-  /* margin-bottom: 50px; */
+  display: flex;
   width: 100%;
   border: none;
   background-color: #2196f3;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  align-items: center;
+  justify-content: center;
 }
 
 .buttons-row button:hover {

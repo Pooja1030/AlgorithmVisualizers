@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './sidepanel.css';
 import { CloseRounded } from '@material-ui/icons';
 import { gsap } from 'gsap';
+import { PlayArrow, PauseSharp, SkipPrevious, SkipNext } from '@mui/icons-material';
 
 const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -93,14 +94,14 @@ const SidePanel = ({ algorithmSteps, isOpen, onClose, onAlgoChange }) => {
             </button>
           </div>
           <div className="buttons-row">
-            <button className="toggle-btn" onClick={togglePlayPause}>
-              {isPlaying ? 'Pause' : 'Play'}
-            </button>
             <button className="rewind-btn" onClick={rewind}>
-              Rewind
+              <SkipPrevious/>
+            </button>
+            <button className="toggle-btn" onClick={togglePlayPause}>
+              {isPlaying ? <PauseSharp/> : <PlayArrow/>}
             </button>
             <button className="forward-btn" onClick={forward}>
-              Forward
+              <SkipNext/>
             </button>
           </div>
           <div className="panel-content">
