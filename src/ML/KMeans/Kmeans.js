@@ -1,4 +1,3 @@
-// KMeans.js
 import React, { useEffect, useState } from 'react';
 import Navbar from "../../Components/navbar";
 import axios from 'axios';
@@ -10,6 +9,8 @@ function KMeans() {
   const [numClusters, setNumClusters] = useState(3);
   const [inputValues, setInputValues] = useState([]);
   const [predictedCluster, setPredictedCluster] = useState(null);
+  const [xFeature, setXFeature] = useState('sepal length (cm)');
+  const [yFeature, setYFeature] = useState('sepal width (cm)');
 
   useEffect(() => {
     axios.get(`http://localhost:5000/kmeans?num_clusters=${numClusters}`)
@@ -23,21 +24,24 @@ function KMeans() {
     if (data) {
       const svg = d3.select('#chart')
         .attr('width', 800)
-        .attr('height', 400);
+        .attr('height', 600);
 
-      const margin = { top: 20, right: 30, bottom: 60, left: 40 };
+      const margin = { top: 20, right: 30, bottom: 40, left: 40 };
       const width = +svg.attr('width') - margin.left - margin.right;
       const height = +svg.attr('height') - margin.top - margin.bottom;
 
       svg.selectAll('*').remove(); // Clear previous elements if any
 
+      const xIndex = data.feature_names.indexOf(xFeature);
+      const yIndex = data.feature_names.indexOf(yFeature);
+
       // Scale the data to fit within the chart dimensions
       const x = d3.scaleLinear()
-        .domain(d3.extent(data.data, d => d[0])) // Assuming the first feature for x-axis
+        .domain(d3.extent(data.data, d => d[xIndex]))
         .range([margin.left, width - margin.right]);
 
       const y = d3.scaleLinear()
-        .domain(d3.extent(data.data, d => d[1])) // Assuming the second feature for y-axis
+        .domain(d3.extent(data.data, d => d[yIndex]))
         .range([height - margin.bottom, margin.top]);
 
       // Append axes
@@ -55,8 +59,8 @@ function KMeans() {
       // Plot the data points
       const circles = svg.selectAll('circle')
         .data(data.data.map((d, i) => ({
-          x: d[0],
-          y: d[1],
+          x: d[xIndex],
+          y: d[yIndex],
           cluster: data.clusters[i]
         })))
         .enter()
@@ -65,7 +69,19 @@ function KMeans() {
         .attr('cy', d => y(d.y))
         .attr('r', 5)
         .style('fill', d => color(d.cluster))
-        .style('opacity', 0);
+        .style('opacity', 0)
+        .on('mouseover', (event, d) => {
+          d3.select(event.target).transition().duration(200).attr('r', 7);
+          const tooltip = d3.select('#tooltip');
+          tooltip.style('visibility', 'visible')
+            .style('left', `${event.pageX - 350}px`)
+            .style('top', `${event.pageY - 350}px`)
+            .html(`Cluster: ${d.cluster}<br/>x: ${d.x}<br/>y: ${d.y}`);
+        })
+        .on('mouseout', (event) => {
+          d3.select(event.target).transition().duration(200).attr('r', 5);
+          d3.select('#tooltip').style('visibility', 'hidden');
+        });
 
       gsap.to(circles.nodes(), {
         duration: 1,
@@ -78,10 +94,10 @@ function KMeans() {
         .data(data.centroids)
         .enter()
         .append('rect')
-        .attr('x', d => x(d[0]) - 5)
-        .attr('y', d => y(d[1]) - 5)
-        .attr('width', 10)
-        .attr('height', 10)
+        .attr('x', d => x(d[xIndex]) - 5)
+        .attr('y', d => y(d[yIndex]) - 5)
+        .attr('width', 15)
+        .attr('height', 15)
         .style('fill', 'black')
         .style('opacity', 0);
 
@@ -94,15 +110,15 @@ function KMeans() {
       // Add axis labels
       svg.append('text')
         .attr('text-anchor', 'middle')
-        .attr('transform', `translate(${margin.left / 2},${height / 2})rotate(-90)`)
-        .text(data.feature_names[1]);
+        .attr('transform', `translate(${margin.left / 2 - 10},${height / 2})rotate(-90)`)
+        .text(yFeature);
 
       svg.append('text')
         .attr('text-anchor', 'middle')
-        .attr('transform', `translate(${width / 2},${height - margin.bottom / 3})`)
-        .text(data.feature_names[0]);
+        .attr('transform', `translate(${width / 2},${height - margin.bottom / 3 + 10})`)
+        .text(xFeature);
     }
-  }, [data]);
+  }, [data, xFeature, yFeature]);
 
   const handleNumClustersChange = (e) => {
     setNumClusters(e.target.value);
@@ -139,25 +155,67 @@ function KMeans() {
           onChange={handleNumClustersChange}
           min="1"
         />
-        <div>
+        <label htmlFor="xFeature">X-Axis Feature:</label>
+        <select id="xFeature" value={xFeature} onChange={(e) => setXFeature(e.target.value)}>
           {data && data.feature_names.map((name, index) => (
-            <div key={index}>
-              <label>{name}:</label>
-              <input
-                type="number"
-                value={inputValues[index] || ''}
-                onChange={(e) => handleInputChange(index, e.target.value)}
-              />
-            </div>
+            <option key={index} value={name}>{name}</option>
           ))}
-          <button className='visualize-btn' onClick={handlePredict}>Predict Cluster</button>
-        </div>
-        {predictedCluster !== null && (
-          <div className='result'>
-            Predicted Cluster: {predictedCluster}
+        </select>
+        <label htmlFor="yFeature">Y-Axis Feature:</label>
+        <select id="yFeature" value={yFeature} onChange={(e) => setYFeature(e.target.value)}>
+          {data && data.feature_names.map((name, index) => (
+            <option key={index} value={name}>{name}</option>
+          ))}
+        </select>
+
+      <div style={{display:"flex"}}>
+        {data && data.feature_names.map((name, index) => (
+          <div key={index}>
+            <input
+              type="number"
+              placeholder={name}
+              value={inputValues[index] || ''}
+              onChange={(e) => handleInputChange(index, e.target.value)}
+            />
           </div>
-        )}
-        <svg id="chart"></svg>
+        ))}
+        <button className='visualize-btn' onClick={handlePredict}>Predict Cluster</button>
+      </div>
+      </div>
+
+      {predictedCluster !== null && (
+        <div className='result'>
+          Predicted Cluster: {predictedCluster}
+        </div>
+      )}
+      <div className='regression'>
+        <div className="graph-container">
+          <div className='graph' style={{ padding: "10px 30px 30px 10px", height: "550px", width: "750px" }}>
+
+            <svg id="chart"></svg>
+            <div id="tooltip" className='tooltip'></div>
+          </div>
+        </div>
+      </div>
+
+
+      <div className="info-container-2">
+        <div className="info-section">  <h3>Iris Dataset Details</h3>
+          <p>The Iris dataset is a classic dataset in machine learning and statistics.
+            It includes 150 observations of iris flowers, each described by four features:</p>
+          <ul>
+            <li>Sepal length (cm)</li>
+            <li>Sepal width (cm)</li>
+            <li>Petal length (cm)</li>
+            <li>Petal width (cm)</li>
+          </ul>
+          <p>Each observation belongs to one of three species of iris:</p>
+          <ul>
+            <li>Iris setosa</li>
+            <li>Iris versicolor</li>
+            <li>Iris virginica</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
