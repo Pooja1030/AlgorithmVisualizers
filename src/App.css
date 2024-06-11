@@ -175,7 +175,7 @@ select {
 }
 
 .navbar .home-btn {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-size: 1.5rem;
   font-weight: bold;
   line-height: 1;
@@ -184,23 +184,20 @@ select {
 }
 
 .home-btn a {
-  color: #5a43c3;
+  color: #7d47e9;
 }
 
 .home-btn a:hover {
-  color: #3b2698;
-  text-shadow: #61dafba2 1px 1px 2px;
+  color: #5a43c3;
+  /* text-shadow: #61dafba2 1px 1px 2px; */
 }
 
-.title-logo {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-size: 3rem;
-  font-weight: bold;
-  line-height: 1;
-  padding: 50px 0;
-  text-align: center;
-  color: #3b2698;
-  text-shadow: #61dafba2 1px 1px 2px;
+.navbar .nav-action:hover{
+color: #0000009a;
+}
+
+.navbar button:hover{
+  background-color: transparent;
 }
 
 /* home styles */
@@ -239,7 +236,6 @@ select {
   padding: 30px;
   min-height: 183px;
   min-width: 300px;
-  /* background: var(--card-shadow-1); */
   background-color: #FFF;
   justify-content: space-between;
   align-items: flex-start;
@@ -283,6 +279,7 @@ select {
 .card-content {
   display: flex;
   flex-direction: row;
+  align-items: center;
   /* justify-content: space-between; */
   width: 100%;
 }
@@ -331,8 +328,8 @@ select {
   border-radius: 50%;
   box-shadow: 0 0 1000px 350px #6E6BFE;
   z-index: -1;
-  right: 0;
-  top: 50%;
+  right: 10%;
+  top: 10%;
   transform: translate(-80%, -80%);
   opacity: .2;
 }
@@ -345,9 +342,9 @@ select {
   display: block;
   background: #6E6BFE;
   border-radius: 50%;
-  box-shadow: 0 0 1000px 350px #ef6bfe;
+  box-shadow: 0 0 1000px 350px #f175ff;
   z-index: -1;
-  left: 0;
+  left: 10%;
   top: 10%;
   transform: translate(80%, -80%);
   opacity: .2;
@@ -359,13 +356,18 @@ select {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   border-bottom: #ddd 1px solid;
-  background-color: #7469B6;
+  background-color: #fff;
+  color: #7469B6;
   color: #fff;
+  background-color: #9385e0;
+  gap: 8px;
 }
 
 .logo-text {
-  width: 300px;
+  font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
 }
 
 .hero-section {
@@ -374,7 +376,7 @@ select {
   flex-direction: column;
   position: relative;
   max-width: 100%;
-  padding: 60px 20px;
+  padding: 80px 20px;
 }
 
 .hero-text-content {
@@ -418,7 +420,7 @@ select {
   max-width: 600px;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 40px 0;
 }
 
 .search-input-hero .search-icon {
@@ -447,7 +449,7 @@ select {
 
 .search-input-hero .search-input {
   padding: 28px 45px 28px 55px;
-  border: 1px solid #e7e7e9;
+  border: 1px solid #ddd;
   border-radius: 50px;
   font-size: 14px;
   min-width: 660px;

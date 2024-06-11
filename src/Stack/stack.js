@@ -96,8 +96,8 @@ const StackVisualizer = () => {
                 setResultText('Top value: ')
                 setCurrVal(stack[stack.length - 1]);
                 const timeline = gsap.timeline();
-                timeline.to(".die.top", { background: "#992155", duration: 0.5 });
-                timeline.to(".die.top", { background: "#fb21d3", duration: 0.5, delay: 1 });
+                timeline.to(".die.top", { background: "#4942E4", translateY:"-16px", duration: 0.5 });
+                timeline.to(".die.top", { background: "#FF3EA5",translateY:"0", duration: 0.5, delay: 1 });
             } else {
                 setResultText("");
                 setCurrVal('Stack is empty');
@@ -223,7 +223,7 @@ const StackVisualizer = () => {
                         <div className="pointer top">
                             <ArrowBackRounded />
                             <span>Top</span>
-                            {topIndex}
+                            ({topIndex})
                         </div>
                     }
                 </div>

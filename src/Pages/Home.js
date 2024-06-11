@@ -10,6 +10,7 @@ import { useState } from "react";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 
 const list = [
   {
@@ -229,7 +230,10 @@ export default function Home() {
     <>
       <div className="hero-container home22-intro">
         <div className="nav-logo">
-          <h3 className="logo-text">Algorithm Visualizer</h3>
+          <GraphicEqIcon />
+          <h3 className="logo-text">
+            Interactive learning platform for DSA & ML
+          </h3>
         </div>
         <section className="hero-section">
           <div className="hero-text-content">
@@ -282,7 +286,7 @@ export default function Home() {
               '& .MuiTabs-indicator': {
                 color: "#5a43c3",
                 backgroundColor: "#5a43c3",
-              },        
+              },
             }}
           >
             <Tab label="All" />
@@ -309,7 +313,11 @@ export default function Home() {
                         </React.Fragment>
                       }
                     >
-                      <Button><InfoIcon color="action"></InfoIcon></Button>
+                      <Button>
+                        <Link to={listItem?.link + "/info" || '#'} style={{height:"24px"}}>
+                          <InfoIcon color="action"></InfoIcon>
+                        </Link>
+                      </Button>
                     </HtmlTooltip>
                   </div>
                   <ul className="card-tags">

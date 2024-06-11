@@ -46,7 +46,7 @@ class Canvas extends Component {
             circle.setAttribute('cx', vertex.x);
             circle.setAttribute('cy', vertex.y);
             circle.setAttribute('r', 15);
-            circle.setAttribute('fill', "blue");
+            circle.setAttribute('fill', "#4942E4");
             svg.appendChild(circle);
 
             const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -116,7 +116,7 @@ class Canvas extends Component {
                 delay: delay
             });
 
-            let targetColor = isMSTEdge ? "red" : "lightgray";
+            let targetColor = isMSTEdge ? "#B31312" : "lightgray";
             let strokeWidth = isMSTEdge ? 2 : 1;
             this.animationTimeline.to(visitedEdge, {
                 duration: animationDuration,
@@ -124,8 +124,8 @@ class Canvas extends Component {
                     line.setAttribute('stroke', targetColor);
                     line.setAttribute('stroke-width', strokeWidth);
                     if (isMSTEdge) {
-                        vertexFrom.setAttribute('fill', "red");
-                        vertexTo.setAttribute('fill', "red");
+                        vertexFrom.setAttribute('fill', "#B31312");
+                        vertexTo.setAttribute('fill', "#B31312");
                         text.setAttribute('font-weight', "bold");
 
                     }

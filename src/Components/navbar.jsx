@@ -16,14 +16,14 @@ class Navbar extends Component {
                 {
                     (this.props.info) &&
                     <Link to={`/${this.props.info}`}title="More Information">
-                        <Button><InfoIcon color="action" /></Button>
+                        <Button><InfoIcon color="action" className='nav-action' /></Button>
 
                     </Link>
                 }
                 {
                     (this.props.visualizer) &&
                     <Link to={`/${this.props.visualizer}`}title="Open Visualizer">
-                        <Button><GraphicEqIcon color="action" /></Button>
+                        <Button><GraphicEqIcon color="action" className='nav-action'/></Button>
                     </Link>
                 }
             </nav>

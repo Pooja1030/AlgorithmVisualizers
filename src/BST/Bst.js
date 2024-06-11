@@ -194,7 +194,7 @@ class BinaryTree extends Component {
     if (!isNaN(value)) {
       const algorithmSteps = steps("addNodeToBST");
       this.setState({ algorithmSteps });
-      this.triggerToggleAnimation();
+      // this.triggerToggleAnimation();
 
       const findPosition = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
 
@@ -274,13 +274,13 @@ class BinaryTree extends Component {
       // Calculate space complexity
       const realSpaceComplexity = `${this.estimateSpaceComplexity(tree)} bytes`;
       this.setState({ resultText: [], algorithmSteps, realTimeComplexity, realSpaceComplexity }); // Clear previous search results
-      this.triggerToggleAnimation();
+      // this.triggerToggleAnimation();
 
       const found = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
       if (!found) {
         this.setState({ resultText: 'Node not found' });
       }
-      // this.setState({ resultText: 'Node found' });
+      // else this.setState({ resultText: 'Node found' });
     }
   }
 
@@ -291,7 +291,7 @@ class BinaryTree extends Component {
     if (!isNaN(value)) {
       const algorithmSteps = steps("deleteNodeFromBST");
       this.setState({ algorithmSteps });
-      this.triggerToggleAnimation();
+      // this.triggerToggleAnimation();
 
       const found = await searchBST(tree, value, (resultText) => this.setState({ resultText }), animationSpeed);
       if (!found) {
@@ -311,8 +311,8 @@ class BinaryTree extends Component {
 
         if (nodeElement) {
           gsap.to(nodeElement, {
-            duration: 0.5,
-            fill: 'red',
+            duration: .75,
+            fill: '#910A67',
             r: 10,
             delay: 1,
             onComplete: () => {
@@ -321,7 +321,8 @@ class BinaryTree extends Component {
             }
           });
         }
-
+        
+        await new Promise(resolve => setTimeout(resolve, 1000));
         // If the node has a single child or no children, handle the simple case
         if (!nodeToDelete.left || !nodeToDelete.right) {
           const childNode = nodeToDelete.left || nodeToDelete.right;
@@ -335,7 +336,7 @@ class BinaryTree extends Component {
                 fill: "#fb21d3",
                 delay: 1,
                 onComplete: async () => {
-                  await new Promise(resolve => setTimeout(resolve, 4000));
+                  await new Promise(resolve => setTimeout(resolve, 2000));
                   // Update the tree structure after the animation completes
                   const startTime = performance.now(); // Start measuring time
                   const updatedTree = deleteNodeFromBST(tree, value);
@@ -362,7 +363,7 @@ class BinaryTree extends Component {
               });
             }
 
-            await new Promise(resolve => setTimeout(resolve, 3000));
+            await new Promise(resolve => setTimeout(resolve, 2000));
             const startTime = performance.now(); // Start measuring time
             // Update the tree structure after the animation completes
             const updatedTree = deleteNodeFromBST(tree, value);
@@ -390,7 +391,7 @@ class BinaryTree extends Component {
               fill: "#fb21d3",
               delay: 1,
               onComplete: async () => {
-                await new Promise(resolve => setTimeout(resolve, 4000));
+                await new Promise(resolve => setTimeout(resolve, 2000));
                 const startTime = performance.now(); // Start measuring time
                 const updatedTree = deleteNodeFromBST(tree, value);
                 const endTime = performance.now(); // Stop measuring time
@@ -404,7 +405,7 @@ class BinaryTree extends Component {
               }
             });
           } else {
-            await new Promise(resolve => setTimeout(resolve, 3000));
+            await new Promise(resolve => setTimeout(resolve, 2000));
             const startTime = performance.now(); // Start measuring time
             const updatedTree = deleteNodeFromBST(tree, value);
             const endTime = performance.now(); // Stop measuring time

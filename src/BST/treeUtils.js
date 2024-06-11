@@ -69,7 +69,7 @@ export function searchBST(tree, value, setResultText, animationSpeed) {
         });
         animationTimeline.to(nodeElement, {
           duration: 1,
-          fill: '0077ff'
+          fill: 'rgb(0, 119, 255)'
         });
       })(current);
     });
@@ -82,7 +82,7 @@ export function searchBST(tree, value, setResultText, animationSpeed) {
         animationTimeline.to(`#node-${current.id}`, {
           duration: animationDuration,
           // delay: delay,
-          fill: 'green',
+          fill: '#337357',
           r: 25
         });
         resolve(true);

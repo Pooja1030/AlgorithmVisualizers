@@ -144,8 +144,8 @@ const QueueVisualizer = () => {
       setResultText("Front: ");
       setCurrVal(queue[0]);
       const timeline = gsap.timeline();
-      timeline.to(".top", { background: "#992155", duration: 0.5 });
-      timeline.to(".top", { background: "#fb21d3", duration: 0.5, delay: 1 });
+      timeline.to(".top", { background: "#1640D6", translateY:"-8px", duration: 0.5 });
+      timeline.to(".top", { background: "#DA0C81",  translateY:"0",duration: 0.5, delay: 1 });
       setSteps('Peek');
     } else {
       setResultText("");
@@ -237,7 +237,7 @@ const QueueVisualizer = () => {
 
           {frontIndex >= 0 &&
             <div className="pointer front">
-              {frontIndex}
+              ({frontIndex})
               <span>Front</span>
               <ArrowDownwardRounded />
             </div>
@@ -258,7 +258,7 @@ const QueueVisualizer = () => {
           {rearIndex >= 0 && <div className="pointer rear">
             <ArrowUpwardRounded />
             <span>Rear</span>
-            {rearIndex}
+            ({rearIndex})
           </div>
           }</div>
 

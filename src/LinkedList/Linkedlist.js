@@ -328,9 +328,9 @@ const LinkedListVisualizer = () => {
             .to(currentNodeBox, { backgroundColor: "#FFF7FC", color: "#1363DF", borderColor: "#1363DF", duration: 1 },);
 
         // Highlight next node box
-        timeline.to(nextBox, { backgroundColor: "#5B8FB9", duration: 0.5 }, "-=2")
+        timeline.to(nextBox, { backgroundColor: "#5999cd", duration: 0.5 }, "-=2")
             .to(nextBox, { backgroundColor: "#D800A6", duration: 1 }, "-=1")
-            .to(nextBox, { backgroundColor: "#5B8FB9", duration: 0.5 });
+            .to(nextBox, { backgroundColor: "#5999cd", duration: 0.5 });
 
         // Highlight next arrow
         timeline.to(nextArrowElement, { fill: "#D800A6", duration: .5 }, "-=2")
@@ -443,9 +443,9 @@ const LinkedListVisualizer = () => {
                 .to(nextNodeBox, { backgroundColor: "#FFF7FC", color: "#1363DF", borderColor: "#1363DF", duration: 1 },);
 
             // Highlight next node box
-            timeline.to(nextPrev, { backgroundColor: "#5B8FB9", duration: 0.5 }, "-=2")
+            timeline.to(nextPrev, { backgroundColor: "#5999cd", duration: 0.5 }, "-=2")
                 .to(nextPrev, { backgroundColor: "#D800A6", duration: 1 }, "-=1")
-                .to(nextPrev, { backgroundColor: "#5B8FB9", duration: 0.5 });
+                .to(nextPrev, { backgroundColor: "#5999cd", duration: 0.5 });
 
             timeline.set(nextPrevArrowElement, { opacity: 1 })
             timeline.to(nextPrevArrowElement, { x: "+=10", scale: 1.2, duration: 0.5 },)
@@ -515,9 +515,9 @@ const LinkedListVisualizer = () => {
 
         // highlight the prev pointer of next node
         if (nextPrev && insertPosition !== "Before Node") {
-            timeline.to(nextPrev, { backgroundColor: "#5B8FB9", duration: 0.5 }, "-=2")
+            timeline.to(nextPrev, { backgroundColor: "#5999cd", duration: 0.5 }, "-=2")
                 .to(nextPrev, { backgroundColor: "#D800A6", duration: 1 }, "+=1")
-                .to(nextPrev, { backgroundColor: "#5B8FB9", duration: 0.5 });
+                .to(nextPrev, { backgroundColor: "#5999cd", duration: 0.5 });
         }
 
         // point arrow to prev node
@@ -529,9 +529,9 @@ const LinkedListVisualizer = () => {
 
         // reset style
         timeline.to(newNode, { backgroundColor: "#FFF7FC", color: "#1363DF", borderColor: "#1363DF", duration: 1 }, "+=2")
-            .to(nextBox, { backgroundColor: "#5B8FB9", duration: 0.5 }, "<");
+            .to(nextBox, { backgroundColor: "#5999cd", duration: 0.5 }, "<");
         if (prevBox)
-            timeline.to(prevBox, { backgroundColor: "#5B8FB9", duration: 0.5 }, "<");
+            timeline.to(prevBox, { backgroundColor: "#5999cd", duration: 0.5 }, "<");
 
     };
 
@@ -663,9 +663,9 @@ const LinkedListVisualizer = () => {
         }
 
         // Highlight next node box of prev node
-        timeline.to(prevNextBox, { backgroundColor: "#5B8FB9", duration: 0.5 }, "-=2")
+        timeline.to(prevNextBox, { backgroundColor: "#5999cd", duration: 0.5 }, "-=2")
             .to(prevNextBox, { backgroundColor: "#D800A6", duration: 1 }, "+=1")
-            .to(prevNextBox, { backgroundColor: "#5B8FB9", duration: 0.5 });
+            .to(prevNextBox, { backgroundColor: "#5999cd", duration: 0.5 });
 
         // point arrow to next node
         timeline
@@ -679,9 +679,9 @@ const LinkedListVisualizer = () => {
 
         // Highlight prev node box
         if (nextPrev) {
-            timeline.to(nextPrev, { backgroundColor: "#5B8FB9", duration: 0.5 }, "-=2")
+            timeline.to(nextPrev, { backgroundColor: "#5999cd", duration: 0.5 }, "-=2")
                 .to(nextPrev, { backgroundColor: "#D800A6", duration: 1 }, "+=1")
-                .to(nextPrev, { backgroundColor: "#5B8FB9", duration: 0.5 });
+                .to(nextPrev, { backgroundColor: "#5999cd", duration: 0.5 });
         }
 
         // point arrow to prev node 
@@ -750,9 +750,9 @@ const LinkedListVisualizer = () => {
 
         // reset style
         timeline.to(searchNode, { backgroundColor: "#FFF7FC", color: "#1363DF", borderColor: "#1363DF", duration: 1 }, "+=2")
-            .to(nextBox, { backgroundColor: "#5B8FB9", duration: 0.5 }, "<");
+            .to(nextBox, { backgroundColor: "#5999cd", duration: 0.5 }, "<");
         if (prevBox)
-            timeline.to(prevBox, { backgroundColor: "#5B8FB9", duration: 0.5 }, "<");
+            timeline.to(prevBox, { backgroundColor: "#5999cd", duration: 0.5 }, "<");
     };
 
     const resetLinkedList = () => {
