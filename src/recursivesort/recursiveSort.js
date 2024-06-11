@@ -83,7 +83,7 @@ class RecursiveSort extends Component {
         return (
             <React.Fragment>
                 <Navbar currentPage="Recursive Sort" 
-                info="sort/info"/>
+                info="Recursivesort/info"/>
                 <Menu className="menu"
                     isDisabled={this.state.isRunning}
                     onVisualize={this.handleSort}

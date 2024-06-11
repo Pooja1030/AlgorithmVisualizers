@@ -46,6 +46,7 @@ import KNNInfo from './Pages/InfoPages/KNNInfo.js';
 import KMeansInfo from './Pages/InfoPages/kmeansInfo.js';
 import ANNInfo from './Pages/InfoPages/annInfo.js';
 import CNNInfo from './Pages/InfoPages/cnnInfo.js';
+import RecursiveSortInfo from './Pages/InfoPages/recursivesortInfo.js';
 
 function App() {
   return (
@@ -96,6 +97,7 @@ function App() {
             <Route path="KMeans/info" element={<KMeansInfo />} />
             <Route path="ANN/info" element={<ANNInfo/>} />
             <Route path="CNN/info" element={<CNNInfo />} />
+            <Route path="recursiveSort/info" element={<RecursiveSortInfo />} />
 
             <Route path="*" element={<NoPage />} />
           </Routes>
