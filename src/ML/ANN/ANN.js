@@ -49,6 +49,25 @@ function ANN() {
       </div>
       {prediction && <div className='result'>Prediction: {prediction}</div>}
       {accuracy && <div className='result'>Accuracy: {accuracy}</div>}
+
+      <div className="info-container-2">
+        <div className="info-section">
+          <h3>Iris Dataset Details</h3>
+          <p>The Iris dataset is a classic dataset in machine learning and statistics. It includes 150 observations of iris flowers, each described by four features:</p>
+          <ul>
+            <li>Sepal length (cm)</li>
+            <li>Sepal width (cm)</li>
+            <li>Petal length (cm)</li>
+            <li>Petal width (cm)</li>
+          </ul>
+          <p>Each observation belongs to one of three species of iris:</p>
+          <ul>
+            <li>Iris setosa</li>
+            <li>Iris versicolor</li>
+            <li>Iris virginica</li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
