@@ -67,9 +67,8 @@ function KMeans() {
         .append('circle')
         .attr('cx', d => x(d.x))
         .attr('cy', d => y(d.y))
-        .attr('r', 5)
+        .attr('r', 0)
         .style('fill', d => color(d.cluster))
-        .style('opacity', 0)
         .on('mouseover', (event, d) => {
           d3.select(event.target).transition().duration(200).attr('r', 7);
           const tooltip = d3.select('#tooltip');
@@ -85,8 +84,9 @@ function KMeans() {
 
       gsap.to(circles.nodes(), {
         duration: 1,
-        opacity: 1,
-        stagger: 0.05
+        attr: { r: 5 },
+        ease: 'power2.out'
+
       });
 
       // Plot the centroids
@@ -131,7 +131,8 @@ function KMeans() {
   };
 
   const handlePredict = () => {
-    axios.post('http://localhost:5000/predict', {
+    setPredictedCluster("");
+    axios.post('http://localhost:5000/predict-cluster', {
       data: inputValues,
       num_clusters: numClusters
     })
@@ -140,6 +141,12 @@ function KMeans() {
       })
       .catch(error => console.error('Error predicting cluster:', error));
   };
+
+  const species = [
+    "Iris setosa",
+    "Iris versicolor",
+    "Iris virginica",
+  ]
 
   return (
     <div>
@@ -155,37 +162,38 @@ function KMeans() {
           onChange={handleNumClustersChange}
           min="1"
         />
-        <label htmlFor="xFeature">X-Axis Feature:</label>
+        <label htmlFor="xFeature">X-Axis:</label>
         <select id="xFeature" value={xFeature} onChange={(e) => setXFeature(e.target.value)}>
           {data && data.feature_names.map((name, index) => (
             <option key={index} value={name}>{name}</option>
           ))}
         </select>
-        <label htmlFor="yFeature">Y-Axis Feature:</label>
+        <label htmlFor="yFeature">Y-Axis:</label>
         <select id="yFeature" value={yFeature} onChange={(e) => setYFeature(e.target.value)}>
           {data && data.feature_names.map((name, index) => (
             <option key={index} value={name}>{name}</option>
           ))}
         </select>
 
-      <div style={{display:"flex"}}>
-        {data && data.feature_names.map((name, index) => (
-          <div key={index}>
-            <input
-              type="number"
-              placeholder={name}
-              value={inputValues[index] || ''}
-              onChange={(e) => handleInputChange(index, e.target.value)}
-            />
-          </div>
-        ))}
-        <button className='visualize-btn' onClick={handlePredict}>Predict Cluster</button>
-      </div>
+        <div style={{ display: "flex" }}>
+          {data && data.feature_names.map((name, index) => (
+            <div key={index}>
+              <input
+                type="number"
+                placeholder={name}
+                value={inputValues[index] || ''}
+                onChange={(e) => handleInputChange(index, e.target.value)}
+              />
+            </div>
+          ))}
+          <button className='visualize-btn' onClick={handlePredict}>Predict Cluster</button>
+        </div>
       </div>
 
       {predictedCluster !== null && (
         <div className='result'>
-          Predicted Cluster: {predictedCluster}
+          Predicted Cluster: {predictedCluster} <br />
+          <strong>{species[predictedCluster]}</strong>
         </div>
       )}
       <div className='regression'>
@@ -211,9 +219,11 @@ function KMeans() {
           </ul>
           <p>Each observation belongs to one of three species of iris:</p>
           <ul>
-            <li>Iris setosa</li>
-            <li>Iris versicolor</li>
-            <li>Iris virginica</li>
+            {species.map((name, index) => (
+              <li key={index}>
+                <span style={{ color: d3.schemeCategory10[index], marginLeft: "-24px", marginRight: "10px" }}>◉</span>
+                {name}</li>
+            ))}
           </ul>
         </div>
       </div>

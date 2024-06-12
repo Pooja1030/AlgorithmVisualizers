@@ -33,32 +33,6 @@ CORS(app)  # Allow cross-origin requests
 # Get the directory of the current file
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Linear Regression Data
-@app.route('/linear-regression-data', methods=['GET'])
-def get_linear_regression_data():
-    # Construct the relative path to the CSV file
-    csv_path = os.path.join(base_dir, "Book1.csv")
-    # Load and preprocess the dataset
-    df = pd.read_csv(csv_path)
-    x = df['x'].values.reshape(-1, 1)
-    y = df['y'].values.reshape(-1, 1)
-    x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.50)
-    model = LinearRegression()
-    model.fit(x_train, y_train)
-    y_predicted = model.predict(x_test)
-    mse = mean_squared_error(y_test, y_predicted)
-    intercept = model.intercept_[0]
-    coefficient = model.coef_[0][0]
-    response_data = {
-        "intercept": intercept,
-        "coefficient": coefficient,
-        "x_test": x_test.flatten().tolist(),
-        "y_test": y_test.flatten().tolist(),
-        "y_predicted": y_predicted.flatten().tolist(),
-        "mse": mse
-    }
-    return jsonify(response_data)
-
 # Logistic Regression Results
 @app.route('/logistic-regression-results', methods=['GET'])
 def get_logistic_regression_results():
@@ -130,39 +104,6 @@ def get_line_plot():
     return send_file(img, mimetype="image/png")
 
 
-# Multiple linear regression
- 
-@app.route("/train", methods=["GET"])
-def train_model():
-     # Construct the relative path to the CSV file
-    csv_path = os.path.join(base_dir, "kc_house_data.csv")
-
-    # Load and preprocess the dataset
-    dataset = pd.read_csv(csv_path)
-    dataset = dataset.drop(["id", "date"], axis=1)
-    X = dataset.iloc[:, 1:].values
-    y = dataset.iloc[:, 0].values
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=1 / 3, random_state=0
-    )
-
-    regressor = LinearRegression()
-    regressor.fit(X_train, y_train)
-
-    y_pred = regressor.predict(X_test)
-
-    response = {
-        "X_test": X_test.tolist(),
-        "y_test": y_test.tolist(),
-        "y_pred": y_pred.tolist(),
-        "coefficients": regressor.coef_.tolist(),
-        "intercept": regressor.intercept_.tolist(),
-        "mse": np.mean((y_pred - y_test) ** 2),
-    }
-
-    return jsonify(response)
-
-
 # KNN Iris Data
 @app.route('/data', methods=['GET'])
 def get_data():
@@ -216,32 +157,15 @@ def kmeans():
 
 @app.route('/predict-cluster', methods=['POST'])
 def predict_cluster():
-    new_data = request.json['data']
-    num_clusters = int(request.json.get('num_clusters', 3))
     iris = load_iris()
     df = pd.DataFrame(iris.data, columns=iris.feature_names)
+    new_data = request.json['data']
+    num_clusters = int(request.json.get('num_clusters', 3))
     kmeans = KMeans(n_clusters=num_clusters, random_state=0)
     kmeans.fit(df)
     cluster = kmeans.predict([new_data])
     return jsonify({'cluster': int(cluster[0])})
 
-# Multi-linear Regression
-@app.route("/train", methods=["GET"])
-def train_linear_model():
-    X, y = load_data()
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1 / 3, random_state=0)
-    regressor = LinearRegression()
-    regressor.fit(X_train, y_train)
-    y_pred = regressor.predict(X_test)
-    response = {
-        "X_test": X_test.tolist(),
-        "y_test": y_test.tolist(),
-        "y_pred": y_pred.tolist(),
-        "coefficients": regressor.coef_.tolist(),
-        "intercept": regressor.intercept_.tolist(),
-        "mse": np.mean((y_pred - y_test) ** 2),
-    }
-    return jsonify(response)
 
 # Load and preprocess CIFAR-10 dataset
 (x_train_cifar, y_train_cifar), (x_test_cifar, y_test_cifar) = cifar10.load_data()
