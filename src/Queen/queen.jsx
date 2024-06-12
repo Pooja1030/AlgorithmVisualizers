@@ -163,11 +163,12 @@ class Queen extends Component {
 
     toggleSidePanel = () => {
         const { sidePanelOpen } = this.state;
-        this.setState({ sidePanelOpen: !sidePanelOpen }, () => {
-            if (!sidePanelOpen) {
-                this.handlePlay();
-            }
-        });
+        // this.setState({ sidePanelOpen: !sidePanelOpen }, () => {
+        //     if (!sidePanelOpen) {
+        //         this.handlePlay();
+        //     }
+        // });
+        this.setState({ sidePanelOpen: !sidePanelOpen });
     }
 
     closeSidePanel = () => {
