@@ -100,38 +100,39 @@ class MST extends Component {
 		const executionTime = (endTime - startTime).toFixed(2); // Calculate execution time in milliseconds
 		const realTimeComplexity = `${executionTime} ms`; // Display execution time
 
-		// Define space complexity
-		const realSpaceComplexity = "O(E + V)";
+		// Calculate and set the space complexity
+		const realSpaceComplexity = this.calculateSpaceComplexity(algorithm);
 
-		// this.triggerToggleAnimation();
 		this.setState({ mstEdges, visitedEdges, realTimeComplexity, realSpaceComplexity }); // Set execution time and space complexity
 	}
 
 	setAlgoSteps = (algorithm) => {
 		let algorithmSteps = [];
-		let timeComplexity ="";
+		let timeComplexity = "";
+		let spaceComplexity = "";
 		if (algorithm === "kruskal") {
 			algorithmSteps = [
-				{ code: " Step 1: Sort all the edges by weight (non-decreasing)." },
-				{ code: " Step 2: Pick the edge with the smallest weight." },
-				{ code: " Step 3: Check if adding that edge to the MST forms a cycle. If it doesn't, add it." },
-				{ code: " Step 4: Repeat steps 2 and 3 until the MST has a length of (number of Vertices - 1)." }
+				{ code: "Step 1: Sort all the edges by weight (non-decreasing)." },
+				{ code: "Step 2: Pick the edge with the smallest weight." },
+				{ code: "Step 3: Check if adding that edge to the MST forms a cycle. If it doesn't, add it." },
+				{ code: "Step 4: Repeat steps 2 and 3 until the MST has a length of (number of vertices - 1)." }
 			];
-			timeComplexity = " O(E log E)";
+			timeComplexity = "O(E log E)";
+			spaceComplexity = "O(E + V)";
 		} else if (algorithm === "prim") {
 			algorithmSteps = [
-				{ code: " Step 1: Initialize the start node and the open set." },
-				{ code: " Step 2: Loop until the open set is empty." },
-				{ code: " Step 3: Select the node with the lowest f score from the open set." },
-				{ code: " Step 4: If the selected node is the finish node, reconstruct the path." },
-				{ code: " Step 5: Generate the neighbors of the selected node." },
-				{ code: " Step 6: For each neighbor, calculate tentative g score and add it to the open set." },
-				{ code: " Step 7: Repeat the loop." }
+				{ code: "Step 1: Initialize the start node and the open set." },
+				{ code: "Step 2: Loop until the open set is empty." },
+				{ code: "Step 3: Select the node with the lowest f score from the open set." },
+				{ code: "Step 4: If the selected node is the finish node, reconstruct the path." },
+				{ code: "Step 5: Generate the neighbors of the selected node." },
+				{ code: "Step 6: For each neighbor, calculate tentative g score and add it to the open set." },
+				{ code: "Step 7: Repeat the loop." }
 			];
-			timeComplexity = " O(E + V log V)";
+			timeComplexity = "O(E + V log V)";
+			spaceComplexity = "O(E + V)";
 		}
-		this.setState({ algorithmSteps, timeComplexity });
-
+		this.setState({ algorithmSteps, timeComplexity, spaceComplexity });
 	}
 
 	// Function to calculate space complexity based on the selected algorithm
@@ -182,7 +183,6 @@ class MST extends Component {
 				<Navbar currentPage="Minimum Spanning Tree"
 				info="MinimumSpanningTree/info" />
 				<div className='menu'>
-					{/* <label>Select Algorithm:</label> */}
 					<select value={algorithm} onChange={this.handleAlgorithmChange}>
 						<option disabled value="">Select Algorithm</option>
 						<option value="kruskal">Kruskal's Algorithm</option>
@@ -206,7 +206,7 @@ class MST extends Component {
 
 					<div>
 						<button className='visualize-btn' onClick={() => this.calculateMST()}>Get MST</button>
-						<button className='reset-btn' onClick={() => this.generateVertices()}>Reset</button>
+						<button className='reset-btn' onClick={() => this						.generateVertices()}>Reset</button>
 					</div>
 				</div>
 

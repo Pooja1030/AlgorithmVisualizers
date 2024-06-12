@@ -25,7 +25,13 @@ class CanvasSvg extends Component {
         let off = this.props.offset;
         return (
             <div>
-                <svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    viewBox="0 0 240 100"  // Adjusted viewBox to fit better
+                    width="100%"           // Ensures SVG takes full width of the container
+                    height="auto"          // Makes the height responsive to the content
+                    style={{ maxHeight: "450px" }} // Sets a max-height to prevent excessive vertical space
+                    xmlns="http://www.w3.org/2000/svg"
+                >
                     {
                         this.props.edges.map((edge, cellidx) => {
                             return (
