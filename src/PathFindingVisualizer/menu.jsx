@@ -50,7 +50,7 @@ class Menu extends Component {
                         </div>
                         <div className='node-type'>
                             <div className='node node-finish'></div>
-                            <p>Finish Node</p>
+                            <p>End Node</p>
                         </div>
                     </div>
                 </div>

@@ -9,9 +9,9 @@ const KMeansInfo = () => {
             <Navbar currentPage="k-Means Clustering" visualizer="kmeans" />
             <div className="info-container-2">
                 <div className="info-section">
-                    <h2>k-Means Clustering</h2>
+                    <h2>K-Means Clustering</h2>
                     <p>
-                        k-Means clustering is an unsupervised machine learning algorithm used to
+                        K-Means clustering is an unsupervised machine learning algorithm used to
                         partition a dataset into k distinct, non-overlapping subsets (clusters).
                         The algorithm aims to minimize the variance within each cluster and maximize
                         the variance between clusters.
@@ -60,7 +60,8 @@ const KMeansInfo = () => {
                             targeted marketing.</li>
                     </ul>
                     <button title="Learn more">
-                        <a href="https://en.wikipedia.org/wiki/K-means_clustering" target="_blank" rel="noopener noreferrer">Learn more about k-Means Clustering</a>
+                        <a href="https://en.wikipedia.org/wiki/K-means_clustering" target="_blank" rel="noopener noreferrer">
+                            Learn more</a>
                     </button>
                 </div>
             </div>

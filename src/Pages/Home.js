@@ -108,49 +108,49 @@ const list = [
     "title": "Linear Regression",
     "link": "linear-regression",
     "description": "Linear Regression is a basic and commonly used type of predictive analysis.",
-    "algorithms": [],
+    "algorithms": ["Supervised", "Prediction"],
     "img": ""
   },
   {
     "title": "Logistic Regression",
     "link": "logistic-regression",
     "description": "Logistic Regression is a statistical method for analyzing a dataset in which there are one or more independent variables that determine an outcome.",
-    "algorithms": [],
+    "algorithms": ["Supervised","Independent Variables"],
     "img": ""
   },
   {
     "title": "Multiple Linear Regression",
     "link": "multilinear-regression",
     "description": "",
-    "algorithms": [],
+    "algorithms": ["Simple Linear Regression","Multiple Independent Variables"],
     "img": ""
   },
   {
     "title": "K-Means Clustering",
     "link": "KMeans",
     "description": "K-Means Clustering is an unsupervised learning algorithm that is used for clustering.",
-    "algorithms": [],
+    "algorithms": ["Unsupervised", "Classification"],
     "img": ""
   },
   {
     "title": "K-Nearest Neighbors",
     "link": "KNN",
     "description": "K-Nearest Neighbors is a simple, easy-to-implement supervised machine learning algorithm that can be used to solve both classification and regression problems.",
-    "algorithms": [],
+    "algorithms": ["Supervised", "Classification"],
     "img": ""
   },
   {
     "title": "Artificial Neural Networks",
     "link": "ann",
     "description": "Artificial Neural Networks (ANN) are computational models inspired by human neural networks, and they are used to approximate functions that can depend on a large number of inputs.",
-    "algorithms": [],
+    "algorithms": ["Computation Models","Complex Patterns"],
     "img": ""
   },
   {
     "title": "Convolutional Neural Networks",
     "link": "cnn",
     "description": "Convolutional Neural Networks (CNN) are a class of deep neural networks, most commonly applied to analyzing visual imagery.",
-    "algorithms": [],
+    "algorithms": ["Image Recognition", "Computer Vision"],
     "img": ""
   },
   // {

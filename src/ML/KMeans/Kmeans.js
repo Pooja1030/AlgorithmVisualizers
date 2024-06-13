@@ -161,6 +161,7 @@ function KMeans() {
           value={numClusters}
           onChange={handleNumClustersChange}
           min="1"
+          max="3"
         />
         <label htmlFor="xFeature">X-Axis:</label>
         <select id="xFeature" value={xFeature} onChange={(e) => setXFeature(e.target.value)}>
