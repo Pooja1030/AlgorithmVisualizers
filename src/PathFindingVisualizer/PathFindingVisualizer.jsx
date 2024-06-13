@@ -16,14 +16,14 @@ const algorithms = [
         name: "Dijkstra's Algorithm",
         function: dijkstra,
         steps: dijkstra.steps,
-        timeComplexity: "O((V + E) * log(V))",
+        timeComplexity: "O(V ^ 2)",
         spaceComplexity: "O(V + E)"
     },
     {
         name: "A* Algorithm",
         function: aStar,
         steps: aStar.steps,
-        timeComplexity: "O((V + E) * log(V))",
+        timeComplexity: "O(V + E)",
         spaceComplexity: "O(V + E)"
     },
     {
@@ -403,11 +403,14 @@ export default class PathfindingVisualizer extends Component {
     };
 
     render() {
-        const { grid, mouseIsPressed, sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity } = this.state;
+        const { grid, mouseIsPressed, sidePanelOpen, algorithmSteps, timeComplexity, spaceComplexity, algorithm } = this.state;
 
-        // Default time and space complexities (for initial rendering)
-        const defaultTimeComplexity = "O((V+E) * log(V))";
-        const defaultSpaceComplexity = "O(V+E)";
+          // Find the selected algorithm object from the array
+    const selectedAlgorithm = algorithms.find(algo => algo.name === algorithm);
+        // Default time and space complexities (for initial rendering and when no algorithm is selected)
+    const defaultTimeComplexity = selectedAlgorithm ? selectedAlgorithm.timeComplexity : "O(V+E)";
+    const defaultSpaceComplexity = selectedAlgorithm ? selectedAlgorithm.spaceComplexity : "O(V+E)";
+
 
         return (
             <>

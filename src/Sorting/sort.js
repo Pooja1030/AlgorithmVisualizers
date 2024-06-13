@@ -97,13 +97,13 @@ class Sort extends Component {
     handleRandomize = () => {
         const rect = this.getInitialRects(this.state.count);
         const rect2 = rect.slice();
-        this.setState({ rects: rect, rects2: rect2 });
+        this.setState({ rects: rect, rects2: rect2, isRunning: false, algorithmSteps1: [], algorithmSteps2: [] });
     };
 
     handleRefresh = () => {
         const rects = this.state.rects.map(rect => ({ ...rect, isSorted: false, isSorting: false }));
         const rects2 = rects.slice();
-        this.setState({ rects, rects2 });
+        this.setState({ rects, rects2, isRunning: false, algorithmSteps1: [], algorithmSteps2: [] });
     };
 
     handleDouble = (val) => {
@@ -123,6 +123,8 @@ class Sort extends Component {
         } else {
             this.setState({ algo2: val });
         }
+        // Also reset the visualization
+        this.handleRefresh();
     };
 
     handleSpeedChanged = (val) => {
@@ -171,7 +173,7 @@ class Sort extends Component {
                 startTime1 = performance.now();
                 steps1 = quickSort(this.state.rects); // Call insertionSort to get steps
                 endTime1 = performance.now();
-                algorithmSteps1 = insertionSortSteps; // Set algorithmSteps to insertionSortSteps
+                algorithmSteps1 = quickSortSteps; // Set algorithmSteps to quickSortSteps
                 timeComplexity1 = `${(endTime1 - startTime1).toFixed(2)} ms`; // Update time complexity
                 spaceUsage1 = this.state.rects.length * 4; // Assuming each rect object takes 4 bytes
                 spaceComplexity1 = `${spaceUsage1} bytes`; // Update space complexity
@@ -238,8 +240,6 @@ class Sort extends Component {
             });
         }
 
-        // this.triggerToggleAnimation();
-
         this.handleFirst(steps1);
         if (this.state.doubles) this.handleSecond(steps2);
 
@@ -252,7 +252,6 @@ class Sort extends Component {
         this.setState({ isRunning1: true });
         const prevRect = this.state.rects;
         for (let i = 0; i < steps.length; i++) {
-            //   setTimeout(()=>{
             if (i !== 0) {
                 prevRect[steps[i - 1].xx] = { ...prevRect[steps[i - 1].xx], isSorting: false };
                 prevRect[steps[i - 1].yy] = { ...prevRect[steps[i - 1].yy], isSorting: false };
@@ -275,15 +274,14 @@ class Sort extends Component {
                 }
             }
             this.setState({ rects: prevRect });
-            await this.sleep(this.state.speed);
+            await this.sleep();
         }
-    }
+    };
 
     handleSecond = async (steps) => {
         this.setState({ isRunning2: true });
         const prevRect = this.state.rects2;
         for (let i = 0; i < steps.length; i++) {
-            //   setTimeout(()=>{
             if (i !== 0) {
                 prevRect[steps[i - 1].xx] = { ...prevRect[steps[i - 1].xx], isSorting: false };
                 prevRect[steps[i - 1].yy] = { ...prevRect[steps[i - 1].yy], isSorting: false };
@@ -307,13 +305,12 @@ class Sort extends Component {
             }
 
             this.setState({ rects2: prevRect });
-            await this.sleep(this.state.speed);
-
+            await this.sleep();
         }
-    }
+    };
 
-    sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+    sleep() {
+        return new Promise(resolve => setTimeout(resolve, this.state.speed));
     }
 
     getInitialRects = (tot) => {

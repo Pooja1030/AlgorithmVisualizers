@@ -129,7 +129,7 @@ class MST extends Component {
 				{ code: "Step 6: For each neighbor, calculate tentative g score and add it to the open set." },
 				{ code: "Step 7: Repeat the loop." }
 			];
-			timeComplexity = "O(E + V log V)";
+			timeComplexity = "O(E log V)";
 			spaceComplexity = "O(E + V)";
 		}
 		this.setState({ algorithmSteps, timeComplexity, spaceComplexity });
