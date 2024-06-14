@@ -23,13 +23,13 @@ function ANN() {
 
   const handlePredict = () => {
     const inputData = Object.values(inputs).map(Number);
-    axios.post('http://localhost:5000/predict-iris', { data: inputData })
+    axios.post('http://localhost:5000/iris-predict', { data: inputData })
       .then(response => setPrediction(`Predicted Class: ${response.data.class}`))
       .catch(error => console.error('Error predicting:', error));
   };
 
   const handleGetAccuracy = () => {
-    axios.get('http://localhost:5000/accuracy-iris')
+    axios.get('http://localhost:5000/iris-accuracy')
       .then(response => setAccuracy(`Model Accuracy: ${(response.data.accuracy * 100).toFixed(2)}%`))
       .catch(error => console.error('Error getting accuracy:', error));
   };

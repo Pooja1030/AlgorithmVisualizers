@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 import { gsap } from 'gsap';
 
 function KNN() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const [input, setInput] = useState(Array(4).fill('')); // Initialize with empty strings
   const [prediction, setPrediction] = useState('');
   const [data, setData] = useState(null);
@@ -19,7 +20,9 @@ function KNN() {
 
   const handlePredict = () => {
     const inputValues = input.map(val => parseFloat(val));
-    axios.post('http://localhost:5000/predict', { data: inputValues })
+    // axios.get(`${backendUrl}/data`)
+
+    axios.post(`${backendUrl}/predict`, { data: inputValues })
       .then(response => {
         setPrediction(response.data.prediction);
         animatePrediction(inputValues, response.data.neighbors);
@@ -91,7 +94,8 @@ function KNN() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:5000/data')
+    // axios.get('http://localhost:5000/data')
+    axios.get(`${backendUrl}/data`)
       .then(response => {
         setData(response.data);
       })
