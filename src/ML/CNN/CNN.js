@@ -29,7 +29,7 @@ function CNN() {
           const inputData = tensor.arraySync();
           axios.post('http://localhost:5000/predict-cifar', { data: inputData })
             .then(response => {
-              setPrediction(`Predicted Class: ${response.data.prediction}`);
+              setPrediction(`Predicted Class: ${response.data.predicted_class}`);
               setConfidence(`Confidence: ${(response.data.confidence * 100).toFixed(2)}%`);
             })
             .catch(error => console.error('Error predicting:', error));
@@ -40,7 +40,7 @@ function CNN() {
   };
 
   const handleGetAccuracy = () => {
-    axios.get('http://localhost:5000/accuracy-cifar')
+    axios.get('http://localhost:5000/cifar10-accuracy')
       .then(response => setAccuracy(`Model Accuracy: ${(response.data.accuracy * 100).toFixed(2)}%`))
       .catch(error => console.error('Error getting accuracy:', error));
   };
@@ -63,9 +63,9 @@ function CNN() {
           <button className='visualize-btn' onClick={handlePredict} disabled={!image}>Predict</button>
           <button className='visualize-btn' onClick={handleGetAccuracy}>Get Accuracy</button>
         </div>
-        {prediction && <div className='result'>Prediction: {prediction}</div>}
-        {confidence && <div className='result'>Confidence: {confidence}</div>}
-        {accuracy && <div className='result'>Accuracy: {accuracy}</div>}
+        {prediction && <div className='result'>{prediction}</div>}
+        {confidence && <div className='result'>{confidence}</div>}
+        {accuracy && <div className='result'>{accuracy}</div>}
       </div>
     </div>
   );
