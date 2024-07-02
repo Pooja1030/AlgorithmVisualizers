@@ -6,6 +6,7 @@ import { gsap } from 'gsap';
 
 function KNN() {
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [input, setInput] = useState(Array(4).fill('')); // Initialize with empty strings
   const [prediction, setPrediction] = useState('');
   const [data, setData] = useState(null);
@@ -19,9 +20,7 @@ function KNN() {
   };
 
   const handlePredict = () => {
-    const inputValues = input.map(val => parseFloat(val));
-    // axios.get(`${backendUrl}/data`)
-
+    const inputValues = input.map(val => parseFloat(val)); // Define inputValues here
     axios.post(`${backendUrl}/predict`, { data: inputValues })
       .then(response => {
         setPrediction(response.data.prediction);
@@ -94,13 +93,12 @@ function KNN() {
   };
 
   useEffect(() => {
-    // axios.get('http://localhost:5000/data')
     axios.get(`${backendUrl}/data`)
       .then(response => {
         setData(response.data);
       })
       .catch(error => console.error('Error fetching data:', error));
-  }, []);
+  }, [backendUrl]); // Add backendUrl as a dependency to useEffect
 
   useEffect(() => {
     if (data) {
@@ -149,10 +147,9 @@ function KNN() {
         .attr('transform', `translate(0,${height - margin.bottom})`)
         .call(d3.axisBottom(x));
 
-
       // Y-axis label
       svg.append('text')
-        .attr('transform', `translate(${margin.left / 2},${height / 2}) rotate(-90)`) // Adjusted positioning for Y-axis label
+        .attr('transform', `translate(${margin.left / 2},${height / 2}) rotate(-90)`)
         .attr('text-anchor', 'middle')
         .text('Sepal Width (cm)');
 
@@ -172,7 +169,7 @@ function KNN() {
     "Iris setosa",
     "Iris versicolor",
     "Iris virginica",
-  ]
+  ];
 
   return (
     <div>
@@ -224,4 +221,4 @@ function KNN() {
   );
 }
 
-export default KNN;
+export default KNN
