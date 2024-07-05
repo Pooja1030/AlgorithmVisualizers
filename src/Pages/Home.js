@@ -139,20 +139,20 @@ const list = [
     "algorithms": ["Supervised", "Classification"],
     "img": ""
   },
-  {
-    "title": "Artificial Neural Networks",
-    "link": "ann",
-    "description": "Artificial Neural Networks (ANN) are computational models inspired by human neural networks, and they are used to approximate functions that can depend on a large number of inputs.",
-    "algorithms": ["Computation Models","Complex Patterns"],
-    "img": ""
-  },
-  {
-    "title": "Convolutional Neural Networks",
-    "link": "cnn",
-    "description": "Convolutional Neural Networks (CNN) are a class of deep neural networks, most commonly applied to analyzing visual imagery.",
-    "algorithms": ["Image Recognition", "Computer Vision"],
-    "img": ""
-  },
+  // {
+  //   "title": "Artificial Neural Networks",
+  //   "link": "ann",
+  //   "description": "Artificial Neural Networks (ANN) are computational models inspired by human neural networks, and they are used to approximate functions that can depend on a large number of inputs.",
+  //   "algorithms": ["Computation Models","Complex Patterns"],
+  //   "img": ""
+  // },
+  // {
+  //   "title": "Convolutional Neural Networks",
+  //   "link": "cnn",
+  //   "description": "Convolutional Neural Networks (CNN) are a class of deep neural networks, most commonly applied to analyzing visual imagery.",
+  //   "algorithms": ["Image Recognition", "Computer Vision"],
+  //   "img": ""
+  // },
   // {
   //   "title": "RNN",
   //   "link": "RNN",
@@ -169,7 +169,7 @@ const categories = {
   "Backtracking": ["N-queens Problem"],
   // "Geometry": ["Convex Hull"],
   "Machine Learning": ["Linear Regression", "Logistic Regression", "Multiple Linear Regression", "K-Means Clustering", "K-Nearest Neighbors"],
-  "Deep Learning": ["Artificial Neural Networks", "Convolutional Neural Networks"],
+  // "Deep Learning": ["Artificial Neural Networks", "Convolutional Neural Networks"],
   // "Recursion": ["Recursion Tree"],
 };
 
