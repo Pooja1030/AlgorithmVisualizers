@@ -23,8 +23,8 @@ import LogisticRegressionVisualization from './ML/LogisticRegression/logistic';
 import MultipleLinearRegressionVisualization from './ML/Multiplelinearregression/multiplelinear';
 import KMeans from './ML/KMeans/Kmeans';
 import KNN from './ML/KNN/KNN';
-import ANN from './ML/ANN/ANN';
-import CNN from './ML/CNN/CNN';
+// import ANN from './ML/ANN/ANN';
+// import CNN from './ML/CNN/CNN';
 // import RNN from './ML/RNN/RNN';
 
 import SortingInfo from './Pages/InfoPages/sortInfo'
@@ -44,8 +44,8 @@ import LogisticRegressionInfo from './Pages/InfoPages/logisticInfo.js';
 import MultipleLinearRegressionInfo from './Pages/InfoPages/multilinearInfo.js';
 import KNNInfo from './Pages/InfoPages/KNNInfo.js';
 import KMeansInfo from './Pages/InfoPages/kmeansInfo.js';
-import ANNInfo from './Pages/InfoPages/annInfo.js';
-import CNNInfo from './Pages/InfoPages/cnnInfo.js';
+// import ANNInfo from './Pages/InfoPages/annInfo.js';
+// import CNNInfo from './Pages/InfoPages/cnnInfo.js';
 import RecursiveSortInfo from './Pages/InfoPages/recursivesortInfo.js';
 
 function App() {
@@ -74,8 +74,8 @@ function App() {
             <Route path="multiplelinear-regression" element={<MultipleLinearRegressionVisualization />} />
             <Route path="KMeans" element={<KMeans />} />
             <Route path="KNN" element={<KNN />} />
-            <Route path="ANN" element={<ANN/>} />
-            <Route path="CNN" element={<CNN />} />
+            {/* <Route path="ANN" element={<ANN/>} /> */}
+            {/* <Route path="CNN" element={<CNN />} /> */}
             {/* <Route path="RNN" element={<RNN />} /> */}
             
             <Route path="sort/info" element={<SortingInfo />} />
@@ -95,8 +95,8 @@ function App() {
             <Route path="multiplelinear-regression/info" element={<MultipleLinearRegressionInfo />} />
             <Route path="KNN/info" element={<KNNInfo />} />
             <Route path="KMeans/info" element={<KMeansInfo />} />
-            <Route path="ANN/info" element={<ANNInfo/>} />
-            <Route path="CNN/info" element={<CNNInfo />} />
+            {/* <Route path="ANN/info" element={<ANNInfo/>} /> */}
+            {/* <Route path="CNN/info" element={<CNNInfo />} /> */}
             <Route path="recursiveSort/info" element={<RecursiveSortInfo />} />
 
             <Route path="*" element={<NoPage />} />
