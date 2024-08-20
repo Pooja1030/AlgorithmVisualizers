@@ -168,7 +168,7 @@ const categories = {
   "Graph": ["Pathfinding Algorithms", "Minimum Spanning Tree"],
   "Backtracking": ["N-queens Problem"],
   // "Geometry": ["Convex Hull"],
-  "Machine Learning": ["Linear Regression", "Logistic Regression", "Multiple Linear Regression", "K-Means Clustering", "K-Nearest Neighbors"],
+  // "Machine Learning": ["Linear Regression", "Logistic Regression", "Multiple Linear Regression", "K-Means Clustering", "K-Nearest Neighbors"],
   // "Deep Learning": ["Artificial Neural Networks", "Convolutional Neural Networks"],
   // "Recursion": ["Recursion Tree"],
 };
