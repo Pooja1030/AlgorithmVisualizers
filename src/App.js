@@ -68,12 +68,12 @@ function App() {
             <Route path="stack" element={<Stack />} />
             <Route path="queue" element={<Queue />} />
             <Route path="LinkedList" element={<LinkedList />} />
-            // <Route path="linear-regression" element={<LinearRegression />} />
-            // <Route path="multilinear-regression" element={<MultiLinearRegression />} />
-            // <Route path="logistic-regression" element={<LogisticRegressionVisualization />} />
-            // <Route path="multiplelinear-regression" element={<MultipleLinearRegressionVisualization />} />
-            // <Route path="KMeans" element={<KMeans />} />
-            // <Route path="KNN" element={<KNN />} />
+           {/* <Route path="linear-regression" element={<LinearRegression />} /> */}
+           {/* <Route path="multilinear-regression" element={<MultiLinearRegression />} /> */}
+           {/* <Route path="logistic-regression" element={<LogisticRegressionVisualization />} /> */}
+           {/* <Route path="multiplelinear-regression" element={<MultipleLinearRegressionVisualization />} /> */}
+           {/* <Route path="KMeans" element={<KMeans />} /> */}
+           {/* <Route path="KNN" element={<KNN />} /> */}
             {/* <Route path="ANN" element={<ANN/>} /> */}
             {/* <Route path="CNN" element={<CNN />} /> */}
             {/* <Route path="RNN" element={<RNN />} /> */}
@@ -88,13 +88,13 @@ function App() {
             <Route path="BinarySearchTree/info" element={<BSTInfo />} />
             <Route path="LinkedList/info" element={<LinkedListInfo />} />
             <Route path="recursiontree/info" element={<RecursionTreeInfo />} />
-            // <Route path="linear-regression/info" element={<LinearRegressionInfo />} />
+             {/* <Route path="linear-regression/info" element={<LinearRegressionInfo />} /> */}
             <Route path="convexHull/info" element={<ConvexHullInfo />} />
             <Route path="puzzle/info" element={<PuzzleInfo />} />
-            // <Route path="logistic-regression/info" element={<LogisticRegressionInfo />} />
-            // <Route path="multiplelinear-regression/info" element={<MultipleLinearRegressionInfo />} />
-            // <Route path="KNN/info" element={<KNNInfo />} />
-            // <Route path="KMeans/info" element={<KMeansInfo />} />
+             {/* <Route path="logistic-regression/info" element={<LogisticRegressionInfo />} /> */}
+             {/* <Route path="multiplelinear-regression/info" element={<MultipleLinearRegressionInfo />} /> */}
+             {/* <Route path="KNN/info" element={<KNNInfo />} /> */}
+             {/* <Route path="KMeans/info" element={<KMeansInfo />} /> */}
             {/* <Route path="ANN/info" element={<ANNInfo/>} /> */}
             {/* <Route path="CNN/info" element={<CNNInfo />} /> */}
             <Route path="recursiveSort/info" element={<RecursiveSortInfo />} />
