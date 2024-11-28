@@ -46,7 +46,7 @@ Start by cloning the repository to your local machine:
    ```bash
      cd frontend
    ```
-    2. **Install the required dependencies:**:
+   2. **Install the required dependencies:**:
    ```bash
    npm install
    ```
