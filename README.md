@@ -3,7 +3,7 @@ Algorithm Visualizer is a web-based interactive tool that helps users visualize 
 
 # Live Demo
 Try the live version of the project here:
-Algorithm Visualizer Demo
+Algorithm Visualizer Demo(https://algorithm-visualizers.vercel.app)
 
 ## Features
 
@@ -66,7 +66,7 @@ The application should now be running locally at http://localhost:3000.
     
 ## 3. **Visit the Live Version**:
 For an online experience, you can also visit the live demo here:
-Algorithm Visualizer Demo
+Algorithm Visualizer Demo(https://algorithm-visualizers.vercel.app)
 
 
 
@@ -87,7 +87,7 @@ Algorithm Visualizer Demo
 -  Make the necessary changes and commit them. 
 -  Push your changes to your forked repository.  
 -  Open a pull request with a description of the changes you've made.
--  
+   
 
 **License**: This project is licensed under the MIT License. See the LICENSE file for more details.
 
