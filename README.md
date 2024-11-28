@@ -89,9 +89,6 @@ For an online experience, you can also visit the live demo here:
 -  Open a pull request with a description of the changes you've made.
    
 
-**License**: This project is licensed under the MIT License. See the LICENSE file for more details.
-
-
 **Acknowledgments**
 - **React.js:** A JavaScript library for building user interfaces.  
 - **Material-UI:** A popular library that provides a set of pre-styled React components.  
