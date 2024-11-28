@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+### Algorithm Visualizer
+Algorithm Visualizer is a web-based interactive tool that helps users visualize and better understand the inner workings of various algorithms. Built with React.js for the frontend, it provides an engaging experience with smooth animations powered by GSAP. The application is designed to be simple, intuitive, and responsive, allowing users to experiment with algorithms in real time.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Live Demo
+Try the live version of the project here:
+Algorithm Visualizer Demo
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Interactive Visualization:** : See algorithm processes unfold in real-time with visual representations of data structures.
+- **Smooth Animations:** Animations are implemented using GSAP to create smooth transitions and visual feedback.
+- **Customizable Inputs:** Users can input their own data sets, change algorithm parameters, and see the effect on the results.
+- **Multiple Algorithm Visualizations: ** The tool provides visualizations for a range of algorithms, helping users understand how different algorithms work step by step.
+- **Responsive Design:** The app is designed to be fully responsive and accessible on all screen sizes.
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Frontend:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **React.js:** JavaScript library used to build the user interface with a component-based structure.
+- **Material-UI:**React component library that provides pre-built components to speed up UI development.
+- **GSAP:** JavaScript library for creating high-performance animations to bring the algorithms to life.
 
-### `npm test`
+Deployment:
+-**Frontend:** Hosted and deployed on Vercel.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
 
-### `npm run build`
+## Prerequisties
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To run the project locally, you need to have the following installed:
+- Node.js (with npm) for managing dependencies and running the frontend.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Getting Started
 
-### `npm run eject`
+Start by cloning the repository to your local machine:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 1. Clone the Repository:
+   ```bash
+   git clone https://github.com/Pooja1030/AlgorithmVisualizers.git
+   ```
+   ```bash
+  cd AlgorithmVisualizers
+   ```
+## 2. Set Up the Frontend (React.js):
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  - 1.**Navigate to the frontend directory**:
+    ```bash
+     cd frontend
+    ```
+   - 2.**Install the required dependencies:**:
+    ```bash
+   npm install
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   - 3.**Start the React development server:**:
+    ```bash
+    npm start
+    ```
+The application should now be running locally at http://localhost:3000.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    
+## 3. **Visit the Live Version**:
+For an online experience, you can also visit the live demo here:
+Algorithm Visualizer Demo
 
-## Learn More
+    
+## How to Contribute
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**We welcome contributions! You can help improve the project by:**
+- **Adding new algorithms:**Extend the visualizer to include more algorithms or data structures.  
+- **UI/UX Improvements:** Help enhance the user experience with design or usability improvements.  
+- **Bug fixes and enhancements:** Report any bugs you find or suggest new features.
+  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Steps to Contribute:
 
-### Code Splitting
+- 1. Fork the repository to your GitHub account.  
+- 2. Create a new branch for the feature or bug fix you are working on.  
+- 3. Make the necessary changes and commit them. 
+- 4. Push your changes to your forked repository.  
+- 5. Open a pull request with a description of the changes you've made.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**License**: This project is licensed under the MIT License. See the LICENSE file for more details.
 
-### Analyzing the Bundle Size
+**Acknowledgments**
+- **React.js:** A JavaScript library for building user interfaces.  
+- **Material-UI:** A popular library that provides a set of pre-styled React components.  
+- **GSAP:** A robust animation library used to create performant and visually appealing animations.  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  
