@@ -13,6 +13,7 @@ Algorithm Visualizer Demo
 - **Multiple Algorithm Visualizations: ** The tool provides visualizations for a range of algorithms, helping users understand how different algorithms work step by step.
 - **Responsive Design:** The app is designed to be fully responsive and accessible on all screen sizes.
 
+
 ## Technologies Used
 
 Frontend:
@@ -21,8 +22,10 @@ Frontend:
 - **Material-UI:** React component library that provides pre-built components to speed up UI development.
 - **GSAP:** JavaScript library for creating high-performance animations to bring the algorithms to life.
 
+
 Deployment:
 -**Frontend:** Hosted and deployed on Vercel.
+
 
 ## Getting Started
 
@@ -30,6 +33,7 @@ Deployment:
 
 To run the project locally, you need to have the following installed:
 - Node.js (with npm) for managing dependencies and running the frontend.
+
 
 ## 1. Clone the Repository:
 Start by cloning the repository to your local machine:
@@ -40,11 +44,12 @@ Start by cloning the repository to your local machine:
    ```bash
   cd AlgorithmVisualizers
    ```
+
 ## 2. Set Up the Frontend (React.js):
 
    1. **Navigate to the frontend directory**:
    ```bash
-     cd frontend
+   cd frontend
    ```
    2. **Install the required dependencies:**:
    ```bash
@@ -53,14 +58,17 @@ Start by cloning the repository to your local machine:
 
    3. **Start the React development server:**:
    ```bash
-    npm start
+   npm start
    ```
 The application should now be running locally at http://localhost:3000.
+
 
     
 ## 3. **Visit the Live Version**:
 For an online experience, you can also visit the live demo here:
 Algorithm Visualizer Demo
+
+
 
     
 ## How to Contribute
@@ -69,6 +77,7 @@ Algorithm Visualizer Demo
 - **Adding new algorithms:** Extend the visualizer to include more algorithms or data structures.  
 - **UI/UX Improvements:** Help enhance the user experience with design or usability improvements.  
 - **Bug fixes and enhancements:** Report any bugs you find or suggest new features.
+
   
 
 ## Steps to Contribute:
@@ -78,8 +87,10 @@ Algorithm Visualizer Demo
 -  Make the necessary changes and commit them. 
 -  Push your changes to your forked repository.  
 -  Open a pull request with a description of the changes you've made.
+-  
 
 **License**: This project is licensed under the MIT License. See the LICENSE file for more details.
+
 
 **Acknowledgments**
 - **React.js:** A JavaScript library for building user interfaces.  
