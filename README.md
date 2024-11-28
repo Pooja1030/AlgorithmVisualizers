@@ -18,7 +18,7 @@ Algorithm Visualizer Demo
 Frontend:
 
 - **React.js:** JavaScript library used to build the user interface with a component-based structure.
-- **Material-UI:**React component library that provides pre-built components to speed up UI development.
+- **Material-UI:** React component library that provides pre-built components to speed up UI development.
 - **GSAP:** JavaScript library for creating high-performance animations to bring the algorithms to life.
 
 Deployment:
@@ -31,12 +31,9 @@ Deployment:
 To run the project locally, you need to have the following installed:
 - Node.js (with npm) for managing dependencies and running the frontend.
 
-
-## Getting Started
-
+## 1. Clone the Repository:
 Start by cloning the repository to your local machine:
 
-## 1. Clone the Repository:
    ```bash
    git clone https://github.com/Pooja1030/AlgorithmVisualizers.git
    ```
@@ -45,19 +42,19 @@ Start by cloning the repository to your local machine:
    ```
 ## 2. Set Up the Frontend (React.js):
 
-  - 1.**Navigate to the frontend directory**:
-    ```bash
+   1. **Navigate to the frontend directory**:
+   ```bash
      cd frontend
-    ```
-   - 2.**Install the required dependencies:**:
-    ```bash
+   ```
+    2. **Install the required dependencies:**:
+   ```bash
    npm install
-    ```
+   ```
 
-   - 3.**Start the React development server:**:
-    ```bash
+   3. **Start the React development server:**:
+   ```bash
     npm start
-    ```
+   ```
 The application should now be running locally at http://localhost:3000.
 
     
@@ -69,18 +66,18 @@ Algorithm Visualizer Demo
 ## How to Contribute
 
 **We welcome contributions! You can help improve the project by:**
-- **Adding new algorithms:**Extend the visualizer to include more algorithms or data structures.  
+- **Adding new algorithms:** Extend the visualizer to include more algorithms or data structures.  
 - **UI/UX Improvements:** Help enhance the user experience with design or usability improvements.  
 - **Bug fixes and enhancements:** Report any bugs you find or suggest new features.
   
 
 ## Steps to Contribute:
 
-- 1. Fork the repository to your GitHub account.  
-- 2. Create a new branch for the feature or bug fix you are working on.  
-- 3. Make the necessary changes and commit them. 
-- 4. Push your changes to your forked repository.  
-- 5. Open a pull request with a description of the changes you've made.
+-  Fork the repository to your GitHub account.  
+-  Create a new branch for the feature or bug fix you are working on.  
+-  Make the necessary changes and commit them. 
+-  Push your changes to your forked repository.  
+-  Open a pull request with a description of the changes you've made.
 
 **License**: This project is licensed under the MIT License. See the LICENSE file for more details.
 
