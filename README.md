@@ -3,7 +3,7 @@ Algorithm Visualizer is a web-based interactive tool that helps users visualize 
 
 ## 🚀 Features
 
-- **🔄 Interactive Visualization:** : See algorithm processes unfold in real-time with visual representations of data structures.
+- **🔄 Interactive Visualization:** See algorithm processes unfold in real-time with visual representations of data structures.
 - **💫 Smooth Animations:** Animations are implemented using GSAP to create smooth transitions and visual feedback.
 - **⚙️ Customizable Inputs:** Users can input their own data sets, change algorithm parameters, and see the effect on the results.
 - **📊 Multiple Algorithm Visualizations:** The tool provides visualizations for a range of algorithms, helping users understand how different algorithms work step by step.
